@@ -30,7 +30,6 @@ namespace SiPintar.Views
             InitializeComponent();
             Loaded += MainWindow_Loaded;
 
-            AddVersionNumber();
             //CheckVersionUpdate();
 
             DataContext = dataContext;
@@ -41,16 +40,6 @@ namespace SiPintar.Views
         }
 
         #region updater
-        private void AddVersionNumber()
-        {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Dispatcher.Invoke(() =>
-            {
-                this.Title += $" v.{versionInfo.FileVersion}";
-            });
-        }
-
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -62,6 +51,7 @@ namespace SiPintar.Views
             }
             catch (Exception exception)
             {
+                System.Windows.MessageBox.Show("Failed to check update ; " + exception.Message);
                 Console.WriteLine("Failed to check update ; " + exception.Message);
             }
         }
@@ -86,16 +76,42 @@ namespace SiPintar.Views
 
         private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
         {
-            var updateInfo = await _manager.CheckForUpdate();
-            UpdateButton.IsEnabled = updateInfo.ReleasesToApply.Count > 0;
+            try
+            {
+                var updateInfo = await _manager.CheckForUpdate();
+                switch (updateInfo.ReleasesToApply.Count > 0)
+                {
+                    case true:
+                        UpdateButton.Visibility = Visibility.Visible;
+                        System.Windows.MessageBox.Show("Pembaruan Tersedia !");
+                        break;
+                    case false:
+                    UpdateButton.Visibility = Visibility.Collapsed;
+                    break;
+                }
+            }
+            catch (Exception exception)
+            {
+                System.Windows.MessageBox.Show("Failed to check update ; " + exception.Message);
+                Console.WriteLine("Failed to check update ; " + exception.Message);
+            }
         }
 
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            await _manager.UpdateApp();
-            System.Windows.MessageBox.Show("Updated succesfuly!");
-            Process.Start(System.Windows.Application.ResourceAssembly.Location);
-            System.Windows.Application.Current.Shutdown();
+            try
+            {
+                System.Windows.MessageBox.Show("Mulai Proses Update");
+                await _manager.UpdateApp();
+                System.Windows.MessageBox.Show("Updated succesfuly!");
+                Process.Start(System.Windows.Application.ResourceAssembly.Location);
+                System.Windows.Application.Current.Shutdown();
+            }
+            catch (Exception exception)
+            {
+                System.Windows.MessageBox.Show("Failed to update ; " + exception.Message);
+                Console.WriteLine("Failed to update ; " + exception.Message);
+            }
         }
         #endregion
 

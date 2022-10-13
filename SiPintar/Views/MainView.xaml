@@ -184,9 +184,11 @@
                     </Button>
                 </Grid>
 
-                <Grid Grid.Row="4">
+                <Grid
+                    x:Name="UpdateButton"
+                    Grid.Row="4"
+                    Visibility="Collapsed">
                     <Button
-                        x:Name="UpdateButton"
                         Margin="20"
                         HorizontalAlignment="Left"
                         Click="UpdateButton_Click"

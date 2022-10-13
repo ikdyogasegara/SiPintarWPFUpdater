@@ -9,8 +9,8 @@
 	<UseWindowsForms>true</UseWindowsForms>
 	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 	<ApplicationManifest>app.manifest</ApplicationManifest>
-	<AssemblyVersion>1.7.84</AssemblyVersion>
-	<FileVersion>1.7.84</FileVersion>
+	<AssemblyVersion>1.7.86</AssemblyVersion>
+	<FileVersion>1.7.86</FileVersion>
   </PropertyGroup>
 
 	<PropertyGroup>
