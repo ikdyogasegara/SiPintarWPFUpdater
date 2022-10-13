@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.Status.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="400" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 8">
+                        <Grid>
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Tambah/Koreksi Data Status"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="20 15">
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Status" LineHeight="15" Margin="0,0,0,2"/>
+                        <Grid>
+                            <TextBox x:Name="Nama" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock DataContext="{Binding ElementName=Nama, Path=Text}" Text="Masukkan nama status" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                    <Border Margin="0,0,0,15" BorderThickness="0.9" BorderBrush="{StaticResource Gray100}" CornerRadius="0" Padding="10" Background="{StaticResource AthensGray}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Include Rekening Air" LineHeight="15" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <RadioButton
+                                x:Name="YesRekeningAir"
+                                GroupName="IncludeRekeningAir"
+                                Content="Ya"
+                                FontSize="12"   
+                                Tag="YesRekeningAir"
+                                Margin="0" 
+                                Grid.Column="0"
+                                Checked="IncludeRekeningAir_Checked"
+                                Unchecked="IncludeRekeningAir_Checked" />
+                                <RadioButton 
+                                x:Name="NoRekeningAir"
+                                GroupName="IncludeRekeningAir"
+                                Content="Tidak"
+                                FontSize="12"
+                                Tag="NoRekeningAir"
+                                Margin="0 0" 
+                                Grid.Column="1"
+                                Checked="IncludeRekeningAir_Checked" 
+                                Unchecked="IncludeRekeningAir_Checked" />
+                            </Grid>
+
+                            <Border Margin="0,0,0,20" />
+
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Include Rekening Limbah" LineHeight="15" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <RadioButton
+                                x:Name="YesRekeningLimbah"
+                                GroupName="IncludeRekeningLimbah"
+                                Content="Ya"
+                                FontSize="12"   
+                                Tag="YesRekeningLimbah"
+                                Margin="0" 
+                                Grid.Column="0"
+                                Checked="IncludeRekeningLimbah_Checked"
+                                Unchecked="IncludeRekeningLimbah_Checked" />
+                                <RadioButton 
+                                x:Name="NoRekeningLimbah"
+                                GroupName="IncludeRekeningLimbah"
+                                Content="Tidak"
+                                FontSize="12"
+                                Tag="NoRekeningLimbah"
+                                Margin="0 0" 
+                                Grid.Column="1"
+                                Checked="IncludeRekeningLimbah_Checked" 
+                                Unchecked="IncludeRekeningLimbah_Checked" />
+                            </Grid>
+
+                            <Border Margin="0,0,0,20" />
+
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Include Rekening LLTT" LineHeight="15" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <RadioButton
+                                x:Name="YesRekeningLLTT"
+                                GroupName="IncludeRekeningLLTT"
+                                Content="Ya"
+                                FontSize="12"   
+                                Tag="YesRekeningLLTT"
+                                Margin="0" 
+                                Grid.Column="0"
+                                Checked="IncludeRekeningLLTT_Checked"
+                                Unchecked="IncludeRekeningLLTT_Checked" />
+                                <RadioButton 
+                                x:Name="NoRekeningLLTT"
+                                GroupName="IncludeRekeningLLTT"
+                                Content="Tidak"
+                                FontSize="12"
+                                Tag="NoRekeningLLTT"
+                                Margin="0 0" 
+                                Grid.Column="1"
+                                Checked="IncludeRekeningLLTT_Checked" 
+                                Unchecked="IncludeRekeningLLTT_Checked" />
+                            </Grid>
+
+                            <Border Margin="0,0,0,20" />
+
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tanpa Biaya Pemakaian Air" LineHeight="15" Margin="0,0,0,10"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <RadioButton
+                                x:Name="YesRekeningBiaya"
+                                GroupName="TanpaBiaya"
+                                Content="Ya"
+                                FontSize="12"   
+                                Tag="YesRekeningBiaya"
+                                Margin="0" 
+                                Grid.Column="0"
+                                Checked="TanpaBiayaPemakaianAir_Checked"
+                                Unchecked="TanpaBiayaPemakaianAir_Checked" />
+                                <RadioButton 
+                                x:Name="NoRekeningBiaya"
+                                GroupName="TanpaBiaya"
+                                Content="Tidak"
+                                FontSize="12"
+                                Tag="NoRekeningBiaya"
+                                Margin="0 0" 
+                                Grid.Column="1"
+                                Checked="TanpaBiayaPemakaianAir_Checked" 
+                                Unchecked="TanpaBiayaPemakaianAir_Checked" />
+                            </Grid>
+
+                            <Border Margin="0,0,0,5" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Margin="30,0,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

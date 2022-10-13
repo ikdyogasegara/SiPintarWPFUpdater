@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.SistemKontrolView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Bacameter.SistemKontrol"
+             xmlns:view="clr-namespace:SiPintar.Views.Bacameter.SistemKontrol"
+             xmlns:local="clr-namespace:SiPintar.Views.Bacameter"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodel:RuteBacaMeterViewModel}">
+                <view:RuteBacaMeterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:WilayahAdministrasiViewModel}">
+                <view:WilayahAdministrasiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:TarifGolonganViewModel}">
+                <view:TarifGolonganView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PetugasBacaViewModel}">
+                <view:PetugasBacaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DaftarKelainanViewModel}">
+                <view:DaftarKelainanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DataPelangganViewModel}">
+                <view:DataPelangganView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DistribusiPelangganViewModel}">
+                <view:DistribusiPelangganView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:JadwalRuteBacaViewModel}">
+                <view:JadwalRuteBacaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DataPembacaanViewModel}">
+                <view:DataPembacaanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:SmsGatewayViewModel}">
+                <view:SmsGatewayView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PenggunaHakAksesViewModel}">
+                <view:PenggunaHakAksesView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PengaturanUmumViewModel}">
+                <view:PengaturanUmumView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PengaturanPutstampViewModel}">
+                <view:PengaturanPutstampView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:SinkronisasiViewModel}">
+                <view:SinkronisasiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PerawatanDatabaseViewModel}">
+                <view:PerawatanDatabaseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:LogAksesUserViewModel}">
+                <view:LogAksesUserView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="10 10" x:Name="MainElement">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Width="225" Height="Auto" CornerRadius="5" VerticalAlignment="Top" Margin="0 0 5 0" Padding="0 0 0 0" x:Name="MenuList" DataContext="{Binding}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Border Width="200" CornerRadius="5" Background="White" Margin="5 0 5 5" HorizontalAlignment="Left">
+                    <Border.Resources>
+                        <Style TargetType="mde:SideNavigation" BasedOn="{StaticResource SideNavigationMenu}"/>
+                    </Border.Resources>
+                    <mde:SideNavigation Margin="0 5" Items="{Binding Path=NavigationItems, Mode=TwoWay}"
+                                            NavigationItemSelected="NavigationItemSelectedHandler" SelectionCornerRadius="8">
+                    </mde:SideNavigation>
+                </Border>
+            </ScrollViewer>
+        </Border>
+
+        <ContentControl Margin="0" Grid.Column="1" Content="{Binding PageViewModel}" />
+    </Grid>
+</UserControl>

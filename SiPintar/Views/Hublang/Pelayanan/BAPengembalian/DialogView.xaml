@@ -1,0 +1,384 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.BAPengembalian.DialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Hublang.Pelayanan.BAPengembalian" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataBgToBrushConverter" isBackground="True"/>
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataLabelToBrushConverter" isLabel="True"/>
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataToBrushConverter"/>
+            <converters:StatusPermohonanToStringConverter x:Key="StatusDataToStringConverter"/>
+            <StackPanel Orientation="Vertical" x:Key="TemplateView" x:Shared="false" Margin="0,15,0,0">
+                <TextBlock Text="Label" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                <TextBlock Text="Content" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+            </StackPanel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--<Grid Background="White" Height="466" Width="960">-->
+    <Grid Background="White" Height="600" Width="960">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Detail Berita Acara"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppHublang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <ScrollViewer>
+                <Grid Margin="16,16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0"  Margin="0,0,0,24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <StackPanel  Width="200" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Tanggal Berita Acara" Margin="0,0,0,2" Foreground="{StaticResource Gray}" />
+                                    <Grid>
+                                        <TextBox IsEnabled="False" Text="{Binding SelectedData.TanggalBa, Converter={StaticResource DatetimeToStringConverter}, ConverterParameter='notime'}" FontSize="11" TextAlignment="Left" Padding="25 0 10 0" Style="{StaticResource TextBoxInputForm}" />
+                                        <md:PackIcon Kind="Calendar" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 3 0 0" Foreground="Gray" />
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel>
+                                    <Border CornerRadius="5" Padding="16,8,16,8">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="#F5F5F5" Opacity="1" />
+                                        </Border.Background>
+                                        <StackPanel>
+                                            <TextBlock Foreground="#646464" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Margin="0,0,0,5">Nomor Berita Acara</TextBlock>
+                                            <TextBlock Foreground="#126E3D" FontFamily="{StaticResource MontserratSemiBold}" FontSize="18" Text="{Binding SelectedData.NomorBa}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Border Grid.Row="1" Margin="0,15,0,0" Background="#F5F5F5" CornerRadius="4">
+                            <Grid Margin="24,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0">
+                                            <TextBlock Text="Nama Pelanggan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <TextBlock x:Name="NamaPelanggan" Text="{Binding SelectedData.Nama}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                        </StackPanel>
+                                        <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="0,20,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="Kelurahan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Keluarahan" Text="{Binding SelectedData.NamaKelurahan}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Kecamatan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Kecamatan" Text="{Binding SelectedData.NamaKecamatan}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0">
+                                            <TextBlock Text="Alamat" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <TextBlock x:Name="Alamat" Text="{Binding SelectedData.Alamat}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                        </StackPanel>
+                                        <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="0,20,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="Cabang" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Cabang" Text="{Binding SelectedData.NamaCabang}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="Golongan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Golongan" Text="{Binding SelectedData.KodeGolongan}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="2" HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0">
+                                            <TextBlock Text="Nomor Sambungan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <TextBlock x:Name="NomorSambungan" Text="{Binding SelectedData.NoSamb}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,20,0,0">
+                                            <TextBlock Text="Wilayah" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <TextBlock x:Name="Wilayah" Text="{Binding SelectedData.NamaWilayah}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                   
+                    <Grid Grid.Row="1" Margin="0,24,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Info Rekening" Margin="5,0,0,0" Style="{StaticResource BigTitle}" Foreground="#028DDB" FontSize="13" LineHeight="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                        <Border Grid.Row="1" Margin="0,15,0,0" Background="#F5F5F5" CornerRadius="4">
+                            <Grid Margin="24,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="Sebelum Berita Acara" Style="{StaticResource Title}" Margin="0 0 0 20"></TextBlock>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="Stan Lalu" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="StanLalu" Text="{Binding SelectedData.StanLalu_Lama, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                                                    <TextBlock Text="Stan Kini" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="StanKini" Text="{Binding SelectedData.StanSkrg_Lama, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2" Margin="20,0,0,0">
+                                                    <TextBlock Text="Stan Angkat" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="StanAngkat" Text="{Binding SelectedData.StanAngkat_Lama, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="Pakai" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Pakai" Text="{Binding SelectedData.Pakai_Lama, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="Biaya Pemakaian" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="BiayaPemakaian" Text="{Binding SelectedData.BiayaPemakaian_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Administrasi" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="Administrasi" Text="{Binding SelectedData.Administrasi_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}"  TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Administrasi Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="AdministrasiLain" Text="{Binding SelectedData.AdministrasiLain_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}"  TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Pemeliharaan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="Pemeliharaan" Text="{Binding SelectedData.Pemeliharaan_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Pemeliharaan Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="PemeliharaanLain" Text="{Binding SelectedData.PemeliharaanLain_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Retribusi" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="Retribusi" Text="{Binding SelectedData.Retribusi_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Retribusi Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="RetribusiLain" Text="{Binding SelectedData.RetribusiLain_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="Rekair" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="Rekair" Text="{Binding SelectedData.Rekair_Lama, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Row="1" x:Name="CanvasCol1">
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="Sesudah Berita Acara" Style="{StaticResource Title}" Margin="0 0 0 20"></TextBlock>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="Stan Lalu" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewStanLalu" Text="{Binding SelectedData.StanLalu, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                                                    <TextBlock Text="Stan Kini" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewStanKini" Text="{Binding SelectedData.StanSkrg, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2" Margin="20,0,0,0">
+                                                    <TextBlock Text="Stan Angkat" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewStanAngkat" Text="{Binding SelectedData.StanAngkat, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="Pakai" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="NewPakai" Text="{Binding SelectedData.Pakai, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="BiayaPemakaian" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="NewBiayaPemakaian" Text="{Binding SelectedData.BiayaPemakaian, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Administrasi" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewAdministrasi" Text="{Binding SelectedData.Administrasi, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}"  TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Administrasi Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewAdministrasiLain" Text="{Binding SelectedData.AdministrasiLain, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}"  TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Pemeliharaan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewPemeliharaan" Text="{Binding SelectedData.Pemeliharaan, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Pemeliharaan Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewPemeliharaanLain" Text="{Binding SelectedData.PemeliharaanLain, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Margin="0,15,0,0">
+                                                    <TextBlock Text="Retribusi" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewRetribusi" Text="{Binding SelectedData.Retribusi, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Margin="20,15,0,0">
+                                                    <TextBlock Text="Retribusi Lain" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBlock x:Name="NewRetribusiLain" Text="{Binding SelectedData.RetribusiLain, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <StackPanel Margin="0,15,0,0">
+                                                <TextBlock Text="Rekair" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBlock x:Name="NewRekair" Text="{Binding SelectedData.Rekair, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" TextWrapping="Wrap" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="1" x:Name="CanvasCol2">
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                                
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <StackPanel Grid.Row="2" Margin="20,0,20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <md:PackIcon Width="16" Kind="Printer" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Cetak Pengaduan" VerticalAlignment="Center" Foreground="#028DDB" Margin="10" Style="{StaticResource TextLink}" Cursor="Hand" MouseLeftButtonDown="CetakPermohonan" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

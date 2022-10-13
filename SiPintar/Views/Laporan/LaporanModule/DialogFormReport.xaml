@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="SiPintar.Views.Laporan.LaporanModule.DialogFormReport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Laporan.LaporanModule"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <StackPanel x:Key="RangeTemplate" Orientation="Vertical" Margin="30,0,30,10" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 5" Foreground="{StaticResource Black90}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="KolomKiri" Grid.Column="0">
+                    </Grid>
+                    <Grid x:Name="KolomKanan" Grid.Column="1">
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="DateTimePickerTemplate" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 5" Foreground="{StaticResource Black90}" />
+                <StackPanel Orientation="Horizontal">
+                    <Border Margin="0 0 0 0" BorderBrush="Gray" BorderThickness="0.5" CornerRadius="3">
+                        <Grid>
+                            <DatePicker x:Name="InputDate1" SelectedDateFormat="Short" Style="{StaticResource DefaultDatePicker}" Height="30" Padding="6 0 0 0" BorderThickness="0" IsEnabled="False"/>
+                            <TextBlock DataContext="{Binding ElementName=InputDate1, Path=SelectedDate}" Text="Tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="10" Padding="2,4,2,2" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </Border>
+                    <Border Margin="5 0 0 0" BorderBrush="Gray" BorderThickness="0.5" CornerRadius="3">
+                        <Grid>
+                            <md:TimePicker x:Name="InputTime" Is24Hours="True" Width="75" SelectedTimeFormat="Long" IsEnabled="False" Style="{StaticResource DefaultTimePicker}" />
+                            <TextBlock DataContext="{Binding ElementName=InputTime, Path=SelectedTime}" Text="Jam" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="10" Padding="2,4,2,2" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="DatePickerTemplate" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 10" Foreground="{StaticResource Black90}" />
+                <Border Margin="0 0 0 0" BorderBrush="Gray" BorderThickness="0.5" CornerRadius="3">
+                    <Grid>
+                        <DatePicker x:Name="InputDate" SelectedDateFormat="Long" Style="{StaticResource DefaultDatePicker}" Height="30" Padding="6 0 0 0" BorderThickness="0" IsEnabled="False"/>
+                        <TextBlock DataContext="{Binding ElementName=InputDate, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="10" Padding="2,4,2,2" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="ListTemplate" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 0"/>
+                <Grid Margin="0 5 0 0">
+                    <ComboBox x:Name="ListItemPicker" Background="White" HorizontalAlignment="Stretch" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsEnabled="False"/>
+                    <TextBlock DataContext="{Binding ElementName=ListItemPicker, Path=SelectedItem}" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="10" Padding="2,4,2,2" Foreground="{StaticResource Gray100}"  Text="Placeholder" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="PeriodeTemplate" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 5 5 0" Grid.Column="0">
+                        <ComboBox x:Name="PeriodeBlnPicker" Background="White" HorizontalAlignment="Stretch" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsEnabled="False"/>
+                        <TextBlock DataContext="{Binding ElementName=PeriodeBlnPicker, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"  Padding="2,4,2,2" Foreground="{StaticResource Gray100}"  Text="Placeholder" />
+                    </Grid>
+                    <Grid Margin="5 5 0 0" Grid.Column="1">
+                        <ComboBox x:Name="PeriodeThnPicker" Background="White" HorizontalAlignment="Stretch" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsEnabled="False"/>
+                        <TextBlock DataContext="{Binding ElementName=PeriodeThnPicker, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="2,4,2,2" Foreground="{StaticResource Gray100}"  Text="Pilih" />
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="ListRatio" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0 5 10 0" Grid.Column="0" Width="60">
+                        <ComboBox x:Name="RatioPicker" Background="White" HorizontalAlignment="Stretch" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsEnabled="False"/>
+                        <TextBlock DataContext="{Binding ElementName=RatioPicker, Path=SelectedItem}" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="10" Padding="2,4,2,2" Foreground="{StaticResource Gray100}"  Text="Pilih" />
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <TextBox x:Name="InputRatio" Style="{StaticResource TextBoxInputForm}" Margin="0,5,0,0" IsEnabled="False" />
+                        <TextBlock Style="{StaticResource TextBoxPlaceholder}" Panel.ZIndex="10" Padding="2,10,2,2" Text="Masukkan nilai" Visibility="Visible"/>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="30,0,30,10" x:Key="RegularTemplate" x:Shared="false">
+                <CheckBox Style="{StaticResource FilterCheckBoxReport}" FontSize="12" Content="Label" Margin="0 15 0 0"/>
+                <Grid>
+                    <TextBox x:Name="InputRegular" Style="{StaticResource TextBoxInputForm}" Margin="0,5,0,0" IsEnabled="False" />
+                    <TextBlock Style="{StaticResource TextBoxPlaceholder}" Panel.ZIndex="10" Padding="2,10,2,2" Text="Placeholder" Visibility="Visible"/>
+                </Grid>
+            </StackPanel>
+            <RadioButton x:Key="TemplateSort" Content="Test" Style="{StaticResource RadioStyle}" Margin="0,0,20,0" IsChecked="False" x:Shared="false" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost Identifier="DialogFormReportDialog" DialogTheme="Inherit">
+        <Grid>
+            <Border Width="580" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseApp}">
+                        <Grid Margin="10 8">
+                            <Grid>
+                                <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Judul Laporan"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                                    <TextBlock Foreground="{StaticResource BaseApp}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+
+                                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Focusable="False" Style="{StaticResource ButtonPlain}"
+                                        Background="Transparent" Width="14" Height="14" Padding="0" Margin="0" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" x:Name="ContainerFilter">
+                        <TextBlock Text="Filter" Margin="30,15,30,0" Style="{StaticResource SmallTitle}" />
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="500">
+                            <StackPanel Margin="0,0,0,0" Name="CanvasFilter">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Margin="30,10,30,0" x:Name="ContainerSort" Orientation="Vertical">
+                        <TextBlock Text="Urutkan Berdasarkan" Margin="0,0,0,10" Style="{StaticResource SmallTitle}" />
+                        <UniformGrid Name="CanvasSort" HorizontalAlignment="Left" >
+                        </UniformGrid>
+                    </StackPanel>
+
+
+                    <Grid Grid.Row="3" Margin="30,15,30,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center" Grid.Column="0">
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" x:Name="BtnOpenDesigner" Click="BtnOpenDesigner_Click" IsEnabled="{Binding IsLoadingForm, Converter={StaticResource InverseBooleanConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <md:PackIcon Kind="OpenInNew" />
+                                    <TextBlock Text="Buka Designer" Margin="5 2 0 0" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center"  Grid.Column="1">
+                            <Grid>
+                                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding IsLoadingForm, Converter={StaticResource InverseBooleanConverter}}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                            </Grid>
+                            <Grid>
+                                <Button x:Name="OkButton" Content="Tampilkan" Style="{StaticResource ButtonPrimarySmall}" Click="OkButton_Click" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" Padding="10,0,10,0" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource boolToVisibilityConverter}, FallbackValue=Collapsed}">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <ProgressBar
+                                            Style="{StaticResource ProgressBarDefault}"
+                                            Value="0"
+                                            IsIndeterminate="True" Foreground="{StaticResource BaseApp}" Width="18" VerticalAlignment="Center" VerticalContentAlignment="Center" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center" Margin="4,4,0,0">
+                                            <Run Text="Sedang memuat data " />
+                                            <Run Text="{Binding Progress, FallbackValue=0}" />
+                                            <Run Text="%" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

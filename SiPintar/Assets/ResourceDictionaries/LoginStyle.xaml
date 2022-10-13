@@ -1,0 +1,393 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:SiPintar.Helpers">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/BaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="LoginLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="18px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="Margin" Value="0,20,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+    </Style>
+
+    <Style x:Key="LoginFormLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="13px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="Margin" Value="0,16,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+    </Style>
+
+    <Style x:Key="LupaPasswordMessage" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,14,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource Tuna}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="ErrorLoginFormLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10px" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="10,4,0,0" />
+        <Setter Property="Foreground" Value="Red" />
+    </Style>
+
+    <Style x:Key="LoginButton" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="ForgotPasswordLabel" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{StaticResource Cerulean}" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <Style x:Key="VersionLabel" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,0,0,30" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+
+    <Style x:Key="TextBoxInputForm" TargetType="TextBox">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="BorderBrush" Value="{StaticResource SilverChalice}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,4,0,0" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image x:Name="icon" Grid.Column="0" Margin="14,14,10,14" 
+                                Source="/SiPintar;component/Assets/Images/ic_username.png" 
+                                Height="16"
+                                HorizontalAlignment="Left"/>
+                            <ScrollViewer Margin="0,0,0,2" Grid.Column="1" VerticalAlignment="Center" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                            <Setter Property="BorderThickness" TargetName="border" Value="2" />
+                        </Trigger>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Trigger.Setters>
+                                <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="Red"/>
+                                <Setter Property="CornerRadius" TargetName="border" Value="2" />
+                            </Trigger.Setters>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PasswordBoxInputForm" TargetType="PasswordBox">
+        <Setter Property="BorderBrush" Value="{StaticResource SilverChalice}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,4,0,0" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image x:Name="icon" Grid.Column="0" Margin="14,14,10,14"  
+                                Source="/SiPintar;component/Assets/Images/ic_password.png" 
+                                Height="16"
+                                HorizontalAlignment="Left"/>
+                            <ScrollViewer Margin="0,0,0,2" Grid.Column="1" VerticalAlignment="Center" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                            <Setter Property="BorderThickness" TargetName="border" Value="2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TextBoxPlaceholder" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}"/>
+        <Setter Property="Foreground" Value="{StaticResource SilverChalice}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Grid.ZIndex" Value="10" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Margin" Value="43,2,8,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding}" Value="">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PasswordPlaceholder" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}"/>
+        <Setter Property="Foreground" Value="{StaticResource SilverChalice}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Grid.ZIndex" Value="10" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Margin" Value="43,2,8,0" />
+    </Style>
+
+    <!-- HEADER -->
+    <Style x:Key="MinimizeButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderHide" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="HideWindow">
+                            <Image Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_minimize.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderHide" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Hide" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MaximizeButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderClose" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="CloseWindow">
+                            <Image x:Name="FullWindow" Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_maximize.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderClose" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Full" Value="True" />
+                            <Setter TargetName="FullWindow" Property="Source" Value="/SiPintar;component/Assets/Images/Window/ic_maximize_full.png" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Controls:WindowBehaviours.Normal" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CloseButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderClose" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="CloseWindow">
+                            <Image Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_close.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderClose" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Close" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MinimizeButtonWhite" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderHide" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="HideWindow">
+                            <Image Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_minimize_white.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderHide" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Hide" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MaximizeButtonWhite" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderClose" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="CloseWindow">
+                            <Image x:Name="FullWindow" Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_maximize_white.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderClose" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Full" Value="True" />
+                            <Setter TargetName="FullWindow" Property="Source" Value="/SiPintar;component/Assets/Images/Window/ic_maximize_full_white.png" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Controls:WindowBehaviours.Normal" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CloseButtonWhite" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <Border x:Name="BorderClose" Background="{StaticResource BaseApp}" BorderThickness="0" Width="40" Height="30" HorizontalAlignment="Center" Padding="0,0,0,0" VerticalAlignment="Top" Opacity="0" />
+                        <Border x:Name="CloseWindow">
+                            <Image Width="8" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/Window/ic_close_white.png" />
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderClose" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Controls:WindowBehaviours.Close" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WindowOption" TargetType="Border">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BtnWrapper" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BaseApp}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="GearImg" TargetType="{x:Type Image}">
+        <!--<Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Window/ic_setting_white.png"/>
+            </Trigger>
+        </Style.Triggers>-->
+    </Style>
+</ResourceDictionary>

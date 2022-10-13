@@ -1,0 +1,149 @@
+﻿<Window x:Class="SiPintar.Views.LoketView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:SiPintar.Converters"
+        xmlns:viewmodels="clr-namespace:SiPintar.ViewModels.Loket"
+        xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+        xmlns:views="clr-namespace:SiPintar.Views.Loket"
+        xmlns:onboard="clr-namespace:SiPintar.Views.Loket.Onboarding"
+        md:TransitionAssist.DisableTransitions="True"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
+        MinHeight="480"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Icon="/SiPintar;component/Assets/Images/Application/loket_icon.ico"
+        Title="Loket" Height="720" Width="1280" WindowStartupLocation="CenterScreen" Background="Transparent" Topmost="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" Default="collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodels:TagihanViewModel}">
+                <views:TagihanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AngsuranViewModel}">
+                <views:AngsuranView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:SetoranViewModel}">
+                <views:SetoranView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LaporanViewModel}">
+                <views:LaporanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:TutupLoketViewModel}">
+                <views:TutupLoketView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BantuanViewModel}">
+                <views:BantuanView />
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <DockPanel x:Name="RootWindow" LastChildFill="True" Background="Yellow">
+        <!--This dialog host for enabling top level dialogs-->
+        <Grid>
+            <Grid x:Name="Onboard" Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='tagihan_sr||kolektif_air||angsuran||welcome'}" Panel.ZIndex="1">
+                <onboard:TagihanSRView Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='tagihan_sr'}"/>
+                <onboard:KolektifAirView Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='kolektif_air'}"/>
+                <onboard:AngsuranView Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='angsuran'}"/>
+                <Grid Visibility="{Binding Path=IsOverlayActive, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='True'}" Panel.ZIndex="-1" Background="{StaticResource Black100}" Opacity="0.6"/>
+                <Image Panel.ZIndex="-1" Source="{Binding OnboardFigure}" Stretch="UniformToFill" />
+            </Grid>
+
+            <md:DialogHost Identifier="LoketRootDialog" DialogTheme="Inherit">
+                <Grid Background="{StaticResource Black10}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Background="{StaticResource BaseAppLoket}">
+                        <Grid.Effect>
+                            <DropShadowEffect BlurRadius="5" Direction="-90" RenderingBias="Quality" ShadowDepth="1" Opacity="0.2"/>
+                        </Grid.Effect>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" x:Name="TitleBar" DockPanel.Dock="Top" MouseDown="TitleBar_MouseDown">
+                            <Button x:Name="CloseButton"
+                                    Click="CloseButton_Click"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    DockPanel.Dock="Right">
+                                <md:PackIcon Kind="WindowClose" />
+                            </Button>
+                            <Button x:Name="MaxButton"
+                                    Click="MaximizeButton_Click"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    DockPanel.Dock="Right">
+                                <md:PackIcon x:Name="RestoreIcon" Kind="WindowRestore" />
+                            </Button>
+                            <Button x:Name="MinButton"
+                                    Click="MinimizeButton_Click"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    DockPanel.Dock="Right">
+                                <md:PackIcon Kind="WindowMinimize" />
+                            </Button>
+                            <TextBlock>
+                            </TextBlock>
+                        </DockPanel>
+                        <views:AppHeaderView Grid.Row="1" Panel.ZIndex="1" x:Name="Header" Background="Transparent" />
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <ContentControl Content="{Binding CurrentViewModel}" />
+                        <StackPanel x:Name="SnackbarContainer">
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Border Height="25" Background="{StaticResource BaseAppLoket}">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid>
+                                    <Button Command="{Binding OnOpenListDialogCommand}" CommandParameter="loket" Style="{StaticResource BtnWrapper}" HorizontalAlignment="Left">
+                                        <StackPanel Orientation="Horizontal" Margin="15 0">
+                                            <md:PackIcon Kind="Circle" Width="8" Foreground="White" Margin="0 0 5 0" VerticalAlignment="Center" />
+                                            <Grid VerticalAlignment="Center" Margin="0 6 0 0">
+                                                <TextBlock Visibility="{Binding IsProcessRunning, Converter={StaticResource BooleanToCollapseConverter}}" Style="{StaticResource CaptionSmallBody}" Foreground="White" Text="Background Process" />
+                                                <TextBlock Visibility="{Binding IsProcessRunning, Converter={StaticResource BooleanToVisibleConverter}}" Style="{StaticResource CaptionSmallBody}" Foreground="White" Text="Ada Proses berjalan di belakang layar..." />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Button>
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                                        <md:PackIcon Kind="Email" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Margin="2,3,10,0" Style="{StaticResource SmallTitle}" Foreground="White">
+                                            <Hyperlink NavigateUri="mailto:cs@bsa.id" Foreground="White" TextDecorations="None" RequestNavigate="Hyperlink_RequestNavigate" Focusable="False">cs@bsa.id</Hyperlink>      
+                                        </TextBlock>
+                                        <md:PackIcon Kind="Whatsapp" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Margin="1,5,10,0" Style="{StaticResource SmallTitle}" Foreground="White">
+                                            <Hyperlink NavigateUri="https://wa.me/6281138008800" Foreground="White" TextDecorations="None" RequestNavigate="Hyperlink_RequestNavigate" Focusable="False">+62 811 3800 88 00</Hyperlink>
+                                        </TextBlock>
+                                        <md:PackIcon Kind="Phone" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Text="+62 361 478 5050" Margin="1,5,10,0" Style="{StaticResource SmallTitle}" Foreground="White" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+            </md:DialogHost>
+            <md:DialogHost Identifier="OptionDialog" DialogTheme="Inherit" />
+        </Grid>
+    </DockPanel>
+</Window>

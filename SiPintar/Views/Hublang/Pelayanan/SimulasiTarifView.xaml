@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.SimulasiTarifView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Hublang.Pelayanan"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <Grid Background="#E5E5E5">
+        <Border Background="White" Margin="18,17" CornerRadius="4">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical" Margin="18,27" MinWidth="270">
+                        <Border CornerRadius="5" Background="White" Padding="24">
+                            <StackPanel>
+                        <TextBlock Style="{StaticResource SmallTitle}" Foreground="Black" FontSize="15" LineHeight="18" Margin="0,0,0,4">Simulasi Tarif</TextBlock>
+                        <TextBlock FontFamily="{StaticResource SarabunRegular}" Foreground="#A7A7A7" FontSize="11" LineHeight="18" Margin="0,0,0,19">Simulasi tarif pelanggan disini</TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <StackPanel Orientation="Vertical" Margin="0,0,16,0">
+                                <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Stan Lalu</TextBlock>
+                                <Grid>
+                                    <TextBox x:Name="StanLalu" Style="{StaticResource TextBoxInputForm}" Width="127" PreviewKeyUp="Stan_PreviewKeyUp"></TextBox>
+                                    <TextBlock Style="{StaticResource TextBoxPlaceholder}" FontSize="12" DataContext="{Binding ElementName=StanLalu, Path=Text}">Masukkan Stan Lalu</TextBlock>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Stan Kini</TextBlock>
+                                <Grid>
+                                    <TextBox x:Name="StanKini" Style="{StaticResource TextBoxInputForm}" Width="127" PreviewKeyUp="Stan_PreviewKeyUp"></TextBox>
+                                    <TextBlock Style="{StaticResource TextBoxPlaceholder}" FontSize="12" DataContext="{Binding ElementName=StanKini, Path=Text}">Masukkan Stan Kini</TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,16">
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Golongan</TextBlock>
+                            <Grid>
+                                <ComboBox x:Name="Golongan" Style="{StaticResource ComboBoxInputForm}"
+                                          ItemsSource="{Binding DaftarGolongan}"
+                                          DisplayMemberPath="NamaGolongan"
+                                          SelectedItem="{Binding PilihGolongan}"
+                                          Width="270" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
+                                <TextBlock Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=Golongan, Path=Text}">Pilih golongan</TextBlock>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,16">
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Diameter</TextBlock>
+                            <Grid>
+                                <ComboBox x:Name="Diameter" Style="{StaticResource ComboBoxInputForm}"
+                                          ItemsSource="{Binding DaftarDiameter}"
+                                          DisplayMemberPath="NamaDiameter"
+                                          SelectedItem="{Binding PilihDiameter}"
+                                          Width="270" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
+                                <TextBlock Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=Diameter, Path=Text}">Pilih diameter</TextBlock>
+                            </Grid>
+                        </StackPanel>
+                        <Button x:Name="BtnHitung" Click="BtnHitung_Click" Style="{StaticResource ButtonPrimary2}" Content="Hitung Tarif" Height="35" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Margin="18,27">
+                        <Border CornerRadius="5" Background="#F5F5F5" Padding="24">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SmallTitle}" Foreground="Black" FontSize="15" LineHeight="18" Margin="0,0,0,24">Hasil Simulasi Tarif</TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                                    <StackPanel Margin="0,0,10,0" Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Meter Terpakai</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding MeterTerpakai}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Biaya Pemakaian</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding BiayaPemakaian}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Biaya Pelayanan</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding BiayaPelayanan}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                                    <StackPanel Margin="0,0,10,0" Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Adminstrasi</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding Adminstrasi}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Pemeliharaan</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding Pemeliharaan}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Retribusi</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding Retribusi}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                                    <StackPanel Margin="0,0,10,0" Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Adminstrasi Lain</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding AdminstrasiLain}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Pemeliharaan Lain</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding PemeliharaanLain}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Retribusi Lain</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding RetribusiLain}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                                    <StackPanel Width="150" Margin="0,0,10,0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Retribusi Pakai</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding RetribusiPakai}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Biaya Air Limbah</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding BiayaAirLimbah}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Meterai</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding Meterai}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Width="150" Margin="0,0,10,0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Ppn</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#252B46" Text="{Binding Ppn}"/>
+                                    </StackPanel>
+                                    <StackPanel Width="150">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="#646464">Tagihan</TextBlock>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="13" Foreground="#028DDB" Text="{Binding Tagihan}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

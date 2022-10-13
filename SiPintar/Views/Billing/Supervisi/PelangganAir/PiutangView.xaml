@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.PelangganAir.PiutangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:PeriodeConverter x:Key="PeriodeConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="1028" Height="700" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 8">
+                        <Grid>
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Piutang Rekening Air"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16" Margin="0 0 8 0">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="171"/>
+                            <ColumnDefinition Width="171"/>
+                            <ColumnDefinition Width="171"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0">
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nama Pelanggan" LineHeight="18"/>
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.Nama}" LineHeight="18" Margin="0 3 0 0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1">
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Sambungan" LineHeight="18"/>
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.NoSamb}" LineHeight="18" Margin="0 3 0 0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="2">
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Alamat" LineHeight="18"/>
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.Alamat}" LineHeight="18" Margin="0 3 0 0"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0 23 0 0">
+                        <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                <Image.RenderTransform>
+                                    <RotateTransform x:Name="noFreeze" />
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+
+                        <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptyDialog, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock Text="Pelanggan belum memiliki data piutang." Style="{StaticResource SmallTitle}" HorizontalAlignment="Center" Foreground="{StaticResource Black70}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid
+                            IsReadOnly="True"
+                            ItemsSource="{Binding PiutangList, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource DataGridRegular}"
+                            CanUserSortColumns="False"
+                            EnableRowVirtualization="True"
+                            EnableColumnVirtualization="True"
+                            md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                            AutoGenerateColumns="False"
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                            HeadersVisibility="Column"
+                            SelectionMode="Extended"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            CanUserAddRows="False">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                </Style>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns >
+                                <DataGridTemplateColumn CanUserSort="False" Width="auto" Visibility="Collapsed">
+                                    <DataGridTemplateColumn.Header>
+                                        <CheckBox HorizontalAlignment="Center" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.IsSelectedAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <CheckBox.Resources>
+                                                <!--Unchecked state-->
+                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="White"/>
+                                                <!--Checked state-->
+                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="White"/>
+                                            </CheckBox.Resources>
+                                        </CheckBox>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox HorizontalAlignment="Center"
+                                        IsChecked="{Binding Path=IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding KodePeriode, Converter={StaticResource PeriodeConverter}}" Header="BULAN" ElementStyle="{StaticResource TextDataGridCellRegular}" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding StanLalu}" Header="S. LALU" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="50" />
+                                <DataGridTextColumn Binding="{Binding StanSkrg}" Header="S. KINI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="50"/>
+                                <DataGridTextColumn Binding="{Binding Pakai}" Header="PAKAI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding BiayaPemakaian}" Header="BIAYA PAKAI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Administrasi}" Header="ADMINISTRASI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Pemeliharaan}" Header="PEMELIHARAAN" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Retribusi}" Header="RETRIBUSI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Meterai}" Header="MATERAI" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Ppn}" Header="PPN" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="70"/>
+                                <DataGridTextColumn Binding="{Binding Rekair}" Header="REK AIR" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="80"/>
+                                <DataGridTextColumn Binding="{Binding StatusHapusSecaraAkuntansi}" Header="HPS.SCR.AKUN" ElementStyle="{StaticResource TextDataGridCellRegular}" MinWidth="150"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

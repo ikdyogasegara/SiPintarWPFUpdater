@@ -1,0 +1,752 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/Generic.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <converters:BorderClipConverter x:Key="BorderClipConverter" />
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="WildWatermelon" Color="#FF4A6D" />
+    <SolidColorBrush x:Key="Amarant" Color="#F22F55" />
+    <SolidColorBrush x:Key="Gray" Color="#919191" />
+    <SolidColorBrush x:Key="CodGray" Color="#141414" />
+    <SolidColorBrush x:Key="AthensGray" Color="#F5F5F6" />
+    <SolidColorBrush x:Key="MineShaft" Color="#222222" />
+    <SolidColorBrush x:Key="DoveGray" Color="#646464" />
+    <SolidColorBrush x:Key="Silver" Color="#BDBDBD" />
+    <SolidColorBrush x:Key="SilverChalice" Color="#A7A7A7" />
+    <SolidColorBrush x:Key="Lochmara" Color="#0088E2" />
+    <SolidColorBrush x:Key="LochmaraDarker" Color="#027CC0" />
+    <SolidColorBrush x:Key="JaggedIce" Color="#C9DEEB" />
+    <SolidColorBrush x:Key="WhiteIce" Color="#E6F4FB" />
+    <SolidColorBrush x:Key="Orient" Color="#00568F" />
+    <SolidColorBrush x:Key="Alto" Color="#D3D3D3" />
+    <SolidColorBrush x:Key="PictonBlue" Color="#3CB1F2" />
+    <SolidColorBrush x:Key="Tuna" Color="#3B3B3D" />
+    <SolidColorBrush x:Key="Foam" Color="#E8F5FD" />
+    <SolidColorBrush x:Key="Porcelain" Color="#E6E8E9" />
+    <SolidColorBrush x:Key="PigeonPost" Color="#A2C3D8" />
+    <SolidColorBrush x:Key="EbonyClay" Color="#252B46" />
+    <SolidColorBrush x:Key="HippieBlue" Color="#5587b1" />
+    <SolidColorBrush x:Key="Astronaut" Color="#254D6F" />
+    <SolidColorBrush x:Key="Cerulean" Color="#028DDB" />
+    <SolidColorBrush x:Key="CeruleanActive" Color="#3CB1F2" />
+    <SolidColorBrush x:Key="CeruleanHover" Color="#027CC0" />
+    <SolidColorBrush x:Key="Nepal" Color="#96A7C1" />
+    <SolidColorBrush x:Key="Modul" Color="#D61717" />
+    <SolidColorBrush x:Key="HawkesBlue" Color="#D9F0FC" />
+    <SolidColorBrush x:Key="Grey01" Color="#C1C1C1" />
+    <SolidColorBrush x:Key="MediumGray" Color="#ebebeb" />
+    <SolidColorBrush x:Key="BaseGray" Color="#F4F4F5" />
+
+    <SolidColorBrush x:Key="BaseApp" Color="#028DDB" />
+    <SolidColorBrush x:Key="BaseDarker" Color="#0279bc" />
+
+    <SolidColorBrush x:Key="BaseAppBacameter" Color="#D61717" />
+    <SolidColorBrush x:Key="BaseDarkerBacameter" Color="#a51d16" />
+
+    <SolidColorBrush x:Key="BaseAppBilling" Color="#fc6740" />
+    <SolidColorBrush x:Key="BaseDarkerBilling" Color="#ea4a1f" />
+
+    <SolidColorBrush x:Key="BaseAppDistribusi" Color="#D87A23" />
+    <SolidColorBrush x:Key="BaseDarkerDistribusi" Color="#B86434" />
+
+    <SolidColorBrush x:Key="BaseAppHublang" Color="#338D5D" />
+    <SolidColorBrush x:Key="BaseDarkerHublang" Color="#1E7B49" />
+
+    <SolidColorBrush x:Key="BaseAppLoket" Color="#FF4A6D" />
+    <SolidColorBrush x:Key="BaseDarkerLoket" Color="#F22F55" />
+
+    <SolidColorBrush x:Key="BaseAppPerencanaan" Color="#DA9329" />
+    <SolidColorBrush x:Key="BaseDarkerPerencanaan" Color="#BF722B" />
+    <SolidColorBrush x:Key="BaseAppPerencanaanPrimary" Color="#D78813" />
+    <SolidColorBrush x:Key="BaseAppPerencanaanLight" Color="#FDDB97" />
+    <SolidColorBrush x:Key="BaseAppPerencanaanSoft" Color="#D3983F" />
+    <SolidColorBrush x:Key="BaseAppPerencanaanDark" Color="#BC722D" />
+
+    <SolidColorBrush x:Key="BaseAppGudangPrimary" Color="#73401C" />
+    <SolidColorBrush x:Key="BaseAppGudangLight" Color="#FFE5C7" />
+    <SolidColorBrush x:Key="BaseAppGudangSoft" Color="#A66335" />
+    <SolidColorBrush x:Key="BaseAppGudangDark" Color="#874E26" />
+    <SolidColorBrush x:Key="BaseAppGudang" Color="#A66335" />
+    <SolidColorBrush x:Key="BaseDarkerGudang" Color="#874E26" />
+
+    <SolidColorBrush x:Key="BaseAppPersonalia" Color="#9D68B7" />
+    <SolidColorBrush x:Key="BaseAppPersonaliaSoft" Color="#9D68B7" />
+    <SolidColorBrush x:Key="BaseAppPersonaliaLight" Color="#F1D2FF" />
+    <SolidColorBrush x:Key="BaseAppPersonaliaDark" Color="#563267" />
+    <SolidColorBrush x:Key="BaseDarkerPersonalia" Color="#8854A1" />
+
+    <SolidColorBrush x:Key="BaseAppAkuntansi" Color="#1053B8" />
+    <SolidColorBrush x:Key="BaseDarkerAkuntansi" Color="#183C72" />
+    <SolidColorBrush x:Key="BaseAppAkuntansiSoft" Color="#FF1255BB" />
+    <SolidColorBrush x:Key="BaseAppAkuntansiLight" Color="#75a6f0" />
+    <SolidColorBrush x:Key="BaseAppAkuntansiDark" Color="#183C72" />
+
+
+
+    <SolidColorBrush x:Key="BaseAppKeuangan" Color="#1053B8" />
+    <SolidColorBrush x:Key="BaseDarkerKeuangan" Color="#183C72" />
+
+    <!--  Color Schemes  -->
+    <SolidColorBrush x:Key="Black100" Color="#242424" />
+    <SolidColorBrush x:Key="Black90" Color="#646464" />
+    <SolidColorBrush x:Key="Black70" Color="#919191" />
+    <SolidColorBrush x:Key="Black50" Color="#A7A7A7" />
+    <SolidColorBrush x:Key="Black20" Color="#E9E9E9" />
+    <SolidColorBrush x:Key="Black10" Color="#F5F5F5" />
+
+    <SolidColorBrush x:Key="Gray100" Color="#ABB9CD" />
+    <SolidColorBrush x:Key="Gray70" Color="#D0D7E2" />
+    <SolidColorBrush x:Key="Gray50" Color="#DCE4F0" />
+    <SolidColorBrush x:Key="Gray10" Color="#F1F5FC" />
+
+    <SolidColorBrush x:Key="White100" Color="#FFFFFF" />
+    <SolidColorBrush
+        x:Key="White10"
+        Opacity="20"
+        Color="#ABB9CD" />
+    <SolidColorBrush
+        x:Key="White50"
+        Opacity="50"
+        Color="#ABB9CD" />
+    <SolidColorBrush
+        x:Key="White70"
+        Opacity="80"
+        Color="#ABB9CD" />
+    <SolidColorBrush x:Key="White90" Color="#FDFDFD" />
+
+    <SolidColorBrush x:Key="SecondaryBlue" Color="#028DDB" />
+    <SolidColorBrush x:Key="SecondaryDarker" Color="#252B46" />
+    <SolidColorBrush x:Key="SecondarySofter" Color="#3CB1F2" />
+    <SolidColorBrush x:Key="SecondaryLighter" Color="#96DAFF" />
+
+    <SolidColorBrush x:Key="PrimaryRed" Color="#E31F52" />
+    <SolidColorBrush x:Key="PrimaryDarker" Color="#A51D16" />
+    <SolidColorBrush x:Key="PrimarySofter" Color="#FF4A6D" />
+    <SolidColorBrush x:Key="PrimaryLighter" Color="#FCE9ED" />
+
+    <SolidColorBrush x:Key="SuccessSalem" Color="#027E46" />
+    <SolidColorBrush x:Key="SuccessDarker" Color="#034530" />
+    <SolidColorBrush x:Key="SuccessSofter" Color="#4BCA81" />
+    <SolidColorBrush x:Key="SuccessLighter" Color="#D9FFDF" />
+
+    <SolidColorBrush x:Key="WarningSunshade" Color="#F5A629" />
+    <SolidColorBrush x:Key="WarningDarker" Color="#844800" />
+    <SolidColorBrush x:Key="WarningSofter" Color="#FDB33F" />
+    <SolidColorBrush x:Key="WarningLighter" Color="#FED4A0" />
+
+    <SolidColorBrush x:Key="AccentError" Color="#C30C0C" />
+
+    <!--  Fonts  -->
+    <FontFamily x:Key="SarabunRegular">/SiPintar;component/Assets/Fonts/#Sarabun Regular</FontFamily>
+    <FontFamily x:Key="SarabunMedium">/SiPintar;component/Assets/Fonts/#Sarabun Medium</FontFamily>
+    <FontFamily x:Key="SarabunSemiBold">/SiPintar;component/Assets/Fonts/#Sarabun SemiBold</FontFamily>
+    <FontFamily x:Key="SarabunBold">/SiPintar;component/Assets/Fonts/#Sarabun Bold</FontFamily>
+    <FontFamily x:Key="MontserratRegular">/SiPintar;component/Assets/Fonts/#Montserrat Regular</FontFamily>
+    <FontFamily x:Key="MontserratMedium">/SiPintar;component/Assets/Fonts/#Montserrat Medium</FontFamily>
+    <FontFamily x:Key="MontserratSemiBold">/SiPintar;component/Assets/Fonts/#Montserrat SemiBold</FontFamily>
+    <FontFamily x:Key="MontserratBold">/SiPintar;component/Assets/Fonts/#Montserrat Bold</FontFamily>
+
+    <Style x:Key="LogoTitleLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratRegular}" />
+        <Setter Property="Foreground" Value="{StaticResource CodGray}" />
+        <Setter Property="Margin" Value="0,1,0,1" />
+    </Style>
+
+    <Style
+        x:Key="LogoSubtitleLabel"
+        BasedOn="{StaticResource LogoTitleLabel}"
+        TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Headline1" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontSize" Value="32px" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="LineHeight" Value="43px" />
+        <Setter Property="Foreground" Value="{StaticResource Black100}" />
+    </Style>
+
+    <Style
+        x:Key="ToggleLoket"
+        BasedOn="{StaticResource MaterialDesignSwitchToggleButton}"
+        TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="{StaticResource BaseAppLoket}" />
+    </Style>
+
+    <Style x:Key="Headline2" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="24px" />
+        <Setter Property="LineHeight" Value="32px" />
+        <Setter Property="Foreground" Value="{StaticResource Black100}" />
+    </Style>
+
+    <Style x:Key="Headline3" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="18px" />
+        <Setter Property="LineHeight" Value="24px" />
+        <Setter Property="Foreground" Value="{StaticResource Black100}" />
+    </Style>
+
+    <Style
+        x:Key="Headline3S22"
+        BasedOn="{StaticResource Headline3}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="22px" />
+    </Style>
+
+    <Style x:Key="BigTitle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="15px" />
+        <Setter Property="LineHeight" Value="28px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="Title" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="13px" />
+        <Setter Property="LineHeight" Value="18px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="SmallTitle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="LineHeight" Value="18px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource Black70}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="SmallTitle1" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource Black70}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BigTitleForNumber" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="18px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style
+        x:Key="BigTitleForNumber24"
+        BasedOn="{StaticResource BigTitleForNumber}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24px" />
+    </Style>
+
+    <Style
+        x:Key="BigTitleForNumber22"
+        BasedOn="{StaticResource BigTitleForNumber}"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="22px" />
+    </Style>
+
+    <Style x:Key="TitleForNumber" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="15px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="SmallTitleForNumber" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="CaptionBody" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="15px" />
+        <Setter Property="LineHeight" Value="21px" />
+        <Setter Property="Foreground" Value="{StaticResource Black70}" />
+    </Style>
+
+
+    <Style x:Key="CaptionBodyBlack" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="15px" />
+        <Setter Property="LineHeight" Value="21px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="CaptionSmallBody" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="LineHeight" Value="21px" />
+        <Setter Property="Foreground" Value="{StaticResource Black70}" />
+    </Style>
+
+    <Style x:Key="CaptionFormActive" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunMedium}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="14px" />
+        <Setter Property="Foreground" Value="{StaticResource Black90}" />
+    </Style>
+
+    <Style x:Key="ComboDisableNoChangeColor" TargetType="ComboBox">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="#303030" />
+        <Setter Property="BorderBrush" Value="#000000" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="#101010" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CaptionFormIdle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="14px" />
+        <Setter Property="Foreground" Value="{StaticResource Black90}" />
+    </Style>
+
+    <Style x:Key="CaptionFormActiveSmaller" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunMedium}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="Foreground" Value="{StaticResource Black90}" />
+    </Style>
+
+    <Style x:Key="CaptionFormIdleSmaller" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="Foreground" Value="{StaticResource Black90}" />
+    </Style>
+
+    <Style x:Key="LabelOverline" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="15px" />
+        <Setter Property="LineHeight" Value="21px" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarker}" />
+    </Style>
+
+    <Style x:Key="LabelSmallButton" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource MineShaft}" />
+    </Style>
+
+    <Style x:Key="LabelMenuNavigationSelected" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource MineShaft}" />
+    </Style>
+
+    <Style x:Key="LabelMenuNavigationHover" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource MineShaft}" />
+    </Style>
+
+    <Style x:Key="LabelMenuNavigationInactive" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource Black50}" />
+    </Style>
+
+    <Style x:Key="LabelMenuNavigationDisabled" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource Alto}" />
+    </Style>
+
+    <Style x:Key="LabelTextLink" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="Foreground" Value="{StaticResource Lochmara}" />
+    </Style>
+
+    <Style x:Key="TextLink" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="TextDecorations" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{StaticResource Lochmara}" />
+        <Setter Property="FontSize" Value="11px" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource SecondarySofter}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#A7A7A7" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BackIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_back.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_back.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="CloseIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="EditIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_edit_people.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_edit_people.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FilterIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_filter.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_filter.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="HistoryIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_history.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_history.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PrintIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_print.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_print.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="RefreshIcon" TargetType="Image">
+        <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Scrollbar  -->
+    <Style x:Key="LineButtonUpStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Height="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 8 L 4 0 L 8 8 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonDownStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Height="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 0 L 4 8 L 8 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource HippieBlue}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="VerticalScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="1,0,1,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle
+                        Name="ellipse"
+                        Width="6"
+                        Fill="{StaticResource Nepal}"
+                        RadiusX="2"
+                        RadiusY="2"
+                        Stroke="{StaticResource Nepal}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource HippieBlue}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonLeftStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Width="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 4 L 8 8 L 8 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource HippieBlue}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonRightStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Width="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 8 L 8 4 L 0 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource HippieBlue}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HorizontalScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="0,2,0,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle
+                        Name="ellipse"
+                        Height="6"
+                        Fill="{StaticResource Nepal}"
+                        RadiusX="2"
+                        RadiusY="2"
+                        Stroke="{StaticResource Nepal}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource HippieBlue}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="18" />
+                <RowDefinition Height="*" />
+                <RowDefinition MaxHeight="18" />
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#dce4f0" />
+                    <GradientStop Offset="1" Color="#e9eef5" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <RepeatButton
+                Grid.Row="0"
+                Height="18"
+                Command="ScrollBar.LineUpCommand"
+                Style="{StaticResource LineButtonUpStyle}" />
+            <Track
+                Name="PART_Track"
+                Grid.Row="1"
+                IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource VerticalScrollBarThumbStyle}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton
+                Grid.Row="2"
+                Height="18"
+                Command="ScrollBar.LineDownCommand"
+                Style="{StaticResource LineButtonDownStyle}" />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="18" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition MaxWidth="18" />
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="#dce4f0" />
+                    <GradientStop Offset="1" Color="#e9eef5" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <RepeatButton
+                Grid.Column="0"
+                Width="18"
+                Command="ScrollBar.LineLeftCommand"
+                Style="{StaticResource LineButtonLeftStyle}" />
+            <Track
+                Name="PART_Track"
+                Grid.Column="1"
+                IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource HorizontalScrollBarThumbStyle}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton
+                Grid.Column="2"
+                Width="18"
+                Command="ScrollBar.LineRightCommand"
+                Style="{StaticResource LineButtonRightStyle}" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="9" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="9" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--  end scrollbar  -->
+</ResourceDictionary>

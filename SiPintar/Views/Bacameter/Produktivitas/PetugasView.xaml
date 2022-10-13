@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.Produktivitas.PetugasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200" Padding="5" Width="Auto" Height="Auto">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bacameter/ChartStyle.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bacameter/LaporanStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <XmlDataProvider x:Key="ProduktivitasPetugas" />
+            <BooleanToVisibilityConverter x:Key="bvc" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <!--<converters:ZoomingModeCoverter x:Key="ZoomingModeCoverter" />-->
+            <ContextMenu x:Key="PlotMenu" MenuItem.Click="PlotMenuItem_Click">
+                <MenuItem x:Name="KolomMenuItem"
+                          Header="Kolom"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_kolom_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="BatangMenuItem"
+                          Header="Batang"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_batang_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="GarisMenuItem"
+                          Header="Garis"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_garis_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="SubLaporan" Background="{StaticResource BaseGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" x:Name="ChartWrapper" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="CetakArea" VerticalAlignment="Top">
+            <StackPanel x:Name="CetakAreaTitle" Visibility="Collapsed">
+                <TextBlock Text="Laporan Produktivitas Petugas" Style="{StaticResource CetakAreaTitle}"/>
+            </StackPanel>
+            <StackPanel Height="75">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="4*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel VerticalAlignment="Center">
+                                <Button Style="{StaticResource BtnWrapper}" Margin="20,24,8,24" Click="PlotOption_Click" x:Name="PlotButton">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border VerticalAlignment="Center" Width="24" Height="24" Margin="0,0,8,0" Style="{StaticResource CurrentPlotButton}">
+                                            <Image Source="{Binding CurrentPlotImage}" Width="24" />
+                                        </Border>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPlot}" Style="{StaticResource CurrentPlotText}" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <CheckBox x:Name="TerbacaLabelCheckBox" IsChecked="{Binding JumlahBacaSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                    <Border BorderThickness="1" Background="{StaticResource SecondaryBlue}" CornerRadius="2">
+                                        <TextBlock Text="Terbaca" Style="{StaticResource LabelTitle}" />
+                                    </Border>
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel>
+                                <CheckBox x:Name="TaksirLabelCheckBox" IsChecked="{Binding JumlahTaksirSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                    <Border BorderThickness="1" Background="PaleVioletRed" CornerRadius="2">
+                                        <TextBlock Text="Taksir" Style="{StaticResource LabelTitle}" />
+                                    </Border>
+                                </CheckBox>
+                            </StackPanel>
+                            <StackPanel>
+                                <CheckBox x:Name="KelainanLabelCheckBox" IsChecked="{Binding JumlahKelainanSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                    <Border BorderThickness="1" Background="MediumPurple" CornerRadius="2">
+                                        <TextBlock Text="Kelainan" Style="{StaticResource LabelTitle}" />
+                                    </Border>
+                                </CheckBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <Grid>
+                <Grid HorizontalAlignment="Center" Panel.ZIndex="1" Visibility="{Binding IsDataEmpty, Converter={StaticResource bvc}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Width="130" HorizontalAlignment="Center" Source="/SiPintar;component/Assets/Images/empty_data_v2.png" Margin="0,100,0,10" />
+                    <TextBlock Grid.Row="1" Text="Data Tidak ditemukan" Style="{StaticResource EmptyStateText}" HorizontalAlignment="Center" FontSize="14" />
+                    <TextBlock Grid.Row="2" Style="{StaticResource EmptyStateInfoText}" Margin="0,5,0,0" MaxWidth="340">
+                        Silakan periksa filter kembali atau atur ulang filter untuk menampilkan data laporan produktivitas.
+                    </TextBlock>
+                </Grid>
+                <Grid Visibility="{Binding IsDataNotEmpty, Converter={StaticResource bvc}}">
+                    <Border Visibility="{Binding IsLoading, Converter={StaticResource bvc}}">
+                        <StackPanel>
+                            <other:SpinnerLoadingView Margin="0,50,0,0" />
+                            <TextBlock Text="Harap tunggu..." HorizontalAlignment="Center" Style="{StaticResource ContentText}" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Visibility="{Binding IsNotLoading, Converter={StaticResource bvc}}" Margin="10">
+                        <StackPanel x:Name="ResetZoomWrapper" HorizontalAlignment="Right" Margin="0,-20,0,0">
+                            <Button Style="{StaticResource BtnWrapper}" Margin="5,0,5,0" Click="ResetZoom_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/SiPintar;component/Assets/Images/Action/ic_rotate.png" Width="16" Margin="0,0,4,0" />
+                                    <TextBlock VerticalAlignment="Center" Text="Reset Zoom" Style="{StaticResource ResetZoomText}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Kolom'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False" Zoom="{Binding ZoomingModeX}">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:ColumnSeries Title="Jumlah Terbaca" Values="{Binding JumlahBacaSeries}" Fill="{StaticResource SecondaryBlue}" Visibility="{Binding JumlahBacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Jumlah Taksir" Values="{Binding JumlahTaksirSeries}" Fill="PaleVioletRed" Visibility="{Binding JumlahTaksirSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Jumlah Kelainan" Values="{Binding JumlahKelainanSeries}" Fill="MediumPurple" Visibility="{Binding JumlahKelainanSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Name="KolomX" LabelsRotation="50" Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource HorizontalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Name="KolomY" Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Batang'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False" Zoom="{Binding ZoomingModeY}">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:RowSeries Title="Jumlah Terbaca" Values="{Binding JumlahBacaSeries}" Fill="{StaticResource SecondaryBlue}" Visibility="{Binding JumlahBacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Jumlah Taksir" Values="{Binding JumlahTaksirSeries}" Fill="PaleVioletRed" Visibility="{Binding JumlahTaksirSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Jumlah Kelainan" Values="{Binding JumlahKelainanSeries}" Fill="MediumPurple" Visibility="{Binding JumlahKelainanSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis x:Name="BatangX" Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis x:Name="BatangY" Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource VerticalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                                <lvc:CartesianChart.DataTooltip>
+                                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
+                                </lvc:CartesianChart.DataTooltip>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Garis'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False" Zoom="{Binding ZoomingModeX}">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:LineSeries Title="Jumlah Pelanggan" Values="{Binding JumlahBacaSeries}" LineSmoothness="0" PointForeground="{StaticResource SecondaryBlue}" Stroke="{StaticResource SecondaryBlue}" Fill="Transparent" Visibility="{Binding JumlahBacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Jumlah Taksir" Values="{Binding JumlahTaksirSeries}" LineSmoothness="0" PointForeground="PaleVioletRed" Stroke="PaleVioletRed" Fill="Transparent" Visibility="{Binding JumlahTaksirSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Jumlah Kelainan" Values="{Binding JumlahKelainanSeries}" LineSmoothness="0" PointForeground="MediumPurple" Stroke="MediumPurple" Fill="Transparent" Visibility="{Binding JumlahKelainanSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis x:Name="GarisX" LabelsRotation="50" Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource HorizontalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis x:Name="GarisY" MinValue="0" Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

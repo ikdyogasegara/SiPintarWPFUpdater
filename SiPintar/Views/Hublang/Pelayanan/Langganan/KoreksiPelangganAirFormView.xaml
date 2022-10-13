@@ -1,0 +1,2131 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.Langganan.KoreksiPelangganAirFormView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+
+            <Style x:Key="IconZoom" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+                <Setter Property="FontSize" Value="24px" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost DialogTheme="Inherit" Identifier="InnerHublangRootDialog">
+        <Grid>
+            <Border
+                Width="1000"
+                MaxHeight="700"
+                Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Background="{StaticResource BaseAppHublang}"
+                        Orientation="Vertical">
+                        <Grid Margin="10,5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock
+                                    x:Name="Title"
+                                    Foreground="White"
+                                    LineHeight="10"
+                                    Style="{StaticResource BigTitle}"
+                                    Text="Koreksi Pelanggan Air" />
+                            </Grid>
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <Border
+                                    Height="16"
+                                    Margin="5,0"
+                                    Background="White"
+                                    CornerRadius="2">
+                                    <TextBlock
+                                        Padding="6,1,6,1"
+                                        FontSize="10"
+                                        FontWeight="SemiBold"
+                                        Foreground="{StaticResource BaseAppHublang}">
+                                        Esc
+                                    </TextBlock>
+                                </Border>
+
+                                <Button
+                                    Width="14"
+                                    Height="14"
+                                    Margin="8"
+                                    Padding="0"
+                                    Background="{x:Null}"
+                                    Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                                    Style="{StaticResource ButtonPlain}">
+                                    <md:PackIcon
+                                        Margin="0"
+                                        Foreground="White"
+                                        Kind="Close" />
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+                    <Grid Grid.Row="1" Margin="16,16,16,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="0,0,20,0">
+                                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                                    <RadioButton
+                                        x:Name="DataLangganan"
+                                        Checked="SubMenu_Checked"
+                                        Content="Data Langganan"
+                                        FontSize="13"
+                                        FontWeight="DemiBold"
+                                        GroupName="SubMenu"
+                                        Style="{StaticResource NavHorizontalStyle}" />
+                                    <RadioButton
+                                        x:Name="FotodanMap"
+                                        Checked="SubMenu_Checked"
+                                        Content="Foto dan Map"
+                                        FontSize="13"
+                                        FontWeight="DemiBold"
+                                        GroupName="SubMenu"
+                                        Style="{StaticResource NavHorizontalStyle}" />
+                                </StackPanel>
+
+                                <Border
+                                    Height="1.2"
+                                    Margin="0,0,0,-1"
+                                    VerticalAlignment="Bottom"
+                                    Background="{StaticResource BaseGray}" />
+                            </StackPanel>
+
+                            <Grid
+                                Grid.Column="1"
+                                Margin="0,0,0,15"
+                                HorizontalAlignment="Right">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="310" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Column="0"
+                                    Padding="10,5,10,5"
+                                    Background="{StaticResource Black10}">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontFamily="{StaticResource SarabunRegular}"
+                                            FontSize="12"
+                                            Foreground="#646464"
+                                            Text="Nomor Air" />
+                                        <TextBlock
+                                            FontFamily="{StaticResource MontserratSemiBold}"
+                                            FontSize="18"
+                                            Foreground="{Binding SelectedData.NoSamb, Converter={StaticResource StringDefaultValueConverter}}"
+                                            Text="{Binding SelectedData.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border
+                                    Grid.Column="2"
+                                    Padding="10,5,10,5"
+                                    Background="{StaticResource Black10}">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontFamily="{StaticResource SarabunRegular}"
+                                            FontSize="12"
+                                            Foreground="#646464"
+                                            Text="Nomor Rekening" />
+                                        <TextBlock
+                                            FontFamily="{StaticResource MontserratSemiBold}"
+                                            FontSize="18"
+                                            Foreground="{Binding SelectedData.NoRekening, Converter={StaticResource StringDefaultValueConverter}}"
+                                            Text="{Binding SelectedData.NoRekening, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border
+                                    x:Name="StatusBg"
+                                    Grid.Column="4"
+                                    Padding="10,5,10,5"
+                                    Background="{StaticResource Black10}">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontFamily="{StaticResource SarabunRegular}"
+                                            FontSize="12"
+                                            Foreground="#646464"
+                                            Text="Status" />
+                                        <TextBlock
+                                            x:Name="NamaStatusText"
+                                            FontFamily="{StaticResource MontserratSemiBold}"
+                                            FontSize="18"
+                                            Foreground="{Binding SelectedData.NamaStatus, Converter={StaticResource StringDefaultValueConverter}}"
+                                            Text="{Binding SelectedData.NamaStatus, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    </StackPanel>
+                                </Border>
+
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            x:Name="DataLanggananSection"
+                            Grid.Row="1"
+                            Panel.ZIndex="2"
+                            Background="{StaticResource White100}">
+                            <ScrollViewer Margin="0,0,-16,0" VerticalScrollBarVisibility="Auto">
+                                <StackPanel Margin="20">
+                                    <TextBlock
+                                        Foreground="{StaticResource SecondaryBlue}"
+                                        Style="{StaticResource Title}"
+                                        Text="Info Dasar Pelanggan" />
+                                    <Grid Margin="0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="300" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="Nama"
+                                                    IsEnabled="False"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.Nama, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=Nama, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Alamat" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="Alamat"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.Alamat, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=Alamat, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <Grid Grid.Row="2" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Style="{StaticResource SmallTitle}" Text="RT" />
+                                                <Grid Margin="0,0,15,0">
+                                                    <TextBox
+                                                        x:Name="Rt"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                        PreviewTextInput="NumberValidationTextBox"
+                                                        Style="{StaticResource TextBoxInputForm}"
+                                                        Text="{Binding FormData.Rt, Mode=TwoWay}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="0"
+                                                        DataContext="{Binding ElementName=Rt, Path=Text}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource TextBoxPlaceholder}"
+                                                        Text="000" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Style="{StaticResource SmallTitle}" Text="RW" />
+                                                <Grid Margin="0,0,15,0">
+                                                    <TextBox
+                                                        x:Name="Rw"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                        PreviewTextInput="NumberValidationTextBox"
+                                                        Style="{StaticResource TextBoxInputForm}"
+                                                        Text="{Binding FormData.Rw, Mode=TwoWay}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="0"
+                                                        DataContext="{Binding ElementName=Rw, Path=Text}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource TextBoxPlaceholder}"
+                                                        Text="000" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Margin="0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="No. Handphone" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="NoHandphone"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    PreviewTextInput="NumberValidationTextBox"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NoHp, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NoHandphone, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="No. Telepon" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="NoTelp"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    PreviewTextInput="NumberValidationTextBox"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NoTelp, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NoTelp, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Email" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <TextBox
+                                                    x:Name="Email"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.Email, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=Email, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="0">
+                                            <TextBlock
+                                                Margin="0,0,0,2"
+                                                LineHeight="15"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="Pekerjaan" />
+                                            <Grid
+                                                Margin="0,3,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <ComboBox
+                                                    x:Name="Pekerjaan"
+                                                    HorizontalAlignment="Stretch"
+                                                    d:DataContext="{d:DesignInstance}"
+                                                    Background="White"
+                                                    DisplayMemberPath="NamaPekerjaan"
+                                                    ItemsSource="{Binding PekerjaanList, Mode=OneWay}"
+                                                    SelectedItem="{Binding PekerjaanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectionChanged="Combo_SelectionChanged"
+                                                    Style="{StaticResource ComboBoxInputForm}" />
+                                                <TextBlock
+                                                    Padding="5,2,7,0"
+                                                    Panel.ZIndex="10"
+                                                    DataContext="{Binding ElementName=Pekerjaan, Path=SelectedItem}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="No. Kartu Keluarga" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <TextBox
+                                                    x:Name="NoKk"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    PreviewTextInput="NumberValidationTextBox"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NoKk, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NoKk, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="No. KTP" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <TextBox
+                                                    x:Name="NoKtp"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    PreviewTextInput="NumberValidationTextBox"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NoKtp, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NoKtp, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Rayon" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeRayon"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeRayon"
+                                                        ItemsSource="{Binding RayonList}"
+                                                        SelectedValue="{Binding RayonForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeRayon, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaRayon"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaRayon"
+                                                        ItemsSource="{Binding RayonList}"
+                                                        SelectedValue="{Binding RayonForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaRayon, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kelurahan" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeKelurahan"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeKelurahan"
+                                                        ItemsSource="{Binding KelurahanList}"
+                                                        SelectedValue="{Binding KelurahanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeKelurahan, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaKelurahan"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaKelurahan"
+                                                        ItemsSource="{Binding KelurahanList}"
+                                                        SelectedValue="{Binding KelurahanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaKelurahan, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="6" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Blok" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeBlok"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeBlok"
+                                                        ItemsSource="{Binding BlokList}"
+                                                        SelectedValue="{Binding BlokForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeBlok, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaBlok"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaBlok"
+                                                        ItemsSource="{Binding BlokList}"
+                                                        SelectedValue="{Binding BlokForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaBlok, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="8" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="DMA" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeDma"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeDma"
+                                                        ItemsSource="{Binding DmaList}"
+                                                        SelectedValue="{Binding DmaForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeDma, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaDma"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaDma"
+                                                        ItemsSource="{Binding DmaList}"
+                                                        SelectedValue="{Binding DmaForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaDma, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="8" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="DMZ" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeDmz"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeDmz"
+                                                        ItemsSource="{Binding DmzList}"
+                                                        SelectedValue="{Binding DmzForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeDmz, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaDmz"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaDmz"
+                                                        ItemsSource="{Binding DmzList}"
+                                                        SelectedValue="{Binding DmzForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaDmz, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="8" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kolektif" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeKolektif"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeKolektif"
+                                                        ItemsSource="{Binding KolektifList}"
+                                                        SelectedValue="{Binding KolektifForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeKolektif, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaKolektif"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaKolektif"
+                                                        ItemsSource="{Binding KolektifList}"
+                                                        SelectedValue="{Binding KolektifForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaKolektif, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="10" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Flag" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="IdFlag"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="IdFlag"
+                                                        ItemsSource="{Binding FlagList}"
+                                                        SelectedValue="{Binding FlagForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=IdFlag, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaFlag"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaFlag"
+                                                        ItemsSource="{Binding FlagList}"
+                                                        SelectedValue="{Binding FlagForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaFlag, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="10" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Status" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="IdStatus"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="IdStatus"
+                                                        ItemsSource="{Binding StatusList}"
+                                                        SelectedValue="{Binding StatusForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=IdStatus, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaStatus"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaStatus"
+                                                        ItemsSource="{Binding StatusList}"
+                                                        SelectedValue="{Binding StatusForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaStatus, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border Height="15" />
+
+                                    <TextBlock
+                                        Foreground="{StaticResource SecondaryBlue}"
+                                        Style="{StaticResource Title}"
+                                        Text="Informasi Tarif" />
+                                    <Grid Margin="0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Golongan" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeGolongan"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeGolongan"
+                                                        ItemsSource="{Binding GolonganList}"
+                                                        SelectedValue="{Binding GolonganForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeGolongan, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaGolongan"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaGolongan"
+                                                        ItemsSource="{Binding GolonganList}"
+                                                        SelectedValue="{Binding GolonganForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaGolongan, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="0" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Diameter" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeDiameter"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeDiameter"
+                                                        ItemsSource="{Binding DiameterList}"
+                                                        SelectedValue="{Binding DiameterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeDiameter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaDiameter"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaDiameter"
+                                                        ItemsSource="{Binding DiameterList}"
+                                                        SelectedValue="{Binding DiameterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaDiameter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Administrasi Lain" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeAdministrasiLain"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeAdministrasiLain"
+                                                        ItemsSource="{Binding AdministrasiLainList}"
+                                                        SelectedValue="{Binding AdministrasiLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeAdministrasiLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaAdministrasiLain"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaAdministrasiLain"
+                                                        ItemsSource="{Binding AdministrasiLainList}"
+                                                        SelectedValue="{Binding AdministrasiLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaAdministrasiLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Pemeliharaan Lain" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodePemeliharaanLain"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodePemeliharaanLain"
+                                                        ItemsSource="{Binding PemeliharaanLainList}"
+                                                        SelectedValue="{Binding PemeliharaanLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodePemeliharaanLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaPemeliharaanLain"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaPemeliharaanLain"
+                                                        ItemsSource="{Binding PemeliharaanLainList}"
+                                                        SelectedValue="{Binding PemeliharaanLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaPemeliharaanLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Retribusi Lain" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeRetribusiLain"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeRetribusiLain"
+                                                        ItemsSource="{Binding RetribusiLainList}"
+                                                        SelectedValue="{Binding RetribusiLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeRetribusiLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaRetribusiLain"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaRetribusiLain"
+                                                        ItemsSource="{Binding RetribusiLainList}"
+                                                        SelectedValue="{Binding RetribusiLainForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaRetribusiLain, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="nama" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <TextBlock
+                                        Foreground="{StaticResource SecondaryBlue}"
+                                        Style="{StaticResource Title}"
+                                        Text="Informasi Rumah" />
+                                    <Grid Margin="0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Jumlah Penghuni" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="Penghuni"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.Penghuni, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=Penghuni, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Luas Tanah (m2)" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="LuasTanah"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.LuasTanah, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=LuasTanah, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Luas Bangunan (m2)" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="LuasRumah"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.LuasRumah, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=LuasRumah, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="0">
+                                            <TextBlock
+                                                Margin="0,0,0,2"
+                                                LineHeight="15"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="Jenis Bangunan" />
+                                            <Grid
+                                                Margin="0,3,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <ComboBox
+                                                    x:Name="JenisBangunan"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="White"
+                                                    DisplayMemberPath="NamaJenisBangunan"
+                                                    ItemsSource="{Binding JenisBangunanList, Mode=OneWay}"
+                                                    SelectedItem="{Binding JenisBangunanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectionChanged="Combo_SelectionChanged"
+                                                    Style="{StaticResource ComboBoxInputForm}" />
+                                                <TextBlock
+                                                    Padding="5,2,7,0"
+                                                    Panel.ZIndex="10"
+                                                    DataContext="{Binding ElementName=JenisBangunan, Path=SelectedItem}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                                    Text="Pilih salah satu" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="1">
+                                            <TextBlock
+                                                Margin="0,0,0,2"
+                                                LineHeight="15"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="Kepemilikan Bangunan" />
+                                            <Grid
+                                                Margin="0,3,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <ComboBox
+                                                    x:Name="KepemilikanBangunan"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="White"
+                                                    DisplayMemberPath="NamaKepemilikan"
+                                                    ItemsSource="{Binding KepemilikanBangunanList, Mode=OneWay}"
+                                                    SelectedItem="{Binding KepemilikanBangunanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectionChanged="Combo_SelectionChanged"
+                                                    Style="{StaticResource ComboBoxInputForm}" />
+                                                <TextBlock
+                                                    Padding="5,2,7,0"
+                                                    Panel.ZIndex="10"
+                                                    DataContext="{Binding ElementName=KepemilikanBangunan, Path=SelectedItem}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                                    Text="Pilih salah satu" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="2" Grid.Column="2">
+                                            <TextBlock
+                                                Margin="0,0,0,2"
+                                                LineHeight="15"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="Peruntukan" />
+                                            <Grid
+                                                Margin="0,3,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <ComboBox
+                                                    x:Name="Peruntukan"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="White"
+                                                    DisplayMemberPath="NamaPeruntukan"
+                                                    ItemsSource="{Binding PeruntukanList, Mode=OneWay}"
+                                                    SelectedItem="{Binding PeruntukanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectionChanged="Combo_SelectionChanged"
+                                                    Style="{StaticResource ComboBoxInputForm}" />
+                                                <TextBlock
+                                                    Padding="5,2,7,0"
+                                                    Panel.ZIndex="10"
+                                                    DataContext="{Binding ElementName=Peruntukan, Path=SelectedItem}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                                    Text="Pilih salah satu" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="4" Grid.Column="0">
+                                            <TextBlock
+                                                Margin="0,0,0,2"
+                                                LineHeight="15"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="Sumber Air" />
+                                            <Grid
+                                                Margin="0,3,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <ComboBox
+                                                    x:Name="SumberAir"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="White"
+                                                    DisplayMemberPath="NamaSumberAir"
+                                                    ItemsSource="{Binding SumberAirList, Mode=OneWay}"
+                                                    SelectedItem="{Binding SumberAirForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    SelectionChanged="Combo_SelectionChanged"
+                                                    Style="{StaticResource ComboBoxInputForm}" />
+                                                <TextBlock
+                                                    Padding="5,2,7,0"
+                                                    Panel.ZIndex="10"
+                                                    DataContext="{Binding ElementName=SumberAir, Path=SelectedItem}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                                    Text="Pilih salah satu" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="4" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kode POS" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="KodePost"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.KodePost, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=KodePost, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="Masukkan kode pos" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="4" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Daya Listrik" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="DayaListrik"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.DayaListrik, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=DayaListrik, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="Masukkan daya listrik" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Keterangan" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="Keterangan"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.Keterangan, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=Keterangan, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="Masukkan keterangan" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Pemilik" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="NamaPemilik"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NamaPemilik, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NamaPemilik, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="Masukkan nama pemilik" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="6" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Alamat Pemilik" />
+                                            <Grid Margin="0,0,15,0">
+                                                <TextBox
+                                                    x:Name="AlamatPemilik"
+                                                    Focusable="{Binding IsEdit}"
+                                                    IsHitTestVisible="{Binding IsEdit}"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.AlamatPemilik, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=AlamatPemilik, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="Masukkan alamat pemilik" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border Height="15" />
+
+                                    <TextBlock
+                                        Foreground="{StaticResource SecondaryBlue}"
+                                        Style="{StaticResource Title}"
+                                        Text="Info Meteran" />
+                                    <Grid Margin="0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Grid.Column="0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Merek Meter" />
+                                            <Grid Margin="0,0,15,0" IsEnabled="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeMerekMeter"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeMerekMeter"
+                                                        ItemsSource="{Binding MerekMeterList}"
+                                                        SelectedValue="{Binding MerekMeterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeMerekMeter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaMerekMeter"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaMerekMeter"
+                                                        ItemsSource="{Binding MerekMeterList}"
+                                                        SelectedValue="{Binding MerekMeterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaMerekMeter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="MerekMeter" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="1">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kondisi Meter" />
+                                            <Grid
+                                                Margin="0,0,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox
+                                                        x:Name="KodeKondisiMeter"
+                                                        Margin="0,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="KodeKondisiMeter"
+                                                        ItemsSource="{Binding KondisiMeterList}"
+                                                        SelectedValue="{Binding KondisiMeterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="5,5,7,0"
+                                                        Panel.ZIndex="1"
+                                                        DataContext="{Binding ElementName=KodeKondisiMeter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="kode" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox
+                                                        x:Name="NamaKondisiMeter"
+                                                        Margin="8,4,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        DisplayMemberPath="NamaKondisiMeter"
+                                                        ItemsSource="{Binding KondisiMeterList}"
+                                                        SelectedValue="{Binding KondisiMeterForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        SelectionChanged="KodePair_SelectionChanged"
+                                                        Style="{StaticResource ComboBoxInputForm}"
+                                                        Validation.ErrorTemplate="{x:Null}" />
+                                                    <TextBlock
+                                                        Padding="15,5,7,0"
+                                                        DataContext="{Binding ElementName=NamaKondisiMeter, Path=SelectedItem}"
+                                                        Foreground="{StaticResource Gray100}"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Text="KondisiMeter" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="2">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="No.Seri Meteran" />
+                                            <Grid Margin="0,4,15,0" IsEnabled="False">
+                                                <TextBox
+                                                    x:Name="NoSeriMeter"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.NoSeriMeter, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=NoSeriMeter, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="0" Grid.Column="3">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Urutan Baca" />
+                                            <Grid
+                                                Margin="0,4,15,0"
+                                                Focusable="{Binding IsEdit}"
+                                                IsHitTestVisible="{Binding IsEdit}">
+                                                <TextBox
+                                                    x:Name="UrutanBaca"
+                                                    PreviewKeyUp="CheckForm_PreviewKeyUp"
+                                                    Style="{StaticResource TextBoxInputForm}"
+                                                    Text="{Binding FormData.MasterPelangganAirDetail.UrutanBaca, Mode=TwoWay}"
+                                                    Validation.ErrorTemplate="{x:Null}" />
+                                                <TextBlock
+                                                    Padding="0"
+                                                    DataContext="{Binding ElementName=UrutanBaca, Path=Text}"
+                                                    Foreground="{StaticResource Gray100}"
+                                                    Style="{StaticResource TextBoxPlaceholder}"
+                                                    Text="" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <Grid
+                            x:Name="FotodanMapSection"
+                            Grid.Row="1"
+                            Margin="0,0,0,0"
+                            Panel.ZIndex="1">
+                            <ScrollViewer Margin="0,0,-16,0" VerticalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="15" />
+                                        <ColumnDefinition Width="450" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <Border
+                                            Padding="10,10,10,15"
+                                            BorderBrush="{StaticResource BaseGray}"
+                                            BorderThickness="1"
+                                            CornerRadius="5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                    <CheckBox
+                                                        Margin="0,5,0,10"
+                                                        Content="Foto Rumah 1"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsChecked="{Binding IsFotoRumah1FormChecked, Mode=TwoWay}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        Style="{StaticResource FilterCheckBox}" />
+                                                    <TextBlock
+                                                        Style="{StaticResource CaptionSmallBody}"
+                                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                        TextWrapping="Wrap" />
+                                                    <Grid IsEnabled="{Binding IsFotoRumah1FormChecked}">
+                                                        <Button
+                                                            Width="80"
+                                                            Height="28"
+                                                            Margin="0,10,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            md:ButtonAssist.CornerRadius="13"
+                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                            Command="{Binding OnBrowseFileBuktiCommand}"
+                                                            CommandParameter="foto_rumah1"
+                                                            Content="Pilih File"
+                                                            FontSize="11"
+                                                            Foreground="{StaticResource PictonBlue}"
+                                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                            Visibility="{Binding FotoRumah1Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoRumah1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                            <Button
+                                                                Width="90"
+                                                                Height="28"
+                                                                Margin="0,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                md:ButtonAssist.CornerRadius="13"
+                                                                BorderBrush="{StaticResource PictonBlue}"
+                                                                Command="{Binding OnOpenImageCommand}"
+                                                                CommandParameter="foto_rumah1"
+                                                                Content="Lihat Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                            <Button
+                                                                Width="80"
+                                                                Height="28"
+                                                                Margin="10,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                Command="{Binding OnBrowseFileBuktiCommand}"
+                                                                CommandParameter="foto_rumah1"
+                                                                Content="Ubah Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource BtnWrapper}"
+                                                                Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+                                                <Grid Grid.Column="1">
+                                                    <Grid Visibility="{Binding FotoRumah1Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Panel.ZIndex="1"
+                                                            Foreground="Gray">
+                                                            Belum ada foto
+                                                        </TextBlock>
+                                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                    </Grid>
+                                                    <Grid Visibility="{Binding FotoRumah1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Image
+                                                            Width="180"
+                                                            Height="100"
+                                                            Source="{Binding FotoRumah1Uri}"
+                                                            Stretch="UniformToFill" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <Border Height="10" />
+                                        <Border
+                                            Padding="10,10,10,15"
+                                            BorderBrush="{StaticResource BaseGray}"
+                                            BorderThickness="1"
+                                            CornerRadius="5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                    <CheckBox
+                                                        Margin="0,5,0,10"
+                                                        Content="Foto Rumah 2"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsChecked="{Binding IsFotoRumah2FormChecked, Mode=TwoWay}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        Style="{StaticResource FilterCheckBox}" />
+                                                    <TextBlock
+                                                        Style="{StaticResource CaptionSmallBody}"
+                                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                        TextWrapping="Wrap" />
+                                                    <Grid IsEnabled="{Binding IsFotoRumah2FormChecked}">
+                                                        <Button
+                                                            Width="80"
+                                                            Height="28"
+                                                            Margin="0,10,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            md:ButtonAssist.CornerRadius="13"
+                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                            Command="{Binding OnBrowseFileBuktiCommand}"
+                                                            CommandParameter="foto_rumah2"
+                                                            Content="Pilih File"
+                                                            FontSize="11"
+                                                            Foreground="{StaticResource PictonBlue}"
+                                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                            Visibility="{Binding FotoRumah2Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoRumah2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                            <Button
+                                                                Width="90"
+                                                                Height="28"
+                                                                Margin="0,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                md:ButtonAssist.CornerRadius="13"
+                                                                BorderBrush="{StaticResource PictonBlue}"
+                                                                Command="{Binding OnOpenImageCommand}"
+                                                                CommandParameter="foto_rumah2"
+                                                                Content="Lihat Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                            <Button
+                                                                Width="80"
+                                                                Height="28"
+                                                                Margin="10,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                Command="{Binding OnBrowseFileBuktiCommand}"
+                                                                CommandParameter="foto_rumah2"
+                                                                Content="Ubah Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource BtnWrapper}"
+                                                                Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+                                                <Grid Grid.Column="1">
+                                                    <Grid Visibility="{Binding FotoRumah2Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Panel.ZIndex="1"
+                                                            Foreground="Gray">
+                                                            Belum ada foto
+                                                        </TextBlock>
+                                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                    </Grid>
+                                                    <Grid Visibility="{Binding FotoRumah2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Image
+                                                            Width="180"
+                                                            Height="100"
+                                                            Source="{Binding FotoRumah2Uri}"
+                                                            Stretch="UniformToFill" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <Border Height="10" />
+                                        <Border
+                                            Padding="10,10,10,15"
+                                            BorderBrush="{StaticResource BaseGray}"
+                                            BorderThickness="1"
+                                            CornerRadius="5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                    <CheckBox
+                                                        Margin="0,5,0,10"
+                                                        Content="Foto Rumah 3"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsChecked="{Binding IsFotoRumah3FormChecked, Mode=TwoWay}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        Style="{StaticResource FilterCheckBox}" />
+                                                    <TextBlock
+                                                        Style="{StaticResource CaptionSmallBody}"
+                                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                        TextWrapping="Wrap" />
+                                                    <Grid IsEnabled="{Binding IsFotoRumah3FormChecked}">
+                                                        <Button
+                                                            Width="80"
+                                                            Height="28"
+                                                            Margin="0,10,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            md:ButtonAssist.CornerRadius="13"
+                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                            Command="{Binding OnBrowseFileBuktiCommand}"
+                                                            CommandParameter="foto_rumah3"
+                                                            Content="Pilih File"
+                                                            FontSize="11"
+                                                            Foreground="{StaticResource PictonBlue}"
+                                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                            Visibility="{Binding FotoRumah3Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoRumah3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                            <Button
+                                                                Width="90"
+                                                                Height="28"
+                                                                Margin="0,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                md:ButtonAssist.CornerRadius="13"
+                                                                BorderBrush="{StaticResource PictonBlue}"
+                                                                Command="{Binding OnOpenImageCommand}"
+                                                                CommandParameter="foto_rumah3"
+                                                                Content="Lihat Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                            <Button
+                                                                Width="80"
+                                                                Height="28"
+                                                                Margin="10,10,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                Command="{Binding OnBrowseFileBuktiCommand}"
+                                                                CommandParameter="foto_rumah3"
+                                                                Content="Ubah Foto"
+                                                                FontSize="11"
+                                                                Foreground="{StaticResource PictonBlue}"
+                                                                Style="{StaticResource BtnWrapper}"
+                                                                Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+                                                <Grid Grid.Column="1">
+                                                    <Grid Visibility="{Binding FotoRumah3Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Panel.ZIndex="1"
+                                                            Foreground="Gray">
+                                                            Belum ada foto
+                                                        </TextBlock>
+                                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                    </Grid>
+                                                    <Grid Visibility="{Binding FotoRumah3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Image
+                                                            Width="180"
+                                                            Height="100"
+                                                            Source="{Binding FotoRumah3Uri}"
+                                                            Stretch="UniformToFill" />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <Border Height="15" />
+                                    </StackPanel>
+
+                                    <Border
+                                        Grid.Column="2"
+                                        Margin="0,0,10,0"
+                                        Padding="15"
+                                        BorderBrush="{StaticResource BaseGray}"
+                                        BorderThickness="1"
+                                        CornerRadius="5">
+                                        <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel
+                                                    Grid.Column="0"
+                                                    Margin="0,0,10,0"
+                                                    VerticalAlignment="Center">
+                                                    <CheckBox
+                                                        Content="Titik Lokasi"
+                                                        Focusable="{Binding IsEdit}"
+                                                        IsChecked="{Binding IsDenahLokasiFormChecked, Mode=TwoWay}"
+                                                        IsHitTestVisible="{Binding IsEdit}"
+                                                        Style="{StaticResource FilterCheckBox}" />
+                                                </StackPanel>
+                                                <Grid
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right"
+                                                    IsEnabled="{Binding IsDenahLokasiFormChecked}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="32" />
+                                                        <ColumnDefinition Width="160" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBox
+                                                        x:Name="Lokasi"
+                                                        Grid.ColumnSpan="2"
+                                                        Padding="25,0,0,0"
+                                                        PreviewKeyUp="Lokasi_PreviewKeyUp"
+                                                        Style="{StaticResource TextBoxInputForm}"
+                                                        Text="{Binding DenahLokasiForm}"
+                                                        Validation.ErrorTemplate="{x:Null}"
+                                                        Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
+                                                        <md:PackIcon Kind="Search" />
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+
+                                            <Border Height="0" />
+
+                                            <Grid IsEnabled="{Binding IsDenahLokasiFormChecked}">
+                                                <Border
+                                                    Height="200"
+                                                    Margin="0,8,0,0"
+                                                    Background="{StaticResource BaseGray}"
+                                                    CornerRadius="2">
+                                                    <Grid>
+                                                        <gmaps:GMapControl
+                                                            x:Name="MainMap"
+                                                            Height="200"
+                                                            Focusable="{Binding IsEdit}"
+                                                            IsHitTestVisible="{Binding IsEdit}"
+                                                            OnMapDrag="MainMap_OnMapDrag" />
+                                                        <Button
+                                                            Width="25"
+                                                            Height="25"
+                                                            Margin="0,4,4,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Top"
+                                                            Background="#a7ddf7"
+                                                            Click="OpenMap_Click"
+                                                            Style="{StaticResource BtnWrapper}">
+                                                            <md:PackIcon
+                                                                Width="25"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Kind="Fullscreen" />
+                                                        </Button>
+                                                        <StackPanel
+                                                            Margin="0,0,4,4"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Bottom">
+                                                            <Button
+                                                                x:Name="ZoomInButton"
+                                                                Width="25"
+                                                                Height="25"
+                                                                Background="#a7ddf7"
+                                                                Click="ZoomInButton_Click"
+                                                                Style="{StaticResource BtnWrapper}">
+                                                                <md:PackIcon
+                                                                    Width="25"
+                                                                    Margin="0"
+                                                                    Kind="Add" />
+                                                            </Button>
+                                                            <Border Height="5" />
+                                                            <Button
+                                                                x:Name="ZoomOutButton"
+                                                                Width="25"
+                                                                Height="25"
+                                                                Background="#a7ddf7"
+                                                                Click="ZoomOutButton_Click"
+                                                                Style="{StaticResource BtnWrapper}">
+                                                                <md:PackIcon
+                                                                    Width="25"
+                                                                    Margin="0"
+                                                                    Kind="Minus" />
+                                                            </Button>
+                                                        </StackPanel>
+                                                        <Image
+                                                            x:Name="CenterMarker"
+                                                            Width="30"
+                                                            Panel.ZIndex="2"
+                                                            Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" />
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+
+                                            <Border Height="15" />
+
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Alamat Map" />
+                                                <TextBlock
+                                                    x:Name="AlamatMap"
+                                                    Margin="0,3,0,0"
+                                                    Style="{StaticResource SmallTitle}"
+                                                    Text="{Binding FormData.AlamatMap, Mode=TwoWay}"
+                                                    TextWrapping="Wrap" />
+                                                <CheckBox
+                                                    Margin="0,20,0,20"
+                                                    Content="Atur alamat map sebagai alamat utama pelanggan ini"
+                                                    IsChecked="{Binding IsAlamatMapFormChecked, Mode=TwoWay}"
+                                                    Style="{StaticResource FilterCheckBox}"
+                                                    Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                <Grid Margin="0,20,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Latitude" />
+                                                        <TextBlock
+                                                            x:Name="LatText"
+                                                            Margin="0,3,0,0"
+                                                            Style="{StaticResource SmallTitle}"
+                                                            Text="{Binding FormData.Latitude, Mode=TwoWay}"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1" Margin="0,0,0,0">
+                                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Longitude" />
+                                                        <TextBlock
+                                                            x:Name="LonText"
+                                                            Margin="0,3,0,0"
+                                                            Style="{StaticResource SmallTitle}"
+                                                            Text="{Binding FormData.Longitude, Mode=TwoWay}"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                    <Border
+                        Grid.Row="2"
+                        Margin="0,0,0,0"
+                        Padding="16,0,32,0"
+                        Background="{StaticResource Black20}"
+                        BorderBrush="{StaticResource Black20}"
+                        BorderThickness="1"
+                        CornerRadius="3">
+                        <Grid>
+                            <StackPanel
+                                Margin="0,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                    <Button
+                                        Height="28"
+                                        Margin="5,0"
+                                        md:ButtonAssist.CornerRadius="13"
+                                        BorderBrush="{StaticResource PictonBlue}"
+                                        Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                                        Content="Batal"
+                                        FontSize="11"
+                                        Foreground="{StaticResource PictonBlue}"
+                                        Style="{StaticResource ButtonSecondary2}" />
+                                </Grid>
+                                <Grid Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Button
+                                        x:Name="OkButton"
+                                        md:ButtonAssist.CornerRadius="13"
+                                        Click="OkButton_Click"
+                                        Content="Simpan"
+                                        Style="{StaticResource ButtonPrimarySmall}"
+                                        Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    <Button
+                                        md:ButtonAssist.CornerRadius="13"
+                                        Background="{StaticResource Gray50}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource ButtonPrimarySmall}"
+                                        Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                        <Viewbox
+                                            Width="20"
+                                            Height="20"
+                                            Stretch="Uniform"
+                                            StretchDirection="Both">
+                                            <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                        </Viewbox>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <md:DialogHost DialogTheme="Inherit" Identifier="SambunganSubDialog" />
+        </Grid>
+    </md:DialogHost>
+</UserControl>

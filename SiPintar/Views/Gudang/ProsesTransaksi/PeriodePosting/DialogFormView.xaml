@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.PeriodePosting.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi.PeriodePosting"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="352">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Tambah Periode Posting"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="32" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Periode Posting" VerticalAlignment="Center" Style="{StaticResource SmallTitle}" TextAlignment="Right"/>
+                <StackPanel Grid.Column="1" Width="90" x:Name="BulanPeriodeBorder" Margin="16,0,0,0">
+                    <Grid>
+                        <ComboBox x:Name="BulanPeriode" Width="{Binding ElementName=BulanPeriodeBorder, Path=ActualWidth}" DisplayMemberPath="Value" Style="{StaticResource ComboBoxInputForm}" ItemsSource="{Binding DaftarBulan}" SelectedItem="{Binding BulanPeriode}" />
+                        <TextBlock Text="Pilih" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=BulanPeriode, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Width="80" x:Name="TahunPeriodeBorder" Margin="8,0,0,0">
+                    <Grid>
+                        <ComboBox x:Name="TahunPeriode" Width="{Binding ElementName=TahunPeriodeBorder, Path=ActualWidth}" DisplayMemberPath="Value" Style="{StaticResource ComboBoxInputForm}" ItemsSource="{Binding DaftarTahun}" SelectedItem="{Binding TahunPeriode}" />
+                        <TextBlock Text="Pilih" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=TahunPeriode, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="32,0,32,32">
+                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource ButtonSecondary2}" Width="76" Height="30" />
+                <Button x:Name="BtnSubmit" Content="Simpan" Style="{StaticResource ButtonPrimary2}" Width="76" Height="32" Margin="12,0,0,0" Click="BtnSubmit_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

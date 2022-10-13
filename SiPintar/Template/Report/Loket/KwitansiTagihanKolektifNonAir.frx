@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="01/27/2021 22:52:14" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="ID" DataType="System.Int32"/>
+      <Column Name="NoLPP" DataType="System.String"/>
+      <Column Name="Petugas" DataType="System.String"/>
+      <Column Name="NoPelanggan" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="GolTarif" DataType="System.String"/>
+      <Column Name="Diameter" DataType="System.String"/>
+      <Column Name="Rayon" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Bulan" DataType="System.String"/>
+      <Column Name="Pemakaian" DataType="System.String"/>
+      <Column Name="LevelPemakaian" DataType="System.String"/>
+      <Column Name="M3Pemakaian" DataType="System.String"/>
+      <Column Name="TaripPemakaian" DataType="System.String"/>
+      <Column Name="JumlahPemakaian" DataType="System.String"/>
+      <Column Name="BiayaPemeliharaanMeter" DataType="System.String"/>
+      <Column Name="BiayaPemeliharaanJaringan" DataType="System.String"/>
+      <Column Name="Abudemen" DataType="System.String"/>
+      <Column Name="Denda" DataType="System.String"/>
+      <Column Name="Total" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="210" PaperHeight="148">
+    <DataBand Name="Data1" Width="718.2" Height="491.4" DataSource="MainData">
+      <TableObject Name="Table1" Left="18.9" Top="9.45" Width="567" Height="207.9">
+        <TableColumn Name="Column1" Width="113.4"/>
+        <TableColumn Name="Column2" Width="18.9"/>
+        <TableColumn Name="Column3" Width="434.7"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Text="NOLPP" Font="Arial, 10pt"/>
+          <TableCell Name="Cell2" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell3" Text="[MainData.NoLPP]" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Font="Arial, 10pt"/>
+          <TableCell Name="Cell8" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell11" Text="Petugas" Font="Arial, 10pt"/>
+          <TableCell Name="Cell12" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell13" Text="[MainData.Petugas]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Text="No. Pelanggan" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell18" Text="[MainData.NoPelanggan]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell21" Text="Nama" Font="Arial, 10pt"/>
+          <TableCell Name="Cell22" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell23" Text="[MainData.Nama]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell24" Text="Gol. Tarif" Font="Arial, 10pt"/>
+          <TableCell Name="Cell25" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell26" Text="[MainData.GolTarif]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell27" Text="Diameter" Font="Arial, 10pt"/>
+          <TableCell Name="Cell28" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell29" Text="[MainData.Diameter]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row8">
+          <TableCell Name="Cell30" Text="Rayon" Font="Arial, 10pt"/>
+          <TableCell Name="Cell31" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell32" Text="[MainData.Rayon]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row9">
+          <TableCell Name="Cell33" Text="Alamat" Font="Arial, 10pt"/>
+          <TableCell Name="Cell34" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell35" Text="[MainData.Alamat]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row10">
+          <TableCell Name="Cell36" Text="Bulan" Font="Arial, 10pt"/>
+          <TableCell Name="Cell37" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell38" Text="[MainData.Bulan]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row11">
+          <TableCell Name="Cell39" Text="Pemakaian" Font="Arial, 10pt"/>
+          <TableCell Name="Cell40" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell41" Text="[MainData.Pemakaian]" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table2" Left="18.9" Top="245.7" Width="567" Height="56.7">
+        <TableColumn Name="Column4" Width="160.65"/>
+        <TableColumn Name="Column5" Width="122.85"/>
+        <TableColumn Name="Column6" Width="132.3"/>
+        <TableColumn Name="Column7" Width="151.2"/>
+        <TableRow Name="Row12">
+          <TableCell Name="Cell42" Text="Pemakaian" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell43" Text="M3" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell44" Text="TARIP" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell45" Text="JUMLAH" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row13">
+          <TableCell Name="Cell47" Text="[MainData.LevelPemakaian]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell48" Text="[MainData.M3Pemakaian]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell49" Text="[MainData.TaripPemakaian]" Font="Arial, 10pt"/>
+          <TableCell Name="Cell50" Text="[MainData.JumlahPemakaian]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row15">
+          <TableCell Name="Cell57" Text="konversi" Font="Arial, 10pt"/>
+          <TableCell Name="Cell58" Font="Arial, 10pt"/>
+          <TableCell Name="Cell59" Font="Arial, 10pt"/>
+          <TableCell Name="Cell60" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table3" Left="18.9" Top="321.3" Width="567" Height="122.85">
+        <TableColumn Name="Column8" Width="179.55"/>
+        <TableColumn Name="Column9" Width="18.9"/>
+        <TableColumn Name="Column10" Width="368.55"/>
+        <TableRow Name="Row16">
+          <TableCell Name="Cell61" Text="Jumlah Pemakaian Air" Font="Arial, 10pt, style=Bold" ColSpan="3"/>
+          <TableCell Name="Cell62" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell63" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row17" Height="9.45">
+          <TableCell Name="Cell64" Font="Arial, 10pt"/>
+          <TableCell Name="Cell65" Font="Arial, 10pt"/>
+          <TableCell Name="Cell66" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row18">
+          <TableCell Name="Cell67" Text="B. Pemeliharaan Meter" Font="Arial, 10pt"/>
+          <TableCell Name="Cell68" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell69" Text="[MainData.BiayaPemeliharaanMeter]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row19">
+          <TableCell Name="Cell70" Text="B. Pemeliharaan Jaringan" Font="Arial, 10pt"/>
+          <TableCell Name="Cell71" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell72" Text="[MainData.BiayaPemeliharaanJaringan]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row20">
+          <TableCell Name="Cell73" Text="Abudemen" Font="Arial, 10pt"/>
+          <TableCell Name="Cell74" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell75" Text="[MainData.Abudemen]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row21">
+          <TableCell Name="Cell76" Text="Denda" Font="Arial, 10pt"/>
+          <TableCell Name="Cell77" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell78" Text="[MainData.Denda]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row22">
+          <TableCell Name="Cell79" Text="TOTAL" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell80" Text=":" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell81" Text="[MainData.Total]" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>

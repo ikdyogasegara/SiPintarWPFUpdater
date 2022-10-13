@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.Tunjangan.TunjanganBulanan.DialogPeriodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Personalia.Tunjangan.TunjanganBulanan"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#DDCCF4" SecondBrush="#FFFFFF"/>
+            <converters:NullMultiValueConverter x:Key="NullMultiValueConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="296" Height="273">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="32 33 32 24">
+            <TextBlock Text="Pilih Periode &amp; Kode Gaji" Style="{StaticResource BigTitle}" LineHeight="20" HorizontalAlignment="Center"/>
+            <StackPanel Margin="0 14 0 16">
+                <TextBlock Style="{StaticResource SmallTitle}" Foreground="{StaticResource Black90}" Text="Periode"/>
+                <Grid Margin="0 4 0 0">
+                    <ComboBox x:Name="Periode" Style="{StaticResource ComboBoxInputForm}"    
+                            IsEditable="False" 
+                            ItemsSource="{Binding PeriodeList, Mode=OneWay}"
+                            Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}, Path=ActualWidth}"
+                            DisplayMemberPath="NamaPeriode"
+                            SelectedItem="{Binding FilterPeriode, Mode=TwoWay}"
+                            SelectionChanged="CheckForm_SelectionChanged"
+                            IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13"/>
+                    <TextBlock DataContext="{Binding ElementName=Periode, Path=Text}" Text="Pilih periode" Style="{StaticResource TextBoxPlaceholder}" Margin="10 0 0 0" Foreground="{StaticResource Gray100}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="0 0 0 24">
+                <TextBlock Style="{StaticResource SmallTitle}" Foreground="{StaticResource Black90}" Text="Kode Gaji"/>
+                <Grid Margin="0 4 0 0">
+                    <ComboBox x:Name="KodeGaji" Style="{StaticResource ComboBoxInputForm}"    
+                            IsEditable="False" 
+                            ItemsSource="{Binding KodeGajiList, Mode=OneWay}"
+                            Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}, Path=ActualWidth}"
+                            DisplayMemberPath="Deskripsi"
+                            SelectedItem="{Binding FilterKodeGaji, Mode=TwoWay}"
+                            SelectionChanged="CheckForm_SelectionChanged"
+                            IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13"/>
+                    <TextBlock DataContext="{Binding ElementName=KodeGaji, Path=Text}" Text="Pilih kode gaji" Style="{StaticResource TextBoxPlaceholder}" Margin="10 0 0 0" Foreground="{StaticResource Gray100}" />
+                </Grid>
+            </StackPanel>
+            <Button x:Name="OkButton" IsEnabled="False" Command="{Binding OnSelectPeriodeCommand}" Style="{StaticResource ButtonPrimarySmall}" Width="60" md:ButtonAssist.CornerRadius="15" Content="Pilih" />
+        </StackPanel>
+        <Border Grid.Row="1" Background="{StaticResource BaseAppPersonaliaDark}"/>
+    </Grid>
+</UserControl>

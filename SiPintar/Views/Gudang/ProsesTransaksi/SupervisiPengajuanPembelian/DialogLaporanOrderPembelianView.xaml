@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.SupervisiPengajuanPembelian.DialogLaporanOrderPembelianView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi.SupervisiPengajuanPembelian"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" MinWidth="520">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Laporan Barang Masuk"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="33,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <StackPanel Margin="0,0,0,0" x:Name="JenisLaporanBorder">
+                    <TextBlock Text="Opsi Laporan*" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                    <Grid>
+                        <ComboBox Style="{StaticResource ComboBoxInputForm}" x:Name="JenisLaporan" Width="{Binding ElementName=JenisLaporanBorder, Path=ActualWidth}" DisplayMemberPath="Value" IsEnabled="False" />
+                        <TextBlock Text="Pilih jenis laporan" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=JenisLaporan, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Tanggal Laporan*" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Black70}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="TanggalLaporan" Style="{StaticResource DefaultDatePicker}" Height="30" BorderThickness="0" SelectedDateFormat="Long" SelectedDateChanged="SelectedDateChanged" />
+                                <TextBlock DataContext="{Binding ElementName=TanggalLaporan, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                        <TextBlock Text="Tanggal Voucher*" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Black70}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="TanggalVoucher" Style="{StaticResource DefaultDatePicker}" Height="30" BorderThickness="0" SelectedDateFormat="Long" SelectedDateChanged="SelectedDateChanged" />
+                                <TextBlock DataContext="{Binding ElementName=TanggalVoucher, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Nomor Order Pembelian" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="NomorOrderPembelian" IsEnabled="False" Text="{Binding NoOrderPembelian}" TextChanged="NomorOrderPembelian_TextChanged" />
+                            <TextBlock Text="Otomatis" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NomorOrderPembelian, Path=Text}" />
+                        </Grid>
+                    </StackPanel>
+                    <Button Content="No. Otomatis" Command="{Binding OnGenerateNoOrderPembelianCommand}" CommandParameter="{Binding ElementName=TanggalLaporan, Path=SelectedDate}" Style="{StaticResource ButtonSecondarySmall}" Grid.Column="1" VerticalAlignment="Bottom" Margin="10,0,0,0" />
+                </Grid>
+                <StackPanel Margin="0,15,0,0" x:Name="SuplierBorder">
+                    <TextBlock Text="Suplier*" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                    <Grid>
+                        <ComboBox Style="{StaticResource ComboBoxInputForm}" x:Name="Suplier" Width="{Binding ElementName=SuplierBorder, Path=ActualWidth}" ItemsSource="{Binding DataSuplier}" SelectionChanged="Suplier_SelectionChanged" DisplayMemberPath="NamaPerusahaan" />
+                        <TextBlock Text="Pilih jenis laporan" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=Suplier, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,15,0,0">
+                    <TextBlock Text="Rating Suplier*" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <md:RatingBar Grid.Column="0" Foreground="#F5A629" x:Name="Rating" ValueChanged="Rating_ValueChanged" />
+                        <TextBlock x:Name="RatingText" Grid.Column="1" Text="(Bintang 0)" Style="{StaticResource BigTitle}" Foreground="{StaticResource Black70}" LineHeight="10" Padding="0,2" Margin="14,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="Kembali" Style="{StaticResource ButtonSecondary2}" Width="85" Height="35" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+                <Button x:Name="BtnSubmit" Click="BtnSubmit_Click" Content="Simpan" Style="{StaticResource ButtonPrimary2}" Width="85" Height="37" Margin="16,0,0,0" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

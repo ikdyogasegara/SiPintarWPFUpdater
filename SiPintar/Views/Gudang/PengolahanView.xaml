@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.PengolahanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:SiPintar.ViewModels.Gudang.Pengolahan"
+             xmlns:views="clr-namespace:SiPintar.Views.Gudang.Pengolahan"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:NullVisibilityConverter x:Key="NullToVisible" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsed" True="Collapsed" False="Visible" />
+            <converters:JoinMultiValueConverter x:Key="JoinMultiValueConverter" />
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodels:OpnameBarangViewModel}">
+                <views:OpnameBarangView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:PostingViewModel}">
+                <views:PostingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:PenyesuaianStockViewModel}">
+                <views:PenyesuaianStockView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:StockBarangViewModel}">
+                <views:StockBarangView />
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid Background="{StaticResource AthensGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    ToolBarTray.IsLocked="True"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    Background="White"
+                    ClipToBounds="False">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    Click="NavItemSelectedHandler"
+                                    ContextMenuService.Placement="Bottom"
+                                    GroupName="NavItem"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}">
+                                    <RadioButton.ContextMenu>
+                                        <ContextMenu ItemsSource="{Binding ChildNavigation}" Style="{StaticResource ContextMenuRegular}">
+                                            <ContextMenu.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+                                                        x:Name="SubMenuBorder"
+                                                        Width="120"
+                                                        Height="20"
+                                                        Padding="16,0"
+                                                        Background="White"
+                                                        BorderBrush="{StaticResource SecondarySofter}">
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                x:Name="SubMenuText"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="{StaticResource Black70}"
+                                                                LineHeight="18"
+                                                                Style="{StaticResource CaptionSmallBody}"
+                                                                Text="{Binding Label}" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ContextMenu.ItemTemplate>
+                                            <ContextMenu.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource MenuItemRegular}" TargetType="{x:Type MenuItem}">
+                                                    <Setter Property="Cursor" Value="Hand" />
+                                                    <Setter Property="Background" Value="White" />
+
+                                                    <Setter Property="Tag">
+                                                        <Setter.Value>
+                                                            <MultiBinding Converter="{StaticResource JoinMultiValueConverter}" ConverterParameter=" ">
+                                                                <Binding Path="Tag" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=RadioButton}" />
+                                                                <Binding Path="Label" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type MenuItem}">
+                                                                <Border
+                                                                    x:Name="SubMenuBorder"
+                                                                    Width="130"
+                                                                    Height="20"
+                                                                    Padding="16,0"
+                                                                    Background="White"
+                                                                    BorderBrush="{StaticResource SecondarySofter}">
+                                                                    <TextBlock
+                                                                        x:Name="SubMenuText"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="{StaticResource Black70}"
+                                                                        LineHeight="18"
+                                                                        Style="{StaticResource CaptionSmallBody}"
+                                                                        Text="{Binding Label}" />
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsHighlighted" Value="True">
+                                                                        <Setter TargetName="SubMenuText" Property="Foreground" Value="{StaticResource SecondaryBlue}" />
+                                                                        <Setter TargetName="SubMenuBorder" Property="Background" Value="{StaticResource Black10}" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <EventSetter Event="Click" Handler="MenuItem_Click" />
+                                                </Style>
+                                            </ContextMenu.ItemContainerStyle>
+                                        </ContextMenu>
+                                    </RadioButton.ContextMenu>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <ContentControl Grid.Row="1" Content="{Binding PageViewModel}" Margin="0 0" />
+    </Grid>
+</UserControl>

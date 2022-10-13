@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="01/06/2021 16:46:31" ReportInfo.CreatorVersion="2021.1.0.0">
+    <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="PdamName" DataType="System.String"/>
+      <Column Name="PdamAddress" DataType="System.String"/>
+      <Column Name="PdamPhone" DataType="System.String"/>
+
+      <Column Name="NoLpp" DataType="System.String"/>
+      <Column Name="NoSambungan" DataType="System.String"/>
+      <Column Name="GolDiameter" DataType="System.String"/>
+      <Column Name="Bulan" DataType="System.String"/>
+      <Column Name="TanggalCetak" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+
+      <Column Name="NamaKasir" DataType="System.String"/>
+      <Column Name="TanggalBayar" DataType="System.String"/>
+      <Column Name="ZonaJalan" DataType="System.String"/>
+      
+      <Column Name="Lalu" DataType="System.Decimal"/>
+      <Column Name="Kini" DataType="System.Decimal"/>
+      <Column Name="Pakai" DataType="System.Decimal"/>
+
+      <Column Name="BiayaPakai" DataType="System.Decimal"/>
+      <Column Name="BiayaBeban" DataType="System.Decimal"/>
+      <Column Name="AngsuranAir" DataType="System.Decimal"/>
+      <Column Name="AngsuranPsb" DataType="System.Decimal"/>
+      <Column Name="Denda" DataType="System.Decimal"/>
+      <Column Name="Meterai" DataType="System.Decimal"/>
+      <Column Name="Diskon" DataType="System.Decimal"/>
+      <Column Name="Jumlah" DataType="System.Decimal"/>
+      <Column Name="Terbilang" DataType="System.String"/>
+
+      <Column Name="Kelainan" DataType="System.String"/>
+      <Column Name="InfoKelainan" DataType="System.String"/>
+      <Column Name="NamaDirektur" DataType="System.String"/>
+      <Column Name="Ttd" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="98" PaperHeight="139.6" BottomMargin="1" LeftMargin="1" TopMargin="1" RightMargin="1">
+    <DataBand Name="DataBand" Width="98" Height="500" DataSource="MainData">
+      <TextObject Name="Memo75" Left="22.68" Top="120" Width="56.69" Height="15.12" Text="Nama" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo76" Left="22.68" Top="135" Width="56.69" Height="15.12" Text="Alamat" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo77" Left="79.37" Top="120" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo78" Left="79.37" Top="135" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextNamaValue" Left="90.71" Top="120" Width="275.91" Height="15.12" Text="[MainData.Nama]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="TextAlamatValue" Left="90.71" Top="135" Width="290.91" Height="30.24" Text="[MainData.Alamat]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="TextBulanValue" Left="90.71" Top="90.6" Width="90.71" Height="15.12" Text="[MainData.Bulan]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo2" Left="22.68" Top="41.5" Width="56.69" Height="15.12" Text="No.Rek" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo3" Left="79.37" Top="41.5" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextNoLppValue" Left="90.71" Top="41.5" Width="275.91" Height="15.12" Text="[MainData.NoLpp]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo10" Left="22.68" Top="171.7" Width="56.69" Height="15.12" Text="M.Awal" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo34" Left="79.37" Top="171.7" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextLaluValue" Left="90.71" Top="171.7" Width="37.8" Height="15.12" Text="[MainData.Lalu]" Padding="1, 1, 1, 1" HorzAlign="Right" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo11" Left="22.68" Top="238" Width="79.37" Height="15.12" Text="By.Beban" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo35" Left="102.05" Top="238" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextBiayaBebanValue" Left="113.39" Top="238" Width="147.4" Height="15.12" Text="[MainData.BiayaBeban]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo52" Left="22.68" Top="253" Width="79.37" Height="15.12" Text="Angs. Air" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo53" Left="102.05" Top="253" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextAngsuranAirValue" Left="113.39" Top="253" Width="147.4" Height="15.12" Text="[MainData.AngsuranAir]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo55" Left="22.68" Top="268" Width="79.37" Height="15.12" Text="Angs. PSB" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo56" Left="102.05" Top="268" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextAngsuranPsbValue" Left="113.39" Top="268" Width="147.4" Height="15.12" Text="[MainData.AngsuranPsb]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo61" Left="22.68" Top="283" Width="79.37" Height="15.12" Text="Denda" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo62" Left="102.05" Top="283" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextDendaValue" Left="113.39" Top="283" Width="147.4" Height="15.12" Text="[MainData.Denda]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo64" Left="22.68" Top="298" Width="79.37" Height="15.12" Text="Materei" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo65" Left="102.05" Top="298" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextMatereiValue" Left="113.39" Top="298" Width="147.4" Height="15.12" Text="[MainData.Meterai]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo70" Left="22.68" Top="222" Width="79.37" Height="15.12" Text="Harga Air" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo71" Left="102.05" Top="222" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo30" Left="22.68" Top="332" Width="49.13" Height="22.68" Text="TOTAL" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 8pt, style=Bold"/>
+      <TextObject Name="Memo38" Left="102.05" Top="332" Width="11.34" Height="22.68" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="TextJumlahValue" Left="113.39" Top="332" Width="147.4" Height="22.68" Text="Rp. [MainData.Jumlah]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="TextInfoKelainanValue" Left="22.68" Top="408" Width="132.28" Height="15.12" Text="[MainData.InfoKelainan]" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="TextTanggalBayarValue" Left="245.67" Top="75" Width="120.94" Height="15.12" Text="[MainData.TanggalBayar]" Padding="2, 1, 2, 1" Format="Time" Format.Format="t" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="TextNamaKasirValue" Left="245.67" Top="56.6" Width="105.83" Height="15.12" Text="( [MainData.NamaKasir] )" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo4" Left="22.68" Top="75" Width="67.69" Height="15.12" Text="Tarif / Dia" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo5" Left="79.37" Top="75" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextGolDiameterValue" Left="90.71" Top="75" Width="120.71" Height="15.12" Text="[MainData.GolDiameter]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextPdamAddressValue" Left="9.45" Top="18.8" Width="211.65" Height="15.12" Text="[MainData.PdamAddress]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="TextPdamPhoneValue" Left="211.65" Top="18.8" Width="247.4" Height="15.12" Text="[MainData.PdamPhone]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo13" Left="22.68" Top="56.6" Width="56.69" Height="18.9" Text="No.SL" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo14" Left="79.37" Top="56.6" Width="11.34" Height="18.9" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextNoSambunganValue" Left="90.71" Top="56.6" Width="90.71" Height="18.9" Text="[MainData.NoSambungan]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Memo16" Left="185.2" Top="90.6" Width="49.13" Height="15.12" Text="ZN / JL" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo17" Left="234.33" Top="90.6" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextZonaJalanValue" Left="245.67" Top="90.6" Width="105.83" Height="15.12" Text="[MainData.ZonaJalan]" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo19" Left="22.68" Top="90.6" Width="56.69" Height="15.12" Text="Periode" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo20" Left="79.37" Top="90.6" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextTanggalCetakValue" Left="90.71" Top="105.7" Width="143.62" Height="15.12" Text="[MainData.TanggalCetak]" Padding="1, 1, 1, 1" Format="Time" Format.Format="t" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo22" Left="22.68" Top="105.7" Width="56.69" Height="15.12" Text="Tgl.Cetak" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo23" Left="79.37" Top="105.7" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo24" Left="185.2" Top="56.6" Width="49.13" Height="15.12" Text="Kasir" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo25" Left="234.33" Top="56.6" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo27" Left="185.2" Top="75.5" Width="55.13" Height="15.12" Text="Tgl.bayar" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo28" Left="234.33" Top="75.5" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo26" Left="22.68" Top="186.4" Width="56.69" Height="15.12" Text="M.Akhir" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo31" Left="79.37" Top="186.4" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextKiniValue" Left="90.71" Top="186.4" Width="37.8" Height="15.12" Text="[MainData.Kini]" Padding="1, 1, 1, 1" HorzAlign="Right" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo33" Left="22.68" Top="202" Width="56.69" Height="15.12" Text="Pem.Air" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo40" Left="79.37" Top="202" Width="11.34" Height="15.12" Text=":" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextPakaiValue" Left="90.71" Top="202" Width="37.8" Height="15.12" Text="[Maindata.Pakai]" Padding="1, 1, 1, 1" HorzAlign="Right" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo42" Left="136.06" Top="202" Width="37.8" Height="15.12" Text="m3" Padding="1, 1, 1, 1" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo45" Left="222.99" Top="389" Width="94.49" Height="15.12" Text="Direktur Utama" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo12" Left="173.86" Top="423" Width="188.98" Height="15.12" Text="[MainData.NamaDirektur]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo36" Left="222.99" Top="410" Width="94.49" Height="15.12" Text="[MainData.Ttd]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Memo46" Left="22.68" Top="358" Width="59.13" Height="15.12" Text="Terbilang :" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" Font="Microsoft Sans Serif, 8pt, style=Italic"/>
+      <TextObject Name="TextTerbilangValue" Left="81.81" Top="358" Width="237.24" Height="30.24" Text="[MainData.Terbilang]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" Font="Microsoft Sans Serif, 8pt, style=Italic"/>
+      <TextObject Name="TextHargaAirValue" Left="113.39" Top="223" Width="147.4" Height="15.12" Text="[MainData.BiayaPakai]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo49" Left="22.68" Top="440" Width="317.48" Height="15.12" Text="&quot; PPN DIBEBANKAN SESUAI PP NO:12 THN 2001, DIUBAH PP NO :31 THN 2007 &quot;" Padding="2, 1, 2, 1" HorzAlign="Right" Font="Microsoft Sans Serif, 6pt"/>
+      <LineObject Name="Line1" Left="22.68" Top="220" Width="238.11" Border.Style="Dash"/>
+      <LineObject Name="Line2" Left="22.68" Top="165" Width="238.11" Border.Style="Dash"/>
+      <TextObject Name="TextKelainanValue" Left="22.68" Top="393" Width="132.28" Height="15.12" Text="[MainData.Kelainan]" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <BarcodeObject Name="BarCode" encoding="[MainData.NoSambungan]" Text="[MainData.NoSambungan]" Left="40.11" Top="460.7" Width="20" Height="14.57" ShowText="false" Expression="[MainData.NoSambungan]" Barcode.CalcCheckSum="false"/>
+      <TextObject Name="Memo50" Left="22.9" Top="313.7" Width="49.57" Height="15.12" Text="Diskon" Padding="2, 1, 2, 1" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Memo58" Left="102.05" Top="313.7" Width="11.34" Height="15.12" Text=":" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="TextDiskonValue" Left="113.39" Top="313.7" Width="147.4" Height="15.12" Text="[MainData.Diskon]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="TextPdamNameValue" Width="360" Height="22.68" Text="[MainData.PdamName]" Padding="1, 1, 1, 1" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold, Underline"/>
+    </DataBand>
+  </ReportPage>
+</Report>

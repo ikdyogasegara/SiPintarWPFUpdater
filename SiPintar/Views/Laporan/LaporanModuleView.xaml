@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="SiPintar.Views.Laporan.LaporanModuleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:SiPintar.Views.Laporan"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Laporan"
+             xmlns:view="clr-namespace:SiPintar.Views.Laporan"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Card.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <Button x:Key="ListItem" Height="Auto" Style="{StaticResource LinkButton}" Margin="0,8,0,0" Click="ItemClick" x:Shared="false">
+                <TextBlock Text="Item 1" TextWrapping="Wrap" />
+            </Button>
+            <TextBlock x:Key="SubGroup" Text="SubGroup" Style="{StaticResource SmallTitle}" x:Shared="false" />
+            <materialDesign:Card x:Key="CardTemplate" UniformCornerRadius="4" materialDesign:Background="LightYellow" materialDesign:ShadowAssist.ShadowDepth="Depth1" Grid.Column="1" Grid.Row="1" Margin="0,10,24,24" MinWidth="200" x:Shared="false">
+                <GroupBox
+                        Header="TEST ZONE"
+                        Style="{DynamicResource MaterialDesignGroupBox}"
+                        BorderThickness="0"
+                        Padding="18,12"
+                        FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold">
+                    <StackPanel Orientation="Vertical">
+                    </StackPanel>
+                </GroupBox>
+            </materialDesign:Card>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Margin="10 10" x:Name="MainElement">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Width="200" Height="Auto" VerticalAlignment="Top" CornerRadius="5 0 0 5" Margin="0 0 10 0" Padding="0 10 0 10" Background="White">
+            <Border.Resources>
+                <Style TargetType="mde:SideNavigation" BasedOn="{StaticResource SideNavigationMenu}"/>
+            </Border.Resources>
+            <mde:SideNavigation Items="{Binding Path=NavigationItems, Mode=TwoWay}"
+                                IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
+                NavigationItemSelected="NavigationItemSelectedHandler" x:Name="Sidebar"
+                SelectionCornerRadius="8">
+            </mde:SideNavigation>
+        </Border>
+
+        <Grid Background="White" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Style="{StaticResource BigTitle}" Margin="20,20,20,0" Visibility="{Binding SelectedModule, Converter={StaticResource NullToCollapsibleConverter}, FallbackValue=Collapsed}">
+                <Run Text="Daftar Laporan "/>
+                <Run Text="{Binding SelectedModule, FallbackValue='[Nama Module]'}"/>
+            </TextBlock>
+
+            <Grid Grid.Row="2" Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}" Grid.RowSpan="2">
+                <StackPanel VerticalAlignment="Center">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                        Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                        To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                    <TextBlock Text="{Binding LoadingMsg, FallbackValue=Sedang mengambil daftar laporan ...}" Style="{StaticResource SmallTitle}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <ScrollViewer Grid.Row="1" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2">
+                <WrapPanel Margin="24,0,0,0" HorizontalAlignment="Left" Name="Container"
+                           Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                </WrapPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

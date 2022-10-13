@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.Tarif.GolonganLLTT.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" True="Ya" False="Tidak"/>
+            <converters:BooleanToStringConverter x:Key="BooleanToActiveInactiveConverter" True="Aktif" False="Non Aktif"/>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost DialogTheme="Inherit">
+        <Grid>
+            <Border Width="352" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                        <Grid Margin="10 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Tambah Tarif Golongan L2T2"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0">
+                                <Border CornerRadius="2" Background="White">
+                                    <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" >
+                                <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Margin="20,30,20,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="138"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,24,0">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Kode" LineHeight="15" Margin="0,0,0,4"/>
+                                    <Grid>
+                                        <TextBox x:Name="KodeTarif" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding GolonganFormLltt.KodeTarifLltt, Mode=TwoWay}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                        <TextBlock DataContext="{Binding ElementName=KodeTarif, Path=Text}" Text="Masukkan kode" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" HorizontalAlignment="Right" Margin="0,0,5,0" Width="99" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Tarif" LineHeight="15" Margin="0,0,0,4"/>
+                                    <Grid>
+                                        <TextBox x:Name="NamaTarifLimbah" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding GolonganFormLltt.NamaTarifLltt, Mode=TwoWay}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                        <TextBlock DataContext="{Binding ElementName=NamaTarifLimbah, Path=Text}" Text="Masukkan nama tarif" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Grid.Row="1" Margin="0,5">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Biaya" LineHeight="15"  Margin="0,0,50,4"/>
+                                <Grid Margin="0,0,0,0">
+                                    <TextBox x:Name="Biaya" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding GolonganFormLltt.Biaya, Mode=TwoWay, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                    <TextBlock DataContext="{Binding ElementName=Biaya, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Margin="0,5">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Bulan Mulai Berlaku" LineHeight="15" Margin="0,0,0,4"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" x:Name="Bulan" Margin="0,0,0,0" Style="{StaticResource ComboBoxInputForm}" Width="190" Validation.ErrorTemplate="{x:Null}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" SelectedValue="{Binding Month}" SelectedValuePath="Tag">
+                                        <ComboBoxItem Tag="1" Content="Januari"/>
+                                        <ComboBoxItem Tag="2" Content="Februari"/>
+                                        <ComboBoxItem Tag="3" Content="Maret"/>
+                                        <ComboBoxItem Tag="4" Content="April"/>
+                                        <ComboBoxItem Tag="5" Content="Mei"/>
+                                        <ComboBoxItem Tag="6" Content="Juni"/>
+                                        <ComboBoxItem Tag="7" Content="Juli"/>
+                                        <ComboBoxItem Tag="8" Content="Agustus"/>
+                                        <ComboBoxItem Tag="9" Content="September"/>
+                                        <ComboBoxItem Tag="10" Content="Oktober"/>
+                                        <ComboBoxItem Tag="11" Content="November"/>
+                                        <ComboBoxItem Tag="12" Content="Desember"/>
+                                    </ComboBox>
+                                    <ComboBox Grid.Column="1" Margin="10,0,0,0" x:Name="Tahun" Width="112" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" ItemsSource="{Binding ListYear}" SelectedItem="{Binding Year}"/>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Margin="0,5">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Surat Kerja (SK)" LineHeight="15" Margin="0,0,0,4"/>
+                                <Grid>
+                                    <TextBox x:Name="NomorSK" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding GolonganFormLltt.NomorSk, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                    <TextBlock DataContext="{Binding ElementName=NomorSK, Path=Text}" Text="No Surat Kerja" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="4" Margin="0,5">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Status" LineHeight="15" Margin="0,0,0,4"/>
+                                <Grid Margin="0,0,0,10">
+                                    <ComboBox x:Name="StatusGolongan" Width="125" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" SelectedValuePath="Content" SelectedValue="{Binding GolonganFormLltt.Status, Converter={StaticResource BooleanToActiveInactiveConverter}, Mode=TwoWay}">
+                                        <ComboBoxItem Content="Aktif"/>
+                                        <ComboBoxItem Content="Non Aktif"/>
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        
+                    </StackPanel>
+                    <Grid Grid.Row="2">
+                        <StackPanel Margin="0,0,20,30" Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <!--<Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">-->
+                            <Grid>
+                                <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                            </Grid>
+
+                            <Grid>
+                                <Button x:Name="OkButton" Click="OkButton_Click" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                    </Viewbox>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+    
+</UserControl>

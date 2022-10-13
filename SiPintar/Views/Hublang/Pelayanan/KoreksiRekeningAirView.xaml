@@ -1,0 +1,31 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.KoreksiRekeningAirView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:SiPintar.Views.Hublang.Pelayanan.KoreksiRekeningAir"
+    xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Hublang.Pelayanan.KoreksiRekeningAir"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}" />
+            <!--  Data template for views  -->
+            <DataTemplate DataType="{x:Type viewmodel:PermohonanKoreksiViewModel}">
+                <view:PermohonanKoreksiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:UsulanKoreksiViewModel}">
+                <view:UsulanKoreksiView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ContentControl
+            x:Name="MainContent"
+            Margin="0"
+            Content="{Binding PageViewModel}"
+            DataContext="{Binding}" />
+    </Grid>
+</UserControl>

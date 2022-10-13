@@ -1,0 +1,50 @@
+﻿<UserControl 
+    x:Class="SiPintar.Views.Global.Dialog.DialogCloseWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Border Width="420" Height="200" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" HorizontalAlignment="Right">
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+
+                    <StackPanel Orientation="Horizontal" Margin="36 0 40 0">
+                        <Image Height="52" Width="52" Source="/SiPintar;component/Assets/Images/ResponseIcon/ic_warning.png" />
+
+                        <StackPanel Orientation="Vertical" Margin="28 0 0 0">
+                            <TextBlock Style="{StaticResource BigTitle}" Text="Tutup Aplikasi PDAM Pintar?" x:Name="Title" />
+                            <TextBlock Width="260" Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" x:Name="Message">
+                                Anda akan menutup seluruh aplikasi PDAM Pintar, pastikan Anda telah menyelesaikan pekerjaan yang sedang berjalan.
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <UniformGrid Grid.Row="2" Margin="116 16 0 0" Columns="2" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <Button Click="Close_Click" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Tutup" md:ButtonAssist.CornerRadius="13"/>
+                        <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="{x:Null}" Foreground="{StaticResource Lochmara}" Style="{StaticResource ButtonSecondarySmall}" Content="Batal" Margin="10,0,0,0" md:ButtonAssist.CornerRadius="13" />
+                    </UniformGrid>
+                    <Grid Margin="116 10 0 0">
+
+                    </Grid>
+
+                </StackPanel>
+
+                <Border Background="{StaticResource BaseApp}" Height="5" Grid.Row="1"/>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

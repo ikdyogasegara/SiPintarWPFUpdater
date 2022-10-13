@@ -1,0 +1,244 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.PelangganL2T2.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost Identifier="SupervisiPelangganDialog" DialogTheme="Inherit">
+        <Grid>
+            <Border Width="520" Height="694" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="1" Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="30" RenderTransformOrigin="0.5, 0.5" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Form Pelanggan L2T2"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Margin="20 23 20 16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Pelanggan*" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="NamaPelanggan" Text="{Binding PelangganForm.Nama}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=NamaPelanggan, Path=Text}" Text="Masukkan nama pelanggan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor L2T2" LineHeight="18"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="85" />
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <TextBox x:Name="NoL2T2" Text="{Binding PelangganForm.NomorLltt}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=NoL2T2, Path=Text}" Text="-" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <Button Grid.Column="1" Style="{StaticResource BtnWrapper}">
+                                    <TextBlock TextWrapping="Wrap" Foreground="{StaticResource SecondaryBlue}" FontSize="12">Otomasi No. Sambung</TextBlock>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor KTP" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="NoKtp" Text="{Binding PelangganForm.NoKtp}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=NoKtp, Path=Text}" Text="Tulis 16 digit nomor ktp pelanggan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Golongan L2T2*" LineHeight="18"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <ComboBox x:Name="KodeTarif" ItemsSource="{Binding TarifLlttList}" DisplayMemberPath="KodeTarifLltt" SelectedValuePath="IdTarifLltt" SelectedValue="{Binding PelangganForm.IdTarifLltt, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="68" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=KodeGolongan, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <Grid>
+                                    <ComboBox x:Name="NamaTarif" ItemsSource="{Binding TarifLlttList}" DisplayMemberPath="NamaTarifLltt" SelectedValuePath="IdTarifLltt" SelectedValue="{Binding PelangganForm.IdTarifLltt, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="123" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="8 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=KodeGolongan, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Telepon" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="NoTelp" Text="{Binding PelangganForm.NoTelp}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=NoTelp, Path=Text}" Text="Masukkan nomor telp. pelanggan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Rayon*" LineHeight="18"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <ComboBox x:Name="KodeRayon" ItemsSource="{Binding RayonList}" DisplayMemberPath="KodeRayon" SelectedValuePath="IdRayon" SelectedValue="{Binding PelangganForm.IdRayon, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="68" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=KodeRayon, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <Grid>
+                                    <ComboBox x:Name="NamaRayon" ItemsSource="{Binding RayonList}" DisplayMemberPath="NamaRayon" SelectedValuePath="IdRayon" SelectedValue="{Binding PelangganForm.IdRayon, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="123" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="8 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=NamaRayon, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor HP" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="NoHp" Text="{Binding PelangganForm.NoHp}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=NoHp, Path=Text}" Text="Masukkan nomor HP pelanggan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kelurahan*" LineHeight="18"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <ComboBox x:Name="KodeKelurahan" ItemsSource="{Binding KelurahanList}" DisplayMemberPath="KodeKelurahan" SelectedValuePath="IdKelurahan" SelectedValue="{Binding PelangganForm.IdKelurahan, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="68" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=KodeKelurahan, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <Grid>
+                                    <ComboBox x:Name="NamaKelurahan" ItemsSource="{Binding KelurahanList}" DisplayMemberPath="NamaKelurahan" SelectedValuePath="IdKelurahan" SelectedValue="{Binding PelangganForm.IdKelurahan, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="123" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="8 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=NamaKelurahan, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Email" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="Email" Text="{Binding PelangganForm.Email}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=Email, Path=Text}" Text="Masukkan alamat e-mail pelanggan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kolektif*" LineHeight="18"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <ComboBox x:Name="KodeKolektif" ItemsSource="{Binding KolektifList}" DisplayMemberPath="KodeKolektif" SelectedValuePath="IdKolektif" SelectedValue="{Binding PelangganForm.IdKolektif, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="68" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=KodeKolektif, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <Grid>
+                                    <ComboBox x:Name="NamaKolektif" ItemsSource="{Binding KolektifList}" DisplayMemberPath="NamaKolektif" SelectedValuePath="IdKolektif" SelectedValue="{Binding PelangganForm.IdKolektif, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Width="123" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="8 4 0 0"/>
+                                    <TextBlock DataContext="{Binding ElementName=NamaKolektif, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Alamat*" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="Alamat" Text="{Binding PelangganForm.Alamat}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=Alamat, Path=Text}" Text="Masukkan nama jalan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="5" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Air" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="NomorAir" Text="{Binding PelangganForm.NoSamb}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=NomorAir, Path=Text}" Text="-" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="6" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Status Pelanggan" LineHeight="18"/>
+                            <Grid>
+                                <ComboBox x:Name="Status" ItemsSource="{Binding StatusList}" DisplayMemberPath="NamaStatus" SelectedValuePath="IdStatus" SelectedValue="{Binding PelangganForm.IdStatus, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0" HorizontalAlignment="Stretch"/>
+                                <TextBlock DataContext="{Binding ElementName=Status, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Grid.Column="1" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Keterangan" LineHeight="18"/>
+                            <Grid>
+                                <TextBox x:Name="Keterangan" Text="{Binding PelangganForm.Keterangan}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0"/>
+                                <TextBlock DataContext="{Binding ElementName=Keterangan, Path=Text}" Text="Masukkan keterangan tambahan" Style="{StaticResource TextBoxPlaceholder}" Padding="0 5 0 0" FontSize="12" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="7" Grid.Column="0" Margin="10 16 10 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Flag Pelanggan" LineHeight="18"/>
+                            <Grid>
+                                <ComboBox x:Name="Flag" ItemsSource="{Binding FlagList}" DisplayMemberPath="NamaFlag" SelectedValuePath="IdFlag" SelectedValue="{Binding PelangganForm.IdFlag, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Margin="0 4 0 0" HorizontalAlignment="Stretch"/>
+                                <TextBlock DataContext="{Binding ElementName=Flag, Path=SelectedItem}" Text="-" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel Margin="30,0,35,24" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                            </Grid>
+                            <Grid>
+                                <Button x:Name="OkButton" Content="Perbarui" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="OkButton_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                    </Viewbox>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

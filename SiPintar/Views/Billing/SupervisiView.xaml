@@ -1,0 +1,168 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Billing.SupervisiView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pelayanan="clr-namespace:SiPintar.ViewModels.Hublang.Pelayanan"
+    xmlns:pelayanan1="clr-namespace:SiPintar.Views.Hublang.Pelayanan"
+    xmlns:view="clr-namespace:SiPintar.Views.Billing.Supervisi"
+    xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Billing.Supervisi"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:ComparisonToVisibilityConverter
+                x:Key="ComparisonToCollapsedConverter"
+                False="visible"
+                True="collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToVisible"
+                False="Collapsed"
+                True="Visible" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToCollapsed"
+                False="Visible"
+                True="Collapsed" />
+
+            <!--  Data template for views  -->
+            <DataTemplate DataType="{x:Type viewmodel:PelangganAirViewModel}">
+                <view:PelangganAirView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PelangganLimbahViewModel}">
+                <view:PelangganLimbahView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PelangganL2T2ViewModel}">
+                <view:PelangganL2T2View />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RekeningAirViewModel}">
+                <view:RekeningAirView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RekeningLimbahViewModel}">
+                <view:RekeningLimbahView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RekeningL2T2ViewModel}">
+                <view:RekeningL2T2View />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PenghapusanRekeningViewModel}">
+                <view:PenghapusanRekeningView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PeriodeViewModel}">
+                <view:PeriodeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:UploadDownloadViewModel}">
+                <view:UploadDownloadView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PostingViewModel}">
+                <view:PostingView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type pelayanan:KoreksiRekeningAirViewModel}">
+                <pelayanan1:KoreksiRekeningAirView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource Black10}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    Background="White"
+                    ClipToBounds="False"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    ToolBarTray.IsLocked="True">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    Click="NavItemSelectedHandler"
+                                    GroupName="NavItem"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                        <Grid Visibility="{Binding Path=Label, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='Usulan Koreksi Rekening'}">
+                                            <Border
+                                                Height="15"
+                                                Margin="3,0"
+                                                Padding="4,2,4,2"
+                                                Background="{Binding Color}"
+                                                CornerRadius="10"
+                                                Visibility="{Binding TotalBadge, FallbackValue='0', Converter={StaticResource ComparisonToCollapsedConverter}, ConverterParameter='0'}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="10"
+                                                    Foreground="White"
+                                                    Text="{Binding TotalBadge, FallbackValue='0'}" />
+                                            </Border>
+                                        </Grid>
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <ContentControl
+            Grid.Row="1"
+            Margin="0,1"
+            Content="{Binding PageViewModel}" />
+
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding PageViewModel}" Visibility="{Binding PageViewModel, Converter={StaticResource NullToCollapsed}, FallbackValue=Collapsed}" />
+            <StackPanel x:Name="SnackbarContainer" />
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Visibility="{Binding PageViewModel, Converter={StaticResource NullToVisible}, FallbackValue=Visible}">
+                <Image
+                    Width="120"
+                    Margin="10,0"
+                    Source="/SiPintar;component/Assets/Images/Application/billing_logo_3x.png" />
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+                    <TextBlock
+                        FontSize="20"
+                        Style="{StaticResource LogoTitleLabel}"
+                        Text="PDAM PINTAR" />
+                    <TextBlock
+                        FontSize="30"
+                        Style="{StaticResource LogoSubtitleLabel}"
+                        Text="Billing" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

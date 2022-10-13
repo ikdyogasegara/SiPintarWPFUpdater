@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.Loket.LoketTerdaftar.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="400" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 8">
+                        <Grid>
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Tambah/Edit Data Loket"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="20 15">
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kode Loket" LineHeight="15" Margin="0,0,0,2"/>
+                            <Grid Width="150" HorizontalAlignment="Left">
+                                <TextBox x:Name="KodeLoket" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding KodeLoketForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=KodeLoket, Path=Text}" Text="Masukkan kode loket" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,15">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Loket" LineHeight="15" Margin="0,0,0,2"/>
+                            <Grid>
+                                <TextBox x:Name="NamaLoket" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaLoketForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=NamaLoket, Path=Text}" Text="Masukkan nama loket" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Kode Wilayah" LineHeight="15" Margin="0,0,0,0"/>
+                            <Grid Margin="0,3,0,0">
+                                <ComboBox x:Name="KodeWilayah" 
+                                Style="{StaticResource ComboBoxInputForm}" 
+                                HorizontalAlignment="Stretch"
+                                SelectedItem="{Binding WilayahForm}" 
+                                SelectedValuePath="KodeWilayah"
+                                DisplayMemberPath="KodeWilayah"
+                                ItemsSource="{Binding WilayahList, Mode=OneWay}"
+                                SelectionChanged="Wilayah_SelectionChanged"
+                                >
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=KodeWilayah, Path=SelectedItem}" Text="Pilih kode" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Wilayah" LineHeight="15" Margin="0,0,0,0"/>
+                            <Grid Margin="0,3,0,0">
+                                <ComboBox x:Name="NamaWilayah" 
+                                Style="{StaticResource ComboBoxInputForm}" 
+                                HorizontalAlignment="Stretch"
+                                SelectedItem="{Binding WilayahForm}" 
+                                SelectedValuePath="KodeWilayah"
+                                DisplayMemberPath="NamaWilayah"
+                                ItemsSource="{Binding WilayahList, Mode=OneWay}"
+                                SelectionChanged="Wilayah_SelectionChanged"
+                                >
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=NamaWilayah, Path=SelectedItem}" Text="Pilih nama wilayah" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Mitra PDAM" LineHeight="15" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton
+                                x:Name="bukanMitra"
+                                GroupName="MitraGroup"
+                                Content="Tidak (Loket PDAM)"
+                                FontSize="12"   
+                                Tag="bukan"
+                                Margin="0" 
+                                Checked="RadioButton_Checked"
+                                Unchecked="RadioButton_Checked" />
+                            <RadioButton 
+                                x:Name="mitra"
+                                GroupName="MitraGroup"
+                                Content="Ya (Contoh: Bank,PTPOS, Dll.)"
+                                FontSize="12"
+                                Tag="mitra"
+                                Margin="20 0" 
+                                Checked="RadioButton_Checked" 
+                                Unchecked="RadioButton_Checked" />
+                        </StackPanel>
+                    </StackPanel>
+                    
+
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Status" LineHeight="15" Margin="0,0,0,0"/>
+                        <Grid Margin="0,3,0,0" Width="150" HorizontalAlignment="Left">
+                            <ComboBox x:Name="Status" 
+                                Style="{StaticResource ComboBoxInputForm}" 
+                                HorizontalAlignment="Stretch"
+                                SelectedItem="{Binding StatusForm}" 
+                                SelectedValuePath="Key"
+                                DisplayMemberPath="Value"
+                                ItemsSource="{Binding StatusList, Mode=OneWay}"
+                                SelectionChanged="Status_SelectionChanged"
+                                >
+                            </ComboBox>
+                            <TextBlock DataContext="{Binding ElementName=Status, Path=SelectedItem}" Text="Pilih status" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Margin="30,15,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

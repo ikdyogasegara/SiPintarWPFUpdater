@@ -1,0 +1,131 @@
+﻿<Window x:Class="SiPintar.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:SiPintar.Converters"
+        xmlns:helper="clr-namespace:SiPintar.Helpers"
+        xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+        xmlns:c="clr-namespace:SiPintar.Utilities"
+        md:TransitionAssist.DisableTransitions="True"
+        mc:Ignorable="d"
+        Title="PDAM Pintar Login"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/LoginStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <md:DialogHost Identifier="LoginViewDialog" DialogTheme="Inherit">
+            <Border Width="600" Margin="0" BorderBrush="Gray" BorderThickness="0.5" KeyDown="ShortcutKey" MouseEnter="MouseWrapper" Focusable="True" x:Name="CompWrapper">
+                <StackPanel>
+                    <Grid helper:EnableDragHelper.EnableDrag="True">
+                        <Grid VerticalAlignment="Top" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="1" Style="{StaticResource WindowOption}">
+                                <Button Style="{StaticResource BtnWrapper}" ToolTip="Pengaturan Aplikasi" Click="Setting_Click" Visibility="Visible" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+                                    <Image Width="14" Source="/SiPintar;component/Assets/Images/Window/ic_setting_filled_white.png" Style="{StaticResource GearImg}" />
+                                </Button>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource WindowOption}" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+                                <ToggleButton Style="{StaticResource MinimizeButtonWhite}"  />
+                            </Border>
+                            <Border Grid.Column="3" Style="{StaticResource WindowOption}" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+                                <ToggleButton Style="{StaticResource CloseButtonWhite}"  />
+                            </Border>
+                        </Grid>
+
+                        <StackPanel VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontSize="17" Text="Selamat Datang di " Style="{StaticResource CaptionSmallBody}" Foreground="White" VerticalAlignment="Center" />
+                                <TextBlock FontSize="17" Text="PDAM PINTAR" Style="{StaticResource CaptionSmallBody}" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Grid Width="240" Margin="0 5 0 0" Opacity="0.8">
+                                <TextBlock FontSize="12" Style="{StaticResource CaptionSmallBody}" Foreground="White" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" LineHeight="15">
+                                        Teknologi manajemen integrasi terpusat PDAM terbaik dari Indonesia.
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+
+                        <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="/SiPintar;component/Assets/Images/login_bg.png" Panel.ZIndex="-1" />
+                        <Border Background="#028DDB" Panel.ZIndex="-2" />
+                    </Grid>
+
+                    <Grid Margin="0 20 0 35">
+                        <StackPanel Name="PanelLogin" Visibility="Visible" Width="400">
+                            <TextBlock x:Name="NamaPdam" Text="PDAM KABUPATEN XXX" Style="{StaticResource CaptionBody}" Margin="0" FontSize="20" />
+                            <Border Height="20"></Border>
+                            <TextBlock Text="ID Pengguna" Style="{StaticResource SmallTitle}" Margin="0" />
+                            <Grid>
+                                <TextBox FontSize="13" x:Name="Username" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaUser}" Style="{DynamicResource TextBoxInputForm}"
+                                         PreviewKeyUp="Username_PreviewKeyUp" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}" />
+                                <TextBlock FontSize="13" DataContext="{Binding ElementName=Username, Path=Text}" Text="Masukkan username" Style="{StaticResource TextBoxPlaceholder}" />
+                            </Grid>
+                            <TextBlock FontSize="12" x:Name="ErrorUsername" Text="{Binding ErrorUsername}" Style="{StaticResource ErrorLoginFormLabel}" Margin="0 0 0 0"/>
+
+                            <TextBlock Text="Kata Sandi" Style="{StaticResource SmallTitle}" Margin="0" />
+                            <Grid>
+                                <PasswordBox FontSize="13" x:Name="PasswordTextBox" PasswordChanged="Password_PasswordChanged" Style="{StaticResource PasswordBoxInputForm}" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}" />
+                                <TextBlock FontSize="13" x:Name="PasswordPlaceholder" DataContext="{Binding ElementName=PasswordTextBox}" Text="Masukkan kata sandi" Style="{StaticResource PasswordPlaceholder}" />
+                            </Grid>
+                            <TextBlock FontSize="12" x:Name="ErrorPassword" Text="{Binding ErrorPassword}" Style="{StaticResource ErrorLoginFormLabel}" Margin="0 0 0 0"/>
+
+                            <Grid Margin="0,5,0,0" Height="45">
+                                <Button FontSize="13" x:Name="Login" Content="Masuk" Click="Login_Click" Style="{StaticResource LoginButton}" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <other:SpinnerLoadingView Panel.ZIndex="2" x:Name="Loader" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}" />
+                            </Grid>
+                            <TextBlock FontSize="12" x:Name="ErrorMessage" Text="{Binding ErrorMessage}" Style="{StaticResource ErrorLoginFormLabel}" Margin="0 0 0 0"/>
+
+                        </StackPanel>
+
+                        <StackPanel Name="PanelLupaPassword" Visibility="Collapsed" Width="230">
+                            <Image Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" Source="/SiPintar;component/Assets/Images/lupa_password.png" />
+
+                            <TextBlock Text="Permintaan Password Baru" Style="{StaticResource LoginLabel}" HorizontalAlignment="Center" FontSize="16" />
+                            <TextBlock Text="Hubungi Staf IT atau Admin di PDAM setempat untuk mendapatkan password baru." Style="{StaticResource LupaPasswordMessage}" FontSize="11" Margin="0 10 0 0" />
+
+                            <Grid>
+                                <Button x:Name="BackToLogin" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Stretch" Margin="0,32" Click="BackToLogin_Click">Kembali Ke Login</Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="20 15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal" >
+                            <!--<Image Width="60" Source="/SiPintar;component/Assets/Images/Application/pdam_pintar.png" Margin="0 0 0 0" />-->
+                            <TextBlock Style="{StaticResource CaptionBody}"  HorizontalAlignment="Center" FontSize="11" VerticalAlignment="Center" Margin="0 10 0 0">
+                                © 2021 - PT Bima Sakti Alterra - Version
+                                <Run x:Name="VersionInformation" Text="0" />
+                            </TextBlock>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" x:Name="LupaPassword" FontSize="11" Text="Lupa Password?" Style="{StaticResource ForgotPasswordLabel}" HorizontalAlignment="Right" UIElement.PreviewMouseDown="LupaPassword_PreviewMouseDown" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}" />
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </md:DialogHost>
+        <md:DialogHost Identifier="OptionDialog" DialogTheme="Inherit" />
+    </Grid>
+</Window>

@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Atribut.Paket.Material.BarangFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Width="700" MinHeight="500" MaxHeight="700" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPerencanaan}" Grid.ColumnSpan="3">
+                <Grid Margin="10 8">
+                    <Grid>
+                        <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Tambah/Koreksi Barang Material"/>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                            <TextBlock Foreground="{StaticResource BaseAppPerencanaan}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+
+                        <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Grid.Column="0" Margin="20 15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="90" />
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Style="{StaticResource SmallTitle}" Text="Cari Barang" LineHeight="15" Margin="0,0,0,5"/>
+                    <Grid>
+                        <TextBox x:Name="Keyword" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaBarangForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                        <TextBlock DataContext="{Binding ElementName=Keyword, Path=Text}" Text="Cari berdasarkan nama barang" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Column="2">
+                    <Button Content="Cari" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Command="{Binding OnSearchBarangCommand}" Margin="0 10 0 0" />
+                </Grid>
+                <Grid Grid.Column="4" Visibility="{Binding IsTriggerSearch, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Margin="0 28 0 0" PreviewKeyUp="CheckForm_PreviewKeyUp">
+                        <Run Text="Ditemukan"/>
+                        <Run FontWeight="Bold" Text="{Binding SearchList.Count, Mode=OneWay, FallbackValue='0'}"/>
+                        <Run Text="hasil pencarian"/>
+                        <Run Text="'"/>
+                        <Run FontWeight="Bold" Text="{Binding NamaBarangForm, FallbackValue='-'}"/>
+                        <Run Text="'"/>
+                    </TextBlock>
+                </Grid>
+                <Grid Grid.Column="6" Visibility="{Binding IsTriggerSearch, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Button Content="Reset Pencarian" Style="{StaticResource BtnWrapper}" Command="{Binding OnResetSearchBarangCommand}" Foreground="{StaticResource SecondaryBlue}" Margin="0 5 0 0" />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="10 0 10 20">
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="286*"/>
+                        <ColumnDefinition Width="101*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptySearch, Converter={StaticResource BooleanToVisibleConverter}}" Grid.ColumnSpan="2">
+                        <Image Height="90" Source="/SiPintar;component/Assets/Images/empty_data_v2.png"></Image>
+                        <Border Height="8"/>
+                        <TextBlock Margin="0" FontSize="12" Style="{StaticResource CaptionSmallBody}" TextAlignment="Center">
+                            <Run Text="Silakan cari barang lainnya atau" />
+                            <LineBreak />
+                            <Run Text="tambah data barang material terlebih dahulu." />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid
+                        IsReadOnly="True"
+                        ItemsSource="{Binding SearchList, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding Path=DataContext.SelectedBarang, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Width="0.5*" Binding="{Binding KodeMaterial}" Header="KODE" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        <DataGridTextColumn Width="*" Binding="{Binding NamaMaterial}" Header="NAMA BARANG" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        <DataGridTextColumn Width="0.5*" Binding="{Binding Satuan}" Header="SATUAN" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        <DataGridTextColumn Width="0.5*" Binding="{Binding HargaJual, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Header="HARGA NET @" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        <DataGridTemplateColumn Width="100" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding Path=DataContext.OnSubmitAddBarangStep1Command,  RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding IdMaterial}" Padding="0" Height="10" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0">
+                                        <TextBlock FontFamily="{StaticResource SarabunSemiBold}" Style="{StaticResource LabelTextLink}" Text="Tambah"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

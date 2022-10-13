@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.DataMaster.TipeKeluarga.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToStringConverter x:Key="FlagKawinConverter" True="Menikah" False="Tidak Menikah" />
+            <converters:BooleanToStringConverter x:Key="FlagPersenConverter" True="Persen" False="Non-Persen" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="480" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPersonalia}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Tambah/Edit Data Tipe Keluarga"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16">
+                                <TextBlock Foreground="{StaticResource BaseAppPersonalia}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="32 16 32 0">
+                    <StackPanel Margin="0,0,0,8">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Kode" LineHeight="18" Margin="0,0,0,4"/>
+                        <Grid IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}">
+                            <TextBox x:Name="KodeTipeKeluarga" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding FormKodeTipeKeluarga, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock DataContext="{Binding ElementName=KodeTipeKeluarga, Path=Text}" Text="Masukkan kode tipe keluarga" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,8">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Uraian" LineHeight="18" Margin="0,0,0,4"/>
+                        <Grid>
+                            <TextBox x:Name="Uraian" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding FormUraian, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock DataContext="{Binding ElementName=Uraian, Path=Text}" Text="Masukkan uraian" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,8">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Status Perkawinan" LineHeight="18" Margin="0,0,0,4"/>
+                        <Grid>
+                            <ComboBox x:Name="FlagKawin"
+                                              SelectedValuePath="Content"
+                                              SelectedValue="{Binding FormFlagKawin, Converter={StaticResource FlagKawinConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectionChanged="CheckForm_SelectionChanged"
+                                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}"
+                                              Style="{StaticResource ComboBoxInputForm}">
+                                <ComboBoxItem Content="Menikah"/>
+                                <ComboBoxItem Content="Tidak Menikah"/>
+                            </ComboBox>
+                            <TextBlock DataContext="{Binding ElementName=FlagKawin, Path=Text}" Text="Pilih status perkawinan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0 0 8 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tunjangan Beras / Pangan" LineHeight="18" Margin="0,0,0,4"/>
+                            <Grid>
+                                <ComboBox x:Name="FlagPersenPangan"
+                                              SelectedValuePath="Content"
+                                              SelectedValue="{Binding FormFlagPersenPangan, Converter={StaticResource FlagPersenConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectionChanged="CheckForm_SelectionChanged"
+                                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}"
+                                              Style="{StaticResource ComboBoxInputForm}">
+                                    <ComboBoxItem Content="Persen"/>
+                                    <ComboBoxItem Content="Non-Persen"/>
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=FlagKawin, Path=Text}" Text="Pilih tunjangan beras / pangan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="8 0 0 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nominal" LineHeight="18" Margin="0,0,0,4"/>
+                            <Grid>
+                                <TextBox x:Name="NominalPangan" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding FormNominalPangan, StringFormat=N2, ConverterCulture='id-ID', Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=NominalPangan, Path=Text}" Text="Masukkan nominal" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0 0 8 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tunjangan Keluarga" LineHeight="18" Margin="0,0,0,4"/>
+                            <Grid>
+                                <ComboBox x:Name="FlagPersenKel"
+                                              SelectedValuePath="Content"
+                                              SelectedValue="{Binding FormFlagPersenKel, Converter={StaticResource FlagPersenConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              SelectionChanged="CheckForm_SelectionChanged"
+                                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}"
+                                              Style="{StaticResource ComboBoxInputForm}">
+                                    <ComboBoxItem Content="Persen"/>
+                                    <ComboBoxItem Content="Non-Persen"/>
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=FlagKawin, Path=Text}" Text="Pilih tunjangan keluarga" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="8 0 0 0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nominal" LineHeight="18" Margin="0,0,0,4"/>
+                            <Grid>
+                                <TextBox x:Name="NominalKel" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding FormNominalKel, StringFormat=N2, ConverterCulture='id-ID', Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=NominalKel, Path=Text}" Text="Masukkan nominal" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Margin="30,24,32,24" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Command="{Binding OnSubmitFormCommand}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

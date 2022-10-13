@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.DaftarBarangMasuk.DialogSetTanggalVoucher"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi.DaftarBarangMasuk"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignWidth="360">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:NullBooleanConverter x:Key="NullToBooleanConverter" True="False"  False="True"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="360">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Set Tanggal Voucher"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="32,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Kode Request*" Style="{StaticResource SmallTitle}" />
+                <Grid Margin="0,4,0,0">
+                    <TextBox Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding SelectedDaftarBarangMasuk.NomorTransaksi}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="0,12,0,0">
+                <TextBlock Text="Tanggal" Style="{StaticResource SmallTitle}" />
+                <Border BorderThickness="1" BorderBrush="{StaticResource Nepal}" Padding="0,5" CornerRadius="2" Margin="0,4,0,0">
+                    <Grid>
+                        <DatePicker x:Name="Tanggal" Style="{StaticResource DefaultDatePicker}" BorderThickness="0" Padding="8,0,0,0" SelectedDate="{Binding SelectedDaftarBarangMasuk.Tgl_Voucher, Mode=OneTime}"/>
+                        <TextBlock Style="{StaticResource ComboBoxSelectOverlay}" Text="Pilih Tanggal" DataContext="{Binding ElementName=Tanggal, Path=SelectedDate}"
+                                   Panel.ZIndex="10" Margin="8,1,0,0" Foreground="{StaticResource Gray100}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,24,0,0">
+                <Button Content="Kembali" Style="{StaticResource ButtonSecondarySmall}" Margin="0,0,16,0" MinWidth="79" Command="{x:Static md:DialogHost.CloseDialogCommand}" />
+                <Button Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" MinWidth="76" Command="{Binding OnSetTanggalVoucherCommand}" CommandParameter="{Binding ElementName=Tanggal, Path=SelectedDate}"
+                        IsEnabled="{Binding ElementName=Tanggal, Path=SelectedDate, Converter={StaticResource NullToBooleanConverter}, FallbackValue=False}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

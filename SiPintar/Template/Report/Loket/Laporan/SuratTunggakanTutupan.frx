@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="02/23/2021 15:38:36" ReportInfo.CreatorVersion="2021.1.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {                                                         
+
+    private void GroupFooter1_BeforeLayout(object sender, EventArgs e)
+    {                                                                        
+    }
+
+    private void Data1_BeforePrint(object sender, EventArgs e)
+    {
+      
+    }
+
+    private void GroupFooter2_BeforePrint(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <TableDataSource Name="DataSurat" Alias="Surat" ReferenceName="Data.DataSurat" DataType="System.Int32" Enabled="true">
+      <Column Name="Tipe" DataType="System.Int32"/>
+      <Column Name="JenisTipe" DataType="System.String"/>
+      <Column Name="Periode" DataType="System.String"/>
+      <Column Name="Jenis" DataType="System.String"/>
+      <Column Name="Bulan" DataType="System.String"/>
+      <Column Name="Meterai" DataType="System.Decimal"/>
+      <Column Name="KodeWil" DataType="System.String"/>
+      <Column Name="NoSamb" DataType="System.String"/>
+      <Column Name="KodeRayon" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="KodeGol" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="RekAir" DataType="System.Decimal"/>
+      <Column Name="Denda" DataType="System.Decimal"/>
+      <Column Name="Jumlah" DataType="System.Decimal"/>
+      <Column Name="Nomor" DataType="System.String"/>
+      <Column Name="Terbilang" DataType="System.String"/>
+      <Column Name="JumlahTagihan" DataType="System.Int32"/>
+    </TableDataSource>
+    <TableDataSource Name="ParamData" Alias="Param" ReferenceName="Data.ParamData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Footer" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+      <Column Name="Email" DataType="System.String"/>
+      <Column Name="Tanggal" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="Kasir" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="ParafData" Alias="Paraf" ReferenceName="Data.ParafData" DataType="System.Int32" Enabled="true">
+      <Column Name="Ket1" DataType="System.String"/>
+      <Column Name="Jab1" DataType="System.String"/>
+      <Column Name="Nama1" DataType="System.String"/>
+      <Column Name="Nik1" DataType="System.String"/>
+      <Column Name="Ket2" DataType="System.String"/>
+      <Column Name="Jab2" DataType="System.String"/>
+      <Column Name="Nama2" DataType="System.String"/>
+      <Column Name="Nik2" DataType="System.String"/>
+      <Column Name="Ket3" DataType="System.String"/>
+      <Column Name="Jab3" DataType="System.String"/>
+      <Column Name="Nama3" DataType="System.String"/>
+      <Column Name="Nik3" DataType="System.String"/>
+      <Column Name="NomorSurat" DataType="System.String"/>
+      <Column Name="TanggalCetak" Enabled="false" DataType="System.String"/>
+    </TableDataSource>
+    <Total Name="TotalRekAir" Expression="[Surat.RekAir]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalDenda" Expression="[Surat.Denda]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalJumlah" Expression="[Surat.Jumlah]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="215" PaperHeight="148" TopMargin="3" BottomMargin="3" Guides="793.8" Watermark.Font="Arial, 60pt">
+    <GroupHeaderBand Name="GroupHeader1" Width="737.1" Height="194.43" StartNewPage="true" Condition="[Surat.Nomor]" KeepTogether="true">
+      <TextObject Name="Memo17" Left="395.71" Top="5.45" Width="117.17" Height="18.9" Text="Tanggal/Jam cetak" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Memo51" Left="516.66" Top="5.45" Width="204.1" Height="18.9" Text=": [FormatDateTime([Date],&quot;dd MMMM yyyy HH:mm&quot;)]" Padding="2, 1, 2, 1" Format="Time" Format.Format="t" Font="Arial, 10pt"/>
+      <TextObject Name="Memo3" Left="6.42" Top="94.94" Width="464.88" Height="30.24" Text="INFORMASI TAGIHAN AIR PELANGGAN" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Memo5" Left="471.3" Top="91.94" Width="41.57" Height="30.24" Text="ID :" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 20pt, style=Bold"/>
+      <TextObject Name="Memo6" Left="512.88" Top="91.94" Width="204.09" Height="30.24" Text=": [Surat.NoSamb]" Padding="2, 1, 2, 1" Font="Arial, 20pt, style=Bold"/>
+      <TextObject Name="Memo1" Left="6.42" Top="5.45" Width="362.83" Height="22.68" Text="BIMASAKTI ALTERRA" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Memo4" Left="6.42" Top="50.8" Width="362.83" Height="22.68" Text="Jl. Denpasar-Bali" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 11pt"/>
+      <TextObject Name="Memo2" Left="6.42" Top="28.13" Width="362.83" Height="22.68" Text="PERUMDA AIR MINUM Wil.BALI" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 12pt"/>
+      <LineObject Name="Line1" Left="242.67" Top="120.72" Width="631.18" Border.Style="Dot"/>
+      <TextObject Name="Memo52" Left="6.42" Top="127.5" Width="98.27" Height="18.9" Text="Rayon" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo7" Left="104.69" Top="127.5" Width="162.52" Height="18.9" Text=": [Surat.KodeRayon]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo27" Left="441.07" Top="127.5" Width="120.94" Height="18.9" Text="Status" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo32" Left="562.01" Top="127.5" Width="11.34" Height="18.9" Text=":" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo35" Left="573.35" Top="127.5" Width="120.94" Height="18.9" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo33" Left="104.69" Top="148.63" Width="313.7" Height="18.9" Text=": [Surat.Nama]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 12pt"/>
+      <TextObject Name="Memo8" Left="6.42" Top="148.63" Width="98.27" Height="18.9" Text="Nama" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo31" Left="441.07" Top="148.63" Width="120.94" Height="18.9" Text="Jml.Tagihan Air" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo34" Left="562.01" Top="148.63" Width="11.34" Height="18.9" Text=":" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo36" Left="573.35" Top="148.63" Width="120.94" Height="18.9" Text="[Surat.JumlahTagihan]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" Font="Arial, 12pt"/>
+      <TextObject Name="Memo39" Left="104.69" Top="167.53" Width="313.7" Height="18.9" Text=": [Surat.Alamat]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <TextObject Name="Memo54" Left="6.42" Top="167.53" Width="98.27" Height="18.9" Text="Alamat" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="197.1" Width="737.1" Height="19.35" Condition="[Surat.Tipe]">
+        <TextObject Name="Memo9" Left="9.41" Top="0.45" Width="52.91" Height="18.9" Border.Lines="All" Text="NO" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo10" Left="62.32" Top="0.45" Width="52.91" Height="18.9" Border.Lines="All" Text="TARIF" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo11" Left="115.24" Top="0.45" Width="102.05" Height="18.9" Border.Lines="All" Text="TGL_BAYAR" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo12" Left="217.28" Top="0.45" Width="102.05" Height="18.9" Border.Lines="All" Text="PERIODE" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo13" Left="319.33" Top="0.45" Width="102.05" Height="18.9" Border.Lines="All" Text="TAGIHAN" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo14" Left="421.38" Top="0.45" Width="102.05" Height="18.9" Border.Lines="All" Text="DENDA_AIR" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Text1" Left="523.75" Width="117.17" Height="18.9" Border.Lines="All" Text="TTL_TAGIHAN" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <DataBand Name="Data1" Top="219.11" Width="737.1" Height="21.68" BeforePrintEvent="Data1_BeforePrint" DataSource="DataSurat">
+          <TextObject Name="Memo16" Left="9.41" Top="-1" Width="52.91" Height="22.68" Border.Lines="All" Text="[Row#]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+          <TextObject Name="Memo18" Left="62.32" Top="-1" Width="52.91" Height="22.68" Border.Lines="All" Text="[Surat.KodeGol]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+          <TextObject Name="Memo19" Left="115.24" Top="-1" Width="102.05" Height="22.68" Border.Lines="All" Text="[Surat.Keterangan]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+          <TextObject Name="Memo20" Left="217.28" Top="-1" Width="102.05" Height="22.68" Border.Lines="All" Text="[Surat.Periode]" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+          <TextObject Name="Memo21" Left="319.33" Top="-1" Width="102.05" Height="22.68" Border.Lines="All" Text="[Surat.RekAir]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+          <TextObject Name="Memo22" Left="421.38" Top="-1" Width="102.05" Height="22.68" Border.Lines="All" Text="[Surat.Denda]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+          <TextObject Name="Memo23" Left="523.43" Top="-1" Width="117.17" Height="22.68" Border.Lines="All" Text="[Surat.Jumlah]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter2" Top="243.46" Width="737.1" Height="32.13" BeforePrintEvent="GroupFooter2_BeforePrint">
+          <TextObject Name="Memo24" Left="9.96" Width="309.92" Height="22.68" Border.Lines="All" Text="TOTAL TAGIHAN" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+          <TextObject Name="Memo28" Left="319.88" Width="102.05" Height="22.68" Border.Lines="All" Text="[TotalRekAir]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+          <TextObject Name="Memo29" Left="421.93" Width="102.05" Height="22.68" Border.Lines="All" Text="[TotalDenda]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+          <TextObject Name="Memo30" Left="523.98" Width="117.17" Height="22.68" Border.Lines="All" Text="[TotalJumlah]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 12pt"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="278.26" Width="737.1" Height="179.55" BeforeLayoutEvent="GroupFooter1_BeforeLayout">
+        <TextObject Name="Memo58" Left="3.16" Top="32.13" Width="740.79" Height="18.9" Text="Catatan:" Padding="2, 1, 2, 1" Font="Arial, 12pt"/>
+        <TextObject Name="Memo63" Left="3.16" Top="54.8" Width="740.79" Height="18.9" Text="harap menyelesaikan tunggakannya,Agar terhindar dari penyegelan / Ditutup" Padding="2, 1, 2, 1" Font="Arial, 12pt, style=Italic"/>
+        <TextObject Name="Memo66" Left="3.16" Width="86.93" Height="18.9" Text="Terbilang :" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" Font="Arial, 12pt"/>
+        <TextObject Name="Memo67" Left="90.09" Width="642.52" Height="18.9" Text="[Surat.Terbilang]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" Font="Arial, 12pt"/>
+        <TextObject Name="Memo25" Left="415.13" Top="92.6" Width="317.48" Height="15.12" Text="PERUMDA AIR MINUM Wil.BALI" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Memo26" Left="415.13" Top="107.72" Width="317.48" Height="18.9" Text="BIMASAKTI ALTERRA" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 10pt"/>
+        <LineObject Name="Line2" Left="430.25" Top="171.97" Width="291.02" Border.Style="Dot"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

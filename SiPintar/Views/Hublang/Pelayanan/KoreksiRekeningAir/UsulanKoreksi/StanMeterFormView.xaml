@@ -1,0 +1,1180 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.KoreksiRekeningAir.UsulanKoreksi.StanMeterFormView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:NullVisibilityConverter
+                x:Key="NullVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:NullVisibilityConverter
+                x:Key="NullCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid
+        Width="600"
+        MaxHeight="600"
+        Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Background="{StaticResource BaseAppHublang}"
+            Orientation="Vertical">
+            <Grid Margin="10,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="10,7,15,5">
+                    <TextBlock
+                        x:Name="Title"
+                        FontSize="13"
+                        Foreground="White"
+                        LineHeight="10"
+                        Style="{StaticResource BigTitle}"
+                        Text="Usulan Koreksi Rekening" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Button
+                        Width="14"
+                        Height="14"
+                        Margin="8"
+                        Padding="0"
+                        Background="{x:Null}"
+                        Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                        Style="{StaticResource ButtonPlain}">
+                        <md:PackIcon
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Kind="Close" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <ScrollViewer
+            x:Name="scrollBar"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid
+                    x:Name="HeaderAddForm"
+                    Grid.Row="0"
+                    Margin="0,15,0,0">
+                    <Border
+                        Margin="16,0"
+                        Padding="15,16,15,22"
+                        Background="{StaticResource Black10}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="15" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Rekening Bulan" />
+                                <TextBlock
+                                    Margin="0,3,10,0"
+                                    FontSize="14"
+                                    LineHeight="18"
+                                    Style="{StaticResource SmallTitle}"
+                                    Text="{Binding SelectedPiutangAir.NamaPeriode, Converter={StaticResource StringDefaultValueConverter}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1">
+                                <TextBlock
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Nama" />
+                                <TextBlock
+                                    Margin="0,3,10,0"
+                                    FontSize="14"
+                                    LineHeight="18"
+                                    Style="{StaticResource SmallTitle}"
+                                    Text="{Binding SelectedPiutangAir.Nama, Converter={StaticResource StringDefaultValueConverter}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="No. Sambungan" />
+                                <TextBlock
+                                    Margin="0,3,10,0"
+                                    FontSize="14"
+                                    LineHeight="18"
+                                    Style="{StaticResource SmallTitle}"
+                                    Text="{Binding SelectedPiutangAir.NoSamb, Converter={StaticResource StringDefaultValueConverter}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Golongan" />
+                                <TextBlock
+                                    Margin="0,3,10,0"
+                                    FontSize="14"
+                                    LineHeight="18"
+                                    Style="{StaticResource SmallTitle}"
+                                    Text="{Binding SelectedPiutangAir.NamaGolongan, Converter={StaticResource StringDefaultValueConverter}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="1">
+                                <TextBlock
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Diameter" />
+                                <TextBlock
+                                    Margin="0,3,10,0"
+                                    FontSize="14"
+                                    LineHeight="18"
+                                    Style="{StaticResource SmallTitle}"
+                                    Text="{Binding SelectedPiutangAir.NamaDiameter, Converter={StaticResource StringDefaultValueConverter}}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <StackPanel Grid.Row="1" Margin="16,0">
+
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        FontFamily="{StaticResource SarabunSemiBold}"
+                        FontSize="12"
+                        FontWeight="DemiBold"
+                        Foreground="Black"
+                        Style="{StaticResource CaptionSmallBody}"
+                        Text="Tipe Koreksi" />
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton
+                            x:Name="KoreksiPemakaian"
+                            Margin="0,5,5,5"
+                            Checked="Tipe_Checked"
+                            Content="Koreksi Pemakaian"
+                            FontSize="12"
+                            GroupName="TipeKoreksi"
+                            IsChecked="True"
+                            Style="{StaticResource RadioStyle}" />
+                        <RadioButton
+                            x:Name="HanyaAbonemen"
+                            Margin="15,5,0,5"
+                            Checked="Tipe_Checked"
+                            Content="Hanya Abonemen"
+                            FontSize="12"
+                            GroupName="TipeKoreksi"
+                            Style="{StaticResource RadioStyle}" />
+                    </StackPanel>
+
+                    <Separator Height="0.2" Margin="0,5" />
+
+                    <Grid Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontSize="12"
+                                Foreground="#028DDB"
+                                LineHeight="15"
+                                Style="{StaticResource BigTitle}"
+                                Text="Rekening Saat Ini" />
+                            <Border Padding="15,16,15,22" Background="{StaticResource Black10}">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Stan Lalu" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Stan Kini" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Stan Angkat" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pakai" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="{Binding SelectedPiutangAir.StanLalu, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="{Binding SelectedPiutangAir.StanSkrg, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="{Binding SelectedPiutangAir.StanAngkat, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="{Binding SelectedPiutangAir.Pakai, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Separator Height="0.3" Margin="0,5" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Biaya Pakai" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Administrasi" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pemeliharaan" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Retribusi" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pelayanan" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="AirLimbah" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Denda Pakai 0" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Administrasi Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pemeliharaan Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Retribusi Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Ppn" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Meterai" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Rekening Air" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Denda" />
+                                            <TextBlock
+                                                Margin="0,10"
+                                                FontSize="13"
+                                                Foreground="Black"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Total Biaya" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.BiayaPemakaian, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Administrasi, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Pemeliharaan, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Retribusi, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Pelayanan, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.AirLimbah, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.DendaPakai0, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.AdministrasiLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.PemeliharaanLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.RetribusiLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Ppn, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Meterai, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Rekair, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Denda, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,10"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding SelectedPiutangAir.Total, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock
+                                Margin="0,0,0,5"
+                                FontSize="12"
+                                Foreground="#028DDB"
+                                LineHeight="15"
+                                Style="{StaticResource BigTitle}"
+                                Text="Diusulkan Menjadi" />
+                            <Border Padding="15,16,15,22" Background="{StaticResource Black10}">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <CheckBox
+                                                x:Name="CekStanLalu"
+                                                Margin="0,4"
+                                                Content="Stan Lalu"
+                                                IsChecked="{Binding IsStanLaluChecked}"
+                                                Style="{StaticResource FilterCheckBox}" />
+                                            <CheckBox
+                                                x:Name="CekStanKini"
+                                                Margin="0,4"
+                                                Content="Stan Kini"
+                                                IsChecked="{Binding IsStanKiniChecked}"
+                                                Style="{StaticResource FilterCheckBox}" />
+                                            <CheckBox
+                                                x:Name="CekStanAngkat"
+                                                Margin="0,4"
+                                                Content="Stan Angkat"
+                                                IsChecked="{Binding IsStanAngkatChecked}"
+                                                Style="{StaticResource FilterCheckBox}" />
+                                            <CheckBox
+                                                x:Name="CekPakai"
+                                                Margin="0,4"
+                                                Content="Pakai"
+                                                IsChecked="{Binding IsPakaiChecked}"
+                                                Style="{StaticResource FilterCheckBox}" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBox
+                                                x:Name="StanLalu"
+                                                Width="100"
+                                                Height="20"
+                                                Margin="0,0,0,2"
+                                                HorizontalAlignment="Right"
+                                                IsEnabled="{Binding IsStanLaluChecked}"
+                                                Style="{StaticResource TextBoxInputForm}"
+                                                TextChanged="StanLalu_TextChanged" />
+                                            <TextBox
+                                                x:Name="StanSkrg"
+                                                Width="100"
+                                                Height="20"
+                                                Margin="0,0,0,2"
+                                                HorizontalAlignment="Right"
+                                                IsEnabled="{Binding IsStanKiniChecked}"
+                                                Style="{StaticResource TextBoxInputForm}"
+                                                TextChanged="StanSkrg_TextChanged" />
+                                            <TextBox
+                                                x:Name="StanAngkat"
+                                                Width="100"
+                                                Height="20"
+                                                Margin="0,0,0,2"
+                                                HorizontalAlignment="Right"
+                                                IsEnabled="{Binding IsStanAngkatChecked}"
+                                                Style="{StaticResource TextBoxInputForm}"
+                                                TextChanged="StanAngkat_TextChanged" />
+                                            <TextBox
+                                                x:Name="Pakai"
+                                                Width="100"
+                                                Height="20"
+                                                Margin="0,0,0,0"
+                                                HorizontalAlignment="Right"
+                                                IsEnabled="{Binding IsPakaiChecked}"
+                                                Style="{StaticResource TextBoxInputForm}"
+                                                TextChanged="Pakai_TextChanged" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <Separator Height="0.3" Margin="0,15,0,5" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Biaya Pakai" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Administrasi" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pemeliharaan" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Retribusi" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pelayanan" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="AirLimbah" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Denda Pakai 0" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Administrasi Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Pemeliharaan Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Retribusi Lain" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Ppn" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Meterai" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Rekening Air" />
+                                            <TextBlock
+                                                Margin="0,3"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Denda" />
+                                            <TextBlock
+                                                Margin="0,10"
+                                                FontSize="13"
+                                                Foreground="Black"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="Total Biaya" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.BiayaPemakaian, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Administrasi, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Pemeliharaan, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Retribusi, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Pelayanan, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.AirLimbah, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.DendaPakai0, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.AdministrasiLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.PemeliharaanLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.RetribusiLain, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Ppn, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Meterai, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Rekair, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,3"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Denda, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+                                            <TextBlock
+                                                Margin="0,10"
+                                                FontSize="12"
+                                                LineHeight="18"
+                                                Style="{StaticResource SmallTitle}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap">
+                                                <Run Text="Rp" />
+                                                <Run Text="{Binding HitungKoreksi.Total, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID', FallbackValue='0'}" />
+                                            </TextBlock>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    Margin="50,0,16,0"
+                    Background="White">
+                    <StackPanel Grid.Column="0">
+                        <Border
+                            Height="180"
+                            Padding="10,10,10,15"
+                            BorderBrush="{StaticResource BaseGray}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <CheckBox
+                                        Margin="0,5,0,10"
+                                        Content="Foto Bukti 1"
+                                        IsChecked="{Binding IsFotoBukti1FormChecked, Mode=TwoWay}"
+                                        Style="{StaticResource FilterCheckBox}" />
+                                    <TextBlock
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                        TextWrapping="Wrap" />
+                                    <Grid IsEnabled="{Binding IsFotoBukti1FormChecked}">
+                                        <Button
+                                            Width="80"
+                                            Height="28"
+                                            Margin="0,10,0,0"
+                                            HorizontalAlignment="Left"
+                                            md:ButtonAssist.CornerRadius="13"
+                                            BorderBrush="{StaticResource PictonBlue}"
+                                            Click="BtnOnBrowseFileBukti1Command_Click"
+                                            Content="Pilih File"
+                                            FontSize="11"
+                                            Foreground="{StaticResource PictonBlue}"
+                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                            Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                            <Button
+                                                Width="80"
+                                                Height="28"
+                                                Margin="10,10,0,0"
+                                                HorizontalAlignment="Left"
+                                                Click="BtnOnBrowseFileBukti2Command_Click"
+                                                Content="Ubah Foto"
+                                                FontSize="11"
+                                                Foreground="{StaticResource PictonBlue}"
+                                                Style="{StaticResource BtnWrapper}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <Grid Grid.Column="1">
+                                    <Grid Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Panel.ZIndex="1"
+                                            Foreground="Gray">
+                                            Belum ada foto
+                                        </TextBlock>
+                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                    </Grid>
+                                    <Grid Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                        <Image
+                                            Width="180"
+                                            Height="180"
+                                            Source="{Binding FotoBukti1Uri}"
+                                            Stretch="UniformToFill" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border Height="10" />
+                        <Border
+                            Height="180"
+                            Padding="10,10,10,15"
+                            BorderBrush="{StaticResource BaseGray}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <CheckBox
+                                        Margin="0,5,0,10"
+                                        Content="Foto Bukti 2"
+                                        IsChecked="{Binding IsFotoBukti2FormChecked, Mode=TwoWay}"
+                                        Style="{StaticResource FilterCheckBox}" />
+                                    <TextBlock
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                        TextWrapping="Wrap" />
+                                    <Grid IsEnabled="{Binding IsFotoBukti2FormChecked}">
+                                        <Button
+                                            Width="80"
+                                            Height="28"
+                                            Margin="0,10,0,0"
+                                            HorizontalAlignment="Left"
+                                            md:ButtonAssist.CornerRadius="13"
+                                            BorderBrush="{StaticResource PictonBlue}"
+                                            Click="BtnOnBrowseFileBukti2Command_Click"
+                                            Content="Pilih File"
+                                            FontSize="11"
+                                            Foreground="{StaticResource PictonBlue}"
+                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                            Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                            <Button
+                                                Width="80"
+                                                Height="28"
+                                                Margin="10,10,0,0"
+                                                HorizontalAlignment="Left"
+                                                Click="BtnOnBrowseFileBukti2Command_Click"
+                                                Content="Ubah Foto"
+                                                FontSize="11"
+                                                Foreground="{StaticResource PictonBlue}"
+                                                Style="{StaticResource BtnWrapper}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <Grid Grid.Column="1">
+                                    <Grid Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Panel.ZIndex="1"
+                                            Foreground="Gray">
+                                            Belum ada foto
+                                        </TextBlock>
+                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                    </Grid>
+                                    <Grid Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                        <Image
+                                            Width="180"
+                                            Height="180"
+                                            Source="{Binding FotoBukti2Uri}"
+                                            Stretch="UniformToFill" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border Height="10" />
+                        <Border
+                            Height="180"
+                            Padding="10,10,10,15"
+                            BorderBrush="{StaticResource BaseGray}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                    <CheckBox
+                                        Margin="0,5,0,10"
+                                        Content="Foto Bukti 3"
+                                        IsChecked="{Binding IsFotoBukti3FormChecked, Mode=TwoWay}"
+                                        Style="{StaticResource FilterCheckBox}" />
+                                    <TextBlock
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Pilih &amp; Upload file dari dokumen komputer."
+                                        TextWrapping="Wrap" />
+                                    <Grid IsEnabled="{Binding IsFotoBukti3FormChecked}">
+                                        <Button
+                                            Width="80"
+                                            Height="28"
+                                            Margin="0,10,0,0"
+                                            HorizontalAlignment="Left"
+                                            md:ButtonAssist.CornerRadius="13"
+                                            BorderBrush="{StaticResource PictonBlue}"
+                                            Click="BtnOnBrowseFileBukti3Command_Click"
+                                            Content="Pilih File"
+                                            FontSize="11"
+                                            Foreground="{StaticResource PictonBlue}"
+                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                            Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                            <Button
+                                                Width="80"
+                                                Height="28"
+                                                Margin="10,10,0,0"
+                                                HorizontalAlignment="Left"
+                                                Click="BtnOnBrowseFileBukti3Command_Click"
+                                                Content="Ubah Foto"
+                                                FontSize="11"
+                                                Foreground="{StaticResource PictonBlue}"
+                                                Style="{StaticResource BtnWrapper}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <Grid Grid.Column="1">
+                                    <Grid Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Panel.ZIndex="1"
+                                            Foreground="Gray">
+                                            Belum ada foto
+                                        </TextBlock>
+                                        <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                    </Grid>
+                                    <Grid Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                        <Image
+                                            Width="180"
+                                            Height="180"
+                                            Source="{Binding FotoBukti3Uri}"
+                                            Stretch="UniformToFill" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border Height="15" />
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Grid>
+        </ScrollViewer>
+
+        <Border
+            Grid.Row="2"
+            Padding="16,0,32,0"
+            Background="{StaticResource Black20}"
+            BorderBrush="{StaticResource Black20}"
+            BorderThickness="1"
+            CornerRadius="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="30,5,0,5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button
+                            Height="28"
+                            Margin="5,0"
+                            md:ButtonAssist.CornerRadius="13"
+                            BorderBrush="{StaticResource PictonBlue}"
+                            Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                            Content="Batal"
+                            FontSize="11"
+                            Foreground="{StaticResource PictonBlue}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                    </Grid>
+                    <Grid>
+                        <Button
+                            x:Name="OkButton"
+                            md:ButtonAssist.CornerRadius="13"
+                            Click="OkButton_Click"
+                            Style="{StaticResource ButtonPrimarySmall}"
+                            Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <TextBlock Text="Simpan" />
+                        </Button>
+                        <Button
+                            md:ButtonAssist.CornerRadius="13"
+                            Background="{StaticResource Gray50}"
+                            IsEnabled="False"
+                            Style="{StaticResource ButtonPrimarySmall}"
+                            Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Viewbox
+                                Width="20"
+                                Height="20"
+                                Stretch="Uniform"
+                                StretchDirection="Both">
+                                <other:SpinnerLoadingView Panel.ZIndex="2" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

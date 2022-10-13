@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="01/05/2021 11:10:43" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="No" DataType="System.Int32"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="NoSamb" DataType="System.String"/>
+      <Column Name="Gol" DataType="System.String"/>
+      <Column Name="Bulan" DataType="System.String"/>
+      <Column Name="Pakai" DataType="System.Double"/>
+      <Column Name="Konv" DataType="System.Double"/>
+      <Column Name="HargaAir" DataType="System.Double"/>
+      <Column Name="Adm" DataType="System.Double"/>
+      <Column Name="BJM" DataType="System.Double"/>
+      <Column Name="Denda" DataType="System.Double"/>
+      <Column Name="Jumlah" DataType="System.Double"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="170.1">
+      <TextObject Name="Text5" Width="718.2" Height="28.35" Text="PERUSAHAAN UMUM DAERAH AIR MINUM" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Top="28.35" Width="718.2" Height="18.9" Text="KOTA X" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Top="47.25" Width="718.2" Height="18.9" Text="Alamat x" Font="Arial, 9pt"/>
+      <TextObject Name="Text8" Top="85.05" Width="718.2" Height="18.9" Text="DAFTAR TAGIHAN PELANGGAN&#13;&#10;" HorzAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+      <TextObject Name="Text13" Top="113.4" Width="330.75" Height="18.9" Text="NO. SL	:" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="330.75" Top="113.4" Width="330.75" Height="18.9" Text="TARIF	:" Font="Arial, 10pt"/>
+      <TextObject Name="Text21" Top="132.3" Width="330.75" Height="18.9" Text="NAMA	:" Font="Arial, 10pt"/>
+      <TextObject Name="Text22" Left="330.75" Top="132.3" Width="330.75" Height="18.9" Text="RAYON	:" Font="Arial, 10pt"/>
+      <TextObject Name="Text23" Top="151.2" Width="718.2" Height="18.9" Text="ALAMAT	:" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="172.77" Width="718.2" Height="37.8">
+      <TableObject Name="Table1" Width="718.2" Height="37.8">
+        <TableColumn Name="Column1" Width="28.35"/>
+        <TableColumn Name="Column2" Width="85.05"/>
+        <TableColumn Name="Column3" Width="56.7"/>
+        <TableColumn Name="Column4" Width="47.25"/>
+        <TableColumn Name="Column5" Width="75.6"/>
+        <TableColumn Name="Column6"/>
+        <TableColumn Name="Column7" Width="47.25"/>
+        <TableColumn Name="Column8"/>
+        <TableColumn Name="Column9"/>
+        <TableColumn Name="Column10" Width="56.7"/>
+        <TableColumn Name="Column11" Width="122.85"/>
+        <TableRow Name="Row1" Height="37.8">
+          <TableCell Name="Cell1" Border.Lines="All" Border.Style="Dash" Text="NO" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Border.Style="Dash" Text="M. AWAL" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Border.Style="Dash" Text="M. AKHIR" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell4" Border.Lines="All" Border.Style="Dash" Text="PAKAI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Border.Style="Dash" Text="PERIODE" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell6" Border.Lines="All" Border.Style="Dash" Text="HARGA AIR" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Border.Style="Dash" Text="BIAYA BEBAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Border.Style="Dash" Text="MATEREI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Border.Style="Dash" Text="TAGIHAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell10" Border.Lines="All" Border.Style="Dash" Text="DENDA" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell11" Border.Lines="All" Border.Style="Dash" Text="JUMLAH" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="213.23" Width="718.2" Height="18.9" CanGrow="true" CanShrink="true" Guides="0,0" DataSource="MainData">
+      <TableObject Name="Table2" Width="718.2" Height="18.9">
+        <TableColumn Name="Column13" Width="28.35"/>
+        <TableColumn Name="Column14" Width="85.05"/>
+        <TableColumn Name="Column15" Width="56.7"/>
+        <TableColumn Name="Column16" Width="47.25"/>
+        <TableColumn Name="Column17" Width="75.6"/>
+        <TableColumn Name="Column18"/>
+        <TableColumn Name="Column19" Width="47.25"/>
+        <TableColumn Name="Column20"/>
+        <TableColumn Name="Column21"/>
+        <TableColumn Name="Column22" Width="56.7"/>
+        <TableColumn Name="Column23" Width="122.85"/>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell13" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.No]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Center" Font="Arial, 7pt"/>
+          <TableCell Name="Cell14" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.MeteranAwal]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell15" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.MeteranAkhir]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell16" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Pakai]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell17" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Periode]" HorzAlign="Center" Font="Arial, 7pt" />
+          <TableCell Name="Cell18" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.HargaAir]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell19" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.BiayaBeban]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell20" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Materei]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell21" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Tagihan]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell22" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Denda]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+          <TableCell Name="Cell23" Border.Lines="All" Border.LeftLine.Style="Dash" Border.RightLine.Style="Dash" Text="[MainData.Jumlah]" HorzAlign="Center" Font="Arial, 7pt" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" />
+        </TableRow>
+      </TableObject>
+      <DataFooterBand Name="DataFooter1" Top="234.8" Width="718.2" Height="47.25">
+        <TableObject Name="Table3" Width="718.2" Height="18.9" Border.Lines="All" Border.Style="Dash">
+          <TableColumn Name="Column25" Width="28.35"/>
+          <TableColumn Name="Column26" Width="85.05"/>
+          <TableColumn Name="Column27" Width="56.7"/>
+          <TableColumn Name="Column28" Width="47.25"/>
+          <TableColumn Name="Column29" Width="75.6"/>
+          <TableColumn Name="Column30"/>
+          <TableColumn Name="Column31" Width="47.25"/>
+          <TableColumn Name="Column32"/>
+          <TableColumn Name="Column33"/>
+          <TableColumn Name="Column34" Width="56.7"/>
+          <TableColumn Name="Column35" Width="122.85"/>
+          <TableRow Name="Row3">
+            <TableCell Name="Cell25" Border.Lines="All" Border.Style="Dash" Text="TOTAL" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt" ColSpan="5"/>
+            <TableCell Name="Cell26" Border.Lines="All" Border.Style="Dash" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+            <TableCell Name="Cell27" Border.Lines="All" Border.Style="Dash" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+            <TableCell Name="Cell28" Border.Lines="All" Border.Style="Dash" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell29" Border.Lines="All" Border.Style="Dash" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell30" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell31" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell32" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell33" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell34" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+            <TableCell Name="Cell35" Border.Lines="All" Border.Style="Dash" Text="0" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+          </TableRow>
+        </TableObject>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

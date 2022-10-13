@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="SiPintar.Views.Global.Other.GlobalLoadingDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Border Background="{StaticResource Black20}" Width="350" Height="150" BorderBrush="{StaticResource Alto}" BorderThickness="1" CornerRadius="2 2 4 4" >
+        <Grid Background="White">
+            <StackPanel Orientation="Vertical" Margin="10">
+
+                <Grid Height="30" Margin="0 10 0 20">
+                    <Image x:Name="IndeterminateCircle" Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10 -10 10 -10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                     To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+
+                    <!--<ProgressBar
+                        x:Name="IndeterminateCircle"
+                        Visibility="Visible"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Value="70"
+                        Width="30"
+                        IsIndeterminate="True"/>-->
+
+                    <Grid x:Name="DetermineWrapperLinear" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="40" />
+                        </Grid.ColumnDefinitions>
+                        <ProgressBar
+                            x:Name="DeterminateLinear"
+                            Value="0"
+                            Margin="0 0 0 -10"
+                            Height="10"
+                            Style="{StaticResource MaterialDesignLinearProgressBar}"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource CaptionFormIdle}" Margin="5 12 0 0" TextAlignment="Right">
+                            <Run Text="0" x:Name="PercentageInfo" />
+                            <Run Text="%" />
+                        </TextBlock>
+                    </Grid>
+
+                </Grid>
+
+                <TextBlock x:Name="DialogHeader" Text="Header" Style="{StaticResource Title}" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="DialogMessage1" Text="Message1" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center" />
+                <TextBlock x:Name="DialogMessage2" Margin="0,-5,0,0" Text="Message2" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center" />
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

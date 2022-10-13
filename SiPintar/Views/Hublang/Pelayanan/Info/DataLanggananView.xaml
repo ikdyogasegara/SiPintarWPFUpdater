@@ -1,0 +1,257 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.Info.DataLanggananView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:info="clr-namespace:SiPintar.ViewModels.Hublang.Pelayanan.Info" d:DataContext="{d:DesignInstance Type=info:DataLanggananViewModel}"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer>
+            <Grid Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Border Margin="10,10,10,10" Background="#F5F5F5" CornerRadius="4"  BorderThickness="0.35" BorderBrush="#646464">
+                        <StackPanel Margin="15">
+                            <TextBlock Text="Pelanggan Air" Style="{StaticResource BigTitle}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="16" Foreground="#646464" />
+                            <StackPanel>
+                                <TextBlock Text="Status" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.NamaStatus, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nomor Sambungan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nama" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.Nama, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Alamat" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.Alamat, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Rayon" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Wilayah" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Kelurahan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Cabang" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Golongan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaGolongan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeGolongan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Diameter" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganAir.NamaDiameter, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganAir.KodeDiameter, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nomor Seri Meter" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.NoSeriMeter, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Flag" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganAir.NamaFlag, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Border Margin="10,10,10,10" Background="#F5F5F5" CornerRadius="4"  BorderThickness="0.35" BorderBrush="#646464">
+                        <StackPanel Margin="15">
+                            <TextBlock Text="Pelanggan Limbah" Style="{StaticResource BigTitle}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="16" Foreground="#646464" />
+                            <StackPanel>
+                                <TextBlock Text="Status" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLimbah.NamaStatus, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nomor Sambungan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLimbah.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nama" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLimbah.Nama, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Alamat" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLimbah.Alamat, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Rayon" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLimbah.NamaRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLimbah.KodeRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Wilayah" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLimbah.NamaWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLimbah.KodeWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Kelurahan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLimbah.NamaKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLimbah.KodeKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Cabang" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLimbah.NamaCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLimbah.KodeCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Golongan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLimbah.NamaTarifLimbah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLimbah.KodeTarifLimbah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Flag" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLimbah.NamaFlag, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Border Margin="10,10,10,10" Background="#F5F5F5" CornerRadius="4"  BorderThickness="0.35" BorderBrush="#646464">
+                        <StackPanel Margin="15">
+                            <TextBlock Text="Pelanggan L2T2" Style="{StaticResource BigTitle}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="16" Foreground="#646464" />
+                            <StackPanel>
+                                <TextBlock Text="Status" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLltt.NamaStatus, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nomor Sambungan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLltt.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Nama" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLltt.Nama, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Alamat" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLltt.Alamat, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Rayon" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLltt.NamaRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLltt.KodeRayon, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Wilayah" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLltt.NamaWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLltt.KodeWilayah, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Kelurahan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLltt.NamaKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLltt.KodeKelurahan, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Cabang" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLltt.NamaCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLltt.KodeCabang, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Golongan" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Margin="0,5,0,4" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46">
+                                    <Run Text="{Binding DetailPelangganLltt.NamaTarifLltt, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=" (" />
+                                    <Run Text="{Binding DetailPelangganLltt.KodeTarifLltt, Mode=OneWay, Converter={StaticResource StringDefaultValueConverter}}" />
+                                    <Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Flag" Margin="0,20,0,4" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                <TextBlock Text="{Binding DetailPelangganLltt.NamaFlag, Converter={StaticResource StringDefaultValueConverter}}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14" Foreground="#252B46"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

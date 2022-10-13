@@ -1,0 +1,2270 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.Permohonan.DialogSpkFormView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+    xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+    xmlns:local="clr-namespace:SiPintar.Views.Hublang.Pelayanan.Permohonan"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:BooleanToStringConverter
+                x:Key="StatusConverter"
+                False="Tidak Aktif"
+                True="Aktif" />
+            <converters:BooleanToBrushConverter
+                x:Key="BooleanToBrushConverter"
+                FirstBrush="#646464"
+                SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter
+                x:Key="BooleanToBrushConverterActivePage"
+                FirstBrush="#028DDB"
+                SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter
+                x:Key="BooleanToBackgroundConverter"
+                FirstBrush="#FFFFFF"
+                SecondBrush="#FA91A5" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataToBrushConverter" />
+            <converters:StatusPermohonanToStringConverter x:Key="StatusDataToStringConverter" />
+            <converters:StatusPelangganAirToBrushConverter x:Key="StatusPelangganToStringConverter" />
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataLabelToBrushConverter" isLabel="True" />
+            <converters:StatusPermohonanToBrushConverter x:Key="StatusDataBgToBrushConverter" isBackground="True" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <StackPanel
+                x:Key="PegawaiComponent"
+                Margin="0,0,0,10"
+                x:Shared="false">
+                <TextBlock
+                    x:Name="Title"
+                    Style="{StaticResource SmallTitle}"
+                    Text="Petugas Pelaksana" />
+                <StackPanel Orientation="Horizontal">
+                    <Grid
+                        Width="370"
+                        Margin="0,0,15,0"
+                        HorizontalAlignment="Left">
+                        <ComboBox
+                            x:Name="OptionList"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            DisplayMemberPath="NamaPegawai"
+                            SelectionChanged="OptionList_SelectionChanged"
+                            Style="{StaticResource ComboBoxInputForm}"
+                            Validation.ErrorTemplate="{x:Null}" />
+                        <TextBlock
+                            x:Name="PlaceHolder"
+                            Padding="5,5,7,0"
+                            DataContext="{Binding ElementName=OptionList, Path=SelectedItem}"
+                            Foreground="{StaticResource Gray100}"
+                            Style="{StaticResource ComboBoxSelectOverlay}"
+                            Text="Pilih salah satu" />
+                    </Grid>
+                    <Button
+                        x:Name="DeletePegawaiBtn"
+                        Click="DeletePegawaiBtn_Click"
+                        Style="{StaticResource BtnWrapper}">
+                        <md:PackIcon
+                            Width="24"
+                            Height="24"
+                            Foreground="{StaticResource Modul}"
+                            Kind="Delete" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel
+                x:Key="ComboBoxTemplate"
+                Margin="0,5,15,0"
+                x:Shared="False">
+                <TextBlock Style="{StaticResource SmallTitle}" Text="Text" />
+                <Grid>
+                    <ComboBox Width="518" Style="{StaticResource ComboBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel
+                x:Key="TextBoxTemplate"
+                Margin="0,5,15,0"
+                x:Shared="False">
+                <TextBlock Style="{StaticResource SmallTitle}" Text="Text" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel
+                x:Key="TextBoxNumberTemplate"
+                Margin="0,5,15,0"
+                x:Shared="False">
+                <TextBlock Style="{StaticResource SmallTitle}" Text="Text" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel
+                x:Key="TextBoxDecimalTemplate"
+                Margin="0,5,15,0"
+                x:Shared="False">
+                <TextBlock Style="{StaticResource SmallTitle}" Text="Text" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel
+                x:Key="DatePickerTemplate"
+                Margin="0,5,15,0"
+                x:Shared="False">
+                <TextBlock Style="{StaticResource SmallTitle}" Text="Tanggal" />
+                <Border
+                    Grid.Column="2"
+                    BorderBrush="{StaticResource Gray100}"
+                    BorderThickness="1"
+                    CornerRadius="3">
+                    <Grid>
+                        <DatePicker
+                            Height="30"
+                            Margin="6,0,0,0"
+                            BorderThickness="0"
+                            SelectedDateFormat="Long"
+                            Style="{StaticResource DefaultDatePicker}" />
+                        <TextBlock
+                            Padding="5,2,7,0"
+                            Panel.ZIndex="-10"
+                            Foreground="{StaticResource Gray100}"
+                            Style="{StaticResource ComboBoxSelectOverlay}"
+                            Text="Pilih tanggal" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost DialogTheme="Inherit" Identifier="InnerGlobalRootDialog">
+        <Grid
+            Width="1000"
+            MaxHeight="700"
+            Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="38" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Grid.Row="0"
+                Background="{StaticResource BaseAppPerencanaanDark}"
+                Orientation="Vertical">
+                <Grid Margin="10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="10,7,15,5">
+                        <TextBlock
+                            x:Name="TitleForm"
+                            FontSize="13"
+                            Foreground="White"
+                            LineHeight="10"
+                            Style="{StaticResource BigTitle}"
+                            Text="Tambah Permohonan" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,3,0"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Border Background="White" CornerRadius="2">
+                            <TextBlock
+                                Padding="6,1,6,1"
+                                FontSize="10"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource BaseAppPerencanaanDark}">
+                                Esc
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button
+                            Width="14"
+                            Height="14"
+                            Margin="8"
+                            Padding="0"
+                            Background="{x:Null}"
+                            Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                            Style="{StaticResource ButtonPlain}">
+                            <md:PackIcon
+                                Margin="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                Kind="Close" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <Grid
+                x:Name="HeaderEditForm"
+                Grid.Row="1"
+                Margin="32,15,32,0"
+                Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel Width="160" HorizontalAlignment="Left">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FiturName, StringFormat={}Tanggal {0}}" />
+                        <Border
+                            x:Name="TanggalSpk"
+                            BorderBrush="{StaticResource Gray100}"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Grid>
+                                <DatePicker
+                                    x:Name="TglSpkEdit"
+                                    Height="30"
+                                    Margin="0,0,0,0"
+                                    BorderThickness="0"
+                                    IsEnabled="False"
+                                    SelectedDate="{Binding SelectedData.WaktuPermohonan}"
+                                    SelectedDateFormat="Long"
+                                    Style="{StaticResource DefaultDatePicker}" />
+                                <TextBlock
+                                    Padding="5,2,7,0"
+                                    Panel.ZIndex="-10"
+                                    DataContext="{Binding ElementName=TglSpkEdit, Path=SelectedDate}"
+                                    Foreground="{StaticResource Gray100}"
+                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                    Text="Pilih tanggal" />
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            x:Name="TanggalBa"
+                            BorderBrush="{StaticResource Gray100}"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Grid>
+                                <DatePicker
+                                    x:Name="TglBeritaAcaraEdit"
+                                    Height="30"
+                                    Margin="0,0,0,0"
+                                    BorderThickness="0"
+                                    IsEnabled="False"
+                                    SelectedDate="{Binding SelectedData.BeritaAcara.TanggalBa}"
+                                    SelectedDateFormat="Long"
+                                    Style="{StaticResource DefaultDatePicker}" />
+                                <TextBlock
+                                    Padding="5,2,7,0"
+                                    Panel.ZIndex="-10"
+                                    DataContext="{Binding ElementName=TglBeritaAcaraEdit, Path=SelectedDate}"
+                                    Foreground="{StaticResource Gray100}"
+                                    Style="{StaticResource ComboBoxSelectOverlay}"
+                                    Text="Pilih tanggal" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1" Margin="0,0,10,0">
+                    <StackPanel>
+                        <Border Padding="10,8,8,8" CornerRadius="5">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="1" Color="#F5F5F5" />
+                            </Border.Background>
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    FontSize="12"
+                                    Foreground="#646464">
+                                    ID
+                                </TextBlock>
+                                <TextBlock
+                                    FontFamily="{StaticResource MontserratSemiBold}"
+                                    FontSize="18"
+                                    Foreground="#126E3D"
+                                    Text="{Binding SelectedData.IdPermohonan}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="2" Margin="0,0,10,0">
+                    <StackPanel>
+                        <Border Padding="10,8,8,8" CornerRadius="5">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="1" Color="#F5F5F5" />
+                            </Border.Background>
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    FontSize="12"
+                                    Foreground="#646464">
+                                    Nomor Permohonan
+                                </TextBlock>
+                                <TextBlock
+                                    FontFamily="{StaticResource MontserratSemiBold}"
+                                    FontSize="18"
+                                    Foreground="#126E3D"
+                                    Text="{Binding SelectedData.NomorPermohonan}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="NomorSpk" Grid.Column="3">
+                    <StackPanel>
+                        <Border Padding="10,8,8,8" CornerRadius="5">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="1" Color="#FCE9ED" />
+                            </Border.Background>
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    FontSize="12"
+                                    Foreground="#646464">
+                                    SPK
+                                </TextBlock>
+                                <TextBlock
+                                    FontFamily="{StaticResource MontserratSemiBold}"
+                                    FontSize="18"
+                                    Foreground="#126E3D"
+                                    Text="{Binding SelectedData.SPK.NomorSpk}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="NomorBa" Grid.Column="4">
+                    <StackPanel>
+                        <Border Padding="10,8,8,8" CornerRadius="5">
+                            <Border.Background>
+                                <SolidColorBrush Opacity="1" Color="#FCE9ED" />
+                            </Border.Background>
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="0,0,0,5"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    FontSize="12"
+                                    Foreground="#646464">
+                                    Berita Acara
+                                </TextBlock>
+                                <TextBlock
+                                    FontFamily="{StaticResource MontserratSemiBold}"
+                                    FontSize="18"
+                                    Foreground="#126E3D"
+                                    Text="{Binding SelectedData.BeritaAcara.NomorBa}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+                <Border
+                    Grid.Column="5"
+                    Margin="10,0,0,0"
+                    Padding="16,8,16,8"
+                    Background="{Binding SelectedData.StatusPermohonan, Converter={StaticResource StatusDataBgToBrushConverter}}"
+                    CornerRadius="5">
+                    <StackPanel>
+                        <TextBlock
+                            Margin="0,0,0,5"
+                            FontFamily="{StaticResource SarabunRegular}"
+                            FontSize="12"
+                            Foreground="#646464">
+                            Status
+                        </TextBlock>
+                        <TextBlock
+                            FontFamily="{StaticResource MontserratSemiBold}"
+                            FontSize="18"
+                            Foreground="{Binding SelectedData.StatusPermohonanText, Converter={StaticResource StringDefaultValueConverter}}"
+                            Text="{Binding SelectedData.StatusPermohonanText, Converter={StaticResource StringDefaultValueConverter}}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid
+                x:Name="HeaderAddForm"
+                Grid.Row="1"
+                Margin="32,25,35,15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel
+                            Grid.Column="0"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                            <Border
+                                x:Name="StepCariPelangganNumber"
+                                Width="24"
+                                Height="24"
+                                Background="#0088E2"
+                                CornerRadius="50">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    Foreground="White"
+                                    Text="1" />
+                            </Border>
+                            <TextBlock
+                                x:Name="StepCariPelangganText"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource SarabunRegular}"
+                                FontWeight="SemiBold"
+                                Foreground="#252B46"
+                                Text="Cari &amp; Pilih Permohonan" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <Border
+                                Width="28"
+                                Height="1"
+                                Background="#A7A7A7" />
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="2"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                            <Border
+                                x:Name="StepIsiFormNumber"
+                                Width="24"
+                                Height="24"
+                                Background="#BDBDBD"
+                                CornerRadius="50">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource SarabunRegular}"
+                                    Foreground="White"
+                                    Text="2" />
+                            </Border>
+                            <TextBlock
+                                x:Name="StepIsiFormText"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource SarabunRegular}"
+                                FontWeight="SemiBold"
+                                Foreground="#A7A7A7"
+                                Text="{Binding FiturName, StringFormat={}Isi Form {0}}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid
+                        x:Name="TanggalSection"
+                        Grid.Column="1"
+                        HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel
+                                Width="200"
+                                Margin="0,0,5,0"
+                                IsEnabled="False">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Tanggal Permohonan" />
+                                <Border
+                                    BorderBrush="{StaticResource Gray100}"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                    <Grid>
+                                        <DatePicker
+                                            x:Name="TglPermohonan"
+                                            Height="30"
+                                            Margin="0,0,0,0"
+                                            BorderThickness="0"
+                                            IsEnabled="True"
+                                            SelectedDateFormat="Long"
+                                            Style="{StaticResource DefaultDatePicker}" />
+                                        <TextBlock
+                                            Padding="5,2,7,0"
+                                            Panel.ZIndex="-10"
+                                            DataContext="{Binding ElementName=TglPermohonan, Path=SelectedDate}"
+                                            Foreground="{StaticResource Gray100}"
+                                            Style="{StaticResource ComboBoxSelectOverlay}"
+                                            Text="Pilih tanggal" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel
+                                Width="200"
+                                Margin="5,0,0,0"
+                                IsEnabled="True">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Tanggal SPK" />
+                                <Border
+                                    BorderBrush="{StaticResource Gray100}"
+                                    BorderThickness="1"
+                                    CornerRadius="3">
+                                    <Grid>
+                                        <DatePicker
+                                            x:Name="TglSpk"
+                                            Height="30"
+                                            Margin="0,0,0,0"
+                                            BorderThickness="0"
+                                            IsEnabled="True"
+                                            SelectedDateFormat="Long"
+                                            Style="{StaticResource DefaultDatePicker}" />
+                                        <TextBlock
+                                            Padding="5,2,7,0"
+                                            Panel.ZIndex="-10"
+                                            DataContext="{Binding ElementName=TglSpk, Path=SelectedDate}"
+                                            Foreground="{StaticResource Gray100}"
+                                            Style="{StaticResource ComboBoxSelectOverlay}"
+                                            Text="Pilih tanggal" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <ScrollViewer
+                x:Name="scrollBar"
+                Grid.Row="2"
+                VerticalScrollBarVisibility="Auto">
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="1"
+                        Margin="32,0,32,0"
+                        Visibility="{Binding IsCariPelangganForm, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid x:Name="FormCariPelanggan" Margin="0,18">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="0,0,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                    <TextBlock
+                                        Margin="0,0,0,4"
+                                        Style="{StaticResource SmallTitle}"
+                                        Text="Nama" />
+                                    <Grid>
+                                        <TextBox x:Name="NamaPelanggan" Style="{StaticResource TextBoxInputForm}" />
+                                        <TextBlock
+                                            Padding="0"
+                                            DataContext="{Binding ElementName=NamaPelanggan, Path=Text}"
+                                            Foreground="{StaticResource Gray100}"
+                                            Style="{StaticResource TextBoxPlaceholder}"
+                                            Text="Masukkan nama pelanggan" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                                    <TextBlock
+                                        Margin="0,0,0,4"
+                                        Style="{StaticResource SmallTitle}"
+                                        Text="Alamat" />
+                                    <Grid>
+                                        <TextBox x:Name="Alamat" Style="{StaticResource TextBoxInputForm}" />
+                                        <TextBlock
+                                            Padding="0"
+                                            DataContext="{Binding ElementName=Alamat, Path=Text}"
+                                            Foreground="{StaticResource Gray100}"
+                                            Style="{StaticResource TextBoxPlaceholder}"
+                                            Text="Masukkan alamat" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Margin="0,0,12,0">
+                                    <TextBlock
+                                        Margin="0,0,0,4"
+                                        Style="{StaticResource SmallTitle}"
+                                        Text="Nomor Sambungan" />
+                                    <Grid>
+                                        <TextBox x:Name="NomorSambungan" Style="{StaticResource TextBoxInputForm}" />
+                                        <TextBlock
+                                            Padding="0"
+                                            DataContext="{Binding ElementName=NomorSambungan, Path=Text}"
+                                            Foreground="{StaticResource Gray100}"
+                                            Style="{StaticResource TextBoxPlaceholder}"
+                                            Text="Masukkan no sambungan" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel
+                                    Grid.Column="3"
+                                    Margin="22,0,0,0"
+                                    VerticalAlignment="Bottom">
+                                    <Button
+                                        x:Name="CariPelangganButton"
+                                        Width="120"
+                                        Height="33"
+                                        Click="CariPelangganButton_Click"
+                                        IsEnabled="False"
+                                        Style="{StaticResource ButtonPrimary2}">
+                                        Cari Permohonan
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingCariPelanggan, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Image
+                                        Height="30"
+                                        Margin="10"
+                                        RenderTransformOrigin="0.5, 0.5"
+                                        Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                        <Image.RenderTransform>
+                                            <RotateTransform x:Name="noFreeze" />
+                                        </Image.RenderTransform>
+                                        <Image.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            RepeatBehavior="Forever"
+                                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                            To="360"
+                                                            Duration="0:0:0:1" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Grid>
+                                <DataGrid
+                                    x:Name="DataGridPelanggan"
+                                    Height="300"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                    CanUserSortColumns="False"
+                                    DataContext="{Binding}"
+                                    EnableColumnVirtualization="True"
+                                    EnableRowVirtualization="True"
+                                    HeadersVisibility="Column"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    IsReadOnly="True"
+                                    ItemsSource="{Binding DataPermohonan, UpdateSourceTrigger=PropertyChanged}"
+                                    MouseDoubleClick="DataGridPelanggan_MouseDoubleClick"
+                                    SelectedItem="{Binding Path=DataContext.SelectedDataPermohonan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                    SelectionMode="Extended"
+                                    Style="{StaticResource DataGridRegular}"
+                                    Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
+                                    <DataGrid.Resources>
+                                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="IsHitTestVisible" Value="False" />
+                                            <Setter Property="Focusable" Value="False" />
+                                            <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                        <Style BasedOn="{StaticResource DataGridCellRegular}" TargetType="{x:Type DataGridCell}" />
+                                    </DataGrid.Resources>
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn Width="120" Header="NO.PERMOHONAN">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding NomorPermohonan}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Width="180" Header="NAMA">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Left"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding Nama}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Width="200" Header="ALAMAT">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Left"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding Alamat}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnNoSamb"
+                                            Width="120"
+                                            Header="NOMOR AIR">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding NoSamb}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnNomorLimbah"
+                                            Width="120"
+                                            Header="NOMOR LIMBAH">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding NomorLimbah}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnNomorLltt"
+                                            Width="120"
+                                            Header="NOMOR L2T2">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding NomorLltt}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnGolongan"
+                                            Width="80"
+                                            Header="KD.TARIF">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding KodeGolongan}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnTarifLimbah"
+                                            Width="80"
+                                            Header="KD.TARIF">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding KodeTarifLimbah}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn
+                                            x:Name="ColumnTarifLltt"
+                                            Width="80"
+                                            Header="KD.TARIF">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding KodeTarifLltt}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Width="80" Header="KD.RAYON">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding KodeRayon}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Width="80" Header="KD.WIL">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        Style="{StaticResource TextDataGridCellRegular}"
+                                                        Text="{Binding KodeWilayah}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="0,0,0,0">
+                                <Border
+                                    Background="{StaticResource Black20}"
+                                    BorderBrush="{StaticResource Black50}"
+                                    BorderThickness="1,0,1,1"
+                                    CornerRadius="0, 0, 4, 4">
+                                    <Grid Margin="11,8,14,7">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox
+                                            x:Name="ShowOption"
+                                            Width="64"
+                                            Height="25"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            DisplayMemberPath="Value"
+                                            IsEnabled="{Binding Path=IsLoadingCariPelanggan, Converter={StaticResource InverseBooleanConverter}, ConverterParameter=IsLoadingCariPelanggan}"
+                                            ItemsSource="{Binding ShowOptions, Mode=OneWay}"
+                                            SelectedItem="{Binding LimitDataPelanggan}"
+                                            SelectedValuePath="Key"
+                                            SelectionChanged="ShowOption_SelectionChanged"
+                                            Style="{StaticResource ComboBoxInputFormPagination}" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Margin="6,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="{StaticResource Black90}"
+                                            LineHeight="18"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Data per Halaman" />
+                                        <StackPanel
+                                            Grid.Column="2"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="0,0,16,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource Black90}"
+                                                LineHeight="18"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="{Binding TotalRecordPelanggan, ConverterCulture='id-ID', StringFormat={}{0} Data Pelanggan}" />
+                                            <Button
+                                                Height="16"
+                                                Padding="0"
+                                                Click="OnPrevPageClick"
+                                                IsEnabled="{Binding IsPreviousButtonEnabledPelanggan}"
+                                                Style="{StaticResource ButtonPlain}">
+                                                <Grid>
+                                                    <md:PackIcon
+                                                        Height="16"
+                                                        Background="{StaticResource Black20}"
+                                                        Foreground="{StaticResource SecondaryBlue}"
+                                                        Kind="ChevronLeft"
+                                                        Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                    <md:PackIcon
+                                                        Height="16"
+                                                        Background="{StaticResource Black20}"
+                                                        Foreground="{StaticResource Black50}"
+                                                        Kind="ChevronLeft"
+                                                        Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                                </Grid>
+                                            </Button>
+                                            <TextBlock
+                                                Margin="13,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding IsLeftPageNumberActivePelanggan, Converter={StaticResource BooleanToBrushConverterActivePage}}"
+                                                LineHeight="12"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="1" />
+                                            <TextBlock
+                                                Margin="13,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource Black90}"
+                                                LineHeight="12"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="..."
+                                                Visibility="{Binding IsLeftPageNumberFillerVisiblePelanggan, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <TextBlock
+                                                Margin="13,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding IsMiddlePageNumberVisiblePelanggan, Converter={StaticResource BooleanToBrushConverterActivePage}}"
+                                                LineHeight="12"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="{Binding CurrentPagePelanggan}"
+                                                Visibility="{Binding IsMiddlePageNumberVisiblePelanggan, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <TextBlock
+                                                Margin="13,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource Black90}"
+                                                LineHeight="12"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="..."
+                                                Visibility="{Binding IsRightPageNumberFillerVisiblePelanggan, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <TextBlock
+                                                Margin="13,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding IsRightPageNumberActivePelanggan, Converter={StaticResource BooleanToBrushConverterActivePage}}"
+                                                LineHeight="12"
+                                                Style="{StaticResource CaptionSmallBody}"
+                                                Text="{Binding TotalPagePelanggan}" />
+                                            <Button
+                                                Height="16"
+                                                Padding="0"
+                                                Click="OnNextPageClick"
+                                                IsEnabled="{Binding IsNextButtonEnabledPelanggan}"
+                                                Style="{StaticResource ButtonPlain}">
+                                                <Grid>
+                                                    <md:PackIcon
+                                                        Height="16"
+                                                        Background="{StaticResource Black20}"
+                                                        Foreground="{StaticResource SecondaryBlue}"
+                                                        Kind="ChevronRight"
+                                                        Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                    <md:PackIcon
+                                                        Height="16"
+                                                        Background="{StaticResource Black20}"
+                                                        Foreground="{StaticResource Black50}"
+                                                        Kind="ChevronRight"
+                                                        Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                                </Grid>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid
+                        x:Name="FormInputData"
+                        Grid.Row="2"
+                        Margin="32,15,32,0"
+                        Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border
+                            Grid.Row="0"
+                            Background="#F5F5F5"
+                            CornerRadius="5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" Margin="24,24,24,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nomor Sambungan" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.NomorSambunganWpf}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nama Pelanggan" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.Nama}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Alamat" />
+                                        <TextBlock
+                                            Style="{StaticResource SmallTitle}"
+                                            Text="{Binding FormData.Alamat}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Telepon" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.NoTelpWpf}" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="24,24,24,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nomor HP" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.NoHpWpf}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Kelurahan/Desa" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.NamaKelurahan}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Rayon" />
+                                        <TextBlock
+                                            Style="{StaticResource SmallTitle}"
+                                            Text="{Binding FormData.NamaRayon}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Golongan" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.TarifGolonganWpf}" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2" Margin="24,24,24,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Kecamatan" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.NamaKecamatan}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Wilayah" />
+                                        <TextBlock
+                                            Style="{StaticResource SmallTitle}"
+                                            Text="{Binding FormData.NamaWilayah}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Email" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding FormData.EmailWpf}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="3" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="User Input" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedData.NamaUser}" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="3" Margin="24,24,24,24">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="User Berita Acara" />
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedData.BeritaAcara.NamaUser}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Memo Berita Acara" />
+                                        <TextBlock
+                                            Style="{StaticResource SmallTitle}"
+                                            Text="{Binding SelectedData.BeritaAcara.Memo}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <TextBlock
+                                            Margin="0,0,0,5"
+                                            FontSize="12"
+                                            LineHeight="12"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nomor RAB" />
+                                        <TextBlock
+                                            Style="{StaticResource SmallTitle}"
+                                            Text="{Binding SelectedData.RAB.NomorRab}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                            <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                                <RadioButton
+                                    x:Name="GroupSPK"
+                                    Checked="SubMenu_Checked"
+                                    Content="Formulir SPK"
+                                    FontSize="13"
+                                    FontWeight="DemiBold"
+                                    GroupName="SubMenu"
+                                    Style="{StaticResource NavHorizontalStyle}" />
+                                <RadioButton
+                                    x:Name="GroupPermohonan"
+                                    Checked="SubMenu_Checked"
+                                    Content="Permohonan"
+                                    FontSize="13"
+                                    FontWeight="DemiBold"
+                                    GroupName="SubMenu"
+                                    Style="{StaticResource NavHorizontalStyle}" />
+                            </StackPanel>
+
+                            <Border
+                                Height="1.2"
+                                Margin="0,0,0,-1"
+                                VerticalAlignment="Bottom"
+                                Background="{StaticResource BaseGray}" />
+                        </StackPanel>
+
+                        <Grid
+                            x:Name="SPKSection"
+                            Grid.Row="2"
+                            Panel.ZIndex="1"
+                            Background="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Margin="0,10,0,0"
+                                    Padding="10,10,10,15"
+                                    BorderBrush="{StaticResource BaseGray}"
+                                    BorderThickness="1"
+                                    CornerRadius="5">
+                                    <Grid
+                                        x:Name="FotodanKelengkapanSpkSection"
+                                        Margin="32,15,32,0"
+                                        Visibility="Visible">
+                                        <ScrollViewer Margin="0,0,-16,0" VerticalScrollBarVisibility="Auto">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="15" />
+                                                    <ColumnDefinition Width="450" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Row="0" Grid.Column="0">
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <CheckBox
+                                                                    Margin="0,5,0,10"
+                                                                    Content="Foto Kelengkapan SPK 1"
+                                                                    Focusable="{Binding IsCanEdit}"
+                                                                    IsChecked="{Binding IsFotoBuktiSpk1FormChecked, Mode=TwoWay}"
+                                                                    IsHitTestVisible="{Binding IsCanEdit}"
+                                                                    Style="{StaticResource FilterCheckBox}" />
+                                                                <TextBlock
+                                                                    Style="{StaticResource CaptionSmallBody}"
+                                                                    Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                                    TextWrapping="Wrap" />
+                                                                <Grid IsEnabled="{Binding IsFotoBuktiSpk1FormChecked}">
+                                                                    <Button
+                                                                        Width="80"
+                                                                        Height="28"
+                                                                        Margin="0,10,0,0"
+                                                                        HorizontalAlignment="Left"
+                                                                        md:ButtonAssist.CornerRadius="13"
+                                                                        BorderBrush="{StaticResource PictonBlue}"
+                                                                        Click="BtnOnBrowseFileBuktiSpk1Command_Click"
+                                                                        Content="Pilih File"
+                                                                        FontSize="11"
+                                                                        Foreground="{StaticResource PictonBlue}"
+                                                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                                        Visibility="{Binding FotoBuktiSpk1Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBuktiSpk1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                        <Button
+                                                                            Width="90"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_buktispk1"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                        <Button
+                                                                            Width="80"
+                                                                            Height="28"
+                                                                            Margin="10,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            Click="BtnOnBrowseFileBuktiSpk1Command_Click"
+                                                                            Content="Ubah Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource BtnWrapper}"
+                                                                            Visibility="{Binding IsCanEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid Visibility="{Binding FotoBuktiSpk1Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Panel.ZIndex="1"
+                                                                        Foreground="Gray">
+                                                                        Belum ada foto
+                                                                    </TextBlock>
+                                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                                </Grid>
+                                                                <Grid Visibility="{Binding FotoBuktiSpk1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBuktiSpk1Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="10" />
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <CheckBox
+                                                                    Margin="0,5,0,10"
+                                                                    Content="Foto Kelengkapan SPK 2"
+                                                                    Focusable="{Binding IsCanEdit}"
+                                                                    IsChecked="{Binding IsFotoBuktiSpk2FormChecked, Mode=TwoWay}"
+                                                                    IsHitTestVisible="{Binding IsCanEdit}"
+                                                                    Style="{StaticResource FilterCheckBox}" />
+                                                                <TextBlock
+                                                                    Style="{StaticResource CaptionSmallBody}"
+                                                                    Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                                    TextWrapping="Wrap" />
+                                                                <Grid IsEnabled="{Binding IsFotoBuktiSpk2FormChecked}">
+                                                                    <Button
+                                                                        Width="80"
+                                                                        Height="28"
+                                                                        Margin="0,10,0,0"
+                                                                        HorizontalAlignment="Left"
+                                                                        md:ButtonAssist.CornerRadius="13"
+                                                                        BorderBrush="{StaticResource PictonBlue}"
+                                                                        Click="BtnOnBrowseFileBuktiSpk2Command_Click"
+                                                                        Content="Pilih File"
+                                                                        FontSize="11"
+                                                                        Foreground="{StaticResource PictonBlue}"
+                                                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                                        Visibility="{Binding FotoBuktiSpk2Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBuktiSpk2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                        <Button
+                                                                            Width="90"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_buktispk2"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                        <Button
+                                                                            Width="80"
+                                                                            Height="28"
+                                                                            Margin="10,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            Click="BtnOnBrowseFileBuktiSpk2Command_Click"
+                                                                            Content="Ubah Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource BtnWrapper}"
+                                                                            Visibility="{Binding IsCanEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid Visibility="{Binding FotoBuktiSpk2Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Panel.ZIndex="1"
+                                                                        Foreground="Gray">
+                                                                        Belum ada foto
+                                                                    </TextBlock>
+                                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                                </Grid>
+                                                                <Grid Visibility="{Binding FotoBuktiSpk2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBuktiSpk2Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="10" />
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <CheckBox
+                                                                    Margin="0,5,0,10"
+                                                                    Content="Foto Kelengkapan SPK 3"
+                                                                    Focusable="{Binding IsCanEdit}"
+                                                                    IsChecked="{Binding IsFotoBuktiSpk3FormChecked, Mode=TwoWay}"
+                                                                    IsHitTestVisible="{Binding IsCanEdit}"
+                                                                    Style="{StaticResource FilterCheckBox}" />
+                                                                <TextBlock
+                                                                    Style="{StaticResource CaptionSmallBody}"
+                                                                    Text="Pilih &amp; Upload file dari dokumen komputer."
+                                                                    TextWrapping="Wrap" />
+                                                                <Grid IsEnabled="{Binding IsFotoBuktiSpk3FormChecked}">
+                                                                    <Button
+                                                                        Width="80"
+                                                                        Height="28"
+                                                                        Margin="0,10,0,0"
+                                                                        HorizontalAlignment="Left"
+                                                                        md:ButtonAssist.CornerRadius="13"
+                                                                        BorderBrush="{StaticResource PictonBlue}"
+                                                                        Click="BtnOnBrowseFileBuktiSpk3Command_Click"
+                                                                        Content="Pilih File"
+                                                                        FontSize="11"
+                                                                        Foreground="{StaticResource PictonBlue}"
+                                                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                                        Visibility="{Binding FotoBuktiSpk3Uri, Converter={StaticResource NullToVisibleConverter}}" />
+                                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBuktiSpk3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                        <Button
+                                                                            Width="90"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_buktispk3"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                        <Button
+                                                                            Width="80"
+                                                                            Height="28"
+                                                                            Margin="10,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            Click="BtnOnBrowseFileBuktiSpk3Command_Click"
+                                                                            Content="Ubah Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource BtnWrapper}"
+                                                                            Visibility="{Binding IsCanEdit, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid Visibility="{Binding FotoBuktiSpk3Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Panel.ZIndex="1"
+                                                                        Foreground="Gray">
+                                                                        Belum ada foto
+                                                                    </TextBlock>
+                                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                                </Grid>
+                                                                <Grid Visibility="{Binding FotoBuktiSpk3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBuktiSpk3Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="15" />
+                                                </StackPanel>
+
+                                                <Border
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    Margin="0,0,0,0"
+                                                    Padding="15"
+                                                    BorderBrush="{StaticResource BaseGray}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5"
+                                                    Focusable="{Binding IsCanEdit}"
+                                                    IsHitTestVisible="{Binding IsCanEdit}">
+                                                    <StackPanel>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="*" MinHeight="205" />
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock
+                                                                Margin="0,0,0,8"
+                                                                Foreground="#028DDB"
+                                                                Style="{StaticResource Title}"
+                                                                Text="Menugaskan" />
+                                                            <ScrollViewer
+                                                                x:Name="ContentForm"
+                                                                Grid.Row="1"
+                                                                VerticalScrollBarVisibility="Auto">
+                                                                <StackPanel>
+                                                                    <StackPanel x:Name="FirstPegawai" Margin="0,0,0,10">
+                                                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Petugas Pelaksana 1" />
+                                                                        <Grid
+                                                                            Width="370"
+                                                                            Margin="0,0,0,0"
+                                                                            HorizontalAlignment="Left">
+                                                                            <ComboBox
+                                                                                x:Name="Petugas1"
+                                                                                Margin="0,0,0,0"
+                                                                                HorizontalAlignment="Stretch"
+                                                                                Background="White"
+                                                                                DisplayMemberPath="NamaPegawai"
+                                                                                ItemsSource="{Binding PegawaiList}"
+                                                                                SelectionChanged="OptionList_SelectionChanged"
+                                                                                Style="{StaticResource ComboBoxInputForm}"
+                                                                                Validation.ErrorTemplate="{x:Null}" />
+                                                                            <TextBlock
+                                                                                Padding="5,5,7,0"
+                                                                                DataContext="{Binding ElementName=Petugas1, Path=SelectedItem}"
+                                                                                Foreground="{StaticResource Gray100}"
+                                                                                Style="{StaticResource ComboBoxSelectOverlay}"
+                                                                                Text="Pilih salah satu" />
+                                                                        </Grid>
+                                                                    </StackPanel>
+                                                                    <StackPanel x:Name="ContentWrapper" />
+                                                                    <Button
+                                                                        HorizontalAlignment="Left"
+                                                                        Click="AddPegawai_Click"
+                                                                        Style="{StaticResource BtnWrapper}">
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="Add" />
+                                                                            <TextBlock Foreground="{StaticResource SecondaryBlue}" Text="Tambah Petugas" />
+                                                                        </StackPanel>
+                                                                    </Button>
+                                                                </StackPanel>
+                                                            </ScrollViewer>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+
+                        <Grid
+                            x:Name="PermohonanSection"
+                            Grid.Row="3"
+                            Panel.ZIndex="1"
+                            Background="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Border
+                                    Grid.Row="0"
+                                    Margin="0,10,0,0"
+                                    Padding="26,16,16,16"
+                                    BorderBrush="{StaticResource BaseGray}"
+                                    BorderThickness="1"
+                                    CornerRadius="5">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="350" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" Margin="0,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                x:Name="AlasanContainer"
+                                                Grid.Row="1"
+                                                Margin="0,0,15,0"
+                                                Focusable="False"
+                                                IsHitTestVisible="False">
+                                                <TextBlock
+                                                    Margin="0,0,0,1"
+                                                    Style="{StaticResource SmallTitle}"
+                                                    Text="Alasan" />
+                                                <TextBox
+                                                    x:Name="Keterangan"
+                                                    Height="31"
+                                                    Style="{StaticResource TextBoxInputForm}" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                x:Name="Canvas"
+                                                Grid.Row="2"
+                                                Margin="0,0,0,15"
+                                                Focusable="False"
+                                                IsHitTestVisible="False"
+                                                Orientation="Vertical" />
+                                        </Grid>
+                                        <Grid
+                                            x:Name="CanvasEstimasiBiaya"
+                                            Grid.Column="1"
+                                            Margin="32,24,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Margin="0,0,0,8"
+                                                    FontFamily="{StaticResource MontserratSemiBold}"
+                                                    FontSize="13"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="#028DDB"
+                                                    Text="Estimasi Biaya" />
+                                                <Border
+                                                    x:Name="CanvasBiayaNormal"
+                                                    Grid.Row="1"
+                                                    MinWidth="200"
+                                                    MaxWidth="300"
+                                                    Background="#F5F5F5"
+                                                    CornerRadius="4">
+                                                    <Grid Margin="16">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Biaya" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="Biaya" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="1">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="PPn" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="Ppn" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                                <Border
+                                                    x:Name="CanvasBiayaAirTangki"
+                                                    Grid.Row="1"
+                                                    Background="#F5F5F5"
+                                                    CornerRadius="4"
+                                                    Visibility="Collapsed">
+                                                    <Grid Margin="16">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Biaya Air" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiBiayaAir" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="1" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Transport" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiTransport" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="2" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Administrasi" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiAdministrasi" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="3" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Operasional" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiOperasional" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="4" Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="Biaya total" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiBiayatotal" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                FontFamily="{StaticResource SarabunRegular}"
+                                                                FontSize="12"
+                                                                Foreground="#646464"
+                                                                Text="PPN" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                FontFamily="{StaticResource SarabunSemiBold}"
+                                                                FontSize="12"
+                                                                FontWeight="Bold"
+                                                                Foreground="#252B46">
+                                                                <Run x:Name="AirTangkiPpn" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                                <Grid Grid.Row="2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        Margin="16,12,0,0"
+                                                        FontFamily="{StaticResource MontserratSemiBold}"
+                                                        FontSize="12"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="#646464"
+                                                        Text="Total" />
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="0,12,16,0"
+                                                        HorizontalAlignment="Right"
+                                                        FontFamily="{StaticResource SarabunSemiBold}"
+                                                        FontSize="12"
+                                                        FontWeight="Bold"
+                                                        Foreground="#028DDB">
+                                                        <Run Text="Rp " />
+                                                        <Run x:Name="Total" />
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+
+                                <Border
+                                    Grid.Row="1"
+                                    Margin="0,10,0,0"
+                                    Padding="10,10,10,15"
+                                    BorderBrush="{StaticResource BaseGray}"
+                                    BorderThickness="1"
+                                    CornerRadius="5">
+                                    <Grid
+                                        x:Name="FotodanMapPermohonanSection"
+                                        Margin="32,15,32,0"
+                                        Visibility="Visible">
+                                        <ScrollViewer Margin="0,0,-16,0" VerticalScrollBarVisibility="Auto">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="15" />
+                                                    <ColumnDefinition Width="450" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Row="0" Grid.Column="0">
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5"
+                                                        Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="120" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <Grid>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Button
+                                                                            Width="100"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_bukti1"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid>
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBukti1Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="10" />
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5"
+                                                        Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="120" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <Grid>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Button
+                                                                            Width="100"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_bukti2"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid>
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBukti2Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="10" />
+                                                    <Border
+                                                        Padding="10,10,10,15"
+                                                        BorderBrush="{StaticResource BaseGray}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="5"
+                                                        Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="120" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                                                                <Grid>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Button
+                                                                            Width="100"
+                                                                            Height="28"
+                                                                            Margin="0,10,0,0"
+                                                                            HorizontalAlignment="Left"
+                                                                            md:ButtonAssist.CornerRadius="13"
+                                                                            BorderBrush="{StaticResource PictonBlue}"
+                                                                            Command="{Binding OnOpenImageCommand}"
+                                                                            CommandParameter="foto_bukti3"
+                                                                            Content="Lihat Foto"
+                                                                            FontSize="11"
+                                                                            Foreground="{StaticResource PictonBlue}"
+                                                                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </StackPanel>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid>
+                                                                    <TextBlock
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Panel.ZIndex="1"
+                                                                        Foreground="Gray">
+                                                                        Belum ada foto
+                                                                    </TextBlock>
+                                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                                </Grid>
+                                                                <Grid>
+                                                                    <Image
+                                                                        Width="180"
+                                                                        Height="100"
+                                                                        Source="{Binding FotoBukti3Uri}"
+                                                                        Stretch="UniformToFill" />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Border Height="15" />
+                                                </StackPanel>
+
+                                                <Border
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    Margin="0,0,0,0"
+                                                    Padding="15"
+                                                    BorderBrush="{StaticResource BaseGray}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5"
+                                                    Visibility="{Binding IsDenahLokasiFormChecked, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                    <StackPanel>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel
+                                                                Grid.Column="0"
+                                                                Margin="0,0,10,0"
+                                                                VerticalAlignment="Center">
+                                                                <TextBlock
+                                                                    Style="{StaticResource SmallTitle}"
+                                                                    Text="Titik Lokasi"
+                                                                    TextWrapping="Wrap" />
+                                                            </StackPanel>
+                                                        </Grid>
+
+                                                        <Border Height="0" />
+
+                                                        <Grid>
+                                                            <Border
+                                                                Height="200"
+                                                                Margin="0,8,0,0"
+                                                                Background="{StaticResource BaseGray}"
+                                                                CornerRadius="2">
+                                                                <Grid>
+                                                                    <gmaps:GMapControl
+                                                                        x:Name="MainMap"
+                                                                        Height="200"
+                                                                        Focusable="False"
+                                                                        IsHitTestVisible="False" />
+                                                                    <Button
+                                                                        Width="25"
+                                                                        Height="25"
+                                                                        Margin="0,4,4,0"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Top"
+                                                                        Background="#a7ddf7"
+                                                                        Click="OpenMap_Click"
+                                                                        Style="{StaticResource BtnWrapper}">
+                                                                        <md:PackIcon
+                                                                            Width="25"
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            Kind="Fullscreen" />
+                                                                    </Button>
+                                                                    <StackPanel
+                                                                        Margin="0,0,4,4"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Bottom">
+                                                                        <Button
+                                                                            x:Name="ZoomInButton"
+                                                                            Width="25"
+                                                                            Height="25"
+                                                                            Background="#a7ddf7"
+                                                                            Click="ZoomInButton_Click"
+                                                                            Style="{StaticResource BtnWrapper}">
+                                                                            <md:PackIcon
+                                                                                Width="25"
+                                                                                Margin="0"
+                                                                                Kind="Add" />
+                                                                        </Button>
+                                                                        <Border Height="5" />
+                                                                        <Button
+                                                                            x:Name="ZoomOutButton"
+                                                                            Width="25"
+                                                                            Height="25"
+                                                                            Background="#a7ddf7"
+                                                                            Click="ZoomOutButton_Click"
+                                                                            Style="{StaticResource BtnWrapper}">
+                                                                            <md:PackIcon
+                                                                                Width="25"
+                                                                                Margin="0"
+                                                                                Kind="Minus" />
+                                                                        </Button>
+                                                                    </StackPanel>
+                                                                    <Image
+                                                                        x:Name="CenterMarker"
+                                                                        Width="30"
+                                                                        Panel.ZIndex="2"
+                                                                        Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" />
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+
+                                                        <Border Height="15" />
+
+                                                        <StackPanel>
+                                                            <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Alamat Map" />
+                                                            <TextBlock
+                                                                x:Name="AlamatMap"
+                                                                Margin="0,3,0,0"
+                                                                Style="{StaticResource SmallTitle}"
+                                                                Text="{Binding FormData.AlamatMap, Mode=TwoWay}"
+                                                                TextWrapping="Wrap" />
+                                                            <CheckBox
+                                                                x:Name="IsAlamatMap"
+                                                                Margin="0,20,0,20"
+                                                                Content="Atur alamat map sebagai alamat utama"
+                                                                IsChecked="{Binding IsAlamatMapFormChecked, Mode=TwoWay}"
+                                                                Style="{StaticResource FilterCheckBox}"
+                                                                Visibility="Collapsed" />
+                                                            <Grid Margin="0,20,0,0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition />
+                                                                    <ColumnDefinition />
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                                                                    <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Latitude" />
+                                                                    <TextBlock
+                                                                        x:Name="LatText"
+                                                                        Margin="0,3,0,0"
+                                                                        Style="{StaticResource SmallTitle}"
+                                                                        Text="{Binding FormData.Latitude, Mode=TwoWay}"
+                                                                        TextWrapping="Wrap" />
+                                                                </StackPanel>
+                                                                <StackPanel Grid.Column="1" Margin="0,0,0,0">
+                                                                    <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Longitude" />
+                                                                    <TextBlock
+                                                                        x:Name="LonText"
+                                                                        Margin="0,3,0,0"
+                                                                        Style="{StaticResource SmallTitle}"
+                                                                        Text="{Binding FormData.Longitude, Mode=TwoWay}"
+                                                                        TextWrapping="Wrap" />
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+
+            <Border
+                Grid.Row="3"
+                Margin="0,0,0,0"
+                Padding="16,0,32,0"
+                Background="{StaticResource Black20}"
+                BorderBrush="{StaticResource Black20}"
+                BorderThickness="1"
+                CornerRadius="3">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        x:Name="Tips"
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        Visibility="Collapsed">
+                        <Border
+                            Width="20"
+                            Height="20"
+                            VerticalAlignment="Center"
+                            Background="#028DDB"
+                            CornerRadius="50">
+                            <TextBlock
+                                Margin="2,2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource SarabunRegular}"
+                                Foreground="White"
+                                Text="i" />
+                        </Border>
+                        <TextBlock
+                            Margin="9,0,0,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource SarabunRegular}"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Text="Klik dua kali untuk memilih pelanggan" />
+                    </StackPanel>
+                    <StackPanel
+                        x:Name="BtnBack"
+                        Grid.Column="0"
+                        Margin="16,0,0,0"
+                        Orientation="Horizontal"
+                        Visibility="Collapsed">
+                        <Button
+                            Width="80"
+                            Height="35"
+                            Click="BtnBackClick"
+                            Style="{StaticResource ButtonSecondary2}">
+                            Kembali
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Width="75"
+                            Height="35"
+                            Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                            Content="Batal"
+                            Style="{StaticResource ButtonSecondary2}" />
+                        <Button
+                            x:Name="BtnSubmit"
+                            Width="170"
+                            Height="35"
+                            Margin="13,0,0,0"
+                            Click="Button_Submit"
+                            Content="Proses"
+                            IsEnabled="False"
+                            Style="{StaticResource ButtonPrimary2}"
+                            Visibility="Collapsed" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <md:DialogHost DialogTheme="Inherit" Identifier="SambunganSubDialog" />
+        </Grid>
+    </md:DialogHost>
+</UserControl>

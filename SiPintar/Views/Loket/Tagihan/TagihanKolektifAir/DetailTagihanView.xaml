@@ -1,0 +1,1710 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Loket.Tagihan.TagihanKolektifAir.DetailTagihanView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Loket/CentralExpanderStyle.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/ControlStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:StringToBrushConverter
+                x:Key="InnerStringToBrushConverter"
+                FirstBrush="#027E46"
+                FirstString="Aktif"
+                SecondBrush="#E31F52"
+                SecondString="Nonaktif"
+                ThirdBrush="#F5A629"
+                ThirdString="Segel" />
+            <converters:StringToBrushConverter
+                x:Key="JenisTagihanToBrushConverter"
+                FirstBrush="#2CD589"
+                FirstString="Air"
+                SecondBrush="#ED7C99"
+                SecondString="Non Air"
+                ThirdBrush="#F5A629"
+                ThirdString="Segel" />
+            <converters:StringToBrushConverter
+                x:Key="OuterStringToBrushConverter"
+                FirstBrush="#D9FFDF"
+                FirstString="Aktif"
+                SecondBrush="#FCE9ED"
+                SecondString="Nonaktif"
+                ThirdBrush="#FED4A0"
+                ThirdString="Segel" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultConverter" Default="-" />
+            <converters:StringDefaultValueConverter x:Key="ZeroDefaultConverter" Default="0" />
+            <converters:GroupTagihanConverter x:Key="GroupTagihanConverter" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:NullVisibilityConverter
+                x:Key="NullToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:ComparisonToBooleanConverter x:Key="ComparisonToBooleanConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:ComparisonToVisibilityConverter
+                x:Key="ComparisonToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:GroupTagihanConverter x:Key="TotalTagihanGroupConverter" />
+
+            <ContextMenu x:Key="ExportMenu" Style="{StaticResource ContextMenuRegular}">
+                <MenuItem
+                    Click="ExportFile_Click"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                    Header="HTML"
+                    Style="{StaticResource MenuItemRegular}"
+                    Tag="html">
+                    <MenuItem.Icon>
+                        <md:PackIcon
+                            Width="16"
+                            Foreground="{StaticResource SecondaryBlue}"
+                            Kind="LanguageHtml5" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="ExportFile_Click"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                    Header="Excel (*.xls)"
+                    Style="{StaticResource MenuItemRegular}"
+                    Tag="xls">
+                    <MenuItem.Icon>
+                        <md:PackIcon
+                            Width="16"
+                            Foreground="{StaticResource SecondaryBlue}"
+                            Kind="FileExcelOutline" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="ExportFile_Click"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                    Header="Excel 2007 (*.xlsx)"
+                    Style="{StaticResource MenuItemRegular}"
+                    Tag="xlsx">
+                    <MenuItem.Icon>
+                        <md:PackIcon
+                            Width="16"
+                            Foreground="{StaticResource SecondaryBlue}"
+                            Kind="FileExcel" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="ExportFile_Click"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                    Header="XML"
+                    Style="{StaticResource MenuItemRegular}"
+                    Tag="xml">
+                    <MenuItem.Icon>
+                        <md:PackIcon
+                            Width="16"
+                            Foreground="{StaticResource SecondaryBlue}"
+                            Kind="FileDocumentOutline" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Click="ExportFile_Click"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                    Header="CSV"
+                    Style="{StaticResource MenuItemRegular}"
+                    Tag="csv">
+                    <MenuItem.Icon>
+                        <md:PackIcon
+                            Width="16"
+                            Foreground="{StaticResource SecondaryBlue}"
+                            Kind="FileCsvOutline" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#F5F5F5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <FrameworkElement x:Name="ProxyElement1" DataContext="{Binding}" />
+
+        <Grid
+            x:Name="LeftSection"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            MaxWidth="230"
+            Margin="0,0,16,0"
+            Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+
+                <StackPanel
+                    Grid.Row="0"
+                    Margin="10,14,10,4"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="40"
+                        Height="50"
+                        Margin="10,0"
+                        Padding="0"
+                        Background="White"
+                        Command="{Binding OnCloseDetailTagihanCommand}"
+                        Style="{StaticResource ButtonPlain}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Margin="4"
+                                Style="{StaticResource CloseIcon}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource CaptionSmallBody}"
+                                Text="Tutup" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Width="40"
+                        Height="50"
+                        Margin="10,0"
+                        Padding="0"
+                        Background="White"
+                        Click="RiwayatTransaksi_Click"
+                        Style="{StaticResource ButtonPlain}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Margin="4"
+                                Style="{StaticResource HistoryIcon}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource CaptionSmallBody}"
+                                Text="Riwayat" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Height="60"
+                        Margin="0"
+                        Padding="8,5"
+                        Background="White"
+                        Click="Export_Click"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource ButtonPlain}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Margin="4"
+                                Source="/SiPintar;component/Assets/Images/Toolbar/ic_table.png" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource CaptionSmallBody}"
+                                Text="Export" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Border
+                    Height="4"
+                    Margin="0,3,0,0"
+                    Background="{StaticResource JaggedIce}" />
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+
+                    <StackPanel Orientation="Vertical" Visibility="{Binding ShowSideInfo, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <StackPanel Width="193" Margin="22,0">
+                            <TextBlock
+                                Margin="0,15,0,0"
+                                LineHeight="23"
+                                Style="{StaticResource BigTitle}"
+                                Text="{Binding SelectedTagihan.Nama, FallbackValue='-'}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Style="{StaticResource CaptionSmallBody}"
+                                Text="{Binding SelectedTagihan.Alamat, FallbackValue='-'}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Border
+                                Width="190"
+                                Height="1"
+                                Margin="0,16"
+                                Background="{StaticResource JaggedIce}" />
+
+                            <Expander
+                                Margin="22,0"
+                                HorizontalAlignment="Stretch"
+                                Background="White"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource SecondaryBlue}"
+                                Header="Informasi"
+                                IsExpanded="True"
+                                Style="{StaticResource ExpanderPlusMinus}">
+                                <StackPanel
+                                    Margin="0,15,0,0"
+                                    Background="White"
+                                    Orientation="Vertical">
+                                    <Grid Margin="0,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Kategori" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.JenisTagihan, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Periode" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.NamaPeriode, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nomor" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.NomorWpf, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="JenisNonAir" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Jenis" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.NamaJenisNonAir, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Nama" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Nama, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Golongan" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Golongan" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.KodeGolongan, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Diameter" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Diameter" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.KodeDiameter, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="NamaStatus" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Status" />
+                                        <Grid
+                                            Grid.Column="1"
+                                            Height="22"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Background="{Binding SelectedTagihan.NamaStatus, Converter={StaticResource OuterStringToBrushConverter}}">
+                                            <TextBlock
+                                                Margin="3,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="{Binding SelectedTagihan.NamaStatus, Converter={StaticResource InnerStringToBrushConverter}}"
+                                                Style="{StaticResource SmallTitle}"
+                                                Text="{Binding SelectedTagihan.NamaStatus, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}" />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid x:Name="StanLalu" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Stan Lalu" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.StanLalu, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="StanAngkat" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Stan Angkat" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.StanAngkat, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="StanKini" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Stan Kini" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.StanSkrg, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Pakai" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Pakai (M3)" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Pakai, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Kelainan" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Kelainan" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Kelainan, FallbackValue='-', Converter={StaticResource StringDefaultConverter}}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="BiayaPemakaian" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Harga Air" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.BiayaPemakaian, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Administrasi" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Administrasi" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Administrasi, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.AdministrasiLain, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Pemeliharaan" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Pemeliharaan" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Pemeliharaan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.PemeliharaanLain, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Retribusi" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Retribusi" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Retribusi, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.RetribusiLain, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Pelayanan" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Pelayanan" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Pelayanan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="AirLimbah" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Air Limbah" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.AirLimbah, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="DendaPakai0" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Denda Pk 0" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.DendaPakai0, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Ppn" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Ppn" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Ppn, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Meterai" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Meterai" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Meterai, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="RekAir" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Rekening Air" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Rekair, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Denda" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Denda" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Denda, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Total" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Total, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                    <Grid x:Name="Keterangan" Margin="0,3,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Left"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="Keterangan" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Foreground="{StaticResource SecondaryDarker}"
+                                            Style="{StaticResource CaptionSmallBody}"
+                                            Text="{Binding SelectedTagihan.Keterangan}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid
+            x:Name="MainSection"
+            Grid.Column="1"
+            Margin="0,0,0,0"
+            Background="{StaticResource Black10}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                x:Name="MainSection2"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                Background="{StaticResource White100}">
+                <ScrollViewer x:Name="MainScrollViewer1" VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="16,0,16,0">
+                        <Grid Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}, FallbackValue=Visible}">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Margin="0,16,20,3" Orientation="Horizontal">
+                                    <TextBlock
+                                        Background="{StaticResource Black20}"
+                                        FontSize="15"
+                                        Foreground="{StaticResource PrimaryRed}"
+                                        Style="{StaticResource Title}"
+                                        Text="Loket Sudah Tutup Hari Ini !"
+                                        Visibility="{Binding ParentPage.IsLoketTutupToday, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    x:Name="PanelTagihan"
+                                    Margin="0,10,0,0"
+                                    Visibility="{Binding IsEmptyTagihan, Converter={StaticResource BooleanToCollapseConverter}}">
+                                    <Expander
+                                        Margin="0,10,0,20"
+                                        HorizontalAlignment="Stretch"
+                                        Background="White"
+                                        Style="{StaticResource ExpanderPlusMinus}">
+                                        <Expander.Header>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel
+                                                    Grid.Column="0"
+                                                    HorizontalAlignment="Left"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock
+                                                        Margin="0"
+                                                        FontSize="16"
+                                                        Foreground="{StaticResource SecondaryBlue}"
+                                                        LineHeight="1"
+                                                        Style="{StaticResource Title}"
+                                                        Text="Tagihan : " />
+                                                    <TextBlock
+                                                        Margin="0,0,12,0"
+                                                        Background="{StaticResource WhiteIce}"
+                                                        FontSize="16"
+                                                        Foreground="{StaticResource Orient}"
+                                                        LineHeight="1"
+                                                        Style="{StaticResource Title}"
+                                                        Text="{Binding RincianDetail.LembarTagihan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                                </StackPanel>
+                                                <StackPanel
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock
+                                                        Margin="0"
+                                                        FontSize="16"
+                                                        Foreground="{StaticResource SecondaryBlue}"
+                                                        LineHeight="1"
+                                                        Style="{StaticResource Title}"
+                                                        Text="Rp. " />
+                                                    <TextBlock
+                                                        Margin="0,0,12,0"
+                                                        Background="{StaticResource WhiteIce}"
+                                                        FontSize="16"
+                                                        Foreground="{StaticResource Orient}"
+                                                        LineHeight="1"
+                                                        Style="{StaticResource Title}"
+                                                        Text="{Binding RincianDetail.TotalTagihan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Expander.Header>
+
+                                        <DataGrid
+                                            x:Name="DataGridTagihan"
+                                            Margin="0,10,0,0"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            md:DataGridAssist.ColumnHeaderPadding="4 2 2 2"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserSortColumns="False"
+                                            ContextMenuOpening="DataGrid_ContextMenuOpening"
+                                            EnableRowVirtualization="True"
+                                            HorizontalScrollBarVisibility="Auto"
+                                            IsReadOnly="True"
+                                            ItemsSource="{Binding DataGroup, UpdateSourceTrigger=PropertyChanged}"
+                                            SelectedItem="{Binding Path=SelectedTagihan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            SelectionChanged="DataGridTagihan_SelectionChanged"
+                                            Style="{StaticResource DataGridRegular}"
+                                            Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                                            VerticalScrollBarVisibility="Auto">
+                                            <DataGrid.Resources>
+                                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="IsHitTestVisible" Value="True" />
+                                                    <Setter Property="Focusable" Value="False" />
+                                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                </Style>
+                                                <Style BasedOn="{StaticResource DataGridCellRegular}" TargetType="{x:Type DataGridCell}" />
+                                            </DataGrid.Resources>
+                                            <DataGrid.ContextMenu>
+                                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                                    <MenuItem
+                                                        x:Name="BtnLihatBuktiPembacaan"
+                                                        Margin="5,0"
+                                                        Click="OpenFotoMeter_Click"
+                                                        Header="Lihat Bukti Pembacaan"
+                                                        Style="{StaticResource MenuItemRegular}">
+                                                        <MenuItem.Icon>
+                                                            <Grid>
+                                                                <md:PackIcon
+                                                                    Width="16"
+                                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                                    Kind="FileMove" />
+                                                            </Grid>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem
+                                                        x:Name="BtnHapusDenda"
+                                                        Margin="5,0"
+                                                        Click="HapusDenda_Click"
+                                                        Header="Hapus Denda"
+                                                        IsEnabled="{Binding ParentPage.IsNamaRoleAdmin}"
+                                                        Style="{StaticResource MenuItemRegular}">
+                                                        <MenuItem.Icon>
+                                                            <Grid>
+                                                                <md:PackIcon
+                                                                    Width="16"
+                                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                                    Kind="FileMove" />
+                                                            </Grid>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </DataGrid.ContextMenu>
+                                            <DataGrid.RowStyle>
+                                                <Style TargetType="DataGridRow">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#E9E9E9" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataGrid.RowStyle>
+                                            <DataGrid.GroupStyle>
+                                                <GroupStyle>
+                                                    <GroupStyle.ContainerStyle>
+                                                        <Style TargetType="{x:Type GroupItem}">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                                        <StackPanel>
+                                                                            <Grid Background="{StaticResource Black20}">
+                                                                                <Grid.ColumnDefinitions>
+                                                                                    <ColumnDefinition MinWidth="100" MaxWidth="250" />
+                                                                                    <ColumnDefinition Width="10" />
+                                                                                    <ColumnDefinition Width="Auto" />
+                                                                                    <ColumnDefinition Width="10" />
+                                                                                    <ColumnDefinition Width="Auto" />
+                                                                                    <ColumnDefinition Width="30" />
+                                                                                    <ColumnDefinition Width="Auto" />
+                                                                                </Grid.ColumnDefinitions>
+                                                                                <Border Grid.Column="0" BorderThickness="0,1,0,0">
+                                                                                    <StackPanel
+                                                                                        Margin="5,5,5,5"
+                                                                                        VerticalAlignment="Center"
+                                                                                        Orientation="Horizontal">
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Bold"
+                                                                                            Foreground="{StaticResource SecondaryBlue}"
+                                                                                            Text="{Binding Path=Items[0].Nama}"
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                    </StackPanel>
+                                                                                </Border>
+                                                                                <StackPanel Grid.Column="6">
+                                                                                    <StackPanel
+                                                                                        Margin="5,8,5,5"
+                                                                                        VerticalAlignment="Center"
+                                                                                        Orientation="Horizontal">
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Regular"
+                                                                                            Foreground="{StaticResource Black70}"
+                                                                                            Text="ALAMAT : "
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Bold"
+                                                                                            Foreground="{StaticResource SecondaryBlue}"
+                                                                                            Text="{Binding Path=Items[0].Alamat}"
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                    </StackPanel>
+                                                                                </StackPanel>
+                                                                                <StackPanel Grid.Column="4" Visibility="Collapsed">
+                                                                                    <StackPanel
+                                                                                        Margin="5,8,5,5"
+                                                                                        VerticalAlignment="Center"
+                                                                                        Orientation="Horizontal">
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Regular"
+                                                                                            Foreground="{StaticResource Black70}"
+                                                                                            Text="LEMBAR : "
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Bold"
+                                                                                            Foreground="{StaticResource SecondaryBlue}"
+                                                                                            Text="{Binding Path=Items.Count}"
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                    </StackPanel>
+                                                                                </StackPanel>
+                                                                                <StackPanel Grid.Column="2">
+                                                                                    <StackPanel
+                                                                                        Margin="5,8,5,5"
+                                                                                        VerticalAlignment="Center"
+                                                                                        Orientation="Horizontal">
+                                                                                        <TextBlock
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Regular"
+                                                                                            Foreground="{StaticResource Black70}"
+                                                                                            Text="TOTAL : "
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                        <TextBlock
+                                                                                            MinWidth="75"
+                                                                                            HorizontalAlignment="Left"
+                                                                                            FontSize="12"
+                                                                                            FontWeight="Bold"
+                                                                                            Foreground="{StaticResource SecondaryBlue}"
+                                                                                            Text="{Binding Items, Converter={StaticResource TotalTagihanGroupConverter}, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}"
+                                                                                            TextAlignment="Right"
+                                                                                            Typography.Capitals="AllPetiteCaps" />
+                                                                                    </StackPanel>
+                                                                                </StackPanel>
+
+
+                                                                                <!--<StackPanel
+                                                                                    Grid.Column="1"
+                                                                                    Margin="0,0,10,0"
+                                                                                    VerticalAlignment="Center"
+                                                                                    Orientation="Horizontal">
+
+                                                                                    <Button
+                                                                                        Height="20"
+                                                                                        Padding="8,1"
+                                                                                        Background="Transparent"
+                                                                                        BorderThickness="0"
+                                                                                        Click="ButtonOpenEditForm_Click"
+                                                                                        Content="Koreksi"
+                                                                                        Tag="{Binding Items[0].IdPaketBarang}">
+                                                                                        <Button.Style>
+                                                                                            <Style BasedOn="{StaticResource ButtonSecondary}" TargetType="{x:Type Button}">
+                                                                                                <Style.Triggers>
+                                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                                        <Setter Property="Foreground" Value="{StaticResource LochmaraDarker}" />
+                                                                                                    </Trigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Button.Style>
+                                                                                    </Button>
+                                                                                    <Button
+                                                                                        Height="20"
+                                                                                        Padding="8,1"
+                                                                                        Background="Transparent"
+                                                                                        BorderThickness="0"
+                                                                                        Click="ButtonOpenDeleteForm_Click"
+                                                                                        Content="Hapus"
+                                                                                        Foreground="OrangeRed"
+                                                                                        Tag="{Binding Items[0].IdPaketBarang}">
+                                                                                        <Button.Style>
+                                                                                            <Style BasedOn="{StaticResource ButtonSecondary}" TargetType="{x:Type Button}">
+                                                                                                <Style.Triggers>
+                                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                                        <Setter Property="Foreground" Value="{StaticResource LochmaraDarker}" />
+                                                                                                    </Trigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Button.Style>
+                                                                                    </Button>
+
+                                                                                </StackPanel>-->
+                                                                            </Grid>
+                                                                            <StackPanel Grid.Row="2" Margin="0,0,0,0">
+                                                                                <Border BorderBrush="{StaticResource Black50}" BorderThickness="0.4">
+                                                                                    <ItemsPresenter />
+                                                                                </Border>
+                                                                            </StackPanel>
+                                                                        </StackPanel>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </GroupStyle.ContainerStyle>
+                                                </GroupStyle>
+                                            </DataGrid.GroupStyle>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn MinWidth="30" IsReadOnly="False">
+                                                    <DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox
+                                                                HorizontalAlignment="Center"
+                                                                Checked="TagihanCheckBoxAll_Checked"
+                                                                IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.IsAllSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Unchecked="TagihanCheckBoxAll_Checked">
+                                                                <CheckBox.Resources>
+                                                                    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="White" />
+                                                                </CheckBox.Resources>
+                                                            </CheckBox>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                <ProgressBar
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    IsIndeterminate="True"
+                                                                    Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                                                    Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToVisibleConverter}}"
+                                                                    Value="0" />
+                                                                <Button
+                                                                    Background="Transparent"
+                                                                    Click="CheckTagihan_Click"
+                                                                    IsEnabled="{Binding IsUpdating, Converter={StaticResource InverseBooleanConverter}}"
+                                                                    Style="{StaticResource BtnWrapper}"
+                                                                    Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                                    <StackPanel>
+                                                                        <Image
+                                                                            Width="16"
+                                                                            Height="16"
+                                                                            VerticalAlignment="Center"
+                                                                            Source="/SiPintar;component/Assets/Images/Action/ic_verifikasi_active.png"
+                                                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}" />
+                                                                        <Image
+                                                                            Width="16"
+                                                                            Height="16"
+                                                                            VerticalAlignment="Center"
+                                                                            Source="/SiPintar;component/Assets/Images/Action/ic_unverifikasi_active.png"
+                                                                            Visibility="{Binding IsSelected, Converter={StaticResource BooleanToCollapseConverter}, FallbackValue=Collapsed}" />
+                                                                    </StackPanel>
+                                                                </Button>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <!--<DataGridTemplateColumn Width="150" Header="NAMA">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding Nama}"
+                                                                TextAlignment="Center" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>-->
+                                                <DataGridTemplateColumn MinWidth="80" Header="KATEGORI">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button
+                                                                Height="25"
+                                                                Margin="0"
+                                                                md:ButtonAssist.CornerRadius="0"
+                                                                Background="{Binding JenisTagihan, Converter={StaticResource JenisTagihanToBrushConverter}}"
+                                                                BorderBrush="{StaticResource Black70}"
+                                                                BorderThickness="0.9"
+                                                                Content="{Binding JenisTagihan}"
+                                                                FontSize="12"
+                                                                Foreground="{StaticResource White90}"
+                                                                IsHitTestVisible="False" />
+
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn MinWidth="100" Header="NOMOR">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding NomorWpf}"
+                                                                TextAlignment="Center" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                                <DataGridTemplateColumn Width="100" Header="PERIODE">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding NamaPeriode, FallbackValue='-'}"
+                                                                TextAlignment="Center" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="100" Header="TAGIHAN">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding TagihanWpf, StringFormat={}{0:N0}, ConverterCulture='id-ID', FallbackValue='0'}"
+                                                                TextAlignment="Right" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="100" Header="DENDA">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding DendaWpf, StringFormat={}{0:N0}, ConverterCulture='id-ID', FallbackValue='0'}"
+                                                                TextAlignment="Right" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="100" Header="TOTAL">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding TotalWpf, StringFormat={}{0:N0}, ConverterCulture='id-ID', FallbackValue='0'}"
+                                                                TextAlignment="Right" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn MinWidth="500" Header="URAIAN">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding UraianWpf}"
+                                                                TextAlignment="Left" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="80" Header="TARIF">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding KodeGolongan}"
+                                                                TextAlignment="Center" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn MinWidth="150" Header="ALAMAT">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Style="{StaticResource TextDataGridCellRegular}"
+                                                                Text="{Binding Alamat}"
+                                                                TextAlignment="Center" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Expander>
+                                    <Border
+                                        Height="2"
+                                        Margin="0,0,0,0"
+                                        Background="{StaticResource JaggedIce}"
+                                        Visibility="{Binding IsEmptyTagihan, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="{StaticResource White100}" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}">
+                            <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                <Image
+                                    Height="30"
+                                    Margin="10"
+                                    RenderTransformOrigin="0.5, 0.5"
+                                    Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                    <Image.RenderTransform>
+                                        <RotateTransform x:Name="noFreeze" />
+                                    </Image.RenderTransform>
+                                    <Image.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation
+                                                        RepeatBehavior="Forever"
+                                                        Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                        To="360"
+                                                        Duration="0:0:0:1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Image.Triggers>
+                                </Image>
+
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource Title}"
+                                    Text="Mohon tunggu sebentar" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Pencarian list tagihan sedang diproses" />
+
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <Grid
+            x:Name="RightSection"
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            MinWidth="233"
+            Margin="16,0,0,0"
+            Background="White">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Margin="20,16,20,3" Orientation="Vertical">
+                        <TextBlock
+                            Foreground="{StaticResource Black70}"
+                            Style="{StaticResource SmallTitle}"
+                            Text="Tanggal Transaksi" />
+                        <Border
+                            Margin="0,0,0,5"
+                            BorderBrush="Gray"
+                            BorderThickness="0.5"
+                            CornerRadius="3">
+                            <Grid>
+                                <DatePicker
+                                    x:Name="TanggalTransaksi"
+                                    Height="30"
+                                    Padding="6,0,0,0"
+                                    BorderThickness="0"
+                                    IsEnabled="{Binding ParentPage.IsNamaRoleAdmin}"
+                                    SelectedDate="{Binding ParentPage.TanggalTransaksi}"
+                                    SelectedDateFormat="Long"
+                                    Style="{StaticResource DefaultDatePicker}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <Border Height="4" Background="{StaticResource JaggedIce}" />
+                    <Button
+                        Height="16"
+                        Margin="0,5,5,0"
+                        Padding="0,0"
+                        HorizontalAlignment="Right"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="DesignKwitansiClick">
+                        <TextBlock Style="{StaticResource TextLink}" Text="Design Kuitansi" />
+                    </Button>
+
+                    <StackPanel Margin="20,10" Orientation="Vertical">
+                        <TextBlock
+                            Margin="0,0,0,5"
+                            FontSize="15px"
+                            Foreground="{StaticResource Black70}"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Total Tagihan" />
+                        <Grid
+                            MinWidth="20"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource WhiteIce}">
+                            <StackPanel Margin="6,0" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,2"
+                                    Foreground="{StaticResource Orient}"
+                                    Style="{StaticResource BigTitleForNumber22}"
+                                    Text="Rp " />
+                                <TextBlock
+                                    Margin="0,2"
+                                    Foreground="{StaticResource Orient}"
+                                    Style="{StaticResource BigTitleForNumber22}"
+                                    Text="{Binding RincianDetail.TotalTagihan, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock
+                            Margin="0,20,0,0"
+                            Foreground="{StaticResource Black70}"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Jumlah Bayar" />
+                        <TextBox
+                            x:Name="BayarText"
+                            Height="55"
+                            Margin="0,5"
+                            md:TextFieldAssist.PrefixText="Rp. "
+                            BorderBrush="{StaticResource BaseApp}"
+                            BorderThickness="1"
+                            IsEnabled="{Binding IsAllowedToProcess, Converter={StaticResource ComparisonToBooleanConverter}, ConverterParameter='True'}"
+                            PreviewKeyUp="Bayar_PreviewKeyUp"
+                            PreviewTextInput="NumberValidationTextBox"
+                            Style="{StaticResource TextBoxInputForm20}"
+                            Text="{Binding JumlahBayar, Mode=TwoWay, FallbackValue='0', UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                        <TextBlock
+                            x:Name="WarningMessage"
+                            Foreground="Red"
+                            Style="{StaticResource SmallTitle}"
+                            Text=""
+                            Visibility="Collapsed" />
+                        <Button
+                            x:Name="BtnUangPas"
+                            Width="106"
+                            Height="35"
+                            Margin="4,8,0,16"
+                            Padding="0"
+                            HorizontalAlignment="Left"
+                            md:ButtonAssist.CornerRadius="22.5"
+                            Click="BtnUangPas_Click"
+                            Content="Uang Pas"
+                            Style="{StaticResource ButtonSecondary2F14}" />
+
+                        <CheckBox
+                            Content="Cetak Kuitansi"
+                            IsChecked="{Binding IsCetakKuitansi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Style="{StaticResource DarkCheckBox13}" />
+                        <CheckBox
+                            Margin="0,5"
+                            Content="Lihat Kuitansi Sebelum Cetak"
+                            IsChecked="{Binding IsLihatKuitansiSebelumCetak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding IsAllowedToProcess, Converter={StaticResource ComparisonToBooleanConverter}, ConverterParameter='True'}"
+                            Style="{StaticResource DarkCheckBox13}" />
+
+
+                        <CheckBox
+                            Margin="0,5,0,10"
+                            Content="Petugas Penagih / Kolektor"
+                            IsChecked="{Binding IsKolektifChecked}"
+                            Style="{StaticResource DarkCheckBox13}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <ComboBox
+                                    x:Name="KodeKolektif"
+                                    Width="65"
+                                    DisplayMemberPath="KodeKolektif"
+                                    IsEnabled="{Binding IsKolektifChecked}"
+                                    ItemsSource="{Binding Parent.KolektifList}"
+                                    SelectedItem="{Binding SelectedKolektif, Mode=TwoWay}"
+                                    Style="{StaticResource ComboBoxInputForm}" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    DataContext="{Binding ElementName=KodeKolektif, Path=Text}"
+                                    Style="{StaticResource TextBoxPlaceholder}"
+                                    Text="Kode" />
+                            </Grid>
+                            <Grid x:Name="KolektifBorderTest" Grid.Column="1">
+                                <ComboBox
+                                    x:Name="Kolektif"
+                                    Width="{Binding ElementName=KolektifBorderTest, Path=ActualWidth}"
+                                    DisplayMemberPath="NamaKolektif"
+                                    IsEnabled="{Binding IsKolektifChecked}"
+                                    ItemsSource="{Binding Parent.KolektifList}"
+                                    SelectedItem="{Binding SelectedKolektif, Mode=TwoWay}"
+                                    Style="{StaticResource ComboBoxInputForm}" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    DataContext="{Binding ElementName=Kolektif, Path=Text}"
+                                    Style="{StaticResource TextBoxPlaceholder}"
+                                    Text="Nama" />
+                            </Grid>
+                        </Grid>
+
+                        <Button
+                            x:Name="BayarBtn"
+                            Margin="0,10,0,0"
+                            Click="Bayar_Click"
+                            Content="Bayar Tagihan"
+                            IsEnabled="False"
+                            Style="{StaticResource ButtonPrimary}" />
+
+                        <Border
+                            Width="190"
+                            Height="1"
+                            Margin="0,16"
+                            Background="{StaticResource JaggedIce}" />
+
+                        <StackPanel x:Name="RincianTagihan" Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,0,0,10"
+                                Style="{StaticResource Title}"
+                                Text="Rincian Tagihan" />
+                            <Grid>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Harga Air" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.BiayaPemakaian, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Administrasi, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Administrasi" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Administrasi, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Pemeliharaan, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Pemeliharaan" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Pemeliharaan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Retribusi, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Retribusi" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Retribusi, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Pelayanan, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Pelayanan" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Pelayanan, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.AirLimbah, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Air Limbah" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.AirLimbah, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.DendaPakai0, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Denda Pakai 0" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.DendaPakai0, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Ppn, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Ppn" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Ppn, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Visibility="{Binding Source={x:Reference ProxyElement1}, Path=DataContext.TableSetting.Meterai, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Meterai" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Meterai, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Rekening Air" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.RekAir, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Denda" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.Denda, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Border
+                                Width="190"
+                                Height="1"
+                                Margin="0,16"
+                                Background="{StaticResource JaggedIce}" />
+                            <Grid>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Tagihan Air" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.TotalRekeningAir, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="Tagihan Non Air" />
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="Rp " />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{StaticResource Tuna}"
+                                        Style="{StaticResource CaptionSmallBody}"
+                                        Text="{Binding RincianDetail.TotalRekeningNonAir, StringFormat='{}{0:#,0}', ConverterCulture='id-ID'}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+</UserControl>

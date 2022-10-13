@@ -1,0 +1,559 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.Supervisi.HasilBacaUlangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="600" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBacameter}">
+                    <Grid Margin="10 8">
+                        <Grid>
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Lihat Hasil Baca"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16" Margin="0 0 10 0">
+                                <TextBlock Foreground="{StaticResource BaseAppBacameter}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="20 5">
+                    <Border Background="{StaticResource Black10}" Margin="0 10 0 0" Padding="10 10 10 0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Nama" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding SelectedData.Nama, Converter={StaticResource StringDefaultValueConverter}}" TextWrapping="Wrap" FontSize="10" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="No Sambung" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding SelectedData.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Alamat" FontSize="10" Style="{StaticResource TitleForNumber}" Foreground="{StaticResource Astronaut}" />
+                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" FontSize="10" Text="{Binding SelectedData.Alamat, Converter={StaticResource StringDefaultValueConverter}}" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Keterangan" FontSize="10" Style="{StaticResource TitleForNumber}" Foreground="{StaticResource Astronaut}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding SelectedData.Lampiran, Converter={StaticResource StringDefaultValueConverter}}" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Grid Margin="0 10 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Title}" FontSize="14" LineHeight="10" Text="Data Lama" Margin="0 10"/>
+                            <Border Background="{StaticResource Black10}" Margin="0" Padding="10 13 10 10">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Waktu Baca" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding SelectedData.WaktuBaca, StringFormat=dd/MM/yyyy HH:mm:ss, ConverterCulture='id-ID'}" TextAlignment="Right" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                    </Grid>
+
+                                    <Border Background="White" BorderBrush="{StaticResource BaseGray}" CornerRadius="2" Margin="0 0 0 10">
+                                        <StackPanel x:Name="Actions1" Margin="8 0 8 8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <RadioButton GroupName="ProveSection1" Style="{StaticResource TextOnlyRadio}" Margin="0 0 10 0" Content="Foto Stan" FontSize="10" x:Name="IsFotoStan1" Click="Section_Click" />
+                                                <RadioButton Grid.Column="1" GroupName="ProveSection1" Style="{StaticResource TextOnlyRadio}" FontSize="10" Margin="0 0 0 0" Content="Foto Rumah" x:Name="IsFotoRumah1" Click="Section_Click" />
+                                                <RadioButton Grid.Column="2" GroupName="ProveSection1" Style="{StaticResource TextOnlyRadio}" Margin="10 0 0 0" FontSize="10" Content="Video" x:Name="IsVideo1" Click="Section_Click" />
+                                            </Grid>
+
+                                            <Border Panel.ZIndex="1" Margin="0,4,0,0" CornerRadius="2" Background="{StaticResource BaseGray}" Height="208" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                <Grid>
+                                                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                                        <Image.RenderTransform>
+                                                            <RotateTransform />
+                                                        </Image.RenderTransform>
+                                                        <Image.Triggers>
+                                                            <EventTrigger RoutedEvent="Loaded">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation
+                                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Image.Triggers>
+                                                    </Image>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Margin="0,4,0,0" CornerRadius="2" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                <Grid>
+                                                    <Grid x:Name="BorderFotoStan1" Background="{StaticResource BaseGray}" Height="208" Visibility="Visible">
+                                                        <Grid Visibility="{Binding HasFotoStan, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="{Binding ThumbnailFotoStan, Mode=OneWay}" Width="233" />
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxFotoStanButton_Click" Tag="FotoStan1" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasFotoStan, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoFotoStan1" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada foto stan air pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxFotoStanButton_Click" Tag="FotoStan1">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid x:Name="BorderFotoRumah1" Background="{StaticResource BaseGray}" Height="208" Visibility="Collapsed">
+                                                        <Grid Visibility="{Binding HasFotoRumah, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="{Binding ThumbnailFotoRumah, Mode=OneWay}" Width="233" />
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxFotoRumahButton_Click" Tag="FotoRumah1" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasFotoRumah, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoFotoRumah1" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada foto rumah pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxFotoRumahButton_Click" Tag="FotoRumah1">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid x:Name="BorderVideo1" Background="{StaticResource BaseGray}" Height="208" Visibility="Collapsed">
+                                                        <Grid Visibility="{Binding HasVideo, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxVideoButton_Click" Tag="Video1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Border Background="Black" Height="208" Width="233">
+                                                                    <Grid>
+                                                                        <Image Source="/SiPintar;component/Assets/Images/Action/ic_play.png" Width="64" />
+                                                                        <Border CornerRadius="50" Background="Gray" Opacity="0.7" Width="60" Height="60" Panel.ZIndex="-1" />
+                                                                    </Grid>
+
+                                                                </Border>
+                                                            </Button>
+                                                            <Button x:Name="MaxVideoButton1" Style="{StaticResource BtnWrapper}" Click="MaxVideoButton_Click" Tag="Video1" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                                <Image x:Name="MaximizeVideo1" Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasVideo, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoVideo1" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada video pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxVideoButton_Click" Tag="Video1">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Grid Margin="0 5 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Angka Stan Meter" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                        <TextBlock Grid.Column="1" TextAlignment="Right" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}">
+                                            <Run Text="{Binding SelectedData.StanLalu, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                            <Run Text="m&#x00B3;" />
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <Separator Margin="0 0 0 10" Background="{StaticResource Gray50}" />
+
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock Text="Stan Sekarang" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding SelectedData.StanSkrg, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Stan Angkat" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding SelectedData.StanAngkat, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Margin="0 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock Text="Pemakaian Air" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding SelectedData.Pakai, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Visibility="Collapsed">
+                                            <TextBlock Text="Persentase" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="-" />
+                                                <Run Text="%" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Separator Margin="0 0 0 10" Background="{StaticResource Gray50}" />
+
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Nama Petugas" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 7 5 0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding SelectedData.PetugasBaca, Converter={StaticResource StringDefaultValueConverter}}" TextWrapping="Wrap" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                    </Grid>
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Kelainan (jika ada)" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 7 5 0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding SelectedData.Kelainan, Converter={StaticResource StringDefaultValueConverter}}" TextWrapping="Wrap" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                    </Grid>
+                                    <Grid Margin="0 5 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Margin="0 0 10 0">
+                                            <TextBlock Text="Latitude" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5"/>
+                                            <TextBox Text="{Binding SelectedData.Latitude, Converter={StaticResource StringDefaultValueConverter}}" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Longitude" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5"/>
+                                            <TextBox Text="{Binding SelectedData.Longitude, Converter={StaticResource StringDefaultValueConverter}}" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource Title}" FontSize="14" LineHeight="10" Text="Data Baru" Margin="0 10"/>
+                            <Border Background="{StaticResource Black10}" Margin="0" Padding="10 13 10 10">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Waktu Baca" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding HasilBacaUlang.WaktuBaca, StringFormat=dd/MM/yyyy HH:mm:ss, ConverterCulture='id-ID'}" TextAlignment="Right" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}" />
+                                    </Grid>
+
+                                    <Border Background="White" BorderBrush="{StaticResource BaseGray}" CornerRadius="2" Margin="0 0 0 10">
+                                        <StackPanel x:Name="Actions2" Margin="8 0 8 8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <RadioButton GroupName="ProveSection2" Style="{StaticResource TextOnlyRadio}" Margin="0 0 10 0" Content="Foto Stan" FontSize="10" x:Name="IsFotoStan2" Click="Section_Click" />
+                                                <RadioButton Grid.Column="1" GroupName="ProveSection2" Style="{StaticResource TextOnlyRadio}" FontSize="10" Margin="0 0 0 0" Content="Foto Rumah" x:Name="IsFotoRumah2" Click="Section_Click" />
+                                                <RadioButton Grid.Column="2" GroupName="ProveSection2" Style="{StaticResource TextOnlyRadio}" Margin="10 0 0 0" FontSize="10" Content="Video" x:Name="IsVideo2" Click="Section_Click" />
+                                            </Grid>
+
+                                            <Border Panel.ZIndex="1" Margin="0,4,0,0" CornerRadius="2" Background="{StaticResource BaseGray}" Height="208" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                <Grid>
+                                                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                                        <Image.RenderTransform>
+                                                            <RotateTransform />
+                                                        </Image.RenderTransform>
+                                                        <Image.Triggers>
+                                                            <EventTrigger RoutedEvent="Loaded">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation
+                                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                        </Image.Triggers>
+                                                    </Image>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Margin="0,4,0,0" CornerRadius="2" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                <Grid>
+                                                    <Grid x:Name="BorderFotoStan2" Background="{StaticResource BaseGray}" Height="208" Visibility="Visible">
+                                                        <Grid Visibility="{Binding HasFotoStanUlang, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="{Binding ThumbnailFotoStanUlang, Mode=OneWay}" Width="233" />
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxFotoStanButton_Click" Tag="FotoStan2" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasFotoStanUlang, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoFotoStan2" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada foto stan air pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxFotoStanButton_Click" Tag="FotoStan2">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid x:Name="BorderFotoRumah2" Background="{StaticResource BaseGray}" Height="208" Visibility="Collapsed">
+                                                        <Grid Visibility="{Binding HasFotoRumahUlang, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="{Binding ThumbnailFotoRumahUlang, Mode=OneWay}" Width="233" />
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxFotoRumahButton_Click" Tag="FotoRumah2" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasFotoRumahUlang, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoFotoRumah2" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada foto rumah pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxFotoRumahButton_Click" Tag="FotoRumah2">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid x:Name="BorderVideo2" Background="{StaticResource BaseGray}" Height="208" Visibility="Collapsed">
+                                                        <Grid Visibility="{Binding HasVideoUlang, Converter={StaticResource BooleanToVisibleConverter}}">
+                                                            <Button Style="{StaticResource BtnWrapper}" Click="MaxVideoButton_Click" Tag="Video2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Border Background="Black" Height="208" Width="233">
+                                                                    <Grid>
+                                                                        <Image Source="/SiPintar;component/Assets/Images/Action/ic_play.png" Width="64" />
+                                                                        <Border CornerRadius="50" Background="Gray" Opacity="0.7" Width="60" Height="60" Panel.ZIndex="-1" />
+                                                                    </Grid>
+
+                                                                </Border>
+                                                            </Button>
+                                                            <Button x:Name="MaxVideoButton2" Style="{StaticResource BtnWrapper}" Click="MaxVideoButton_Click" Tag="Video2" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                                <Image x:Name="MaximizeVideo2" Source="/SiPintar;component/Assets/Images/Action/ic_expand.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid Visibility="{Binding HasVideoUlang, Converter={StaticResource BooleanToCollapseConverter}}">
+                                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/SiPintar;component/Assets/Images/ic_no_pic.png" Width="32" />
+                                                                <TextBlock x:Name="InfoVideo2" Margin="0,4,0,0" FontFamily="{StaticResource MontserratMedium}" FontSize="8" Foreground="{StaticResource Gray}">Belum ada video pelanggan</TextBlock>
+                                                            </StackPanel>
+                                                            <Button Style="{StaticResource BtnWrapper}" Width="24" VerticalAlignment="Top" HorizontalAlignment="Right" Click="MaxVideoButton_Click" Tag="Video2">
+                                                                <Image Source="/SiPintar;component/Assets/Images/Action/ic_expand_disabled.png" Width="24" />
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Grid Margin="0 5 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="Angka Stan Meter" Style="{StaticResource TitleForNumber}" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                        <TextBlock Grid.Column="1" TextAlignment="Right" FontSize="10" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Astronaut}">
+                                            <Run Text="{Binding HasilBacaUlang.StanLalu, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                            <Run Text="m&#x00B3;" />
+                                        </TextBlock>
+                                    </Grid>
+
+                                    <Separator Margin="0 0 0 10" Background="{StaticResource Gray50}" />
+
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock Text="Stan Sekarang" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding HasilBacaUlang.StanSkrg, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Stan Angkat" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding HasilBacaUlang.StanAngkat, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Margin="0 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock Text="Pemakaian Air" Style="{StaticResource TitleForNumber}" Margin="0 0 0 5" FontSize="10" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="{Binding HasilBacaUlang.Pakai, Converter={StaticResource StringDefaultValueConverter}, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID', FallbackValue='-'}" />
+                                                <Run Text="m&#x00B3;" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Visibility="Collapsed">
+                                            <TextBlock Text="Persentase" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5" Foreground="{StaticResource Astronaut}" />
+                                            <TextBlock TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}" FontSize="10" Foreground="{StaticResource Astronaut}">
+                                                <Run Text="-" />
+                                                <Run Text="%" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Separator Margin="0 0 0 10" Background="{StaticResource Gray50}" />
+
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Nama Petugas" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 7 5 0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding HasilBacaUlang.PetugasBaca, Converter={StaticResource StringDefaultValueConverter}}" TextWrapping="Wrap" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                    </Grid>
+                                    <Grid Margin="0 0 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Kelainan (jika ada)" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 7 5 0"/>
+                                        <TextBox Grid.Column="1" Text="{Binding HasilBacaUlang.Kelainan, Converter={StaticResource StringDefaultValueConverter}}" TextWrapping="Wrap" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                    </Grid>
+                                    <Grid Margin="0 5 0 10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Margin="0 0 10 0">
+                                            <TextBlock Text="Latitude" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5"/>
+                                            <TextBox Text="{Binding HasilBacaUlang.Latitude, Converter={StaticResource StringDefaultValueConverter}}" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Longitude" Style="{StaticResource TitleForNumber}" FontSize="10" Margin="0 0 0 5"/>
+                                            <TextBox Text="{Binding HasilBacaUlang.Longitude, Converter={StaticResource StringDefaultValueConverter}}" Style="{StaticResource TextBoxInputForm}" FontSize="10" IsReadOnly="True"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Margin="30,15,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Click="Batalkan_Click" Content="Request Baca Ulang" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Konfirmasi Pakai Data Baru" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <md:DialogHost Identifier="HasilBacaUlangDialog" DialogTheme="Inherit" />
+    </Grid>
+</UserControl>

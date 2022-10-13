@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.PostingKeuanganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Akuntansi"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Akuntansi.PostingKeuangan"
+             xmlns:view="clr-namespace:SiPintar.Views.Akuntansi.PostingKeuangan"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             d:DesignHeight="720" d:DesignWidth="1280"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:NullVisibilityConverter x:Key="NullToVisible" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsed" True="Collapsed" False="Visible" />
+
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodel:PostingTransKasViewModel}">
+                <view:PostingTransKasView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PenerimaanLainnyaViewModel}">
+                <view:PenerimaanLainnyaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PengeluaranLainnyaViewModel}">
+                <view:PengeluaranLainnyaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:ProsesSaldoHarianViewModel}">
+                <view:ProsesSaldoHarianView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:ProsesPiutangBulananViewModel}">
+                <view:ProsesPiutangBulananView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+    <Grid Background="{StaticResource AthensGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    ToolBarTray.IsLocked="True"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    Background="White"
+                    ClipToBounds="False">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    GroupName="NavItem"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}"
+                                    Click="NavItemSelectedHandler"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ContextMenuService.Placement="Bottom">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ContentControl Content="{Binding PageViewModel}" Margin="0 0" Visibility="{Binding PageViewModel, Converter={StaticResource NullToCollapsed}, FallbackValue=Collapsed}" />
+            <StackPanel Visibility="{Binding PageViewModel, Converter={StaticResource NullToVisible}, FallbackValue=Visible}"
+                                    VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Width="120" Source="/SiPintar;component/Assets/Images/Application/akuntansi_logo_3x.png" Margin="10 0"/>
+                <StackPanel VerticalAlignment="Center" Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock Text="PDAM PINTAR" Style="{StaticResource LogoTitleLabel}" FontSize="20"/>
+                    <TextBlock Text="Akuntansi &amp; Keuangan" Style="{StaticResource LogoSubtitleLabel}" FontSize="30"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
+

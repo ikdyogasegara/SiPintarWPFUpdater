@@ -1,0 +1,452 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Distribusi.Distribusi.GantiMeter.RotasiMeterView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SiPintar.Views.Distribusi.Distribusi.GantiMeter"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+            <converters:BooleanToBrushConverter
+                x:Key="BooleanToBrushConverter"
+                FirstBrush="#028DDB"
+                SecondBrush="#646464" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost DialogTheme="Inherit">
+        <Grid Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Margin="15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border
+                    Grid.Row="0"
+                    BorderBrush="{StaticResource Black50}"
+                    BorderThickness="0"
+                    CornerRadius="4 4 0 0">
+                    <Grid>
+                        <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Image
+                                Height="30"
+                                Margin="10"
+                                RenderTransformOrigin="0.5, 0.5"
+                                Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                <Image.RenderTransform>
+                                    <RotateTransform x:Name="noFreeze" />
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                    RepeatBehavior="Forever"
+                                                    Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                    To="360"
+                                                    Duration="0:0:0:1" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+
+                        <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <StackPanel
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Image Height="90" Source="/SiPintar;component/Assets/Images/empty_data_v2.png" />
+                                <Border Height="8" />
+                                <StackPanel>
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        FontStyle="Normal"
+                                        Text="Tidak ada data" />
+                                    <TextBlock
+                                        Margin="0,5,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource Gray100}"
+                                        TextAlignment="Center">
+                                        Silakan periksa filter atau atur ulang filter untuk menampilkan data.
+                                    </TextBlock>
+                                </StackPanel>
+                                <Border Height="30" />
+                            </StackPanel>
+                        </Grid>
+
+                        <ContentControl Content="{StaticResource ProxyElement}" Visibility="Collapsed" />
+
+                        <DataGrid
+                            x:Name="DataGridContent"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserSortColumns="False"
+                            DataContext="{Binding}"
+                            EnableColumnVirtualization="True"
+                            EnableRowVirtualization="True"
+                            HeadersVisibility="Column"
+                            HorizontalScrollBarVisibility="Auto"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding Path=DataContext.SelectedData, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                            SelectionMode="Single"
+                            Style="{StaticResource DataGridRegular}"
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style x:Key="RightCell" TargetType="{x:Type TextBlock}">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="Foreground" Value="{StaticResource Black90}" />
+                                    <Setter Property="Padding" Value="10,0,5,0" />
+                                    <Setter Property="TextAlignment" Value="Right" />
+                                </Style>
+                                <Style BasedOn="{StaticResource DataGridCellRegular}" TargetType="{x:Type DataGridCell}" />
+                            </DataGrid.Resources>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                    <MenuItem
+                                        Header="Detail Pelanggan"
+                                        Style="{StaticResource MenuItemRegular}"
+                                        Visibility="Collapsed">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="FileAccount" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Header="Lihat Foto Pembacaan"
+                                        Style="{StaticResource MenuItemRegular}"
+                                        Visibility="Collapsed">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="Image" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding OnOpenSpkSurveiCommand}"
+                                        Header="Proses SPK Survei Kelainan Meter"
+                                        Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="Plus" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Command="{Binding OnOpenBeritaAcaraCommand}"
+                                        Header="Proses BA Survei Kelainan Meter"
+                                        Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="Plus" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Cetak SPK Survei" Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="Printer" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Cetak BA Survei" Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="Printer" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Header="Export Excel"
+                                        Style="{StaticResource MenuItemRegular}"
+                                        Visibility="Collapsed">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon
+                                                    Width="16"
+                                                    Foreground="{StaticResource SecondaryBlue}"
+                                                    Kind="BookArrowRight"
+                                                    Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    MinWidth="150"
+                                    Binding="{Binding Nama, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="STATUS"
+                                    Visibility="{Binding DataContext.TableSetting.Status, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="150"
+                                    Binding="{Binding Kategori, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="KATEGORI"
+                                    Visibility="{Binding DataContext.TableSetting.Kategori, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NamaPeriode, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="PERIODE"
+                                    Visibility="{Binding DataContext.TableSetting.Periode, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NoSamb, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="NO. SAMBUNGAN"
+                                    Visibility="{Binding DataContext.TableSetting.NoSamb, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="150"
+                                    Binding="{Binding Nama, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="NAMA"
+                                    Visibility="{Binding DataContext.TableSetting.Nama, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding Alamat, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="ALAMAT"
+                                    Visibility="{Binding DataContext.TableSetting.Alamat, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding NamaArea, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="ZONA"
+                                    Visibility="{Binding DataContext.TableSetting.Zona, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NamaRayon, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="RAYON"
+                                    Visibility="{Binding DataContext.TableSetting.Rayon, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NamaWilayah, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="WILAYAH"
+                                    Visibility="{Binding DataContext.TableSetting.Wilayah, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NamaGolongan, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="GOL"
+                                    Visibility="{Binding DataContext.TableSetting.Golongan, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding UmurMeter, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="UMUR METER (TH)"
+                                    Visibility="{Binding DataContext.TableSetting.UmurMeter, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NomorSPK, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="NOMOR SPK"
+                                    Visibility="{Binding DataContext.TableSetting.NomorSPK, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding NomorBa, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="NOMOR BA"
+                                    Visibility="{Binding DataContext.TableSetting.NomorBA, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                                <DataGridTextColumn
+                                    MinWidth="200"
+                                    Binding="{Binding JadwalBa, Converter={StaticResource StringDefaultValueConverter}, FallbackValue='-'}"
+                                    ElementStyle="{StaticResource TextDataGridCellRegular}"
+                                    Header="JADWAL BA"
+                                    Visibility="{Binding DataContext.TableSetting.JadwalBA, Converter={StaticResource BooleanToVisibleConverter}, Source={StaticResource ProxyElement}}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1" Margin="0,0,0,16">
+                    <Border
+                        Background="{StaticResource Black20}"
+                        BorderBrush="{StaticResource Black50}"
+                        BorderThickness="1,0,1,1"
+                        CornerRadius="0, 0, 4, 4">
+                        <Grid Margin="11,8,14,7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ComboBox
+                                x:Name="ShowOption"
+                                Width="64"
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="White"
+                                DisplayMemberPath="Value"
+                                IsEnabled="{Binding Path=IsLoading, Converter={StaticResource InverseBooleanConverter}, ConverterParameter=IsLoading}"
+                                ItemsSource="{Binding ShowOptions, Mode=OneWay}"
+                                SelectedItem="{Binding LimitData}"
+                                SelectedValuePath="Key"
+                                Style="{StaticResource ComboBoxInputForm}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="6,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource Black90}"
+                                LineHeight="18"
+                                Style="{StaticResource CaptionSmallBody}"
+                                Text="Data per Halaman" />
+                            <StackPanel
+                                Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,16,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource Black90}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="{Binding TotalRecord, StringFormat='{}{0:#,0.###} Data Tunggakan', ConverterCulture='id-ID'}" />
+                                <Button
+                                    Height="16"
+                                    Padding="0"
+                                    Command="{Binding OnPreviousPageCommand}"
+                                    IsEnabled="{Binding IsPreviousButtonEnabled}"
+                                    Style="{StaticResource ButtonPlain}">
+                                    <Grid>
+                                        <md:PackIcon
+                                            Height="16"
+                                            Background="{StaticResource Black20}"
+                                            Foreground="{StaticResource SecondaryBlue}"
+                                            Kind="ChevronLeft"
+                                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon
+                                            Height="16"
+                                            Background="{StaticResource Black20}"
+                                            Foreground="{StaticResource Black50}"
+                                            Kind="ChevronLeft"
+                                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </Button>
+                                <TextBlock
+                                    Margin="13,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{Binding IsLeftPageNumberActive, Converter={StaticResource BooleanToBrushConverter}}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="1" />
+                                <TextBlock
+                                    Margin="13,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource Black90}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="..."
+                                    Visibility="{Binding IsLeftPageNumberFillerVisible, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                <TextBlock
+                                    Margin="13,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{Binding IsMiddlePageNumberVisible, Converter={StaticResource BooleanToBrushConverter}}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="{Binding CurrentPage, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID'}"
+                                    Visibility="{Binding IsMiddlePageNumberVisible, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                <TextBlock
+                                    Margin="13,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{StaticResource Black90}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="..."
+                                    Visibility="{Binding IsRightPageNumberFillerVisible, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                <TextBlock
+                                    Margin="13,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{Binding IsRightPageNumberActive, Converter={StaticResource BooleanToBrushConverter}}"
+                                    LineHeight="18"
+                                    Style="{StaticResource CaptionSmallBody}"
+                                    Text="{Binding TotalPage, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID'}" />
+                                <Button
+                                    Height="16"
+                                    Padding="0"
+                                    Command="{Binding OnNextPageCommand}"
+                                    IsEnabled="{Binding IsNextButtonEnabled}"
+                                    Style="{StaticResource ButtonPlain}">
+                                    <Grid>
+                                        <md:PackIcon
+                                            Height="16"
+                                            Background="{StaticResource Black20}"
+                                            Foreground="{StaticResource SecondaryBlue}"
+                                            Kind="ChevronRight"
+                                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon
+                                            Height="16"
+                                            Background="{StaticResource Black20}"
+                                            Foreground="{StaticResource Black50}"
+                                            Kind="ChevronRight"
+                                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

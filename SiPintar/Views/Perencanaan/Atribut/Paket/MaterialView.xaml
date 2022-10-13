@@ -1,0 +1,297 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Atribut.Paket.MaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Margin="0 0 10 0" Background="White">
+            <Grid Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Paket Material" Style="{StaticResource Headline3}" FontSize="16" />
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 5">
+                    <Button Command="{Binding OnOpenAddPaketFormCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="5 0">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Add" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenEditPaketFormCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="5 0" Visibility="{Binding IsPaketSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="FileEdit" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Koreksi" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button DataContext="{Binding}" Click="Refresh_Click" Tag="paket" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0" Visibility="{Binding IsPaketSelected, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Refresh" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Refresh" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenDeletePaketConfirmCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0" Visibility="{Binding IsPaketSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Delete" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Hapus" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingPaket, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingPaket, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="286*"/>
+                            <ColumnDefinition Width="101*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptyPaket, Converter={StaticResource BooleanToVisibleConverter}}" Grid.ColumnSpan="2">
+                            <TextBlock Margin="0" FontSize="12" Style="{StaticResource CaptionSmallBody}" TextAlignment="Center">
+                                    <Run Text="Data masih kosong. Silakan" />
+                                    <LineBreak />
+                                    <Button Command="{Binding OnOpenAddPaketFormCommand}" Padding="0" Height="13" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0 0 2 -2">
+                                        <TextBlock FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah Paket Material"/>
+                                    </Button>
+                                    <Run Text="terlebih dahulu" />
+                                </TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid
+                        IsReadOnly="True"
+                        ItemsSource="{Binding PaketList, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding Path=DataContext.SelectedPaket, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}" Visibility="{Binding IsPaketSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <MenuItem Header="Koreksi" Style="{StaticResource MenuItemRegular}" Command="{Binding OnOpenEditPaketFormCommand}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Hapus" Style="{StaticResource MenuItemRegular}" Command="{Binding OnOpenDeletePaketConfirmCommand}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Width="0.5*" Binding="{Binding KodePaketMaterial}" Header="KODE" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Width="*" Binding="{Binding NamaPaketMaterial}" Header="NAMA PAKET" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <TextBlock Grid.Row="3" Style="{StaticResource CaptionFormActiveSmaller}" Foreground="Black" Padding="0 4" FontFamily="{StaticResource MontserratRegular}">
+                    <Run Text="Menampilkan" FontWeight="Light" />
+                    <Run Text="{Binding PaketList.Count, Mode=OneWay, StringFormat='{}{0:#,0}', FallbackValue='0'}" />
+                    <Run Text="data" />
+                </TextBlock>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="White">
+            <Grid Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Rincian Paket Material" Style="{StaticResource Headline3}" FontSize="16" />
+
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 5">
+                    <Button Command="{Binding OnOpenAddBarangFormCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="5 0">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Add" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenEditBarangFormCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="5 0" Visibility="{Binding IsRincianSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="FileEdit" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Koreksi" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Grid Visibility="Collapsed">
+                        <Button DataContext="{Binding}" Click="Refresh_Click" Tag="rincian" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0" Visibility="{Binding IsRincianSelected, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Kind="Refresh" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                                <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Refresh" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <Button Command="{Binding OnOpenDeleteBarangConfirmCommand}" Padding="0" Height="20" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0" Visibility="{Binding IsRincianSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon Kind="Delete" Width="15" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <TextBlock Margin="5 0" FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Hapus" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingRincian, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingRincian, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="286*"/>
+                            <ColumnDefinition Width="101*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptyRincian, Converter={StaticResource BooleanToVisibleConverter}}" Grid.ColumnSpan="2">
+                            <TextBlock Margin="0" FontSize="12" Style="{StaticResource CaptionSmallBody}" TextAlignment="Center">
+                                    <Run Text="Data masih kosong. Silakan" />
+                                    <LineBreak />
+                                    <Button Command="{Binding OnOpenAddBarangFormCommand}" Padding="0" Height="13" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0 0 2 -2">
+                                        <TextBlock FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah Barang Material"/>
+                                    </Button>
+                                    <Run Text="terlebih dahulu" />
+                                </TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid
+                        IsReadOnly="True"
+                        ItemsSource="{Binding RincianList, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding Path=DataContext.SelectedRincian, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}"  Visibility="{Binding IsRincianSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <MenuItem Header="Koreksi" Style="{StaticResource MenuItemRegular}" Command="{Binding OnOpenEditBarangFormCommand}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Hapus" Style="{StaticResource MenuItemRegular}" Command="{Binding OnOpenDeleteBarangConfirmCommand}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Width="0.5*" Binding="{Binding KodeMaterial}" Header="KODE" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Width="*" Binding="{Binding NamaMaterial}" Header="NAMA BARANG" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Width="0.5*" Binding="{Binding Satuan}" Header="SATUAN" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Width="0.5*" Binding="{Binding Qty, StringFormat='{}{0:#,0}', FallbackValue='0', ConverterCulture='id-ID'}" Header="KUANTITAS" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <TextBlock Grid.Row="3" Style="{StaticResource CaptionFormActiveSmaller}" Foreground="Black" Padding="0 4" FontFamily="{StaticResource MontserratRegular}">
+                    <Run Text="Menampilkan" FontWeight="Light" />
+                    <Run Text="{Binding RincianList.Count, Mode=OneWay, StringFormat='{}{0:#,0}', FallbackValue='0'}" />
+                    <Run Text="data" />
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

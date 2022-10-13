@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="03/24/2022 17:55:46" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="DataTagihanNonAir" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="NomorNonAir" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="TotalAir" DataType="System.Decimal"/>
+      <Column Name="TotalLimbah" DataType="System.Decimal"/>
+      <Column Name="TotalLltt" DataType="System.Decimal"/>
+      <Column Name="TotalAngsuran" DataType="System.Decimal"/>
+      <Column Name="TotalNonAir" DataType="System.Decimal"/>
+      <Column Name="TotalDenda" DataType="System.Decimal"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="85.05">
+      <TextObject Name="Text1" Left="20.9" Top="18.9" Width="94.5" Height="18.9" Text="HEADER" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="87.05" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="AIR" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text12" Left="172.1" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="LIMBAH" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text13" Left="257.15" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="LLTT" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text14" Left="342.2" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="ANGSURAN" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text15" Left="427.25" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="NON AIR" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text16" Left="512.3" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="DENDA" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text17" Left="597.35" Top="66.15" Width="85.05" Height="18.9" Border.Lines="All" Text="JUMLAH" HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text18" Left="30.35" Top="66.15" Width="56.7" Height="18.9" Border.Lines="All" Text="No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="87.55" Width="718.2" Height="37.8" DataSource="DSource1">
+      <TextObject Name="Text2" Left="30.35" Width="56.7" Height="37.8" Border.Lines="All" Text="[Row#]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text3" Left="87.05" Width="595.35" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.NomorNonAir] | [DataTagihanNonAir.Nama] | [DataTagihanNonAir.Alamat]" Font="Arial, 9pt"/>
+      <TextObject Name="Text4" Left="87.05" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalAir]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text5" Left="172.1" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalLimbah]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text6" Left="257.15" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalLltt]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text7" Left="342.2" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalAngsuran]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text8" Left="427.25" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalNonAir]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="512.3" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.TotalDenda]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+      <TextObject Name="Text10" Left="597.35" Top="18.9" Width="85.05" Height="18.9" Border.Lines="All" Text="[DataTagihanNonAir.Total]" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Right" Font="Arial, 9pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

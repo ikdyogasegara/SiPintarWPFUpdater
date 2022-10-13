@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.Tunjangan.TunjanganBulanan.DialogDeleteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Personalia.Tunjangan.TunjanganBulanan"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#DDCCF4" SecondBrush="#FFFFFF"/>
+            <converters:NullMultiValueConverter x:Key="NullMultiValueConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="354" Height="238">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="32 32 32 24">
+            <RadioButton GroupName="DeleteMode" Margin="0 0 0 16" IsChecked="{Binding Path=DeleteMode1, Mode=TwoWay}" Content="Hapus record yang dipilih" FontFamily="{StaticResource SarabunRegular}" FontSize="13" Foreground="{StaticResource Black90}"/>
+            <RadioButton GroupName="DeleteMode" Margin="0 0 0 16" IsChecked="{Binding Path=DeleteMode2, Mode=TwoWay}" FontFamily="{StaticResource SarabunRegular}" FontSize="13" Foreground="{StaticResource Black90}">
+                <RadioButton.Content>
+                    <TextBlock TextWrapping="Wrap">
+                        <Run Text="Hapus semua tunjangan"/>
+                        <Run Text="{Binding SelectedData.NamaJenisTunjangan}"/>
+                        <Run Text="di kode gaji"/>
+                        <Run Text="{Binding FilterKodeGaji.KodeGaji}"/>
+                        <Run Text="pada periode"/>
+                        <Run Text="{Binding FilterPeriode.NamaPeriode}"/>
+                    </TextBlock>
+                </RadioButton.Content>
+            </RadioButton>
+            <RadioButton GroupName="DeleteMode" Margin="0 0 0 16" IsChecked="{Binding Path=DeleteMode3, Mode=TwoWay}" FontFamily="{StaticResource SarabunRegular}" FontSize="13" Foreground="{StaticResource Black90}">
+                <RadioButton.Content>
+                    <TextBlock TextWrapping="Wrap">
+                        <Run Text="Hapus semua tunjangan di kode gaji"/>
+                        <Run Text="{Binding FilterKodeGaji.KodeGaji}"/>
+                        <Run Text="pada periode"/>
+                        <Run Text="{Binding FilterPeriode.NamaPeriode}"/>
+                    </TextBlock>
+                </RadioButton.Content>
+            </RadioButton>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="OkButton" Command="{Binding OnConfirmDeleteFormCommand}" Style="{StaticResource ButtonPrimarySmall}" Width="60" md:ButtonAssist.CornerRadius="15" Content="Pilih" />
+                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="15" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="12 0 0 0" />
+            </StackPanel>
+        </StackPanel>
+        <Border Grid.Row="1" Background="{StaticResource BaseAppPersonaliaDark}"/>
+    </Grid>
+</UserControl>

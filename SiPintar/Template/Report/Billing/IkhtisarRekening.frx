@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="02/14/2022 17:07:44" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="administrasi" DataType="System.String"/>
+      <Column Name="golongan" DataType="System.String"/>
+      <Column Name="lembar" DataType="System.String"/>
+      <Column Name="pakaibaca" DataType="System.String"/>
+      <Column Name="pakairek" DataType="System.String"/>
+      <Column Name="biayapemakaian" DataType="System.String"/>
+      <Column Name="pemeliharaan" DataType="System.String"/>
+      <Column Name="angsuranpsb" DataType="System.String"/>
+      <Column Name="lbrangsuranair" DataType="System.String"/>
+      <Column Name="angsuranair" DataType="System.String"/>
+      <Column Name="lbrangsurannonair" DataType="System.String"/>
+      <Column Name="angsurannonair" DataType="System.String"/>
+      <Column Name="meterai" DataType="System.String"/>
+      <Column Name="lbrangsuranpsb" DataType="System.String"/>
+      <Column Name="kecamatan" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="periode" DataType="System.String"/>
+    <Parameter Name="berdasarkan" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="330" PaperHeight="216" RawPaperSize="149" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1171.8" Height="94.5">
+      <TextObject Name="Text1" Left="9.45" Top="28.35" Width="1143.45" Height="18.9" Text="IKHTISAR REKENING AIR MENURUT &quot;UpperCase(berdasarkan)&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text2" Left="9.45" Top="47.25" Width="1143.45" Height="18.9" Text="PERIODE BULAN &quot;UpperCase(periode)&quot; &quot;TAHUN&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="165.65" Width="1171.8" Height="32.13">
+      <TextObject Name="Text67" Left="47.25" Width="160.65" Height="32.13" Border.Lines="All" Text="[MainData.golongan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text69" Left="328.86" Width="69.93" Height="32.13" Border.Lines="All" Text="[MainData.pakairek]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text70" Left="627.48" Width="32.13" Height="32.13" Border.Lines="All" Text="[MainData.lbrangsuranpsb]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text71" Left="659.61" Width="60.48" Height="32.13" Border.Lines="All" Text="[MainData.angsuranpsb]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text72" Left="9.45" Width="37.8" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text73" Left="398.79" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.biayapemakaian]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text74" Left="487.62" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.pemeliharaan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text75" Left="567" Width="60.48" Height="32.13" Border.Lines="All" Text="[MainData.administrasi]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text76" Left="924.21" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text77" Left="1013.04" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text78" Left="1092.42" Width="60.48" Height="32.13" Border.Lines="All" Text="[MainData.meterai]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text79" Left="207.9" Width="60.48" Height="32.13" Border.Lines="All" Text="[MainData.lembar]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text80" Left="720.09" Width="32.13" Height="32.13" Border.Lines="All" Text="[MainData.lbrangsuranair]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text81" Left="752.22" Width="69.93" Height="32.13" Border.Lines="All" Text="[MainData.angsuranair]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text82" Left="822.15" Width="32.13" Height="32.13" Border.Lines="All" Text="[MainData.lbrangsurannonair]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text83" Left="854.28" Width="69.93" Height="32.13" Border.Lines="All" Text="[MainData.angsurannonair]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text68" Left="268.38" Width="60.48" Height="32.13" Border.Lines="All" Text="[MainData.pakaibaca]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <DataHeaderBand Name="DataHeader1" Top="99.83" Width="1171.8" Height="60.48">
+        <TextObject Name="Text46" Left="47.25" Width="160.65" Height="60.48" Border.Lines="All" Text="&quot;berdasarkan&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text48" Left="268.38" Top="20.79" Width="60.48" Height="39.69" Border.Lines="All" Text="P.METER" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text49" Left="328.86" Top="20.79" Width="69.93" Height="39.69" Border.Lines="All" Text="REKENING" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text50" Left="627.48" Top="20.79" Width="32.13" Height="39.69" Border.Lines="All" Text="LBR" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text51" Left="659.61" Top="20.79" Width="60.48" Height="39.69" Border.Lines="All" Text="PS. BARU (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text55" Left="9.45" Width="37.8" Height="60.48" Border.Lines="All" Text="NO" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text53" Left="398.79" Width="88.83" Height="60.48" Border.Lines="All" Text="JUMLAH PENERIMAAN AIR (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text56" Left="627.48" Width="296.73" Height="20.79" Border.Lines="All" Text="ANGSURAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text57" Left="487.62" Width="79.38" Height="60.48" Border.Lines="All" Text="DANA &#13;&#10;METER (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text58" Left="567" Width="60.48" Height="60.48" Border.Lines="All" Text="ADM. (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text59" Left="924.21" Width="88.83" Height="60.48" Border.Lines="All" Text="JUMLAH UANG (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text60" Left="1013.04" Width="79.38" Height="60.48" Border.Lines="All" Text="HARGA AIR RATA-RATA PER M3 (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text61" Left="1092.42" Width="60.48" Height="60.48" Border.Lines="All" Text="METERAI (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text62" Left="207.9" Width="60.48" Height="60.48" Border.Lines="All" Text="JUMLAH LEMBAR REK." HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text47" Left="268.38" Width="130.41" Height="20.79" Border.Lines="All" Text="JML. PEMAKAIAN (M3)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text63" Left="720.09" Top="20.79" Width="32.13" Height="39.69" Border.Lines="All" Text="LBR" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text64" Left="752.22" Top="20.79" Width="69.93" Height="39.69" Border.Lines="All" Text="REK. AIR (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text65" Left="822.15" Top="20.79" Width="32.13" Height="39.69" Border.Lines="All" Text="LBR" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text66" Left="854.28" Top="20.79" Width="69.93" Height="39.69" Border.Lines="All" Text="NON AIR (Rp)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="203.11" Width="1171.8" Height="170.1">
+        <TextObject Name="Text84" Left="9.45" Top="9.45" Width="198.45" Height="32.13" Border.Lines="All" Text="JUMLAH" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text85" Left="328.86" Top="9.45" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text86" Left="627.48" Top="9.45" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text87" Left="659.61" Top="9.45" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text88" Left="398.79" Top="9.45" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text89" Left="487.62" Top="9.45" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text90" Left="567" Top="9.45" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text91" Left="924.21" Top="9.45" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text92" Left="1013.04" Top="9.45" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text93" Left="1092.42" Top="9.45" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text94" Left="207.9" Top="9.45" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text95" Left="720.09" Top="9.45" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text96" Left="752.22" Top="9.45" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text97" Left="822.15" Top="9.45" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text98" Left="854.28" Top="9.45" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text99" Left="268.38" Top="9.45" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text100" Left="9.45" Top="41.58" Width="198.45" Height="32.13" Border.Lines="All" Text="RATA - RATA" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text101" Left="328.86" Top="41.58" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text102" Left="627.48" Top="41.58" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text103" Left="659.61" Top="41.58" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text104" Left="398.79" Top="41.58" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text105" Left="487.62" Top="41.58" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text106" Left="567" Top="41.58" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text107" Left="924.21" Top="41.58" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text108" Left="1013.04" Top="41.58" Width="79.38" Height="128.52" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text109" Left="1092.42" Top="41.58" Width="60.48" Height="128.52" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text110" Left="207.9" Top="41.58" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text111" Left="720.09" Top="41.58" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text112" Left="752.22" Top="41.58" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text113" Left="822.15" Top="41.58" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text114" Left="854.28" Top="41.58" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text115" Left="268.38" Top="41.58" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text116" Left="47.25" Top="73.71" Width="160.65" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text117" Left="328.86" Top="73.71" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text118" Left="627.48" Top="73.71" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text119" Left="659.61" Top="73.71" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text120" Left="9.45" Top="73.71" Width="37.8" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text121" Left="398.79" Top="73.71" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text122" Left="487.62" Top="73.71" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text123" Left="567" Top="73.71" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text124" Left="924.21" Top="73.71" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text127" Left="207.9" Top="73.71" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text128" Left="720.09" Top="73.71" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text129" Left="752.22" Top="73.71" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text130" Left="822.15" Top="73.71" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text131" Left="854.28" Top="73.71" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text132" Left="268.38" Top="73.71" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text133" Left="47.25" Top="105.84" Width="160.65" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text134" Left="328.86" Top="105.84" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text135" Left="627.48" Top="105.84" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text136" Left="659.61" Top="105.84" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text137" Left="9.45" Top="105.84" Width="37.8" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text138" Left="398.79" Top="105.84" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text139" Left="487.62" Top="105.84" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text140" Left="567" Top="105.84" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text141" Left="924.21" Top="105.84" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text144" Left="207.9" Top="105.84" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text145" Left="720.09" Top="105.84" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text146" Left="752.22" Top="105.84" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text147" Left="822.15" Top="105.84" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text148" Left="854.28" Top="105.84" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text149" Left="268.38" Top="105.84" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text150" Left="9.45" Top="137.97" Width="198.45" Height="32.13" Border.Lines="All" Text="JUMLAH BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text151" Left="328.86" Top="137.97" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text152" Left="627.48" Top="137.97" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text153" Left="659.61" Top="137.97" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text154" Left="398.79" Top="137.97" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text155" Left="487.62" Top="137.97" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text156" Left="567" Top="137.97" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text157" Left="924.21" Top="137.97" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text160" Left="207.9" Top="137.97" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text161" Left="720.09" Top="137.97" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text162" Left="752.22" Top="137.97" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text163" Left="822.15" Top="137.97" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text164" Left="854.28" Top="137.97" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text165" Left="268.38" Top="137.97" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      </DataFooterBand>
+    </DataBand>
+    <DataBand Name="Data2" Top="378.54" Width="1171.8" Height="32.13">
+      <TextObject Name="Text166" Left="9.45" Width="198.45" Height="32.13" Border.Lines="All" Text="JUMLAH BULAN LALU" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text167" Left="328.86" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text168" Left="627.48" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text169" Left="659.61" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text170" Left="398.79" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text171" Left="487.62" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text172" Left="567" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text173" Left="924.21" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text174" Left="1013.04" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text175" Left="1092.42" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text176" Left="207.9" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text177" Left="720.09" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text178" Left="752.22" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text179" Left="822.15" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text180" Left="854.28" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text181" Left="268.38" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+    </DataBand>
+    <DataBand Name="Data3" Top="421.34" Width="1171.8">
+      <DataHeaderBand Name="DataHeader2" Top="416.01" Width="1171.8"/>
+      <DataFooterBand Name="DataFooter2" Top="426.67" Width="1171.8" Height="359.1">
+        <TextObject Name="Text182" Left="47.25" Width="160.65" Height="32.13" Border.Lines="All" Text="KOREKSI REKENING" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text183" Left="328.86" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text184" Left="627.48" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text185" Left="659.61" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text186" Left="9.45" Width="37.8" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text187" Left="398.79" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text188" Left="487.62" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text189" Left="567" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text190" Left="924.21" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text191" Left="1013.04" Width="79.38" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text192" Left="1092.42" Width="60.48" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text193" Left="207.9" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text194" Left="720.09" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text195" Left="752.22" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text196" Left="822.15" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text197" Left="854.28" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text198" Left="268.38" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text199" Left="9.45" Top="32.13" Width="198.45" Height="32.13" Border.Lines="All" Text="JUMLAH BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text200" Left="328.86" Top="32.13" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text201" Left="627.48" Top="32.13" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text202" Left="659.61" Top="32.13" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text203" Left="398.79" Top="32.13" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text204" Left="487.62" Top="32.13" Width="79.38" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text205" Left="567" Top="32.13" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text206" Left="924.21" Top="32.13" Width="88.83" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text209" Left="207.9" Top="32.13" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text210" Left="720.09" Top="32.13" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text211" Left="752.22" Top="32.13" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text212" Left="822.15" Top="32.13" Width="32.13" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text213" Left="854.28" Top="32.13" Width="69.93" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text214" Left="268.38" Top="32.13" Width="60.48" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text215" Left="9.45" Top="75.6" Width="198.45" Height="51.03" Border.Lines="All" Text="JUMLAH S/D BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text216" Left="328.86" Top="75.6" Width="69.93" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text217" Left="627.48" Top="75.6" Width="32.13" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text218" Left="659.61" Top="75.6" Width="60.48" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text219" Left="398.79" Top="75.6" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text220" Left="487.62" Top="75.6" Width="79.38" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text221" Left="567" Top="75.6" Width="60.48" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text222" Left="924.21" Top="75.6" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text223" Left="1013.04" Top="75.6" Width="79.38" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text224" Left="1092.42" Top="75.6" Width="60.48" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text225" Left="207.9" Top="75.6" Width="60.48" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text226" Left="720.09" Top="75.6" Width="32.13" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text227" Left="752.22" Top="75.6" Width="69.93" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text228" Left="822.15" Top="75.6" Width="32.13" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text229" Left="854.28" Top="75.6" Width="69.93" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text230" Left="268.38" Top="75.6" Width="60.48" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text231" Left="47.25" Top="141.75" Width="160.65" Height="32.13" Border.Lines="Left, Right, Top" Text="TAMBAH DR S/D BULAN LALU&#13;&#10;" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text232" Left="328.86" Top="141.75" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text233" Left="627.48" Top="141.75" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text234" Left="659.61" Top="141.75" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text235" Left="9.45" Top="141.75" Width="37.8" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text236" Left="398.79" Top="141.75" Width="88.83" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text237" Left="487.62" Top="141.75" Width="79.38" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text238" Left="567" Top="141.75" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text239" Left="924.21" Top="141.75" Width="88.83" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text242" Left="207.9" Top="141.75" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text243" Left="720.09" Top="141.75" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text244" Left="752.22" Top="141.75" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text245" Left="822.15" Top="141.75" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text246" Left="854.28" Top="141.75" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text247" Left="268.38" Top="141.75" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text248" Left="47.25" Top="173.88" Width="160.65" Height="32.13" Border.Lines="Left, Right, Bottom" Text="JUMLAH S/D BULAN INI&#13;&#10;" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text249" Left="328.86" Top="173.88" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text250" Left="627.48" Top="173.88" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text251" Left="659.61" Top="173.88" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text252" Left="9.45" Top="173.88" Width="37.8" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text253" Left="398.79" Top="173.88" Width="88.83" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text254" Left="487.62" Top="173.88" Width="79.38" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text255" Left="567" Top="173.88" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text256" Left="924.21" Top="173.88" Width="88.83" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text259" Left="207.9" Top="173.88" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text260" Left="720.09" Top="173.88" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text261" Left="752.22" Top="173.88" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text262" Left="822.15" Top="173.88" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text263" Left="854.28" Top="173.88" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text264" Left="268.38" Top="173.88" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text265" Left="1013.04" Top="141.75" Width="79.38" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text266" Left="1092.42" Top="141.75" Width="60.48" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text267" Left="47.25" Top="217.35" Width="160.65" Height="32.13" Border.Lines="Left, Right, Top" Text="TAMBAH DR S/D BULAN LALU&#13;&#10;" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text268" Left="328.86" Top="217.35" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text269" Left="627.48" Top="217.35" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text270" Left="659.61" Top="217.35" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text271" Left="9.45" Top="217.35" Width="37.8" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text272" Left="398.79" Top="217.35" Width="88.83" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text273" Left="487.62" Top="217.35" Width="79.38" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text274" Left="567" Top="217.35" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text275" Left="924.21" Top="217.35" Width="88.83" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text276" Left="207.9" Top="217.35" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text277" Left="720.09" Top="217.35" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text278" Left="752.22" Top="217.35" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text279" Left="822.15" Top="217.35" Width="32.13" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text280" Left="854.28" Top="217.35" Width="69.93" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text281" Left="268.38" Top="217.35" Width="60.48" Height="32.13" Border.Lines="Left, Right, Top" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text297" Left="1013.04" Top="217.35" Width="79.38" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text298" Left="1092.42" Top="217.35" Width="60.48" Height="64.26" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text282" Left="47.25" Top="249.48" Width="160.65" Height="32.13" Border.Lines="Left, Right, Bottom" Text="JUMLAH S/D BULAN INI&#13;&#10;" VertAlign="Center" Font="Arial, 7pt"/>
+        <TextObject Name="Text283" Left="328.86" Top="249.48" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text284" Left="627.48" Top="249.48" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text285" Left="659.61" Top="249.48" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text286" Left="9.45" Top="249.48" Width="37.8" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text287" Left="398.79" Top="249.48" Width="88.83" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text288" Left="487.62" Top="249.48" Width="79.38" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text289" Left="567" Top="249.48" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text290" Left="924.21" Top="249.48" Width="88.83" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text291" Left="207.9" Top="249.48" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text292" Left="720.09" Top="249.48" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text293" Left="752.22" Top="249.48" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text294" Left="822.15" Top="249.48" Width="32.13" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text295" Left="854.28" Top="249.48" Width="69.93" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text296" Left="268.38" Top="249.48" Width="60.48" Height="32.13" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      </DataFooterBand>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="791.11" Width="1171.8" Height="37.8"/>
+  </ReportPage>
+</Report>

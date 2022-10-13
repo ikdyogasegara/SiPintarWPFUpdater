@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="SiPintar.Views.Loket.Angsuran.DetailAngsuran.KoreksiSemuaTanggalMulaiTagihView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Loket.Angsuran.DetailAngsuran"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <StackPanel x:Key="DatePickerTemplate" Margin="0,5,15,0" x:Shared="False">
+                <TextBlock Text="Tanggal" Style="{StaticResource SmallTitle}" />
+                <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                    <Grid>
+                        <DatePicker Style="{StaticResource DefaultDatePicker}" SelectedDateFormat="Long" Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                        <TextBlock Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border Width="256" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="21 20 15 0">
+                            <TextBlock x:Name="DialogHeader" Style="{StaticResource BigTitle}" FontSize="13" LineHeight="18" Text="Koreksi Semua Tanggal Mulai Tagih" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="16" Height="16" Padding="0" Margin="0 12 15 0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                        </Button>
+                    </Grid>
+                    <StackPanel x:Name="Container" Orientation="Vertical" Margin="20 14 10 20"/>
+
+
+                    <!--<StackPanel Margin="20 14 20 20">
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Mulai Tagih" LineHeight="18"/>
+                        <Border BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>-->
+
+
+                    <StackPanel Grid.Row="2" Margin="20 0 20 21" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="CancelButton" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" Margin="0 0 8 0"/>
+                        <!--<Button x:Name="YesButton" Command="{Binding OnSubmitSemuaTglMulaiTagihCommand}" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Simpan"/>-->
+                        <Button x:Name="YesButton" Click="YesButton_Click" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Simpan"/>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <Border Background="{StaticResource BaseAppLoket}" Height="5" Grid.Row="2"/>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

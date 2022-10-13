@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.Kepegawaian.PerjalananDinas.DialogPesertaFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost Identifier="PersonaliaInnerInnerDialog" DialogTheme="Inherit" >
+
+        <Grid>
+            <Border Width="601" Height="539" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPersonaliaDark}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Pegawai Yang Melakukan Perjalanan Dinas"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Border CornerRadius="2" Background="White" Height="16">
+                                    <TextBlock Foreground="{StaticResource BaseAppPersonaliaDark}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                                <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
+                    <Border Grid.RowSpan="3" Background="Black" Opacity="0.3" Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                            To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Border>
+
+                    <Grid Grid.Row="1" Margin="32 16 32 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <!--<Grid Margin="0 0 0 8">
+                        <TextBlock Text="Data Pegawai" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Bottom"/>
+                        <Button Command="{Binding OnOpenSelectPegawaiCommand}" CommandParameter="CariPegawaiLain" Content="Cari Pegawai Lain" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="12" Foreground="{StaticResource SecondaryBlue}" md:ButtonAssist.CornerRadius="13" Height="30" HorizontalAlignment="Right" BorderBrush="{DynamicResource SecondaryBlue}" />
+                    </Grid>-->
+                        <Border Grid.Row="0" Background="{StaticResource Black10}" CornerRadius="4" Padding="16" HorizontalAlignment="Left" Margin="0 0 0 16">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <TextBlock Text="NIK" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}" LineHeight="18" Margin="0 0 0 4"/>
+                                    <TextBlock Text="{Binding FormPesertaData.NoPegawai}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" Foreground="{StaticResource SecondaryDarker}"/>
+                                </StackPanel>
+                                <StackPanel Margin="32 0 0 0">
+                                    <TextBlock Text="Nama" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}" LineHeight="18" Margin="0 0 0 4"/>
+                                    <TextBlock Text="{Binding FormPesertaData.NamaPegawai}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" Foreground="{StaticResource SecondaryDarker}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Grid Grid.Row="1">
+                            <TextBlock Text="Biaya Perjalanan" Style="{StaticResource Title}" HorizontalAlignment="Left" Foreground="{StaticResource SecondaryBlue}" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 16" >
+                                <Button Command="{Binding OnOpenAddPesertaBiayaFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="47" Padding="8 0">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_add.png" Margin="4" />
+                                        <TextBlock Text="Tambah"
+                                       Style="{StaticResource CaptionSmallBody}" LineHeight="18"
+                                       HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Command="{Binding OnOpenEditPesertaBiayaFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="47" Padding="8 0">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_edit_people.png" Margin="4" />
+                                        <TextBlock Text="Koreksi"
+                                       Style="{StaticResource CaptionSmallBody}" LineHeight="18"
+                                       HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Command="{Binding OnOpenDeletePesertaBiayaFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="47" Padding="8 0">
+                                    <StackPanel Orientation="Vertical">
+                                        <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" Margin="4" />
+                                        <TextBlock Text="Hapus"
+                                       Style="{StaticResource CaptionSmallBody}" LineHeight="18"
+                                       HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <DataGrid
+                                x:Name="DataGridPerjalananDinasPesertaBiaya"
+                                DataContext="{Binding}"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding FormPesertaBiayaList, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}"
+                                TargetUpdated="CheckForm_TargetUpdated"
+                                SelectedItem="{Binding Path=DataContext.SelectedDataPesertaBiaya, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                                Style="{StaticResource DataGridRegular}"
+                                CanUserSortColumns="False"
+                                EnableRowVirtualization="True"
+                                EnableColumnVirtualization="True"
+                                md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                                AutoGenerateColumns="False" 
+                                Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                                HeadersVisibility="Column"
+                                SelectionMode="Extended"
+                                HorizontalScrollBarVisibility="Auto"
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch"
+                                CanUserAddRows="False">
+                                <DataGrid.Resources>
+                                    <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="IsHitTestVisible" Value="False"/>
+                                        <Setter Property="Focusable" Value="False"/>
+                                        <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                    <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Width="Auto" Header="KODE BIAYA">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Deskripsi}" HorizontalAlignment="Center" Style="{StaticResource TextDataGridCellRegular}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="*" Header="BIAYA" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Biaya}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="Auto" Header="QTY">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Qty}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="*" Header="JUMLAH">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Jumlah}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="Auto" Header="KETERANGAN">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Keterangan}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel Margin="30 24" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                            <Button x:Name="OkButton" IsEnabled="True" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Command="{Binding OnSavePesertaFormCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

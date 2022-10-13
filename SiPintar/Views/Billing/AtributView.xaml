@@ -1,0 +1,113 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Billing.AtributView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:SiPintar.Views.Billing.Atribut"
+    xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Billing.Atribut"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+            <!--  Data template for views  -->
+            <DataTemplate DataType="{x:Type viewmodel:TarifViewModel}">
+                <view:TarifView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:WilayahAdministrasiViewModel}">
+                <view:WilayahAdministrasiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:LoketViewModel}">
+                <view:LoketView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:MeteranViewModel}">
+                <view:MeteranView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:SumberAirViewModel}">
+                <view:SumberAirView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:KolektifViewModel}">
+                <view:KolektifView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:KepemilikanViewModel}">
+                <view:KepemilikanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:StatusViewModel}">
+                <view:StatusView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:FlagViewModel}">
+                <view:FlagView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PetugasBacaViewModel}">
+                <view:PetugasBacaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RuteBacaMeterViewModel}">
+                <view:RuteBacaMeterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:KelainanViewModel}">
+                <view:KelainanView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource AthensGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <!--<RowDefinition />-->
+
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    Background="White"
+                    ClipToBounds="False"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    ToolBarTray.IsLocked="True">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    Click="NavItemSelectedHandler"
+                                    GroupName="NavItem"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <ContentControl
+            Grid.Row="1"
+            Margin="10,10"
+            Content="{Binding PageViewModel}" />
+    </Grid>
+</UserControl>

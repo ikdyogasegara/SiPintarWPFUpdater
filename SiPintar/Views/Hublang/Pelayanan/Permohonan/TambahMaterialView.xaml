@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.Permohonan.TambahMaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <md:DialogHost Identifier="InnerSecondGlobalRootDialog" DialogTheme="Inherit">
+        <Grid Background="White" Width="400" Height="385">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPerencanaanDark}">
+                <Grid Margin="10 5">
+                    <Grid Margin="10,7,15,5">
+                        <TextBlock x:Name="TitleDialog" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10">
+                        <Run Text="Tambah Material" />
+                        </TextBlock>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                            <TextBlock Foreground="{StaticResource BaseAppPerencanaanDark}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+
+                        <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <Grid Grid.Row="1" Margin="24,16" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <TextBlock Text="Nama Material" Style="{StaticResource CaptionSmallBody}" />
+                        <TextBlock Text="{Binding SelectedDaftarMaterial.NamaMaterial, FallbackValue='-'}" Style="{StaticResource Title}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                        <TextBlock Text="@Harga" Style="{StaticResource CaptionSmallBody}" TextAlignment="Right" />
+                        <TextBlock Text="{Binding SelectedDaftarMaterial.HargaJual, FallbackValue='-', StringFormat={}{0:N0}, ConverterCulture='id-ID'}" TextAlignment="Right" Style="{StaticResource Title}"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Row="1" Margin="0,15,0,0">
+                    <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black70}">Kuantitas Material</TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="Qty" Style="{StaticResource TextBoxInputForm}" Padding="0,0,10,0" Text="1" HorizontalContentAlignment="Right" FontSize="20" Height="40" Width="200" />
+                            <TextBlock Margin="10 0 0 0" Text="{Binding SelectedDaftarMaterial.Satuan, FallbackValue='-'}" Style="{StaticResource CaptionBody}" FontSize="20" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Keterangan" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black70}" Margin="0 12 0 0"></TextBlock>
+                        <TextBox x:Name="Keterangan" Style="{StaticResource TextBoxInputForm}" Padding="0,0,10,0" HorizontalContentAlignment="Left" FontSize="20" Height="40" />
+                        <CheckBox x:Name="CheckTambahan" Content="Tambahan" Style="{StaticResource FilterCheckBox}" Margin="0 20 0 0" FontSize="12"/>
+                        <CheckBox x:Name="CheckTidakDikenakanJasaBahan" Content="Tidak Dikenakan % Jasa dari Bahan" Style="{StaticResource FilterCheckBox}" Margin="0 15 0 0" FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Kembali" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonSecondary2}" Width="90" Height="35" />
+                    <Button x:Name="BtnSimpan" Click="BtnSimpan_Click" Content="Simpan" Style="{StaticResource ButtonPrimary2}" Width="90"  Height="35" Margin="15,0,0,0" IsEnabled="False" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

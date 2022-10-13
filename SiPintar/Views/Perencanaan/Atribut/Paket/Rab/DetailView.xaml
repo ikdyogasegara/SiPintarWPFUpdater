@@ -1,0 +1,188 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Atribut.Paket.Rab.DetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Width="500" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPerencanaan}">
+                <Grid Margin="10 8">
+                    <Grid>
+                        <TextBlock Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Detail Paket RAB"/>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                            <TextBlock Foreground="{StaticResource BaseAppPerencanaan}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+
+                        <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="25 20">
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Kode Paket RAB" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding SelectedData.KodePaket, FallbackValue='-'}" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Paket RAB" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding SelectedData.NamaPaket, FallbackValue='-'}" Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Style="{StaticResource SmallTitle}" Text="Harga Net Paket" LineHeight="15" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                        <Run Text="Rp"/>
+                        <Run Text="{Binding SelectedData.HargaNetPaket, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Persentase Keuntungan" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PersentaseKeuntungan, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text="%"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Persentase Jasa Dari Bahan" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PersentaseJasaDariBahan, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text="%"/>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Style="{StaticResource SmallTitle}" Text="Paket Material" LineHeight="15" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                        <Run Text="{Binding SelectedData.KodePaketMaterial, FallbackValue='-'}" />
+                        <Run Text="-" />
+                        <Run Text="{Binding SelectedData.NamaPaketMaterial, FallbackValue='-'}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <Grid Margin="0 0 0 15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Harga Net Material" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="Rp"/>
+                            <Run Text="{Binding SelectedData.HargaNetMaterial, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="PPN Paket Material" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PpnMaterial, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Style="{StaticResource SmallTitle}" Text="Paket Ongkos" LineHeight="15" Margin="0,0,0,5"/>
+                    <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                        <Run Text="{Binding SelectedData.KodePaketOngkos, FallbackValue='-'}" />
+                        <Run Text="-" />
+                        <Run Text="{Binding SelectedData.NamaPaketOngkos, FallbackValue='-'}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <Grid Margin="0 0 0 15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Harga Net Ongkos" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="Rp"/>
+                            <Run Text="{Binding SelectedData.HargaNetOngkos, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="PPN Paket Material" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PpnOngkos, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="PPN Material Tambahan" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PpnMaterialTambahan, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="PPN Ongkos Tambahan" LineHeight="15" Margin="0,0,0,5"/>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="{StaticResource Black90}">
+                            <Run Text="{Binding SelectedData.PpnOngkosTambahan, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+
+            <Grid Grid.Row="2">
+                <StackPanel Margin="30,0,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Tutup" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

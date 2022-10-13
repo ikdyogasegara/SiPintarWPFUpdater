@@ -1,0 +1,97 @@
+<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.PengajuanPengeluaranBarang.DialogTambahBarangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi.PengajuanPengeluaranBarang"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost Identifier="TambahBarangDialog" DialogTheme="Inherit">
+        <Grid x:Name="GridContainer" Width="361" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+                <Grid Margin="10 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                        <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Tambah Barang"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Border CornerRadius="2" Background="White">
+                            <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                            <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="33, 24">
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock Text="Kode Barang" Style="{StaticResource SmallTitle}" HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock Text="Cari Barang [F3]" Style="{StaticResource SmallTitle}" HorizontalAlignment="Right"></TextBlock>
+                    </DockPanel>
+                    <Grid Margin="0,4,0,0">
+                        <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="KodeBarang"
+                                 Text="{Binding CariBarangForm.KodeBarang}" PreviewKeyUp="KodeBarang_OnPreviewKeyUp"></TextBox>
+                        <TextBlock Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=KodeBarang, Path=Text}"
+                                   Text="Masukkan atau cari kode barang"></TextBlock>
+                        <ProgressBar
+                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                            Value="0"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,5,0"
+                            IsIndeterminate="True" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}" />
+                    </Grid>
+                    <TextBlock FontFamily="{StaticResource SarabunRegular}"
+                               Visibility="{Binding IsErrorCariKodeBarang, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}"
+                               Margin="0,3,0,0" FontSize="12" Foreground="{StaticResource PrimaryRed}" Text="kode barang tidak ditemukan"></TextBlock>
+                </StackPanel>
+                <StackPanel Margin="0,12,0,0">
+                    <TextBlock Text="Nama Barang" Style="{StaticResource SmallTitle}"></TextBlock>
+                    <Grid Margin="0,4,0,0">
+                        <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="NamaBarang" IsEnabled="False"
+                                 Text="{Binding CariBarangForm.NamaBarang}"></TextBox>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,12,0,0">
+                    <TextBlock Text="Kuantitas Barang" Style="{StaticResource SmallTitle}"></TextBlock>
+                    <Grid Margin="0,4,0,0">
+                        <TextBox Style="{StaticResource TextBoxInputForm20}" x:Name="KuantitasBarang" Foreground="#646464" FontWeight="SemiBold"
+                                 Padding="16,11"
+                                 Text="{Binding CariBarangForm.Qty, FallbackValue=0}" HorizontalContentAlignment="Right" Height="45"
+                                 PreviewKeyUp="KuantitasBarang_OnPreviewKeyUp"></TextBox>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+                    <Button Style="{StaticResource ButtonSecondary}" Content="Kembali" Height="30" Margin="0,0,16,0"
+                            Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                            md:ButtonAssist.CornerRadius="15" Width="79"></Button>
+                    <Button Style="{StaticResource ButtonPrimary}" Content="Simpan" Height="30" Click="ButtonSubmit_OnClick"
+                            md:ButtonAssist.CornerRadius="15" Width="76"></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

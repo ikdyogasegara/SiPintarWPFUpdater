@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="02/03/2022 15:45:32" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true"/>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="261" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="910.98" Height="355.28">
+      <TextObject Name="Memo15" Left="18.9" Top="18.9" Width="362.83" Height="22.68" Text="[param_laporan.header1] [param_laporan.header2]" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo1" Left="18.9" Top="45.35" Width="147.4" Height="22.68" Text="KWITANSI NON AIR" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 11pt, style=Bold, Underline"/>
+      <TextObject Name="Memo2" Left="215.43" Top="41.58" Width="26.46" Height="15.12" Text="ID" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo3" Left="260.79" Top="41.58" Width="117.17" Height="15.12" Text=": [frxDBDataset2.dibebankankepada]" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo4" Left="215.43" Top="56.69" Width="41.57" Height="15.12" Text="Cetak" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo5" Left="260.79" Top="56.69" Width="117.17" Height="15.12" Text=": [date]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo6" Left="18.9" Top="68.03" Width="41.57" Height="15.12" Text="Jenis" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo7" Left="64.25" Top="68.03" Width="306.14" Height="15.12" Text=": [frxDBDataset2.urutan]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo8" Left="18.9" Top="105.83" Width="41.57" Height="15.12" Text="Alamat" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo9" Left="120.95" Top="105.83" Width="249.45" Height="15.12" Text=": [frxDBDataset2.alamat]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo10" Left="18.9" Top="86.93" Width="102.05" Height="15.12" Text="Sudah terima dari " Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo11" Left="120.95" Top="86.93" Width="249.45" Height="15.12" Text=": [frxDBDataset2.nama]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo12" Left="18.9" Top="124.72" Width="94.49" Height="15.12" Text="Banyaknya Uang" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo14" Left="18.9" Top="143.62" Width="37.8" Height="15.12" Text="Untuk" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo16" Left="64.25" Top="143.62" Width="128.5" Height="15.12" Text="1. Biaya Bahan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo17" Left="64.25" Top="162.52" Width="128.5" Height="15.12" Text="2. Biaya Pasang" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo18" Left="64.25" Top="181.42" Width="128.5" Height="15.12" Text="3. Landasan Bon" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo19" Left="64.25" Top="196.54" Width="128.5" Height="15.12" Text="4. Crosing Jalan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo20" Left="64.25" Top="211.65" Width="128.5" Height="15.12" Text="5. Biaya Formulir" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo21" Left="64.25" Top="226.77" Width="128.5" Height="15.12" Text="6. Survey Perencanaan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo22" Left="64.25" Top="241.89" Width="128.5" Height="15.12" Text="7. Biaya Aliran" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo23" Left="64.25" Top="257.01" Width="128.5" Height="15.12" Text="8. Lainnya" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo24" Left="64.25" Top="272.13" Width="128.5" Height="15.12" Text="Total Bayar" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo25" Left="18.9" Top="287.24" Width="185.2" Height="15.12" Text="Pasaman, [date]" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo26" Left="18.9" Top="302.36" Width="185.2" Height="15.12" Text="[frxDBDataset2.kasir]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+      <TextObject Name="Memo27" Left="207.87" Top="287.24" Width="151.18" Height="15.12" Text="Keterangan :" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+      <TextObject Name="Memo28" Left="238.11" Top="143.62" Width="132.28" Height="15.12" Text="[frxDBDataset2.biayabahan]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo29" Left="238.11" Top="162.52" Width="132.28" Height="15.12" Text="[frxDBDataset2.biayapasang]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo30" Left="238.11" Top="181.42" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo35" Left="238.11" Top="257.01" Width="132.28" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo36" Left="238.11" Top="272.13" Width="132.28" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo13" Left="120.95" Top="124.72" Width="139.84" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" Font="Arial, 8pt"/>
+      <TextObject Name="Memo31" Left="238.11" Top="196.54" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo32" Left="238.11" Top="211.65" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo33" Left="238.11" Top="226.77" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo34" Left="238.11" Top="241.89" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo75" Left="219.21" Top="143.62" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo76" Left="219.21" Top="162.52" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo77" Left="219.21" Top="181.42" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo78" Left="219.21" Top="196.54" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo79" Left="219.21" Top="211.65" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo80" Left="219.21" Top="226.77" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo81" Left="219.21" Top="241.89" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo82" Left="219.21" Top="257.01" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo83" Left="219.21" Top="272.13" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <LineObject Name="Line1" Left="248.84" Top="272.13" Width="121.56" Diagonal="true"/>
+      <TextObject Name="Memo37" Left="427.09" Top="18.9" Width="362.83" Height="22.68" Text="[param_laporan.header1] [param_laporan.header2]" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo38" Left="427.09" Top="41.58" Width="147.4" Height="22.68" Text="KWITANSI NON AIR" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 11pt, style=Bold, Underline"/>
+      <TextObject Name="Memo39" Left="623.62" Top="37.8" Width="26.46" Height="15.12" Text="ID" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo40" Left="668.98" Top="37.8" Width="117.17" Height="15.12" Text=": [frxDBDataset2.dibebankankepada]" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo41" Left="623.62" Top="52.91" Width="41.57" Height="15.12" Text="Cetak" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Memo42" Left="668.98" Top="52.91" Width="117.17" Height="15.12" Text=": [date]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo43" Left="427.09" Top="64.25" Width="41.57" Height="15.12" Text="Jenis" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo44" Left="472.44" Top="64.25" Width="306.14" Height="15.12" Text=": [frxDBDataset2.urutan]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo45" Left="427.09" Top="102.05" Width="41.57" Height="15.12" Text="Alamat" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo46" Left="529.13" Top="102.05" Width="249.45" Height="15.12" Text=": [frxDBDataset2.alamat]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo47" Left="427.09" Top="83.15" Width="102.05" Height="15.12" Text="Sudah terima dari " Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo48" Left="529.13" Top="83.15" Width="249.45" Height="15.12" Text=": [frxDBDataset2.nama]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Memo49" Left="427.09" Top="120.95" Width="94.49" Height="15.12" Text="Banyaknya Uang" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo50" Left="427.09" Top="139.84" Width="37.8" Height="15.12" Text="Untuk" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo51" Left="472.44" Top="139.84" Width="128.5" Height="15.12" Text="1. Biaya Bahan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo52" Left="472.44" Top="158.74" Width="128.5" Height="15.12" Text="2. Biaya Pasang" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo53" Left="472.44" Top="177.64" Width="128.5" Height="15.12" Text="3. Landasan Bon" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo54" Left="472.44" Top="192.76" Width="128.5" Height="15.12" Text="4. Crosing Jalan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo55" Left="472.44" Top="207.87" Width="128.5" Height="15.12" Text="5. Biaya Formulir" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo56" Left="472.44" Top="222.99" Width="128.5" Height="15.12" Text="6. Survey Perencanaan" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo57" Left="472.44" Top="238.11" Width="128.5" Height="15.12" Text="7. Biaya Aliran" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo58" Left="472.44" Top="253.23" Width="128.5" Height="15.12" Text="8. Lainnya" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo59" Left="472.44" Top="268.35" Width="128.5" Height="15.12" Text="Total Bayar" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo60" Left="427.09" Top="283.47" Width="185.2" Height="15.12" Text="Pasaman, [date]" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo61" Left="427.09" Top="298.58" Width="185.2" Height="15.12" Text="[frxDBDataset2.kasir]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+      <TextObject Name="Memo62" Left="616.06" Top="283.47" Width="151.18" Height="15.12" Text="Keterangan :" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+      <TextObject Name="Memo63" Left="646.3" Top="139.84" Width="132.28" Height="15.12" Text="[frxDBDataset2.biayabahan]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo64" Left="646.3" Top="158.74" Width="132.28" Height="15.12" Text="[frxDBDataset2.biayapasang]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo65" Left="646.3" Top="177.64" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo66" Left="646.3" Top="253.23" Width="132.28" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo67" Left="646.3" Top="268.35" Width="132.28" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo68" Left="529.13" Top="120.95" Width="139.84" Height="15.12" Text="[frxDBDataset2.total]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" Font="Arial, 8pt"/>
+      <TextObject Name="Memo69" Left="646.3" Top="192.76" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo70" Left="646.3" Top="207.87" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo71" Left="646.3" Top="222.99" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo72" Left="646.3" Top="238.11" Width="132.28" Height="15.12" Text="[frxDBDataset2.biaya1]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo73" Left="627.4" Top="139.84" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo74" Left="627.4" Top="158.74" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo84" Left="627.4" Top="177.64" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo85" Left="627.4" Top="192.76" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo86" Left="627.4" Top="207.87" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo87" Left="627.4" Top="222.99" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo88" Left="627.4" Top="238.11" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo89" Left="627.4" Top="253.23" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo90" Left="627.4" Top="268.35" Width="18.9" Height="15.12" Text="Rp." Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <LineObject Name="Line2" Left="657.03" Top="268.35" Width="121.56" Diagonal="true"/>
+      <TextObject Name="Memo91" Left="207.87" Top="302.36" Width="151.18" Height="15.12" Text="[frxDBDataset2.infocetakulang]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+      <TextObject Name="Memo92" Left="616.06" Top="298.58" Width="151.18" Height="15.12" Text="[frxDBDataset2.infocetakulang]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Arial, 8pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

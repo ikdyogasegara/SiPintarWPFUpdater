@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.MasterData.BagianMemintaBarang.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.MasterData.BagianMemintaBarang"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="650">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Tambah Bagian Meminta Barang"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="16,16,16,0" VerticalAlignment="Center">
+                <StackPanel Margin="0,0,0,0">
+                    <TextBlock Text="Nama Bagian Meminta Barang" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="NamaBagianMemintaBarang" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan bagian meminta barang" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NamaBagianMemintaBarang, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0" x:Name="DivisiBorder">
+                    <TextBlock Text="Divisi" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <ComboBox Style="{StaticResource ComboBoxInputForm}" x:Name="Divisi" DisplayMemberPath="Divisi"
+                                  ItemsSource="{Binding DaftarDivisi}" Width="{Binding ElementName=DivisiBorder, Path=ActualWidth}" SelectionChanged="ComboBox_SelectionChanged" />
+                        <TextBlock Text="Pilih" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=Divisi, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0" x:Name="WilayahBorder">
+                    <TextBlock Text="Wilayah" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <ComboBox Style="{StaticResource ComboBoxInputForm}" x:Name="Wilayah" DisplayMemberPath="NamaWilayah"
+                                  ItemsSource="{Binding DaftarWilayah}" Width="{Binding ElementName=WilayahBorder, Path=ActualWidth}" SelectionChanged="ComboBox_SelectionChanged" />
+                        <TextBlock Text="Pilih" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=Wilayah, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="16" VerticalAlignment="Center">
+                <StackPanel Margin="0,0,0,0">
+                    <TextBlock Text="Nama Ttd" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="NamaTtd" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan nama ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NamaTtd, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="Jabatan Ttd" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="JabatanTtd" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan jabatan ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=JabatanTtd, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="NIK Ttd" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="NikTtd" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan nik ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NikTtd, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="16" VerticalAlignment="Center">
+                <StackPanel Margin="0,0,0,0">
+                    <TextBlock Text="Nama Ttd 2" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="NamaTtd2" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan nama ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NamaTtd2, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="Jabatan Ttd 2" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="JabatanTtd2" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan jabatan ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=JabatanTtd2, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock Text="NIK Ttd 2" Style="{StaticResource SmallTitle}" Margin="0,0,0,3" />
+                    <Grid>
+                        <TextBox  Style="{StaticResource TextBoxInputForm}" x:Name="NikTtd2" PreviewKeyUp="Text_PreviewKeyUp" />
+                        <TextBlock Text="Masukkan nik ttd" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=NikTtd2, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="16,5,16,16">
+                <Button x:Name="BtnSubmit" Content="Simpan" Style="{StaticResource ButtonPrimary2}" Width="100" Height="35" Margin="0,0,10,0" Click="ButtonSimpan_Click"  />
+                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource ButtonSecondary2}" Width="100" Height="35" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

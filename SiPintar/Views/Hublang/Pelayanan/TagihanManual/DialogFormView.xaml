@@ -1,0 +1,629 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.TagihanManual.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="1000" d:DesignHeight="650">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed"
+                                                     False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464"
+                                                SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB"
+                                                SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF"
+                                                SecondBrush="#FA91A5" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+            <StackPanel x:Key="ComboBoxTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <ComboBox Style="{StaticResource ComboBoxInputForm}" Width="839" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxNumberTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxDecimalTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="DatePickerTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Tanggal" Style="{StaticResource SmallTitle}" />
+                <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                    <Grid>
+                        <DatePicker Style="{StaticResource DefaultDatePicker}" Height="30" Margin="6 0 0 0"
+                                    BorderThickness="0" />
+                        <TextBlock Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}"
+                                   Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="1000" MaxHeight="650">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38" />
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical" Background="{StaticResource BaseAppHublang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13"
+                               LineHeight="10" Text="Tambah Tagihan Non Air Manual" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0"
+                            Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppHublang}" Padding="6,1,6,1" FontSize="10"
+                                   FontWeight="SemiBold" Text="Esc" />
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2"
+                            Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}"
+                            Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0"
+                            Margin="8">
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0"  Margin="42 20 20 0">
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+                    <RadioButton GroupName="SubMenu" x:Name="Formulir"
+                                 Style="{StaticResource NavHorizontalStyle}" FontWeight="DemiBold"
+                                 FontSize="13" Content="Formulir" Checked="SubMenu_Checked" />
+                    <RadioButton GroupName="SubMenu" x:Name="Piutang"
+                                 Style="{StaticResource NavHorizontalStyle}" FontWeight="DemiBold"
+                                 FontSize="13" Content="Piutang Non Air" Checked="SubMenu_Checked" />
+                </StackPanel>
+
+                <Border Height="1.2" Background="{StaticResource BaseGray}" VerticalAlignment="Bottom"
+                        Margin="0 0 0 -1" />
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0" x:Name="FormulirSection" Panel.ZIndex="2" Background="White">
+                 <ScrollViewer VerticalScrollBarVisibility="Auto">
+                     <StackPanel Margin="20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="500" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="32 24 16 32">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" x:Name="ContainerJenisPelanggan">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource SmallTitle}"
+                                                       Text="Kategori Pelanggan" />
+                                            <Grid x:Name="JenisPelangganGroup" Margin="0 4 0 0">
+                                                <ComboBox x:Name="JenisPelanggan"
+                                                          ItemsSource="{Binding JenisPelangganKategori}"
+                                                          SelectedItem="{Binding JenisPelangganSelected, Mode=TwoWay}"
+                                                          SelectionChanged="TagihanManual_SelectionChanged"
+                                                          DisplayMemberPath="NamaJenisPelanggan"
+                                                          Width="{Binding ElementName=JenisPelangganGroup, Path=ActualWidth}"
+                                                          Style="{StaticResource ComboBoxInputForm}">
+                                                </ComboBox>
+                                                <TextBlock Text="Pilih kategori"
+                                                           DataContext="{Binding ElementName=JenisPelanggan, Path=Text}"
+                                                           Style="{StaticResource TextBoxPlaceholder}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="0" x:Name="ContainerTipePelanggan">
+                                        <StackPanel>
+                                            <TextBlock x:Name="TipePelanggan"
+                                                       FontFamily="{StaticResource SarabunSemiBold}" FontSize="18"
+                                                       FontWeight="Bold" Foreground="#028DDB" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <StackPanel Grid.Column="1" x:Name="NomorPelangganGroup" Visibility="Collapsed"
+                                                Margin="5,0,0,0">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Pelanggan"
+                                                   Margin="5 0 0 4" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <Grid Margin="5 0 0 0">
+                                                <TextBox Style="{StaticResource TextBoxInputForm}"
+                                                         x:Name="NomorPelanggan"
+                                                         Text="{Binding FormData.NomorPelanggan}" />
+                                                <TextBlock x:Name="NomorPelangganPlaceholder"
+                                                           DataContext="{Binding ElementName=NomorPelanggan, Path=Text}"
+                                                           Style="{StaticResource TextBoxPlaceholder}"
+                                                           Text="pilih nomor pelanggan" />
+                                            </Grid>
+                                            <Button x:Name="BtnCari" Style="{StaticResource ButtonPrimarySmall}"
+                                                    Click="BtnCariPelanggan" Margin="10,0,0,0">
+                                                Cari Pelanggan
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1" Margin="0 0 0 10">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Jenis Non Air" />
+                                        <Grid x:Name="JenisNonAirGroup" Margin="0 4 0 0">
+                                            <ComboBox x:Name="JenisNonAir" ItemsSource="{Binding JenisNonAirList}"
+                                                      SelectionChanged="JenisNonAir_SelectionChanged"
+                                                      DisplayMemberPath="NamaJenisNonAir"
+                                                      Width="{Binding ElementName=JenisNonAirGroup, Path=ActualWidth}"
+                                                      Style="{StaticResource ComboBoxInputForm}">
+                                            </ComboBox>
+                                            <TextBlock Text="Pilih jenis non-air"
+                                                       DataContext="{Binding ElementName=JenisNonAir, Path=Text}"
+                                                       Style="{StaticResource TextBoxPlaceholder}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="2" Margin="0 0 0 10">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Keterangan" />
+                                        <Grid Margin="0 4 0 0">
+                                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="Keterangan"
+                                                     Text="{Binding FormData.Keterangan}"
+                                                     PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                            <TextBlock x:Name="KeteranganPlaceholder"
+                                                       DataContext="{Binding ElementName=Keterangan, Path=Text}"
+                                                       Style="{StaticResource TextBoxPlaceholder}"
+                                                       Text="Masukkan Keterangan" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="3" Margin="0 0 0 10">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nama" />
+                                        <Grid Margin="0 4 0 0">
+                                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="Nama"
+                                                     Text="{Binding FormData.Nama}"
+                                                     PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                            <TextBlock x:Name="NamaPlaceholder"
+                                                       DataContext="{Binding ElementName=Nama, Path=Text}"
+                                                       Style="{StaticResource TextBoxPlaceholder}"
+                                                       Text="Masukkan nama" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="4" Margin="0 0 0 10">
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Alamat" />
+                                        <Grid Margin="0 4 0 0">
+                                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="Alamat"
+                                                     Text="{Binding FormData.Alamat}"
+                                                     PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                            <TextBlock x:Name="AlamatPlaceholder"
+                                                       DataContext="{Binding ElementName=Alamat, Path=Text}"
+                                                       Style="{StaticResource TextBoxPlaceholder}"
+                                                       Text="Masukkan Alamat" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+
+                                <StackPanel Grid.Row="5" Margin="0 0 0 10" x:Name="KelurahanGroup">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Kelurahan" />
+                                    <Grid Margin="0 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <ComboBox x:Name="KodeKelurahan" Background="White"
+                                                      ItemsSource="{Binding KelurahanList}"
+                                                      DisplayMemberPath="KodeKelurahan"
+                                                      SelectedValue="{Binding KelurahanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Style="{StaticResource ComboBoxInputForm}"
+                                                      Validation.ErrorTemplate="{x:Null}" Margin="0 4 0 0"
+                                                      HorizontalAlignment="Stretch" />
+                                            <TextBlock
+                                                DataContext="{Binding ElementName=KodeKelurahan, Path=SelectedItem}"
+                                                Text="kode" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                        <Grid Grid.Column="2">
+                                            <ComboBox x:Name="NamaKelurahan" Background="White"
+                                                      ItemsSource="{Binding KelurahanList}"
+                                                      DisplayMemberPath="NamaKelurahan"
+                                                      SelectedValue="{Binding KelurahanForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Style="{StaticResource ComboBoxInputForm}"
+                                                      Validation.ErrorTemplate="{x:Null}" Margin="8 4 0 0"
+                                                      HorizontalAlignment="Stretch" />
+                                            <TextBlock
+                                                DataContext="{Binding ElementName=NamaKelurahan, Path=SelectedItem}"
+                                                Text="kelurahan" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="6" Margin="0 0 0 10" x:Name="RayonGroup">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Rayon" />
+                                    <Grid Margin="0 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <ComboBox x:Name="KodeRayon" Background="White"
+                                                      ItemsSource="{Binding RayonList}"
+                                                      DisplayMemberPath="KodeRayon"
+                                                      SelectedValue="{Binding RayonForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Style="{StaticResource ComboBoxInputForm}"
+                                                      Validation.ErrorTemplate="{x:Null}" Margin="0 4 0 0"
+                                                      HorizontalAlignment="Stretch" />
+                                            <TextBlock
+                                                DataContext="{Binding ElementName=KodeRayon, Path=SelectedItem}"
+                                                Text="kode" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                        <Grid Grid.Column="2">
+                                            <ComboBox x:Name="NamaRayon" Background="White"
+                                                      ItemsSource="{Binding RayonList}"
+                                                      DisplayMemberPath="NamaRayon"
+                                                      SelectedValue="{Binding RayonForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Style="{StaticResource ComboBoxInputForm}"
+                                                      Validation.ErrorTemplate="{x:Null}" Margin="8 4 0 0"
+                                                      HorizontalAlignment="Stretch" />
+                                            <TextBlock
+                                                DataContext="{Binding ElementName=NamaRayon, Path=SelectedItem}"
+                                                Text="Rayon" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+
+                                <Grid Grid.Row="7" Margin="0 0 0 10" x:Name="TarifContainer" Visibility="Collapsed"
+                                      IsHitTestVisible="False" Focusable="False">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0" Visibility="Collapsed" Name="GolonganGroup">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Golongan" />
+                                            <Grid Margin="0 0 0 0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox x:Name="KodeGolongan" Background="White"
+                                                              ItemsSource="{Binding GolonganList}"
+                                                              DisplayMemberPath="KodeGolongan"
+                                                              SelectedValue="{Binding GolonganForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="0 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=KodeGolongan, Path=SelectedItem}"
+                                                        Text="kode" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox x:Name="NamaGolongan" Background="White"
+                                                              ItemsSource="{Binding GolonganList}"
+                                                              DisplayMemberPath="NamaGolongan"
+                                                              SelectedValue="{Binding GolonganForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="8 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=NamaGolongan, Path=SelectedItem}"
+                                                        Text="Golongan"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="0" Visibility="Collapsed" Name="TarifLimbahGroup">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tarif Limbah" />
+                                            <Grid Margin="0 0 0 0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox x:Name="KodeTarifLimbah" Background="White"
+                                                              ItemsSource="{Binding TarifLimbahList}"
+                                                              DisplayMemberPath="KodeTarifLimbah"
+                                                              SelectedValue="{Binding TarifLimbahForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="0 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=KodeTarifLimbah, Path=SelectedItem}"
+                                                        Text="kode" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox x:Name="NamaTarifLimbah" Background="White"
+                                                              ItemsSource="{Binding TarifLimbahList}"
+                                                              DisplayMemberPath="NamaTarifLimbah"
+                                                              SelectedValue="{Binding TarifLimbahForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="8 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=NamaTarifLimbah, Path=SelectedItem}"
+                                                        Text="TarifLimbah"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid Grid.Column="0" Visibility="Collapsed" Name="TarifLlttGroup">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tarif L2T2" />
+                                            <Grid Margin="0 0 0 0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Column="0">
+                                                    <ComboBox x:Name="KodeTarifLltt" Background="White"
+                                                              ItemsSource="{Binding TarifLlttList}"
+                                                              DisplayMemberPath="KodeTarifLltt"
+                                                              SelectedValue="{Binding TarifLlttForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="0 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=KodeTarifLltt, Path=SelectedItem}"
+                                                        Text="kode" Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="5,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                                <Grid Grid.Column="2">
+                                                    <ComboBox x:Name="NamaTarifLltt" Background="White"
+                                                              ItemsSource="{Binding TarifLlttList}"
+                                                              DisplayMemberPath="NamaTarifLltt"
+                                                              SelectedValue="{Binding TarifLlttForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                              Style="{StaticResource ComboBoxInputForm}"
+                                                              Validation.ErrorTemplate="{x:Null}" Margin="8 4 0 0"
+                                                              HorizontalAlignment="Stretch" />
+                                                    <TextBlock
+                                                        DataContext="{Binding ElementName=NamaTarifLltt, Path=SelectedItem}"
+                                                        Text="TarifLltt"
+                                                        Style="{StaticResource ComboBoxSelectOverlay}"
+                                                        Padding="15,5,7,0" Foreground="{StaticResource Gray100}" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="15 13 15 32">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="100*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Style="{StaticResource BigTitle}" Grid.Row="0" Margin="15,10,0,0"
+                                           FontSize="13" Foreground="#028DDB" LineHeight="13">
+                                    Detail Tagihan
+                                </TextBlock>
+                                <Grid Grid.Row="1" Margin="0 10 0 0">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <StackPanel Grid.Column="1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="80" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0" Margin="15 0 15 10">
+                                                    <Border Padding="20 10 0 0" Background="#F5F5F5"
+                                                            CornerRadius="4" BorderThickness="0.50"
+                                                            BorderBrush="#646464">
+                                                        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                                                                    Margin="0,0,0,15">
+                                                            <StackPanel Orientation="Vertical" Margin="0,5,35,0">
+                                                                <TextBlock Text="Biaya"
+                                                                           FontFamily="{StaticResource SarabunSemiBold}"
+                                                                           FontSize="12" Foreground="#646464"
+                                                                           FontWeight="Bold" />
+                                                                <TextBlock
+                                                                    FontFamily="{StaticResource SarabunSemiBold}"
+                                                                    FontSize="18" FontWeight="Bold"
+                                                                    Foreground="#028DDB">
+                                                                    <Run Text="Rp " />
+                                                                    <Run x:Name="Biaya" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Vertical" Margin="0,5,35,0">
+                                                                <TextBlock Text="Ppn"
+                                                                           FontFamily="{StaticResource SarabunSemiBold}"
+                                                                           FontSize="12" Foreground="#646464"
+                                                                           FontWeight="Bold" />
+                                                                <TextBlock
+                                                                    FontFamily="{StaticResource SarabunSemiBold}"
+                                                                    FontSize="18" FontWeight="Bold"
+                                                                    Foreground="#028DDB">
+                                                                    <Run Text="Rp " />
+                                                                    <Run x:Name="Ppn" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Vertical" Margin="0,5,35,0">
+                                                                <TextBlock Text="Total"
+                                                                           FontFamily="{StaticResource SarabunSemiBold}"
+                                                                           FontSize="12" Foreground="#646464"
+                                                                           FontWeight="Bold" />
+                                                                <TextBlock
+                                                                    FontFamily="{StaticResource SarabunSemiBold}"
+                                                                    FontSize="18" FontWeight="Bold"
+                                                                    Foreground="#028DDB">
+                                                                    <Run Text="Rp " />
+                                                                    <Run x:Name="Total" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </Grid>
+                                                <Grid Grid.Row="1" Margin="0 0 0 0">
+                                                    <StackPanel x:Name="Canvas" Orientation="Vertical">
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" x:Name="PiutangSection" Panel.ZIndex="1" Margin="0 0 0 0">
+                <StackPanel Margin="20">
+                    <Grid Margin="20 15 20 0">
+                        <DataGrid Margin="15 5 15 0"
+                                  x:Name="DataGridPiutang"
+                                  DataContext="{Binding}"
+                                  IsReadOnly="True"
+                                  ItemsSource="{Binding PiutangNonAirList, UpdateSourceTrigger=PropertyChanged}"
+                                  Style="{StaticResource DataGridRegular}"
+                                  CanUserSortColumns="False"
+                                  EnableRowVirtualization="True"
+                                  EnableColumnVirtualization="True"
+                                  md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                                  AutoGenerateColumns="False"
+                                  Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                                  HeadersVisibility="Column"
+                                  SelectionMode="Extended"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  CanUserAddRows="False">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}"
+                                       TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                                <Style TargetType="{x:Type DataGridCell}"
+                                       BasedOn="{StaticResource DataGridCellRegular}" />
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="150" Header="NOMOR">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding NomorNonAir}" HorizontalAlignment="Center"
+                                                       Style="{StaticResource TextDataGridCellRegular}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="100" Header="KODE JNS">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding KodeJenisNonAir}"
+                                                       HorizontalAlignment="Center"
+                                                       Style="{StaticResource TextDataGridCellRegular}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="100" Header="TOTAL">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Text="{Binding Total, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}"
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource TextDataGridCellRegular}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="200" Header="NAMA JNS">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding NamaJenisNonAir}"
+                                                       HorizontalAlignment="Center"
+                                                       Style="{StaticResource TextDataGridCellRegular}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
+            <Grid>
+                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11"
+                        Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13"
+                        BorderBrush="{StaticResource PictonBlue}" Height="30" Margin="5 0" />
+            </Grid>
+            <Grid>
+                <Button x:Name="BtnSubmit" IsEnabled="False" Content="Proses Permohonan"
+                        Style="{StaticResource ButtonPrimary2}" Height="35" Width="170" Margin="13,0,0,0"
+                        Click="BtnSubmit_Click" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

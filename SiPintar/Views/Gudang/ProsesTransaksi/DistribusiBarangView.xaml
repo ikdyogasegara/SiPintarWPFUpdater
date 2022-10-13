@@ -1,0 +1,482 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.DistribusiBarangView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#E5E5E5">
+        <Grid Background="White" Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="16,24,16,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="0,0,0,12" Grid.Row="0">
+                    <TextBlock Text="Cari barang" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                    <Grid>
+                        <TextBox x:Name="CariBarang" Style="{StaticResource TextBoxInputForm}" MinWidth="128" />
+                        <TextBlock Text="Cari barang disini" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=CariBarang, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel x:Name="CabangGudangContainer" Grid.Row="1">
+                    <TextBlock Text="Cabang Gudang" Style="{StaticResource SmallTitle}" Margin="0,0,0,4" />
+                    <Grid>
+                        <ComboBox x:Name="CabangGudang" ItemsSource="{Binding DaftarGudang}" DisplayMemberPath="NamaGudang" Style="{StaticResource ComboBoxInputForm}" Width="{Binding ElementName=CabangGudangContainer, Path=ActualWidth}" SelectionChanged="CabangGudang_SelectionChanged" />
+                        <TextBlock Text="Pilih Gudang" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=CabangGudang, Path=Text}" />
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="2" Margin="0,16,0,0">
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="20" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Image Height="40" Source="/SiPintar;component/Assets/Images/empty_data_v2.png">
+                            </Image>
+                            <Border Height="8"/>
+                            <StackPanel>
+                                <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Margin="0 10 0 0" FontSize="11" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}"
+                                           Visibility="{Binding ElementName=CabangGudang, Path=SelectedItem, Converter={StaticResource NullToCollapsibleConverter}}">
+                                    <Run Text="Saat ini belum ada" />
+                                    <LineBreak />
+                                    <Run Text="data yang ditampilkan." />
+                                    <LineBreak />
+                                </TextBlock>
+                                <TextBlock Margin="0 10 0 0" FontSize="11" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}" 
+                                           Visibility="{Binding ElementName=CabangGudang, Path=SelectedItem, Converter={StaticResource NullToVisibleConverter}}">
+                                    <Run Text="Cabang belum dipilih" />
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Height="30"/>
+                        </StackPanel>
+                    </Grid>
+                    <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+                    <DataGrid
+                        x:Name="DataGridCabangGudang"
+                        DataContext="{Binding}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding  DataContext.SelectedData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalScrollBarVisibility="Auto"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}">
+                                <Setter Property="Background" Value="White"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                <MenuItem Header="Detail Berita Acara" Command="{Binding OnOpenDetailFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                </MenuItem>
+                                <MenuItem Header="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="FileEdit" Foreground="{StaticResource SecondaryBlue}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Hapus" Command="{Binding OnOpenDeleteConfirmationCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Cetak Berita Acara" Command="{Binding OnCetakFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Printer" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E9E9E9"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="*" Header="Nama Barang">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Margin="8,24,8,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Text="Detail Barang" Style="{StaticResource SmallTitle}" Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Cari Barang" Style="{StaticResource CaptionSmallBody}" Foreground="Black" VerticalAlignment="Center" />
+                        <TextBox Style="{StaticResource TextBoxInputForm}" Grid.Column="1" Margin="10,0,0,0" />
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading1, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}">
+                        <Image Height="20" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze1" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading1, Converter={StaticResource BooleanToCollapseConverter}, FallbackValue=Visible}">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty1, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Visible}">
+                            <Image Height="40" Source="/SiPintar;component/Assets/Images/empty_data_v2.png">
+                            </Image>
+                            <Border Height="8"/>
+                            <StackPanel>
+                                <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Margin="0 10 0 0" FontSize="11" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                    <Run Text="Saat ini belum ada" />
+                                    <LineBreak />
+                                    <Run Text="data yang ditampilkan." />
+                                    <LineBreak />
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Height="30"/>
+                        </StackPanel>
+                    </Grid>
+                    <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+                    <DataGrid
+                        x:Name="DataGridBarang"
+                        DataContext="{Binding}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding  DataContext.SelectedData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalScrollBarVisibility="Auto"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}">
+                                <Setter Property="Background" Value="White"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                <MenuItem Header="Detail Berita Acara" Command="{Binding OnOpenDetailFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                </MenuItem>
+                                <MenuItem Header="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="FileEdit" Foreground="{StaticResource SecondaryBlue}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Hapus" Command="{Binding OnOpenDeleteConfirmationCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Cetak Berita Acara" Command="{Binding OnCetakFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Printer" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E9E9E9"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="2*" Header="Kode">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="3*" Header="Deskripsi">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="1*" Header="Qty">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="8,24,8,24">
+                <Button Style="{StaticResource ButtonSecondary2}" Width="120" Height="35" Margin="0,0,0,20">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Distribusi" Margin="0,2,0,0" />
+                        <md:PackIcon Kind="ArrowRight" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource ButtonSecondary2}" Width="120" Height="35" Margin="0,0,0,20">
+                    <StackPanel Orientation="Horizontal">
+                        <md:PackIcon Kind="ArrowLeft" Margin="-2,0,0,0" />
+                        <TextBlock Text="Kembalikan" Margin="5,2,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource ButtonSecondary2}" Width="120" Height="35" Margin="0,0,0,0" Content="Proses Data" />
+            </StackPanel>
+            <Grid Grid.Column="3" Margin="8,24,16,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Text="Distribusi Barang" Style="{StaticResource SmallTitle}" Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Gudang" Style="{StaticResource CaptionSmallBody}" Foreground="Black" VerticalAlignment="Center" Margin="0,0,10,0" />
+                        <Grid Grid.Column="1" x:Name="GudangTujuanContainer">
+                            <ComboBox x:Name="GudangTujuan" Style="{StaticResource ComboBoxInputForm}" Width="{Binding ElementName=GudangTujuanContainer, Path=ActualWidth}" />
+                            <TextBlock Text="Pilih Gudang" Style="{StaticResource TextBoxPlaceholder}" DataContext="{Binding ElementName=GudangTujuan, Path=Text}" />
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading2, Converter={StaticResource BooleanToVisibleConverter}, FallbackValue=Collapsed}">
+                        <Image Height="20" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze2" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading2, Converter={StaticResource BooleanToCollapseConverter}, FallbackValue=Visible}">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty2, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Image Height="40" Source="/SiPintar;component/Assets/Images/empty_data_v2.png">
+                            </Image>
+                            <Border Height="8"/>
+                            <StackPanel>
+                                <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Margin="0 10 0 0" FontSize="11" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                    <Run Text="Saat ini belum ada" />
+                                    <LineBreak />
+                                    <Run Text="data yang ditampilkan." />
+                                    <LineBreak />
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Height="30"/>
+                        </StackPanel>
+                    </Grid>
+                    <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+                    <DataGrid
+                        x:Name="DataGridBarangDistribusi"
+                        DataContext="{Binding}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Data, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding  DataContext.SelectedData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalScrollBarVisibility="Auto"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}">
+                                <Setter Property="Background" Value="White"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                <MenuItem Header="Detail Berita Acara" Command="{Binding OnOpenDetailFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                </MenuItem>
+                                <MenuItem Header="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="FileEdit" Foreground="{StaticResource SecondaryBlue}" />
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Hapus" Command="{Binding OnOpenDeleteConfirmationCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Cetak Berita Acara" Command="{Binding OnCetakFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                    <MenuItem.Icon>
+                                        <Grid>
+                                            <md:PackIcon Width="16" Kind="Printer" Foreground="{StaticResource SecondaryBlue}"/>
+                                        </Grid>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E9E9E9"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="3*" Header="Nama Barang">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="1*" Header="Qty">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Periode}" HorizontalAlignment="Left" Style="{StaticResource TextDataGridCellRegular}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

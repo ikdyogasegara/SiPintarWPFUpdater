@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.Tarif.Materai.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Billing.Atribut.Tarif.Materai" 
+             xmlns:converters="clr-namespace:SiPintar.Converters" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border Width="500" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Tambah Tarif Materai"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="20,30,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10,0,10,15" Grid.Column="0">
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Bulan Mulai Berlaku" LineHeight="15" Margin="0,0,0,2"/>
+                                <StackPanel Orientation="Horizontal" >
+                                    <ComboBox x:Name="Bulan" Margin="0,0,10,0" Style="{StaticResource ComboBoxInputForm}" Width="111" Validation.ErrorTemplate="{x:Null}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" SelectedValue="{Binding Month}" SelectedValuePath="Tag" PreviewKeyUp="CheckForm_PreviewKeyUp">
+                                        <ComboBoxItem Tag="1" Content="Januari"/>
+                                        <ComboBoxItem Tag="2" Content="Februari"/>
+                                        <ComboBoxItem Tag="3" Content="Maret"/>
+                                        <ComboBoxItem Tag="4" Content="April"/>
+                                        <ComboBoxItem Tag="5" Content="Mei"/>
+                                        <ComboBoxItem Tag="6" Content="Juni"/>
+                                        <ComboBoxItem Tag="7" Content="Juli"/>
+                                        <ComboBoxItem Tag="8" Content="Agustus"/>
+                                        <ComboBoxItem Tag="9" Content="September"/>
+                                        <ComboBoxItem Tag="10" Content="Oktober"/>
+                                        <ComboBoxItem Tag="11" Content="November"/>
+                                        <ComboBoxItem Tag="12" Content="Desember"/>
+                                    </ComboBox>
+                                    <ComboBox x:Name="Tahun" Style="{StaticResource ComboBoxInputForm}" Width="112" Validation.ErrorTemplate="{x:Null}" IsEnabled="{Binding Path=IsEdit, Converter={StaticResource InverseBooleanConverter}}" ItemsSource="{Binding ListYear}" SelectedItem="{Binding Year}" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <Rectangle HorizontalAlignment="Stretch" Margin="0,30,0,30" Fill="{StaticResource Black50}" Height="0.5"/>
+
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Batas Nominal 1" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Batas1" Style="{StaticResource TextBoxInputForm}"  Text="{Binding MateraiForm.Batas1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Batas1, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Batas Nominal 2" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Batas2" Style="{StaticResource TextBoxInputForm}" Text="{Binding MateraiForm.Batas2, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Batas2, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Batas Nominal 3" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Batas3" Style="{StaticResource TextBoxInputForm}" Text="{Binding MateraiForm.Batas3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Batas3, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="20,0">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Biaya Materai 1" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Meterai1" Style="{StaticResource TextBoxInputForm}" Text="{Binding MateraiForm.Meterai1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Meterai1, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Biaya Materai 2" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Meterai2" Style="{StaticResource TextBoxInputForm}" Text="{Binding MateraiForm.Meterai2, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Meterai2, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Biaya Materai 3" LineHeight="15"/>
+                                <Grid Margin="0,0,0,10">
+                                    <TextBox x:Name="Meterai3" Style="{StaticResource TextBoxInputForm}" Text="{Binding MateraiForm.Meterai3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Meterai3, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+
+                                </Grid>
+                            </StackPanel>
+                            
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Margin="10,0,30,20">
+                    <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                        <!--<Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">-->
+                        <Grid>
+                            <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Simpan" Click="OkButton_Click" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

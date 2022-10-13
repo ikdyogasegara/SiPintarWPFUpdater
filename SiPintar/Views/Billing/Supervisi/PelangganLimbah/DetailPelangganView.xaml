@@ -1,0 +1,456 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.PelangganLimbah.DetailPelangganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="960" Height="570" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Info Lengkap Pelanggan"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+                <ScrollViewer Grid.Row="1" Margin="16" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <StackPanel Orientation="Horizontal"  Margin="7 8 0 0">
+                                <TextBlock Text="Info Dasar" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}" />
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Status" LineHeight="18" Margin="40 0 0 0"/>
+                                <Border Margin="12 0 0 0" Padding="4 0 6 0" CornerRadius="4" Background="{StaticResource SuccessLighter}" >
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedData.NamaStatus}" LineHeight="18" Foreground="{StaticResource SuccessSalem}"/>
+                                </Border>
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Flag" LineHeight="18" Margin="48 0 0 0"/>
+                                <Border Margin="12 0 0 0" Padding="4 0 6 0" CornerRadius="4" Background="#D9F0FC" >
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedData.NamaFlag}" LineHeight="18" Foreground="{StaticResource SecondaryBlue}"/>
+                                </Border>
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Terakhir Diperbarui" LineHeight="18" Margin="48 0 0 0"/>
+                                <Border Margin="18 0 0 0" Padding="4 0 6 0" CornerRadius="4" Background="#EEF1F5" >
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedData.WaktuUpdate, StringFormat=dd MMMM yyyy, ConverterCulture='id-ID'}" LineHeight="18" Foreground="{StaticResource Black90}"/>
+                                </Border>
+
+                            </StackPanel>
+                            <Border Background="{StaticResource Black10}" Margin="0 16 0 0" Padding="24 16 18 22">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nama Pelanggan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.Nama, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Sambungan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.NoSamb, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Alamat" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding SelectedData.Alamat, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="3">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="No. Handphone" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoHp, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="4">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Telepon Rumah" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoTelp, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor KTP" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoKtp, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Email" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.Email, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="2" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Pekerjaan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.Pekerjaan, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="3" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Luas Rumah" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.LuasRumah, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="4" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Jumlah Penghuni" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.Penghuni, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0 24 0 0">
+                            <TextBlock Text="Info Wilayah" Margin="7 8 0 0" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}"/>
+                            <Border Background="{StaticResource Black10}" Margin="0 16 0 0" Padding="24 16 18 22">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Wilayah (kode &amp; nama)" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeWilayah" />
+                                                    <Binding Path="SelectedData.NamaWilayah" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Area (kode &amp; nama)" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeArea" />
+                                                    <Binding Path="SelectedData.NamaArea" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Kecamatan (kode &amp; nama) " LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeKecamatan" />
+                                                    <Binding Path="SelectedData.NamaKecamatan" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="3">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Cabang (kode &amp; nama)" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeCabang" />
+                                                    <Binding Path="SelectedData.NamaCabang" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="4">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Rayon (kode &amp; nama)" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeRayon" />
+                                                    <Binding Path="SelectedData.NamaRayon" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Blok (kode &amp; nama)" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeBlok" />
+                                                    <Binding Path="DetailData.NamaBlok" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Margin="0 24 0 0">
+                            <TextBlock Text="Info Perangkat Meteran Air" Margin="7 8 0 0" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}"/>
+                            <Border Background="{StaticResource Black10}" Margin="0 16 0 0" Padding="24 16 18 22">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Diameter" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeDiameter" />
+                                                    <Binding Path="SelectedData.NamaDiameter" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="No. Seri Meteran Air" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoSeriMeter, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Meter" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.TglMeter, StringFormat=dd MMMM yyyy, ConverterCulture='id-ID'}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="3">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Kondisi Meteran Air" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeKondisiMeter" />
+                                                    <Binding Path="DetailData.NamaKondisiMeter" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="4">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Merek Meteran Air" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeMerekMeter" />
+                                                    <Binding Path="DetailData.NamaMerekMeter" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Sumber Air" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeSumberAir" />
+                                                    <Binding Path="DetailData.NamaSumberAir" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="District Meter Area" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeDma" />
+                                                    <Binding Path="DetailData.NamaDma" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="2" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="District Meter Zona" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeDmz" />
+                                                    <Binding Path="DetailData.NamaDmz" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Margin="0 24 0 0">
+                            <TextBlock Text="Info Administrasi" Margin="7 8 0 0" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}"/>
+                            <Border Background="{StaticResource Black10}" Margin="0 16 0 0" Padding="24 16 18 22">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Golongan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeGolongan" />
+                                                    <Binding Path="SelectedData.NamaGolongan" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Kolektif" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="SelectedData.KodeKolektif" />
+                                                    <Binding Path="SelectedData.NamaKolektif" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Retribusi" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeRetribusiLain" />
+                                                    <Binding Path="DetailData.NamaRetribusiLain" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="3">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Administrasi Lain" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeAdministrasiLain" />
+                                                    <Binding Path="DetailData.NamaAdministrasiLain" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="4">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Kondisi Meteran Air" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodeKondisiMeter" />
+                                                    <Binding Path="DetailData.NamaKondisiMeter" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Pemeliharaan Lain" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14"  LineHeight="18" Margin="0 3 0 0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="DetailData.KodePemeliharaanLain" />
+                                                    <Binding Path="DetailData.NamaPemeliharaanLain" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Margin="0 24 0 0">
+                            <TextBlock Text="Lain-Lain" Margin="7 8 0 0" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}"/>
+                            <Border Background="{StaticResource Black10}" Margin="0 16 0 0" Padding="24 16 18 22">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                        <ColumnDefinition Width="176"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Pendaftaran" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoPendaftaran, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Pendaftaran" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.TglDaftar, StringFormat=dd MMMM yyyy, ConverterCulture='id-ID'}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Pasang" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.TglPasang, StringFormat=dd MMMM yyyy, ConverterCulture='id-ID'}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="3">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="No. BA Pemasangan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoBaPemasangan, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="0" Grid.Column="4">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="No. RAB" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.NoRab, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Stan Awal Pasang" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.StanAwalPasang, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="0 32 0 0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Keterangan" LineHeight="18"/>
+                                        <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" Text="{Binding DetailData.Keterangan, Converter={StaticResource StringDefaultValueConverter}}" LineHeight="18" Margin="0 3 0 0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

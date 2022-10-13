@@ -1,0 +1,402 @@
+﻿<Window x:Class="SiPintar.Views.Global.Other.AppConfigView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helper="clr-namespace:SiPintar.Helpers"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        md:TransitionAssist.DisableTransitions="True"
+        xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+        xmlns:converters="clr-namespace:SiPintar.Converters"
+        Title="Pengaturan"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:PlainMultiValueConverter x:Key="MultiValueConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibile" True="Visible" False="Collapsed"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapse" True="Collapsed" False="Visible"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/ApplicationConfigStyle.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/BaseStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!--This dialog host for enabling top level dialogs-->
+    <Border BorderBrush="Gray" BorderThickness="0.5">
+        <md:DialogHost Identifier="ApplicationConfigViewDialog" DialogTheme="Inherit">
+            <Grid Margin="0" x:Name="ApplicationConfigPage" Height="500" Width="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" helper:EnableDragHelper.EnableDrag="True">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Padding="10,5,0,0" Background="{StaticResource BaseApp}">
+                            <TextBlock x:Name="TitleTextBlock" Text="Pengaturan Aplikasi" Style="{StaticResource TitleLabel}" />
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource WindowOption}">
+                            <ToggleButton x:Name="CloseButton" Style="{StaticResource CloseButton}" Click="CloseButton_Click" />
+                        </Border>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 10 0 15">
+                            <Expander Style="{StaticResource SideExpander}" Header="Pengaturan Umum" Margin="20 10" HorizontalAlignment="Stretch" IsExpanded="True">
+                                <Border Style="{StaticResource BgContent}" Padding="10,10,10,10">
+                                    <StackPanel>
+                                        <StackPanel Margin="0 0 0 10" Visibility="Collapsed">
+                                            <TextBlock Text="Versi Aplikasi" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" />
+                                            <Grid>
+                                                <TextBox x:Name="Version" Text="{Binding AppVersion, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" Margin="8,0,8,0" IsEnabled="False" />
+                                                <TextBlock DataContext="{Binding ElementName=Version, Path=Text}" Text="Masukkan versi aplikasi.." Style="{StaticResource TextBoxPlaceholder}" />
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <TextBlock Text="APLIKASI API" Style="{StaticResource SmallTitle}" Margin="8,0,0,0"/>
+                                        <Separator Margin="5,0,5,5" />
+                                        <StackPanel Margin="0 0 0 15">
+                                            <TextBlock Text="CLOUD API URL" FontWeight="DemiBold" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" />
+                                            <Grid Margin="8,0,8,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid>
+                                                    <TextBox x:Name="ApiCloud" Text="{Binding ApiCloudUrl, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" />
+                                                    <TextBlock DataContext="{Binding ElementName=ApiCloud, Path=Text}" Text="Masukkan URL ..." Style="{StaticResource TextBoxPlaceholder}" />
+                                                </Grid>
+                                                <Button Command="{Binding OnCekKoneksiCloudCommand}" Grid.Column="1" Style="{StaticResource ButtonSecondarySmall}" md:ButtonAssist.CornerRadius="5" Margin="5 0 0 0">Cek Koneksi</Button>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Margin="0 0 0 15">
+                                            <TextBlock Text="LOCAL API URL" FontWeight="DemiBold" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" />
+                                            <Grid Margin="8,0,8,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid>
+                                                    <TextBox x:Name="ApiLocal" Text="{Binding ApiLocalUrl, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" />
+                                                    <TextBlock DataContext="{Binding ElementName=ApiLocal, Path=Text}" Text="Masukkan URL ..." Style="{StaticResource TextBoxPlaceholder}" />
+                                                </Grid>
+                                                <Button Command="{Binding OnCekKoneksiLocalCommand}" Grid.Column="1" Style="{StaticResource ButtonSecondarySmall}" md:ButtonAssist.CornerRadius="5" Margin="5 0 0 0">Cek Koneksi</Button>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <TextBlock Text="REPORT API" Style="{StaticResource SmallTitle}" Margin="8,0,0,0"/>
+                                        <Separator Margin="5,0,5,5" />
+                                        <CheckBox Style="{StaticResource DarkCheckBox13}" VerticalContentAlignment="Bottom" Content="Gunakan Pengaturan Aplikasi"
+                                                  Margin="8,0,8,5" IsChecked="{Binding CheckReportSameSetting, FallbackValue=false}"></CheckBox>
+
+                                        <StackPanel Margin="0 0 0 15" Visibility="{Binding CheckReportSameSetting, Converter={StaticResource BooleanToCollapse}}">
+                                            <TextBlock Text="CLOUD API URL" FontWeight="DemiBold" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" />
+                                            <Grid Margin="8,0,8,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid>
+                                                    <TextBox x:Name="ApiCloudReport" Text="{Binding ApiCloudReportUrl, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" />
+                                                    <TextBlock DataContext="{Binding ElementName=ApiCloudReport, Path=Text}" Text="Masukkan URL ..." Style="{StaticResource TextBoxPlaceholder}" />
+                                                </Grid>
+                                                <Button Command="{Binding OnCekKoneksiCloudReportCommand}" Grid.Column="1" Style="{StaticResource ButtonSecondarySmall}" md:ButtonAssist.CornerRadius="5" Margin="5 0 0 0">Cek Koneksi</Button>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Margin="0 0 0 15" Visibility="{Binding CheckReportSameSetting, Converter={StaticResource BooleanToCollapse}}">
+                                            <TextBlock Text="LOCAL API URL" FontWeight="DemiBold" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" />
+                                            <Grid Margin="8,0,8,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid>
+                                                    <TextBox x:Name="ApiLocalReport" Text="{Binding ApiLocalReportUrl, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" />
+                                                    <TextBlock DataContext="{Binding ElementName=ApiLocalReport, Path=Text}" Text="Masukkan URL ..." Style="{StaticResource TextBoxPlaceholder}" />
+                                                </Grid>
+                                                <Button Command="{Binding OnCekKoneksiLocalReportCommand}" Grid.Column="1" Style="{StaticResource ButtonSecondarySmall}" md:ButtonAssist.CornerRadius="5" Margin="5 0 0 0">Cek Koneksi</Button>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <!-- <StackPanel Margin="0 0 0 15"> -->
+                                        <!--     <TextBlock Text="PATH APP REPORTING" FontWeight="DemiBold" Style="{StaticResource FieldLabel}" Margin="8,0,8,4" /> -->
+                                        <!--     <Grid Margin="8,0,8,0"> -->
+                                        <!--         <Grid.ColumnDefinitions> -->
+                                        <!--             <ColumnDefinition /> -->
+                                        <!--             <ColumnDefinition Width="Auto" /> -->
+                                        <!--         </Grid.ColumnDefinitions> -->
+                                        <!-- -->
+                                        <!--         <Grid> -->
+                                        <!--             <TextBox Background="{StaticResource MediumGray}" x:Name="REPORTPATH" Text="{Binding ReportAppPath, Mode=TwoWay}" Validation.ErrorTemplate="{x:Null}" Style="{StaticResource TextBoxInputForm}" TextWrapping="NoWrap" IsReadOnly="True" /> -->
+                                        <!--             <TextBlock DataContext="{Binding ElementName=REPORTPATH, Path=Text}" Text="Masukkan Path Aplikasi Reporting.." Style="{StaticResource TextBoxPlaceholder}" /> -->
+                                        <!--         </Grid> -->
+                                        <!--         <Button Command="{Binding OnBrowseReportPathCommand}" Grid.Column="1" Style="{StaticResource ButtonSecondarySmall}" md:ButtonAssist.CornerRadius="5" Margin="5 0 0 0"> -->
+                                        <!--             <StackPanel Orientation="Horizontal"> -->
+                                        <!--                 <md:PackIcon Kind="FolderSearch" Width="13" Height="13" Margin="0 0 4 0" /> -->
+                                        <!--                 <TextBlock Text="Browse" Margin="0 0 5 0" /> -->
+                                        <!--             </StackPanel> -->
+                                        <!--         </Button> -->
+                                        <!--     </Grid> -->
+                                        <!-- -->
+                                        <!-- </StackPanel> -->
+                                    </StackPanel>
+                                </Border>
+                            </Expander>
+
+                            <Expander Visibility="Collapsed" Style="{StaticResource SideExpander}" Header="Pengaturan Menu" Background="{StaticResource AthensGray}" Margin="20 10" HorizontalAlignment="Stretch"  IsExpanded="True">
+                                <Border Style="{StaticResource BgContent}" Padding="10">
+                                    <StackPanel>
+                                        <TextBlock Text="Menu Utama (header)" Style="{StaticResource HeaderLabel}" />
+                                        <Border Height="1" Background="{StaticResource MediumGray}" Margin="0,5,0,0" />
+                                        <CheckBox Style="{StaticResource CheckStyleDisable}" IsChecked="{Binding MenuSetting.Tagihan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" x:Name="Tagihan">Tagihan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Angsuran, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Angsuran">Angsuran</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Tunggakan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Tunggakan">Tunggakan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Laporan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Laporan">Laporan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.TutupSiPintar, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="TutupSiPintar">Tutup SiPintar</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Bantuan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Bantuan">Bantuan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Setoran, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Setoran">Setoran</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.Pengaturan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="Pengaturan">Pengaturan</CheckBox>
+
+
+                                        <TextBlock Text="Sidebar (sub menu)" Style="{StaticResource SubLabel}" Margin="8,20,0,0" />
+                                        <Border Height="1" Background="{StaticResource MediumGray}" Margin="0,5,0,0" />
+                                        <CheckBox Style="{StaticResource CheckStyleDisable}" IsEnabled="False" IsChecked="{Binding MenuSetting.SidebarKolektif, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarKolektif">Kolektif</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarNonAirLainnya, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarNonAirLainnya">Non Air Lainnya</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarPelangganSr, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarPelangganSr">Pelanggan SR</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarSaranPengaduan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarSaranPengaduan">Saran Pengaduan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarUmum, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarUmum">Umum</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarPengaturanLaporan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarPengaturanLaporan">Pengaturan Laporan</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarParaf, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarParaf">Paraf</CheckBox>
+                                        <CheckBox Style="{StaticResource CheckStyle}" IsChecked="{Binding MenuSetting.SidebarHapusDenda, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" x:Name="SidebarHapusDenda">Hapus Denda</CheckBox>
+                                    </StackPanel>
+                                </Border>
+                            </Expander >
+
+                            <Expander Style="{StaticResource SideExpander}" Header="Pengaturan Koneksi Aplikasi" Margin="20 10" HorizontalAlignment="Stretch" IsExpanded="False">
+                                <Border Style="{StaticResource BgContent}" Padding="10,10,10,10">
+                                    <StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="LOKET" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiLoket, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiLoket" Grid.Column="1" Style="{StaticResource ToggleLoket}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked">
+                                                </ToggleButton>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="BILLING" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiBilling, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiBilling" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="BACAMETER" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiBacameter, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiBacameter" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="HUBLANG" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiHublang, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiHublang" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="PERENCANAAN" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiPerencanaan, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiPerencanaan" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="DISTRIBUSI" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiDistribusi, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiDistribusi" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="AKUNTANSI &amp; KEUANGAN" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiAkuntansiKeuangan, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiAkuntansiKeuangan" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Expander>
+                            <Expander Style="{StaticResource SideExpander}" Header="Pengaturan Koneksi Report" Margin="20 10" HorizontalAlignment="Stretch" IsExpanded="False">
+                                <Border Style="{StaticResource BgContent}" Padding="10,10,10,10">
+                                    <StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="LOKET" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiLoketReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiLoketReport" Grid.Column="1" Style="{StaticResource ToggleLoket}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked">
+                                                </ToggleButton>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="BILLING" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiBillingReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiBillingReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="BACAMETER" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiBacameterReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiBacameterReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="HUBLANG" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiHublangReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiHublangReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="PERENCANAAN" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiPerencanaanReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiPerencanaanReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="DISTRIBUSI" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiDistribusiReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiDistribusiReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Margin="10 5">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="AKUNTANSI &amp; KEUANGAN" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding ApiAkuntansiKeuanganReport, FallbackValue=CLOUD}" Style="{StaticResource CaptionBodyBlack}" LineHeight="6" VerticalAlignment="Center" />
+                                                <ToggleButton x:Name="ApiAkuntansiKeuanganReport" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                              IsChecked="True"
+                                                              Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="20">
+                    <Button x:Name="OkButton" Click="Submit_Click" Content="Simpan" md:ButtonAssist.CornerRadius="5" Style="{StaticResource ButtonPrimarySmall}" />
+                </Grid>
+            </Grid>
+        </md:DialogHost>
+    </Border>
+</Window>

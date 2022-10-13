@@ -1,0 +1,219 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Bantuan.SaranPengaduanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bantuan/SaranPengaduanStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:ComparisonToBooleanConverter x:Key="ComTparisonToBooleanConverter" />
+            <converters:BooleanToBrushConverter x:Key="BGButton" FirstBrush="#3cb1f2" SecondBrush="#dce4f0" />
+            <converters:BooleanToBrushConverter x:Key="FGButton" FirstBrush="#FFF" SecondBrush="#bababa" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="{StaticResource AthensGray}" Padding="20" Width="Auto" Margin="0,-6,0,0">
+            <TextBlock FontSize="15" Foreground="{StaticResource Astronaut}" FontWeight="DemiBold">
+                Saran &amp; Pengaduan
+            </TextBlock>
+        </Border>
+        <Rectangle HorizontalAlignment="Stretch" Margin="0,45,0,0" Fill="{StaticResource Black10}" Height="5"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20 0">
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid HorizontalAlignment="Left">
+                        <Image Width="100" Source="/SiPintar;component/Assets/Images/email.png" Margin="10 0"/>
+                    </Grid>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock FontSize="16" FontWeight="DemiBold"  Margin="0,0,0,8">Sampaikan Saran Anda</TextBlock>
+                        <TextBlock FontSize="10" TextWrapping="Wrap" LineHeight="15" Foreground="{StaticResource Gray}">Kami membutuhkan saran Anda untuk menyediakan pelayanan yang sesuai dengan kebutuhan dan kenyamanan Anda. Sampaikan saran Anda dengan mengisi data diri di bawah ini.</TextBlock>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Background="{StaticResource AthensGray}">
+                        <StackPanel Margin="20 20">
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Petugas PDAM" LineHeight="15" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <TextBox x:Name="NamaPetugas" VerticalAlignment="Center" Style="{StaticResource TextBoxInputForm}" Height="30" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaPetugas, Mode=TwoWay}" IsEnabled="False" />
+                                    <TextBlock DataContext="{Binding ElementName=NamaPetugas, Path=Text}" Text="Masukkan nama petugas PDAM" Style="{StaticResource TextBoxPlaceholder}" Padding="5" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Bagian*" LineHeight="15" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <TextBox x:Name="Bagian" VerticalAlignment="Center" Style="{StaticResource TextBoxInputForm}" Height="30" Validation.ErrorTemplate="{x:Null}" Text="{Binding Bagian, Mode=TwoWay}" />
+                                    <TextBlock DataContext="{Binding ElementName=Bagian, Path=Text}" Text="Contoh: Admin Hublang" Style="{StaticResource TextBoxPlaceholder}" Padding="5 10 5 4" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Nama PDAM" LineHeight="15" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <TextBox x:Name="NamaPDAM" VerticalAlignment="Center" Style="{StaticResource TextBoxInputForm}" Height="30" Validation.ErrorTemplate="{x:Null}" Text="{Binding NamaPDAM, Mode=TwoWay}" IsEnabled="False" />
+                                    <TextBlock DataContext="{Binding ElementName=NamaPDAM, Path=Text}" Text="Masukkan nama PDAM" Style="{StaticResource TextBoxPlaceholder}" Padding="5" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Handphone*" LineHeight="15" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <TextBox x:Name="NoHp" VerticalAlignment="Center" Style="{StaticResource TextBoxInputForm}" Height="30" Validation.ErrorTemplate="{x:Null}" Text="{Binding NoHp, Mode=TwoWay}" PreviewTextInput="NumberValidationTextBox" />
+                                    <TextBlock DataContext="{Binding ElementName=NoHp, Path=Text}" Text="Masukkan nomor handphone" Style="{StaticResource TextBoxPlaceholder}" Padding="5 10 5 4" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Email" LineHeight="15" Margin="0,0,0,3"/>
+                                <Grid>
+                                    <TextBox x:Name="Email" Style="{StaticResource TextBoxInputForm}" Height="30" Validation.ErrorTemplate="{x:Null}" Text="{Binding Email, Mode=TwoWay}" />
+                                    <TextBlock DataContext="{Binding ElementName=Email, Path=Text}" Text="Masukkan alamat email" Style="{StaticResource TextBoxPlaceholder}" Padding="5 10 5 7" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource SmallTitle}" Foreground="Black">Bagaimana pengalaman Anda menggunakan aplikasi ini?</TextBlock>
+                            <Grid Height="80" HorizontalAlignment="Left">
+                                <other:RatingControlView RatingValue="{Binding Rating, FallbackValue=0, Mode=TwoWay}" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource SmallTitle}">Menurut Anda, apa yang perlu kami perbaiki?</TextBlock>
+                            <TextBlock FontSize="11" FontWeight="Normal" Foreground="{StaticResource Gray}">Bisa pilih lebih dari satu</TextBlock>
+                            <Grid Margin="0 15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <ItemsControl x:Name="DataItems1" ItemsSource="{Binding SaranPertanyaanBagian1}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type Grid}">
+                                                <Grid>
+                                                    <CheckBox
+                                                            Margin="-2 0 0 10"
+                                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                            Style="{StaticResource MaterialDesignDarkCheckBox}"
+                                                            Content="{Binding Pertanyaan}"
+                                                            IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    </CheckBox>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <ItemsControl x:Name="DataItems2" ItemsSource="{Binding SaranPertanyaanBagian2}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type Grid}">
+                                                <Grid>
+                                                    <CheckBox
+                                                                Margin="-2 0 0 10"
+                                                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                Style="{StaticResource MaterialDesignDarkCheckBox}"
+                                                                Content="{Binding Pertanyaan}"
+                                                                IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    </CheckBox>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource SmallTitle}" Foreground="Black">Saran/Komentar</TextBlock>
+                            <TextBox
+                                        Text="{Binding Komentar, Mode=TwoWay}"
+                                        Style="{StaticResource TextBoxInputForm}"
+                                        VerticalContentAlignment="Top"
+                                        Height="150"
+                                        TextWrapping="Wrap"
+                                        AcceptsReturn="True"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,15,0">
+            <Button Command="{Binding OnResetCommand}"
+                            HorizontalAlignment="Left"
+                            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}"
+                            Width="100"
+                            Height="30"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Foreground="{StaticResource PictonBlue}"
+                            BorderBrush="{StaticResource PictonBlue}"
+                            Content="Atur Ulang"
+                            FontSize="11"
+                            Margin="5,15"
+                            md:ButtonAssist.CornerRadius="15"/>
+
+            <Grid>
+                <Button Command="{Binding OnSubmitCommand}"
+                            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}"
+                            IsEnabled="{Binding IsCompleteForm}"
+                            HorizontalAlignment="Right"
+                            Width="80"
+                            Height="30"
+                            Style="{StaticResource ButtonPrimary}"
+                            Foreground="{Binding IsCompleteForm, Converter={StaticResource FGButton}}"
+                            BorderBrush="{Binding IsCompleteForm, Converter={StaticResource BGButton}}"
+                            Background="{Binding IsCompleteForm, Converter={StaticResource BGButton}}"
+                            Content="Kirim"
+                            FontSize="11"
+                            Margin="5,15"
+                            md:ButtonAssist.CornerRadius="15"/>
+                <Button Style="{StaticResource ButtonPrimary}" Width="80" Height="30" md:ButtonAssist.CornerRadius="15" IsEnabled="False" Background="{StaticResource Gray50}" BorderBrush="{StaticResource Gray50}" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                    </Viewbox>
+                </Button>
+            </Grid>
+
+
+        </StackPanel>
+    </Grid>
+
+</UserControl>

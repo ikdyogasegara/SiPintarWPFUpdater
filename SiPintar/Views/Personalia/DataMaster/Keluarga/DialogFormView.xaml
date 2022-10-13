@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.DataMaster.Keluarga.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" True="Ya" False="Tidak" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost Identifier="PersonaliaInnerInnerDialog" DialogTheme="Inherit" DataContext="{Binding}">
+        <Grid>
+            <Border Background="Black" Opacity="0.3" Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                    <Image.RenderTransform>
+                        <RotateTransform x:Name="noFreeze" />
+                    </Image.RenderTransform>
+                    <Image.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                            Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                            To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Image.Triggers>
+                </Image>
+            </Border>
+            <Border Width="540" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPersonalia}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Anggota Keluarga"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Border CornerRadius="2" Background="White" Height="16">
+                                    <TextBlock Foreground="{StaticResource BaseAppPersonalia}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                                <Button Background="{x:Null}" Click="CloseButton_Click" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="32 16 32 0">
+                        <StackPanel Margin="0,0,0,8">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Nama" LineHeight="18" Margin="0 0 0 4"/>
+                            <CheckBox Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsCariDariPegawai}" Content="Cari dari data pegawai" Margin="0 0 0 4"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="NamaKeluarga" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding AnggotaKeluargaForm.NamaKeluarga, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=NamaKeluarga, Path=Text}" Text="Masukkan nama keluarga" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                <Button Grid.Column="1" x:Name="CariPegawaiButton" Command="{Binding OnOpenSelectPegawaiCommand}" IsEnabled="{Binding IsCariDariPegawai}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="5" Height="30" Width="30" Padding="0" Content="..." Margin="8 0 0 0"/>
+                            </Grid>
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Status" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <ComboBox x:Name="Status" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" SelectedValuePath="Tag" SelectedValue="{Binding AnggotaKeluargaForm.Status, Mode=TwoWay}" SelectionChanged="CheckForm_SelectionChanged">
+                                        <ComboBoxItem Tag="ANAK" Content="Anak"/>
+                                        <ComboBoxItem Tag="ISTRI" Content="Istri"/>
+                                        <ComboBoxItem Tag="SUAMI" Content="Suami"/>
+                                    </ComboBox>
+                                    <TextBlock DataContext="{Binding ElementName=Status, Path=Text}" Text="Pilih status" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="16 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Pekerjaan" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <ComboBox x:Name="Pekerjaan" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" ItemsSource="{Binding PekerjaanList}" DisplayMemberPath="NamaPekerjaan" SelectedValuePath="IdPekerjaan" SelectedValue="{Binding AnggotaKeluargaForm.IdPekerjaan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CheckForm_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=Pekerjaan, Path=Text}" Text="Pilih pekerjaan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Jenis Kelamin" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <ComboBox x:Name="JenisKelamin" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" ItemsSource="{Binding JenisKelaminList}" DisplayMemberPath="JenisKelamin" SelectedValuePath="IdJenisKelamin" SelectedValue="{Binding AnggotaKeluargaForm.IdJenisKelamin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CheckForm_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=JenisKelamin, Path=Text}" Text="Pilih jenis kelamin" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="16 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="No. Penduduk" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <TextBox x:Name="NoPenduduk" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding AnggotaKeluargaForm.NoPenduduk, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=NoPenduduk, Path=Text}" Text="Masukkan no. penduduk" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Tgl. Lahir" LineHeight="18" Margin="0 0 0 4"/>
+                                <Border BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="2" Height="30">
+                                    <Grid>
+                                        <DatePicker x:Name="TglLahir" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource DefaultDatePicker}" SelectedDate="{Binding AnggotaKeluargaForm.TglLahir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateChanged="CheckForm_SelectionChanged" Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                                        <TextBlock DataContext="{Binding ElementName=TglLahir, Path=SelectedDate}" Text="Pilih tanggal lahir" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="16 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="No. BPJS Kesehatan" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <TextBox x:Name="NoBpjsKes" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding AnggotaKeluargaForm.NoBpjsKes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=NoBpjsKes, Path=Text}" Text="Masukkan no. BPJS Kesehatan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Kawin" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <ComboBox x:Name="FlagKawin" IsEnabled="{Binding IsCariDariPegawai, Converter={StaticResource InverseBooleanConverter}}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" SelectedValuePath="Content" SelectedValue="{Binding AnggotaKeluargaForm.FlagKawin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToStringConverter}}" SelectionChanged="CheckForm_SelectionChanged">
+                                        <ComboBoxItem Content="Ya"/>
+                                        <ComboBoxItem Content="Tidak"/>
+                                    </ComboBox>
+                                    <TextBlock DataContext="{Binding ElementName=FlagKawin, Path=Text}" Text="Pilih flag kawin" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="16 0 0 8">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Tertanggung" LineHeight="18" Margin="0 0 0 4"/>
+                                <Grid>
+                                    <ComboBox x:Name="FlagTertanggung" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" SelectedValuePath="Content" SelectedValue="{Binding AnggotaKeluargaForm.FlagTanggung, Mode=TwoWay, Converter={StaticResource BooleanToStringConverter}}" SelectionChanged="CheckForm_SelectionChanged">
+                                        <ComboBoxItem Content="Ya"/>
+                                        <ComboBoxItem Content="Tidak"/>
+                                    </ComboBox>
+                                    <TextBlock DataContext="{Binding ElementName=FlagTertanggung, Path=Text}" Text="Pilih flag tertanggung" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel Margin="30,24,32,24" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button Click="CloseButton_Click" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                            <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Command="{Binding OnSaveFormCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

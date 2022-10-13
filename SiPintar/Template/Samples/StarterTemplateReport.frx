@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="12/02/2021 15:24:07" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true"/>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="718.2" Height="151.2">
+      <TextObject Name="Text1" Left="160.65" Top="56.7" Width="359.1" Height="56.7" Text="TEMPLATE BELUM DI SET" Font="Arial, 20pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

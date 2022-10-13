@@ -1,0 +1,204 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Verifikasi.SettingTableFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Hublang.Verifikasi"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border Width="500" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <Grid Margin="20 8">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Title}" FontSize="20" LineHeight="10" Text="Setting Tabel" Margin="0 10"/>
+                            <TextBlock Style="{StaticResource CaptionFormIdle}" LineHeight="10" Text="Pilih data yang ingin Anda tampilkan di tabel"/>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Width="20" Height="20" Foreground="Black"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="20,15,20,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <CheckBox
+                            x:Name="Jenis"
+                            Content="Jenis"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Jenis, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="NoBeritaAcara"
+                            Content="No BeritaAcara"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.NoBeritaAcara, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Kelurahan"
+                            Content="Kelurahan"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Kelurahan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Alasan"
+                            Content="Alasan"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Alasan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="UserBeritaAcara"
+                            Content="User Berita Acara"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.UserBeritaAcara, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <CheckBox
+                            x:Name="Status"
+                            Content="Status"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Wilayah"
+                            Content="Wilayah"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Wilayah, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Alamat"
+                            Content="Alamat"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Alamat, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Kecamatan"
+                            Content="Kecamatan"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Kecamatan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Biaya"
+                            Content="Biaya"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Biaya, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="4">
+                        <CheckBox
+                            x:Name="NomorRegister"
+                            Content="Nomor Register"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.NomorRegister, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="NamaPelanggan"
+                            Content="Nama Pelanggan"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.NamaPelanggan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="Cabang"
+                            Content="Cabang"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.Cabang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                        <CheckBox
+                            x:Name="UserInput"
+                            Content="User Input"
+                            FontSize="12"
+                            Margin="0 0 0 10"
+                            IsChecked="{Binding TableSetting.UserInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="20,15,14,15" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Button Click="Kosongkan_Click" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Style="{StaticResource BtnWrapper}" Margin="5 0">
+                            <TextBlock Text="Kosongkan Semua" FontSize="11" Foreground="{StaticResource Gray}" TextDecorations="Underline" />
+                        </Button>
+                        <Button Click="Reset_Click" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Style="{StaticResource BtnWrapper}" Margin="20 0">
+                            <TextBlock Text="Reset" FontSize="11" Foreground="{StaticResource Gray}" TextDecorations="Underline" />
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="30,15,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="3" Background="{StaticResource BaseAppHublang}" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

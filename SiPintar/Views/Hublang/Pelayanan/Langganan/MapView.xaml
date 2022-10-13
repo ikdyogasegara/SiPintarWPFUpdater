@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.Langganan.MapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+
+            <Style x:Key="IconZoom" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}"/>
+                <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+                <Setter Property="FontSize" Value="24px" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="1000" Height="600" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Titik Lokasi"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <Grid Margin="20 10 20 10" Visibility="{Binding IsDetail, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBox x:Name="Alamat" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock DataContext="{Binding ElementName=Alamat, Path=Text}" Text="Masukkan alamat" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                        <Button  Grid.Column="1" Margin="20 0 0 0" Content="Cari" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="5" Click="Search_Click" />
+                    </Grid>
+
+                    <Grid>
+                        <Grid Panel.ZIndex="2">
+                            <Border CornerRadius="2" Background="White" Padding="4,0" Margin="16,30" Width="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel>
+                                    <TextBlock x:Name="ZoomIn" Text="+" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomIn_PreviewMouseDown" />
+                                    <Separator  />
+                                    <TextBlock x:Name="ZoomOut" Text="-" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomOut_PreviewMouseDown" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Image x:Name="CenterMarker" Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" Width="30" Panel.ZIndex="2" Visibility="{Binding IsDetail, Converter={StaticResource BooleanToCollapseConverter}}" />
+                        <gmaps:GMapControl x:Name="MainMap" Loaded="MainMap_Loaded" Height="425" />
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="10">
+                    <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Tutup" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                    </Grid>
+                    <Grid>
+                        <Button x:Name="SaveButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="SaveButton_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                        <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                <other:SpinnerLoadingView Panel.ZIndex="2" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

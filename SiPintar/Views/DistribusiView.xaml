@@ -1,0 +1,204 @@
+﻿<Window
+    x:Class="SiPintar.Views.DistribusiView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:onboard="clr-namespace:SiPintar.Views.Distribusi.Onboarding"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    xmlns:viewmodels="clr-namespace:SiPintar.ViewModels.Distribusi"
+    xmlns:views="clr-namespace:SiPintar.Views.Distribusi"
+    Title="Distribusi"
+    Width="1280"
+    Height="720"
+    MinHeight="480"
+    md:TransitionAssist.DisableTransitions="True"
+    AllowsTransparency="True"
+    Icon="/SiPintar;component/Assets/Images/Application/distribusi_icon.ico"
+    ResizeMode="CanResizeWithGrip"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" Default="collapsed" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToVisibleConverter"
+                False="Collapsed"
+                True="Visible" />
+            <converters:BooleanToVisibilityConverter
+                x:Key="BooleanToCollapseConverter"
+                False="Visible"
+                True="Collapsed" />
+
+            <!--  Data template for views  -->
+            <DataTemplate DataType="{x:Type viewmodels:DistribusiViewModel}">
+                <views:DistribusiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:NotifikasiViewModel}">
+                <views:NotifikasiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AtributViewModel}">
+                <views:AtributView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BantuanViewModel}">
+                <views:BantuanView />
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <DockPanel x:Name="RootWindow" LastChildFill="True">
+        <!--  This dialog host for enabling top level dialogs  -->
+        <Grid>
+            <!-- <Grid x:Name="Onboard" Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_1||menu_2||menu_3'}" Panel.ZIndex="1"> -->
+            <!--     <onboard:Menu1View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_1'}"/> -->
+            <!--     <onboard:Menu2View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_2'}"/> -->
+            <!--     <onboard:Menu3View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_3'}"/> -->
+            <!--     <Grid Visibility="{Binding Path=IsOverlayActive, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='True'}" Panel.ZIndex="-1" Background="{StaticResource Black100}" Opacity="0.6"/> -->
+            <!--     <Image Panel.ZIndex="-1" Source="{Binding OnboardFigure}" Stretch="UniformToFill" /> -->
+            <!-- </Grid> -->
+
+
+            <Grid
+                x:Name="Onboard"
+                Panel.ZIndex="1"
+                Visibility="Collapsed">
+                <onboard:Menu1View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_1'}" />
+                <onboard:Menu2View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_2'}" />
+                <onboard:Menu3View Visibility="{Binding Path=CurrentPageName, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='menu_3'}" />
+                <Grid
+                    Panel.ZIndex="-1"
+                    Background="{StaticResource Black100}"
+                    Opacity="0.6"
+                    Visibility="{Binding Path=IsOverlayActive, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='True'}" />
+                <Image
+                    Panel.ZIndex="-1"
+                    Source="{Binding OnboardFigure}"
+                    Stretch="UniformToFill" />
+            </Grid>
+
+            <md:DialogHost DialogTheme="Inherit" Identifier="DistribusiRootDialog">
+                <Grid Background="{StaticResource Black10}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Background="{StaticResource BaseAppDistribusi}">
+                        <Grid.Effect>
+                            <DropShadowEffect
+                                BlurRadius="5"
+                                Direction="-90"
+                                Opacity="0.2"
+                                RenderingBias="Quality"
+                                ShadowDepth="1" />
+                        </Grid.Effect>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <DockPanel
+                            x:Name="TitleBar"
+                            Grid.Row="0"
+                            DockPanel.Dock="Top"
+                            MouseDown="TitleBar_MouseDown">
+                            <Button
+                                x:Name="CloseButton"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="CloseButton_Click"
+                                DockPanel.Dock="Right">
+                                <md:PackIcon Kind="WindowClose" />
+                            </Button>
+                            <Button
+                                x:Name="MaxButton"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="MaximizeButton_Click"
+                                DockPanel.Dock="Right">
+                                <md:PackIcon x:Name="RestoreIcon" Kind="WindowRestore" />
+                            </Button>
+                            <Button
+                                x:Name="MinButton"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="MinimizeButton_Click"
+                                DockPanel.Dock="Right">
+                                <md:PackIcon Kind="WindowMinimize" />
+                            </Button>
+                            <TextBlock />
+                        </DockPanel>
+                        <views:AppHeaderView
+                            x:Name="Header"
+                            Grid.Row="1"
+                            Panel.ZIndex="1"
+                            Background="Transparent" />
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <ContentControl Content="{Binding CurrentViewModel}" />
+                        <StackPanel x:Name="SnackbarContainer" />
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Border Height="25" Background="{StaticResource BaseAppDistribusi}">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid>
+                                    <Button
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding OnOpenListDialogCommand}"
+                                        CommandParameter="distribusi"
+                                        Style="{StaticResource BtnWrapper}">
+                                        <StackPanel Margin="15,0" Orientation="Horizontal">
+                                            <md:PackIcon
+                                                Width="8"
+                                                Margin="0,0,5,0"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Kind="Circle" />
+                                            <Grid Margin="0,6,0,0" VerticalAlignment="Center">
+                                                <TextBlock
+                                                    Foreground="White"
+                                                    Style="{StaticResource CaptionSmallBody}"
+                                                    Text="Background Process"
+                                                    Visibility="{Binding IsProcessRunning, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                                <TextBlock
+                                                    Foreground="White"
+                                                    Style="{StaticResource CaptionSmallBody}"
+                                                    Text="Ada Proses berjalan di belakang layar..."
+                                                    Visibility="{Binding IsProcessRunning, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Button>
+                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                                        <md:PackIcon Kind="Email" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Margin="2,3,10,0" Style="{StaticResource SmallTitle}" Foreground="White">
+                                            <Hyperlink NavigateUri="mailto:cs@bsa.id" Foreground="White" TextDecorations="None" RequestNavigate="Hyperlink_RequestNavigate" Focusable="False">cs@bsa.id</Hyperlink>
+                                        </TextBlock>
+                                        <md:PackIcon Kind="Whatsapp" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Margin="1,5,10,0" Style="{StaticResource SmallTitle}" Foreground="White">
+                                            <Hyperlink NavigateUri="https://wa.me/6281138008800" Foreground="White" TextDecorations="None" RequestNavigate="Hyperlink_RequestNavigate" Focusable="False">+62 811 3800 88 00</Hyperlink>
+                                        </TextBlock>
+                                        <md:PackIcon Kind="Phone" Margin="0,2.5,0,0" Foreground="White" />
+                                        <TextBlock Text="+62 361 478 5050" Margin="1,5,10,0" Style="{StaticResource SmallTitle}" Foreground="White" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+
+            </md:DialogHost>
+            <md:DialogHost DialogTheme="Inherit" Identifier="OptionDialog" />
+        </Grid>
+    </DockPanel>
+</Window>

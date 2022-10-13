@@ -1,0 +1,603 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="RibbonIndicator" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource Cerulean}" />
+        <Setter Property="Background" Value="{StaticResource Cerulean}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="0,2,2,0" />
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="48" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="HeaderLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14px" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="SettingIndicator" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource Astronaut}" />
+        <Setter Property="Background" Value="{StaticResource Astronaut}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="Width" Value="33" />
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Margin" Value="0,0,-10,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="TitleLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="SubtitleLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="8px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="Margin" Value="4,8,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="HelpLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10px" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource TextGray}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="RadioStyle" TargetType="RadioButton">
+        <Setter Property="FontSize" Value="12px" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="10,5,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+        <Setter Property="Background" Value="{StaticResource White}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="ResetLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+        <Setter Property="Margin" Value="0,10,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource TextGray}" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextDecorations" Value="Underline" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Style start left side  -->
+    <Style x:Key="ExpanderButtonBuktiBacaStan" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter
+                            x:Name="HeaderContent"
+                            Grid.Column="0"
+                            ContentSource="Content" />
+                        <Image
+                            x:Name="ExpanderIcon"
+                            Grid.Column="1"
+                            Width="16"
+                            Cursor="Hand"
+                            Source="/SiPintar;component/Assets/Images/Action/ic_add.png" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--  Change the sign to minus when toggled  -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ExpanderIcon" Property="Source" Value="/SiPintar;component/Assets/Images/Action/ic_subtract.png" />
+                        </Trigger>
+
+                        <!--  MouseOver, Pressed behaviours  -->
+                        <Trigger Property="IsMouseOver" Value="true" />
+                        <Trigger Property="IsPressed" Value="true" />
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ExpanderBuktiBacaStan" TargetType="Expander">
+        <Setter Property="IsExpanded" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Expander">
+                    <DockPanel>
+                        <ToggleButton
+                            x:Name="ExpanderButton"
+                            Padding="1.5,0"
+                            Content="{TemplateBinding Header}"
+                            DockPanel.Dock="Top"
+                            IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                            OverridesDefaultStyle="True"
+                            Style="{StaticResource ExpanderButtonBuktiBacaStan}" />
+                        <ContentPresenter
+                            x:Name="ExpanderContent"
+                            Grid.Row="1"
+                            DockPanel.Dock="Bottom"
+                            Visibility="Collapsed" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonNavBuktiBacaStan" TargetType="Button">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="Border"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TextBlockBuktiBacaStan" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+
+    <Style x:Key="TextBlockBuktiBacaStanTabActive" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+    <Style x:Key="TextBlockBuktiBacaStanTabInactive" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Nepal}" />
+    </Style>
+    <Style x:Key="TextBlockBuktiBacaStanBulan" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0,13,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+    <Style x:Key="TextBlockBuktiBacaStanLabel" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+    <Style x:Key="TextBlockBuktiBacaStanValue" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+    <Style x:Key="TextBlockBuktiBacaStanValueBold" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,3,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunBold}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+    <Style x:Key="BtnWrapper" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="Transparent"
+                        BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Style akhir left side  -->
+
+    <Style x:Key="CalendarInputForm" TargetType="DatePickerTextBox">
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="BorderBrush" Value="{StaticResource Nepal}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="2"
+                        SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Grid.Column="0"
+                                Margin="0,0,0,2"
+                                VerticalAlignment="Center"
+                                Focusable="false"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" />
+
+                            <Image
+                                x:Name="icon"
+                                Grid.Column="1"
+                                Width="16"
+                                Margin="0,0,4,0"
+                                HorizontalAlignment="Right"
+                                Source="/SiPintar;component/Assets/Images/Action/ic_calendar_idle.png" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AstronoutHover}" />
+                            <Setter TargetName="icon" Property="Source" Value="/SiPintar;component/Assets/Images/Action/ic_calendar_active.png" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource AstronoutHover}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                            <Setter TargetName="icon" Property="Source" Value="/SiPintar;component/Assets/Images/Action/ic_calendar_active.png" />
+                        </Trigger>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Trigger.Setters>
+                                <Setter TargetName="border" Property="BorderThickness" Value="1" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                                <Setter TargetName="border" Property="CornerRadius" Value="2" />
+                            </Trigger.Setters>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ArrowRightIcon" TargetType="Border">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="CornerRadius" Value="0,20,20,0" />
+        <Setter Property="Width" Value="4" />
+        <Setter Property="Height" Value="7" />
+        <Setter Property="Margin" Value="2,0,0,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="OptionLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="9px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="Margin" Value="0,5,0,0" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="OptionBox" TargetType="StackPanel">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="White" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource MediumGray}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  Scrollbar  -->
+    <Style x:Key="LineButtonUpStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Height="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 8 L 4 0 L 8 8 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonDownStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Height="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 0 L 4 8 L 8 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="VerticalScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="1,0,1,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle
+                        Name="ellipse"
+                        Width="6"
+                        Fill="{StaticResource Nepal}"
+                        RadiusX="2"
+                        RadiusY="2"
+                        Stroke="{StaticResource Nepal}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ellipse" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonLeftStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Width="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 4 L 8 8 L 8 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LineButtonRightStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Width="18" Margin="1">
+                        <Path
+                            Name="Path"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 8 L 8 4 L 0 0 Z"
+                            Fill="{StaticResource Gray}"
+                            Stretch="Uniform" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Path" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HorizontalScrollBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Margin" Value="0,2,0,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle
+                        Name="ellipse"
+                        Height="6"
+                        Fill="{StaticResource Nepal}"
+                        RadiusX="2"
+                        RadiusY="2"
+                        Stroke="{StaticResource Nepal}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ellipse" Property="Fill" Value="#5587b1" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="ellipse" Property="Fill" Value="{StaticResource Astronaut}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ScrollBarPageButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="18" />
+                <RowDefinition Height="*" />
+                <RowDefinition MaxHeight="18" />
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Offset="0" Color="#dce4f0" />
+                    <GradientStop Offset="1" Color="#e9eef5" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <RepeatButton
+                Grid.Row="0"
+                Height="18"
+                Command="ScrollBar.LineUpCommand"
+                Style="{StaticResource LineButtonUpStyle}" />
+            <Track
+                Name="PART_Track"
+                Grid.Row="1"
+                IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource VerticalScrollBarThumbStyle}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton
+                Grid.Row="2"
+                Height="18"
+                Command="ScrollBar.LineDownCommand"
+                Style="{StaticResource LineButtonDownStyle}" />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="18" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition MaxWidth="18" />
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0" Color="#dce4f0" />
+                    <GradientStop Offset="1" Color="#e9eef5" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <RepeatButton
+                Grid.Column="0"
+                Width="18"
+                Command="ScrollBar.LineLeftCommand"
+                Style="{StaticResource LineButtonLeftStyle}" />
+            <Track
+                Name="PART_Track"
+                Grid.Column="1"
+                IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource HorizontalScrollBarThumbStyle}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButtonStyle}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton
+                Grid.Column="2"
+                Width="18"
+                Command="ScrollBar.LineRightCommand"
+                Style="{StaticResource LineButtonRightStyle}" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="9" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="9" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

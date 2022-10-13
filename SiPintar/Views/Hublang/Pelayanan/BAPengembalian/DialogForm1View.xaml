@@ -1,0 +1,466 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.BAPengembalian.DialogForm1View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Hublang.Pelayanan.BAPengembalian" xmlns:converters="clr-namespace:SiPintar.Converters" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+            <StackPanel x:Key="ComboBoxTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <ComboBox Style="{StaticResource ComboBoxInputForm}" Width="839" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}" />
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxNumberTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="TextBoxDecimalTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Text" Style="{StaticResource SmallTitle}" />
+                <Grid>
+                    <TextBox Style="{StaticResource TextBoxInputForm}"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Key="DatePickerTemplate" Margin="15,15,15,0" x:Shared="False">
+                <TextBlock Text="Tanggal" Style="{StaticResource SmallTitle}" />
+                <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                    <Grid>
+                        <DatePicker Style="{StaticResource DefaultDatePicker}" Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                        <TextBlock Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!--<md:DialogHost Identifier="HublangInnerInnerDialog" DialogTheme="Inherit" DataContext="{Binding}">-->
+        <Grid Background="White" Width="1000" Height="610">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="38" />
+                <RowDefinition Height="70*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}">
+                <Grid Margin="10 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                        <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Tambah Berita Acara Pengembalian"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Border CornerRadius="2" Background="White">
+                            <TextBlock Foreground="{StaticResource BaseAppHublang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold" Text="Esc"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                            <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <TabControl Style="{StaticResource MaterialDesignTabControl}">
+                    <TabItem Header="Data Pelanggan" Margin="35 10 0 0" >
+                        <StackPanel>
+                            <Grid Margin="24,25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Margin="0 0 5 0">
+                                    <Grid>
+                                        <StackPanel Orientation="Vertical" >
+                                            <StackPanel Margin=" 0 0 80 0">
+                                                <TextBlock Text="Nama Pelanggan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBox x:Name="NamaPelanggan" Text="{Binding SelectedPelanggan.Nama}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                            </StackPanel>
+
+                                            <StackPanel Margin=" 0 20 80 0">
+                                                <TextBlock Text="Alamat Pelanggan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <TextBox x:Name="AlamatPelanggan" TextWrapping="Wrap" Text="{Binding SelectedPelanggan.Alamat}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                            </StackPanel>
+
+                                            <StackPanel Margin=" 0 20 80 0">
+                                                <TextBlock Text="Golongan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox x:Name="KodeGolongan" Text="{Binding SelectedPelanggan.KodeGolongan}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                    <TextBox x:Name="NamaGolongan" Text="{Binding SelectedPelanggan.NamaGolongan}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <StackPanel Margin=" 0 20 0 0">
+                                                <TextBlock Text="Wilayah" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox x:Name="KodeWilayah" Text="{Binding SelectedPelanggan.KodeWilayah}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                    <TextBox x:Name="NamaWilayah" Text="{Binding SelectedPelanggan.NamaWilayah}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <StackPanel Margin=" 0 20 0 0">
+                                                <TextBlock Text="Area" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox x:Name="KodeArea" Text="{Binding SelectedPelanggan.KodeArea}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                    <TextBox x:Name="NamaArea" Text="{Binding SelectedPelanggan.NamaArea}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+
+                                    <StackPanel Orientation="Vertical">
+
+                                        <StackPanel Margin=" 0 0 0 0">
+                                            <TextBlock Text="Rayon" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="KodeRayon" Text="{Binding SelectedPelanggan.KodeRayon}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                <TextBox x:Name="NamaRayon" Text="{Binding SelectedPelanggan.NamaRayon}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Margin=" 0 20 0 0">
+                                            <TextBlock Text="Cabang" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="KodeCabang" Text="{Binding SelectedPelanggan.KodeCabang}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontWeight="SemiBold" FontSize="14"/>
+                                                <TextBox x:Name="NamaCabang" Text="{Binding SelectedPelanggan.NamaCabang}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontWeight="SemiBold" FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Margin=" 0 20 0 0">
+                                            <TextBlock Text="Kelurahan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="KodeKelurahan" Text="{Binding SelectedPelanggan.KodeKelurahan}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                <TextBox x:Name="NamaKelurahan" Text="{Binding SelectedPelanggan.NamaKelurahan}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Margin=" 0 20 0 0">
+                                            <TextBlock Text="Kecamatan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="KodeKecamatan" Text="{Binding SelectedPelanggan.KodeKecamatan}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontSize="14" />
+                                                <TextBox x:Name="NamaKecamatan" Text="{Binding SelectedPelanggan.KodeKecamatan}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False"  FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Margin=" 0 20 0 0">
+                                            <TextBlock Text="Diameter" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox x:Name="KodeDiameter" Text="{Binding SelectedPelanggan.KodeDiameter}" Margin=" 0 0 5 0" Style="{StaticResource TextBoxInputForm}" Width="150" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                                <TextBox x:Name="NamaDiameter" Text="{Binding SelectedPelanggan.NamaDiameter}" Style="{StaticResource TextBoxInputForm}" Width="277" IsEnabled="False" FontFamily="{StaticResource SarabunRegular}" FontSize="14"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Formulir Berita Acara"  Margin="0 10 0 0">
+                        <ScrollViewer>
+                            <StackPanel>
+                                <Grid Margin="24,25">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="310"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Margin="0 0 5 20">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Grid.Row="0" Margin="0 0 20 0">
+                                                <StackPanel Margin=" 0 0 0 0">
+                                                    <TextBlock Text="Periode DRD" Style="{StaticResource SmallTitle}"/>
+                                                    <Grid Grid.Column="1" x:Name="PeriodeWidth" Width="130">
+                                                        <!--<ComboBox x:Name="BulanDRD" HorizontalAlignment="Left" SelectionChanged="BulanDRD_SelectionChanged" Text="{Binding DataContext.NamaPeriode}" Width="{Binding ElementName=PeriodeWidth, Path=ActualWidth}" ItemsSource="{Binding PeriodeTransaksiList}" DisplayMemberPath="NamaPeriode" SelectedItem="{Binding SelectedPeriodeTransaksi, Mode=TwoWay}" Style="{StaticResource ComboBoxInputForm}"  VerticalAlignment="Stretch" />-->
+                                                        <ComboBox x:Name="BulanDRD" HorizontalAlignment="Left" SelectionChanged="BulanDRD_SelectionChanged" Width="{Binding ElementName=PeriodeWidth, Path=ActualWidth}" ItemsSource="{Binding PeriodeTransaksiList, Mode=TwoWay}" DisplayMemberPath="NamaPeriode" Style="{StaticResource ComboBoxInputForm}" SelectedItem="{Binding SelectedPeriodeTransaksi}"  VerticalAlignment="Stretch"/>
+                                                        <TextBlock Text="Pilih periode" DataContext="{Binding ElementName=BulanDRD, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Grid.Row="0" Margin="0 -2 0 0">
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock Text="Tanggal Berita Acara" Style="{StaticResource SmallTitle}"/>
+                                                    <Border BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3" >
+                                                        <Grid>
+                                                            <DatePicker x:Name="TanggalBA" Width="150" Style="{StaticResource DefaultDatePicker}" SelectedDate="{Binding SelectedData.TanggalBa}"  Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                                                            <TextBlock DataContext="{Binding ElementName=TanggalBA, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+
+                                        <StackPanel Orientation="Vertical" x:Name="Row2Width" Grid.Row="1" Margin="0 10 0 0">
+                                            <StackPanel>
+                                                <TextBlock Text="Alasan" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <Grid>
+                                                <TextBox x:Name="Alasan" Text="{Binding SelectedData.Alasan}" Style="{StaticResource TextBoxInputForm}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" PreviewKeyUp="Text_PreviewKeyUp" Foreground="#646464"/>
+                                                    <TextBlock Text="Masukan Alasan " DataContext="{Binding ElementName=Alasan, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Margin=" 0 10 0 0">
+                                                <TextBlock Text="Petugas" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <Grid Grid.Column="1" >
+                                                    <ComboBox x:Name="Petugas" HorizontalAlignment="Left" Width="{Binding ElementName=Row2Width, Path=ActualWidth}" ItemsSource="{Binding MasterPegawaiList}" SelectedItem="{Binding SelectedMasterPegawai}" DisplayMemberPath="NamaPegawai" Style="{StaticResource ComboBoxInputForm}" VerticalAlignment="Stretch" SelectionChanged="Petugas_SelectionChanged"/>
+                                                    <TextBlock Text="Pilih Petugas" DataContext="{Binding ElementName=Petugas, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                </Grid>
+                                            </StackPanel>
+                                            <Grid Grid.Column="0" Grid.Row="0" Margin="0 10 0 0">
+                                                <StackPanel Margin=" 0 0 0 0">
+                                                    <TextBlock Text="Kondisi Meter" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464"/>
+                                                    <Grid Grid.Column="1" >
+                                                        <ComboBox x:Name="KondisiMeter" HorizontalAlignment="Left" Width="{Binding ElementName=Row2Width, Path=ActualWidth}" ItemsSource="{Binding KondisiMeterList}" SelectedItem="{Binding SelectedKondisiMeter}" DisplayMemberPath="NamaKondisiMeter" Style="{StaticResource ComboBoxInputForm}"  VerticalAlignment="Stretch" SelectionChanged="KondisiMeter_SelectionChanged"/>
+                                                        <TextBlock Text="Pilih kondisi meter" DataContext="{Binding ElementName=KondisiMeter, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <StackPanel Margin=" 0 10 0 0">
+                                                <TextBlock Text="Stan Lalu" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <Grid>
+                                                    <TextBox x:Name="NewStanLalu" TextChanged="NewStanLalu_TextChanged" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.StanLalu, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" PreviewTextInput="NumberValidationTextBox"/>
+                                                    <TextBlock Text="Masukan stan lalu" DataContext="{Binding ElementName=NewStanLalu, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Margin=" 0 10 0 0">
+                                                <TextBlock Text="Stan Kini" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                <Grid>
+                                                    <!--<TextBox x:Name="NewStanKini" TextChanged="NewStanLalu_TextChanged" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.StanSkrg, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" PreviewTextInput="NumberValidationTextBox"/>-->
+                                                    <TextBox x:Name="NewStanKini" TextChanged="NewStanLalu_TextChanged" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.StanSkrg, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14" PreviewTextInput="NumberValidationTextBox"/>
+                                                    <TextBlock Text="Masukan stan kini" DataContext="{Binding ElementName=NewStanKini, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                                                </Grid>
+                                            <TextBlock x:Name="WarningStan" Text="stan kini harus lebih besar dari stan lalu" Visibility="Collapsed" Style="{StaticResource CaptionBody}" Foreground="Red"/>
+
+                                        </StackPanel>
+
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" Margin="10 0 0 0" HorizontalAlignment="Left" x:Name="PelunasanGroup" Width="300">
+                                                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}" Width="{Binding ElementName=PelunasanGroup, Path=ActualWidth}">
+                                                    <TextBlock Style="{StaticResource BigTitle}" HorizontalAlignment="Center" Foreground="White" FontSize="13" LineHeight="10" Text="Pelunasan"/>
+                                                </StackPanel>
+                                                <Border Background="{StaticResource Black10}" Width="{Binding ElementName=PelunasanGroup, Path=ActualWidth}" BorderBrush="{StaticResource Black50}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Height="440" CornerRadius="0 0 5 5 ">
+                                                    <StackPanel Orientation="Vertical" Margin="10">
+
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="90" x:Name="ElementPelunasanGroup">
+                                                                <TextBlock Text="Stan Lalu" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanLalu" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.StanLalu, FallbackValue = -, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Stan Kini" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanKini" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.StanSkrg, FallbackValue = -, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel>
+                                                                <TextBlock Text="Stan Angkat" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanAngkat" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.StanAngkat, FallbackValue = -, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel Margin="0 0 0 5">
+                                                            <TextBlock Text="Pakai" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Pakai"  Text="{Binding SelectedPeriodeTransaksi.Pakai, FallbackValue = -, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                        </StackPanel>
+                                                        <StackPanel Margin="0 0 0 5">
+                                                            <TextBlock Text="Biaya Pemakaian" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="BiayaPemakaian" Text="{Binding SelectedPeriodeTransaksi.BiayaPemakaian, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                        </StackPanel>
+
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137" x:Name="ElementAdministrasiGroup">
+                                                                <TextBlock Text="Administrasi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Administrasi" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.Administrasi, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Administrasi Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="AdministrasiLain" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.AdministrasiLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137">
+                                                                <TextBlock Text="Pemeliharaan" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Pemeliharaan" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.Pemeliharaan, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Pemeliharaan Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="PemeliharaanLain" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.PemeliharaanLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137">
+                                                                <TextBlock Text="Retribusi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Retribusi" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.Retribusi, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Retribusi Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="RetribusiLain" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding SelectedPeriodeTransaksi.RetribusiLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <StackPanel  Margin="0 0 0 5">
+                                                            <TextBlock Text="Materai" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Materai" Text="{Binding SelectedPeriodeTransaksi.Meterai, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock Text="Tagihan" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Tagihan" Text="{Binding SelectedPeriodeTransaksi.Rekair, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Margin="10 0 0 0" Width="300">
+                                                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}">
+                                                    <TextBlock Style="{StaticResource BigTitle}" HorizontalAlignment="Center" Foreground="White" FontSize="13" LineHeight="10" Text="Pengembalian"/>
+                                                </StackPanel>
+
+                                                <Border Background="{StaticResource Black10}" Width="{Binding ElementName=PelunasanGroup, Path=ActualWidth}" BorderBrush="{StaticResource Black50}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1"  Height="440" CornerRadius="0 0 5 5 ">
+                                                    <StackPanel Orientation="Vertical" Margin="10">
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="90" >
+                                                                <TextBlock Text="Stan Lalu" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanLalu2" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Stan Kini" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanKini2" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel>
+                                                                <TextBlock Text="Stan Angkat" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="StanAngkat2" Width="{Binding ElementName=ElementPelunasanGroup, Path=ActualWidth}" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel Margin="0 0 0 5">
+                                                            <TextBlock Text="Pakai" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Pakai2" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding KalkulasiRekening.Pakai, FallbackValue = -, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                        </StackPanel>
+                                                        <StackPanel Margin="0 0 0 5">
+                                                            <TextBlock Text="Biaya Pemakaian" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="BiayaPemakaian2"  Text="{Binding KalkulasiRekening.BiayaPemakaian, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                        </StackPanel>
+                                                        <!--<StackPanel>
+                                                    <TextBlock Text="Administrasi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBox x:Name="Administrasi2" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                </StackPanel>-->
+
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137">
+                                                                <TextBlock Text="Administrasi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Administrasi2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.Administrasi, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Administrasi Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="AdministrasiLain2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.AdministrasiLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <!--<StackPanel>
+                                                    <TextBlock Text="Pemeliharaan" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBox x:Name="Pemeliharaan2" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                </StackPanel>-->
+
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137">
+                                                                <TextBlock Text="Pemeliharaan" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Pemeliharaan2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.Pemeliharaan, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Pemeliharaan Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="PemeliharaanLain2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.PemeliharaanLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <!--<StackPanel>
+                                                    <TextBlock Text="Retribusi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                    <TextBox x:Name="Retribusi2" Text="-" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                </StackPanel>-->
+
+                                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                                            <StackPanel Margin="0 0 4 0" Width="137">
+                                                                <TextBlock Text="Retribusi" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="Retribusi2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.Retribusi, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                            <StackPanel Margin="0 0 4 0">
+                                                                <TextBlock Text="Retribusi Lain" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                                <TextBox x:Name="RetribusiLain2" Width="{Binding ElementName=ElementAdministrasiGroup, Path=ActualWidth}" Text="{Binding KalkulasiRekening.RetribusiLain, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontSize="14"/>
+                                                            </StackPanel>
+                                                        </StackPanel>
+
+                                                        <StackPanel  Margin="0 0 0 5">
+                                                            <TextBlock Text="Materai" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Materai2" Text="{Binding KalkulasiRekening.Meterai, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock Text="Tagihan" VerticalAlignment="Center" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="#646464" />
+                                                            <TextBox x:Name="Tagihan2" Text="{Binding KalkulasiRekening.Total, FallbackValue = -, StringFormat=Rp {0:N0}, ConverterCulture='id-ID'}" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="SemiBold" FontSize="14"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Margin="0 0 24 24">
+                <Grid>
+                    <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="30" Margin="5 0" />
+                </Grid>
+                <Grid>
+                    <!--<Button x:Name="BtnSubmit" IsEnabled="False" Content="Proses Permohonan" Style="{StaticResource ButtonPrimary2}" Height="35" Width="170" Margin="13,0,0,0" Click="BtnSubmit_Click" />-->
+                    <Button x:Name="BtnSubmit" Click="BtnSubmit_Click" IsEnabled="False" Content="Proses Berita Acara" Style="{StaticResource ButtonPrimary2}" Height="35" Width="170" Margin="13,0,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    <!--</md:DialogHost>-->
+</UserControl>

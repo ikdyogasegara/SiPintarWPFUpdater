@@ -1,0 +1,106 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/BaseStyle.xaml" />
+        <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/ControlStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MenuRadioButton" TargetType="RadioButton">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{StaticResource BaseApp}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid x:Name="gridMain" Background="{StaticResource BaseApp}">
+                        <StackPanel Background="{StaticResource BaseApp}" Orientation="Vertical">
+                            <Grid Height="50" Margin="5,0">
+                                <Border
+                                    x:Name="BorderNav"
+                                    Height="26"
+                                    Padding="8,0"
+                                    Background="{StaticResource BaseApp}"
+                                    CornerRadius="10">
+                                    <StackPanel
+                                        x:Name="StackPanelNav"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="{StaticResource BaseApp}"
+                                        Orientation="Horizontal">
+                                        <md:PackIcon Margin="0,0,8,0" Kind="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+                                        <TextBlock
+                                            x:Name="TitleNav"
+                                            FontSize="11"
+                                            Foreground="White"
+                                            Text="{TemplateBinding Content}" />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="BorderNav" Property="Background" Value="{StaticResource BaseDarker}" />
+                            <Setter TargetName="StackPanelNav" Property="Background" Value="{StaticResource BaseDarker}" />
+                            <Setter TargetName="TitleNav" Property="FontWeight" Value="SemiBold" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation
+                            Storyboard.TargetProperty="Background.Color"
+                            To="SkyBlue"
+                            Duration="0:0:0.1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <ColorAnimation
+                            Storyboard.TargetProperty="Background.Color"
+                            To="White"
+                            Duration="0:0:0.1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LogoTitleLabel" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10px" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratRegular}" />
+        <Setter Property="Foreground" Value="{StaticResource CodGray}" />
+        <Setter Property="Margin" Value="0,1,0,1" />
+    </Style>
+
+    <Style
+        x:Key="LogoSubtitleLabel"
+        BasedOn="{StaticResource LogoTitleLabel}"
+        TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratBold}" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style x:Key="PdamNameLabel" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratRegular}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="10px" />
+    </Style>
+
+    <Style x:Key="UserLabel" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="11px" />
+    </Style>
+
+</ResourceDictionary>

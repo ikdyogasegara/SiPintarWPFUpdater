@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.TarifView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Billing.Atribut.Tarif"
+             xmlns:view="clr-namespace:SiPintar.Views.Billing.Atribut.Tarif"
+             xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodel:GolonganViewModel}">
+                <view:GolonganView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DiameterViewModel}">
+                <view:DiameterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:AdministrasiLainViewModel}">
+                <view:AdministrasiLainView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PemeliharaanViewModel}">
+                <view:PemeliharaanView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RetribusiViewModel}">
+                <view:RetribusiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:MateraiViewModel}">
+                <view:MateraiView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:GolonganLimbahViewModel}">
+                <view:GolonganLimbahView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:GolonganLlttViewModel}">
+                <view:GolonganLlttView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Width="200" Grid.Row="0" Height="Auto" CornerRadius="5" VerticalAlignment="Top" Margin="0 0 10 0" Background="White" Visibility="{Binding IsFullPage, Converter={StaticResource BooleanToCollapseConverter}}">
+                <Border.Resources>
+                    <Style TargetType="mde:SideNavigation" BasedOn="{StaticResource SideNavigationMenu}"/>
+                </Border.Resources>
+                <mde:SideNavigation Margin="0 10" Items="{Binding Path=NavigationItems, Mode=TwoWay}"
+                                NavigationItemSelected="NavigationItemSelectedHandler" x:Name="Sidebar"
+                                SelectionCornerRadius="8">
+                </mde:SideNavigation>
+            </Border>
+            <Border Width="200" Grid.Row="1" Height="Auto" CornerRadius="5" VerticalAlignment="Top" Margin="0 10 10 0" Background="White" Visibility="{Binding IsFullPage, Converter={StaticResource BooleanToCollapseConverter}}">
+                <Border.Resources>
+                    <Style TargetType="mde:SideNavigation" BasedOn="{StaticResource SideNavigationMenu}"/>
+                </Border.Resources>
+                <mde:SideNavigation Margin="0 10" Items="{Binding Path=NavigationItems2, Mode=TwoWay}"
+                                NavigationItemSelected="NavigationItemSelectedHandler2" x:Name="Sidebar2"
+                                SelectionCornerRadius="8">
+                </mde:SideNavigation>
+            </Border>
+        </Grid>
+
+        <ContentControl Margin="0" Grid.Column="1" Content="{Binding PageViewModel}" />
+    </Grid>
+</UserControl>

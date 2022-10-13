@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.MasterDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.MasterData"
+             xmlns:viewmodels="clr-namespace:SiPintar.ViewModels.Gudang.MasterData"
+             xmlns:views="clr-namespace:SiPintar.Views.Gudang.MasterData"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodels:BarangViewModel}">
+                <views:BarangView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BarangHabisViewModel}">
+                <views:BarangHabisView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:TipeBarangViewModel}">
+                <views:TipeBarangView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:JenisBarangViewModel}">
+                <views:JenisBarangView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:DiameterViewModel}">
+                <views:DiameterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:SupplierViewModel}">
+                <views:SupplierView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:PaketViewModel}">
+                <views:PaketView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:KategoriBarangMasukViewModel}">
+                <views:KategoriBarangMasukView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:KategoriBarangKeluarViewModel}">
+                <views:KategoriBarangKeluarView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:BagianMemintaBarangViewModel}">
+                <views:BagianMemintaBarangView />
+            </DataTemplate>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid Background="{StaticResource AthensGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <!--<RowDefinition />-->
+
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    ToolBarTray.IsLocked="True"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    Background="White"
+                    ClipToBounds="False">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    GroupName="NavItem"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}"
+                                    Click="NavItemSelectedHandler"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <ContentControl Grid.Row="1" Content="{Binding PageViewModel}" Margin="0 0" />
+    </Grid>
+</UserControl>

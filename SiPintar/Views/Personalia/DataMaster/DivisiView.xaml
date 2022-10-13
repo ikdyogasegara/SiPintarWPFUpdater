@@ -1,0 +1,191 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.DataMaster.DivisiView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Personalia.DataMaster"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToHiddenConverter" True="Hidden" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Margin="16 17 17 0">
+        <Grid Margin="20 0 20 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock FontSize="16" FontWeight="DemiBold"  Margin="0,0,0,8" Text="Master Divisi"/>
+                    <TextBlock FontSize="12" TextWrapping="Wrap" LineHeight="15" Foreground="{StaticResource Gray}" Text="Halaman untuk pengelolaan data master divisi"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding OnLoadCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" Margin="4" />
+                            <TextBlock Text="Refresh" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenAddFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_add.png" Margin="4" />
+                            <TextBlock Text="Tambah"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_edit_people.png" Margin="4" />
+                            <TextBlock Text="Koreksi" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenDeleteFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" Margin="4" />
+                            <TextBlock Text="Hapus" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Margin="0 0 0 16">
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="90" Source="/SiPintar;component/Assets/Images/empty_data_v2.png"/>
+                        <Border Height="8"/>
+                        <StackPanel>
+                            <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0 10 0 0" FontSize="12" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                    <Run Text="Saat ini belum ada data yang ditampilkan." />
+                                    <LineBreak />
+                                    <Run Text="Silakan"/>
+                                    <Button Command="{Binding OnOpenAddFormCommand}" Padding="0" Height="17" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0 0 2 -5">
+                                        <TextBlock FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah Data Master Divisi"/>
+                                    </Button>
+                                    <Run Text="terlebih dahulu"/>
+                                </TextBlock>
+                        </StackPanel>
+                        <Border Height="30"/>
+                    </StackPanel>
+                </Grid>
+
+                <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+
+                <DataGrid
+                        x:Name="DataGridDivisi"
+                        DataContext="{Binding}"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding DivisiList, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding Path=DataContext.SelectedData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                        Style="{StaticResource DataGridRegular}"
+                        CanUserSortColumns="False"
+                        EnableRowVirtualization="True"
+                        EnableColumnVirtualization="True"
+                        md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                        AutoGenerateColumns="False" 
+                        Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                        HeadersVisibility="Column"
+                        SelectionMode="Extended"
+                        HorizontalScrollBarVisibility="Auto"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        CanUserAddRows="False">
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                    </DataGrid.Resources>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                            <MenuItem Header="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="FileEdit" Foreground="{StaticResource SecondaryBlue}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Hapus" Command="{Binding OnOpenDeleteFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}"/>
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="*" Header="DIVISI">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Divisi}" Style="{StaticResource TextDataGridCellRegular}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="DIVISI ATAS">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DivisiAtas}" Style="{StaticResource TextDataGridCellRegular}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*" Header="DEPARTEMEN">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Departemen}" Style="{StaticResource TextDataGridCellRegular}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

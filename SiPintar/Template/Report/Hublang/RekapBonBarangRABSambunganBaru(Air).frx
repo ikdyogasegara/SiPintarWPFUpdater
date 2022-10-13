@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="03/09/2022 16:07:07" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="nama" DataType="System.String"/>
+      <Column Name="volume" DataType="System.Decimal"/>
+      <Column Name="satuan" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="tanggalAwal" DataType="System.DateTime"/>
+    <Parameter Name="tanggalAkhir" DataType="System.DateTime"/>
+    <Parameter Name="kodewilayah" DataType="System.String"/>
+    <Parameter Name="namawilayah" DataType="System.String"/>
+    <Parameter Name="kodegolongan" DataType="System.String"/>
+    <Parameter Name="namagolongan" DataType="System.String"/>
+    <Parameter Name="kodecabang" DataType="System.String"/>
+    <Parameter Name="namacabang" DataType="System.String"/>
+    <Parameter Name="kodekecamatan" DataType="System.String"/>
+    <Parameter Name="namakecamatan" DataType="System.String"/>
+    <Parameter Name="kodekelurahan" DataType="System.String"/>
+    <Parameter Name="namakelurahan" DataType="System.String"/>
+    <Parameter Name="kodearea" DataType="System.String"/>
+    <Parameter Name="namaarea" DataType="System.String"/>
+    <Parameter Name="koderayon" DataType="System.String"/>
+    <Parameter Name="namarayon" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="215.9" PaperHeight="279.4" RawPaperSize="1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="740.5" Height="207.9">
+      <TextObject Name="Memo51" Left="9.45" Top="88.82" Width="710.67" Height="22.68" Text="BON BARANG SAMBUNGAN BARU AIR" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <LineObject Name="Line53" Left="291.52" Top="81.26" Width="150.19" Diagonal="true"/>
+      <LineObject Name="Line54" Left="291.52" Top="119.06" Width="150.19" Diagonal="true"/>
+      <TextObject Name="tanggal" Left="338.39" Top="171.97" Width="257.01" Height="18.9" Text="L A P O R A N  D R D" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo16" Left="156.97" Top="9.45" Width="498.9" Height="18.9" Text="[AdditionalData.Header1]" Padding="2, 1, 2, 1" Font="Arial, 12pt, style=Bold"/>
+      <LineObject Name="Line10" Left="153.19" Top="51.02" Width="502.68" Diagonal="true"/>
+      <TextObject Name="Memo17" Left="156.97" Top="54.8" Width="498.9" Height="18.9" Text="[AdditionalData.Keterangan]" Padding="2, 1, 2, 1" Font="Arial, 7pt"/>
+      <TextObject Name="Memo93" Left="156.97" Top="28.35" Width="498.9" Height="18.9" Text="[AdditionalData.Header2]" Padding="2, 1, 2, 1" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Memo12" Left="202.33" Top="134.17" Width="94.49" Height="18.9" GrowToBottom="true" Text="Nomer" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo14" Left="202.33" Top="153.07" Width="94.49" Height="18.9" GrowToBottom="true" Text="Cabang" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo15" Left="311.93" Top="134.17" Width="18.9" Height="18.9" GrowToBottom="true" Text=":" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo19" Left="311.93" Top="153.07" Width="18.9" Height="18.9" GrowToBottom="true" Text=":" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="keterangan" Left="338.39" Top="153.07" Width="317.48" Height="18.9" GrowToBottom="true" Text="KETERANGAN" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo21" Left="202.33" Top="171.97" Width="94.49" Height="18.9" GrowToBottom="true" Text="Tanggal" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo22" Left="311.93" Top="171.97" Width="18.9" Height="18.9" GrowToBottom="true" Text=":" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <PictureObject Name="Picture2" Left="56.7" Top="9.45" Width="90.71" Height="60.47" Fill.Color="White" Image="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"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="213.23" Width="740.5" Height="30.24">
+      <TextObject Name="Memo7" Left="9.45" Width="34.02" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="NO." Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Memo8" Left="43.47" Width="234.33" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="URAIAN" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Memo9" Left="353.39" Width="75.59" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="SATUAN" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Memo4" Left="277.8" Width="75.59" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="VOLUME" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Memo6" Left="428.98" Width="75.59" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="REALISASI" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Memo10" Left="504.57" Width="215.43" Height="30.24" Border.Lines="All" Border.Width="0.1" Text="KETERANGAN" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="248.81" Width="740.5" Height="18.9" DataSource="MainData">
+      <TextObject Name="Memo1" Left="43.47" Width="234.33" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Text="[MainData.nama]" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo2" Left="277.8" Width="75.59" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Text="[MainData.volume]" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Memo3" Left="353.39" Width="75.59" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Text="[MainData.satuan]" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Line" Left="9.45" Width="34.02" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Text="[Row#]" Padding="2, 1, 2, 1" HorzAlign="Right" Font="Arial, 8pt"/>
+      <TextObject Name="Memo5" Left="428.98" Width="75.59" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+      <TextObject Name="Memo11" Left="504.57" Width="215.43" Height="18.9" Border.Lines="All" Border.Width="0.1" GrowToBottom="true" Padding="2, 1, 2, 1" Font="Arial, 8pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="273.04" Width="740.5" Height="378">
+      <TextObject Name="Memo23" Left="56.7" Top="59.6" Width="286.49" Height="52.6" Text="Mengetahui,&#13;&#10;&#13;&#10;Kepala Cabang ...................................&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;" Padding="2, 1, 2, 1" Font="Arial, 10pt"/>
+      <TextObject Name="Memo25" Left="181.43" Top="230.56" Width="286.49" Height="24.25" Text="Disetujui," Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Memo26" Left="457.34" Top="64.26" Width="209.24" Height="93.07" Text="Dibuat Oleh&#13;&#10;Ka. Unit ..........................................&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;" Padding="2, 1, 2, 1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text64" Left="453.6" Top="28.35" Width="207.9" Height="15.12" Text="[AdditionalData.Footer1], [Date]" Font="Arial, 8pt, style=Underline"/>
+      <TextObject Name="Text65" Left="56.7" Top="173" Width="286.49" Height="24.25" Text="......................................                                        " Padding="2, 1, 2, 1" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text66" Left="453.6" Top="170.1" Width="210.89" Height="24.25" Text="......................................                                        " Padding="2, 1, 2, 1" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text67" Left="179.55" Top="311.85" Width="286.49" Height="24.25" Text="......................................                                        " Padding="2, 1, 2, 1" HorzAlign="Center" Font="Arial, 10pt, style=Underline"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="656.37" Width="740.5" Height="37.8">
+      <TextObject Name="Text45" Left="557.55" Top="9.45" Width="170.1" Height="18.9" Text="HAL [Page#] / [TotalPages#]" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Italic"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

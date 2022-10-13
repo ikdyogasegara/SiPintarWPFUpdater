@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="01/18/2021 18:01:11" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="ID" DataType="System.Int32"/>
+      <Column Name="TrxID" DataType="System.String"/>
+      <Column Name="KasirTimeStamp" DataType="System.String"/>
+      <Column Name="Periode" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Tarif" DataType="System.String"/>
+      <Column Name="Pakai" DataType="System.String"/>
+      <Column Name="M3Pakai" DataType="System.String"/>
+      <Column Name="M3Tarip" DataType="System.String"/>
+      <Column Name="M3Jumlah" DataType="System.String"/>
+      <Column Name="HargaAir" DataType="System.String"/>
+      <Column Name="Admin" DataType="System.String"/>
+      <Column Name="BiayaMeter" DataType="System.String"/>
+      <Column Name="RekLimbah" DataType="System.String"/>
+      <Column Name="RekLLTT" DataType="System.String"/>
+      <Column Name="AngsuranAir" DataType="System.String"/>
+      <Column Name="AngsuranPSB" DataType="System.String"/>
+      <Column Name="AngsuranNonAir" DataType="System.String"/>
+      <Column Name="Denda" DataType="System.String"/>
+      <Column Name="Meterai" DataType="System.String"/>
+      <Column Name="Total" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="210" PaperHeight="148">
+    <DataBand Name="Data1" Width="1047.06" Height="311.85" DataSource="MainData">
+      <TextObject Name="Text1" Left="18.9" Top="9.45" Width="132.3" Height="18.9" Text="[MainData.Periode]" Font="Arial, 10pt"/>
+      <TableObject Name="Table1" Left="18.9" Top="37.8" Width="274.05" Height="94.5">
+        <TableColumn Name="Column1" Width="103.95"/>
+        <TableColumn Name="Column2" Width="9.45"/>
+        <TableColumn Name="Column3" Width="160.65"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Text="NOMOR" Font="Arial, 10pt"/>
+          <TableCell Name="Cell2" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell3" Text="[MainData.ID]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Text="NAMA" Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell8" Text="[MainData.Nama]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell11" Text="ALAMAT" Font="Arial, 10pt"/>
+          <TableCell Name="Cell12" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell13" Text="[MainData.Alamat]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Text="TARIF" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell18" Text="[MainData.Tarif]" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell21" Text="PAKAI" Font="Arial, 10pt"/>
+          <TableCell Name="Cell22" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell23" Text="[MainData.Pakai]" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table2" Left="406.35" Top="94.5" Width="283.5" Height="207.9">
+        <TableColumn Name="Column4" Width="122.85"/>
+        <TableColumn Name="Column5" Width="9.45"/>
+        <TableColumn Name="Column6" Width="151.2"/>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell24" Text="HARGA AIR" Font="Arial, 10pt"/>
+          <TableCell Name="Cell25" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell26" Text="[MainData.HargaAir]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell29" Text="ADM." Font="Arial, 10pt"/>
+          <TableCell Name="Cell30" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell31" Text="[MainData.Admin]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row8">
+          <TableCell Name="Cell34" Text="B. METER" Font="Arial, 10pt"/>
+          <TableCell Name="Cell35" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell36" Text="[MainData.BiayaMeter]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row9">
+          <TableCell Name="Cell39" Text="REK. LIMBAH" Font="Arial, 10pt"/>
+          <TableCell Name="Cell40" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell41" Text="[MainData.RekLimbah]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row10">
+          <TableCell Name="Cell44" Text="REK. LLTT" Font="Arial, 10pt"/>
+          <TableCell Name="Cell45" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell46" Text="[MainData.RekLLTT]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row11">
+          <TableCell Name="Cell47" Text="ANGS. AIR" Font="Arial, 10pt"/>
+          <TableCell Name="Cell48" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell49" Text="[MainData.AngsuranAir]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row12">
+          <TableCell Name="Cell50" Text="ANGS. PSB" Font="Arial, 10pt"/>
+          <TableCell Name="Cell51" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell52" Text="[MainData.AngsuranPSB]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row13">
+          <TableCell Name="Cell53" Text="ANGS. NON AIR" Font="Arial, 10pt"/>
+          <TableCell Name="Cell54" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell55" Text="[MainData.AngsuranNonAir]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row14">
+          <TableCell Name="Cell56" Text="DENDA" Font="Arial, 10pt"/>
+          <TableCell Name="Cell57" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell58" Text="[MainData.Denda]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row15">
+          <TableCell Name="Cell59" Text="METERAI" Font="Arial, 10pt"/>
+          <TableCell Name="Cell60" Text=":" Font="Arial, 10pt"/>
+          <TableCell Name="Cell61" Text="[MainData.Meterai]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row16">
+          <TableCell Name="Cell62" Text="TOTAL" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell63" Text=":" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell64" Text="[MainData.Total]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text2" Left="406.35" Top="37.8" Width="283.5" Height="18.9" Text="[MainData.KasirTimeStamp]" HorzAlign="Right" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="18.9" Top="264.6" Width="349.65" Height="18.9" Text="[MainData.TrxID]" Font="Arial, 10pt"/>
+      <TableObject Name="Table3" Left="132.3" Top="151.2" Width="236.25" Height="37.8">
+        <TableColumn Name="Column7"/>
+        <TableColumn Name="Column8" Width="75.6"/>
+        <TableColumn Name="Column9" Width="94.5"/>
+        <TableRow Name="Row17">
+          <TableCell Name="Cell65" Text="M3" HorzAlign="Right" Font="Arial, 10pt"/>
+          <TableCell Name="Cell66" Text="TARIP" HorzAlign="Right" Font="Arial, 10pt"/>
+          <TableCell Name="Cell67" Text="JUMLAH" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row18">
+          <TableCell Name="Cell70" Text="[MainData.M3Pakai]" HorzAlign="Right" Font="Arial, 10pt"/>
+          <TableCell Name="Cell71" Text="[MainData.M3Tarip]" HorzAlign="Right" Font="Arial, 10pt"/>
+          <TableCell Name="Cell72" Text="[MainData.M3Jumlah]" HorzAlign="Right" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>

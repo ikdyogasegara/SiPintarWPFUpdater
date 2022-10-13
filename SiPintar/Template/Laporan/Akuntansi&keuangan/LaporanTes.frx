@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="09/19/2022 16:56:30" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="TesDataSource" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Gol" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource2" Alias="TesDataSource2" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="true">
+      <Column Name="Tes" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource3" Alias="Label Laporan" ReferenceName="Data.DSource3" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="RegularDate" DataType="System.DateTime"/>
+    <Parameter Name="RangeDateAwal" DataType="System.DateTime"/>
+    <Parameter Name="RangeDateAkhir" DataType="System.DateTime"/>
+    <Parameter Name="kodegolongan" DataType="System.String"/>
+    <Parameter Name="namagolongan" DataType="System.String"/>
+    <Parameter Name="FullName" DataType="System.String"/>
+    <Parameter Name="UserName" DataType="System.String"/>
+    <Parameter Name="NoIdentitas" DataType="System.String"/>
+    <Parameter Name="NamaLoketLogin" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text4" Left="151.2" Top="9.45" Width="94.5" Height="18.9" Text="[RegularDate]" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="41.8" Width="718.2" Height="151.2" DataSource="DSource1">
+      <TextObject Name="Text1" Left="85.05" Top="56.7" Width="94.5" Height="18.9" Text="[TesDataSource.Nama]" Font="Arial, 10pt"/>
+      <TextObject Name="Text2" Left="217.35" Top="56.7" Width="94.5" Height="18.9" Text="[TesDataSource.Alamat]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="406.35" Top="56.7" Width="94.5" Height="18.9" Text="[TesDataSource.Gol]" Font="Arial, 10pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

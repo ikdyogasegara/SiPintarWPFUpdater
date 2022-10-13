@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.SistemKontrol.PengaturanPutstampView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:NullVisibilityConverter x:Key="NullVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullCollapseConverter" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White" Margin="5 0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="15,16,20,0">
+            <TextBlock FontSize="16" FontWeight="DemiBold"  Margin="0,0,0,8">Pengaturan Put Stamp</TextBlock>
+            <TextBlock FontSize="12" TextWrapping="Wrap" LineHeight="15" Foreground="{StaticResource Gray}">
+                Anda dapat menambahkan penanda pada konfigurasi bacameter melalui menu ini.
+            </TextBlock>
+        </StackPanel>
+        <Grid Grid.ColumnSpan="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid x:Name="ContentWrapper" Grid.Row="1">
+                <Border BorderThickness="0" BorderBrush="{StaticResource Gray}" CornerRadius="2" Margin="0,0,0,10">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="65" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,15,0,0">
+                            <TextBlock Text="Pilih File" Style="{StaticResource Title}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <TextBox x:Name="FilePathTextBox" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" IsReadOnly="True" Width="350" Text="{Binding FileName}" TextWrapping="NoWrap"/>
+                                    <TextBlock DataContext="{Binding ElementName=FilePathTextBox, Path=Text}" Text="Silahkan pilih file dahulu" Style="{StaticResource TextBoxPlaceholder}" />
+                                </Grid>
+                                <StackPanel x:Name="FilePathPanel" Orientation="Horizontal" Margin="10,0" Cursor="Hand" UIElement.PreviewMouseDown="FilePathPanel_PreviewMouseDown">
+                                    <Image Width="16" Source="/SiPintar;component/Assets/Images/Action/ic_folder.png" />
+                                    <Border Margin="5 -3 0 0" BorderBrush="{StaticResource SecondaryBlue}" BorderThickness="0 0 0 1" Width="45" Height="15">
+                                        <TextBlock Text="Pilih File" Foreground="{StaticResource SecondaryBlue}" />
+                                    </Border>
+                                    
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Border BorderBrush="{StaticResource Gray70}" Background="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Grid.Row="2" Visibility="{Binding Path=Content, Converter={StaticResource NullCollapseConverter}}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <TextBox
+                                TextWrapping="Wrap"
+                                AcceptsReturn="True"
+                                VerticalScrollBarVisibility="Auto"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="5"
+                                Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </ScrollViewer>
+                        </Border>
+
+                        <Grid Grid.Row="3" Margin="0,20,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Visibility="{Binding Content, Converter={StaticResource NullCollapseConverter}}">
+                                <Button Command="{Binding OnOpenManualFormPDACommand}" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <md:PackIcon Kind="Lock" />
+                                        <TextBlock Text="Atur Password User PDA" Margin="5 0" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Content, Converter={StaticResource NullCollapseConverter}}">
+                                <Button Command="{Binding OnResetCommand}" Content="Atur Ulang" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                                <Button Command="{Binding OnSaveCommand}" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13"  />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

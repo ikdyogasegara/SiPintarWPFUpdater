@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.Jurnal.Instalasi.BahanKimiaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Akuntansi.Jurnal.Instalasi"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource Black10}">
+        <Border CornerRadius="5">
+            <Grid Margin="0 0 0 0">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Background="White">
+                    <StackPanel Orientation="Horizontal" Margin="30,20,30,0">
+                        <StackPanel  Width="110" VerticalAlignment="Center">
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Periode Posting</TextBlock>
+                        </StackPanel>
+                        <StackPanel Width="200" VerticalAlignment="Center">
+                            <Grid Margin="0,0,0,10" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToCollapseConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <Grid Margin="0,3,0,0">
+                                        <ComboBox x:Name="Bulan"
+                                    Style="{StaticResource ComboBoxInputForm}"
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding BulanForm}"
+                                    DisplayMemberPath="Value"
+                                    ItemsSource="{Binding BulanList, Mode=OneWay}"
+                                    SelectionChanged="Bulan_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                                        </ComboBox>
+                                        <TextBlock DataContext="{Binding ElementName=Bulan, Path=SelectedItem}" Text="Pilih bulan" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <Grid Margin="0,3,0,0">
+                                        <ComboBox x:Name="Tahun"
+                                    Style="{StaticResource ComboBoxInputForm}"
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding TahunForm}"
+                                    DisplayMemberPath="Value"
+                                    ItemsSource="{Binding TahunList, Mode=OneWay}"
+                                    SelectionChanged="Tahun_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                                        </ComboBox>
+                                        <TextBlock DataContext="{Binding ElementName=Tahun, Path=SelectedItem}" Text="Pilih tahun" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="30,10,30,0">
+                        <StackPanel  Width="108" VerticalAlignment="Top">
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="12">Pilihan Proses</TextBlock>
+                        </StackPanel>
+                        <StackPanel x:Name="PilihanProses" VerticalAlignment="Center" Orientation="Vertical" >
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" Tag="True" Content="Rincian">
+                                <RadioButton.IsChecked>
+                                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}"></Binding>
+                                </RadioButton.IsChecked>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" Tag="False" Content="Rekap" Margin="0,8,0,0">
+                                <RadioButton.IsChecked>
+                                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}"></Binding>
+                                </RadioButton.IsChecked>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource MaterialDesignRadioButton}" Tag="False" Content="JPBIK Potrait" Margin="0,8,0,0">
+                                <RadioButton.IsChecked>
+                                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}"></Binding>
+                                </RadioButton.IsChecked>
+                            </RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Width="120" HorizontalAlignment="Center" Margin="0 20 0 20">
+                        <Button  Command="{Binding OnOpenConfirmProsesJurnalCommand}" x:Name="OkButton" Content="Proses Jurnal" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

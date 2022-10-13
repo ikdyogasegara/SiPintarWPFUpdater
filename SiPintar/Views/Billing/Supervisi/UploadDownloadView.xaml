@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.UploadDownloadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280" Background="#E5E5E5">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ProgressBar.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <Style x:Key = "TriggerProgressBar" TargetType="ProgressBar">
+                <Setter Property="Foreground" Value="#028DDB" />
+                <Setter Property="Background" Value="#D9F0FC" />
+                <Style.Triggers>
+                    <Trigger Property="Value" Value="100">
+                        <Setter Property="Foreground" Value="#4BCA81" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Loaded="Component_Loaded">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--<Grid Grid.Column="0" Margin="20,20" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Style="{StaticResource BigTitle}" Margin="26,22,26,5" LineHeight="14" FontSize="14">Download</TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Style="{StaticResource CaptionBody}" Margin="26,5,26,5" LineHeight="13" FontSize="13">Download transaksi pembayaran dan pembatalan.</TextBlock>
+                </StackPanel>
+                <Border Grid.Row="2" Background="#EEF1F5" Margin="26,10,26,5" CornerRadius="4" BorderThickness="1.5">
+                    <Border.BorderBrush>
+                        <DrawingBrush Viewport="0,0,8,8" ViewportUnits="Absolute" TileMode="Tile">
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <GeometryDrawing Brush="#BCC7D7">
+                                        <GeometryDrawing.Geometry>
+                                            <GeometryGroup>
+                                                <RectangleGeometry Rect="0,0,50,50" />
+                                                <RectangleGeometry Rect="50,50,50,50" />
+                                            </GeometryGroup>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Border.BorderBrush>
+                    <TextBlock Margin="12,12" Style="{StaticResource CaptionBody}" TextWrapping="Wrap" Foreground="#028DDB" FontWeight="SemiBold" LineHeight="20" FontSize="12" Text="Modul billing akan mendownload data sesuai dengan tanggal &amp; jam yang berlangsung. Perubahan tanggal download bisa diakses di dashboard PDAM Pintar."/>
+                </Border>
+                <Grid Grid.Row="3" Margin="26,10,26,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Grid.Column="1" Margin="5,10" Style="{StaticResource ButtonPrimary}" Command="{Binding OnOpenConfirmationDownloadCommand}">Download</Button>
+                </Grid>
+            </Grid>-->
+            <Grid Grid.Column="0" Margin="20,20" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Style="{StaticResource BigTitle}" Margin="26,22,26,5" LineHeight="14" FontSize="14">Upload</TextBlock>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource CaptionBody}" Margin="26,5,26,5" LineHeight="13" FontSize="13">Pilihlah data apa saja yang akan di upload</TextBlock>
+                    <Button Grid.Column="1" Click="Button_Click" Foreground="#028DDB" Margin="5,5,26,5" BorderThickness="0" Background="Transparent" FontSize="13">Pilih Semua</Button>
+                </Grid>
+                <Grid Grid.Row="2" Margin="26,10,26,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <CheckBox IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding TagihanAir, Mode=TwoWay}" Content="Tagihan Air" Margin="0 10 0 10"/>
+                        <CheckBox IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding TagihanLimbah, Mode=TwoWay}" Content="Tagihan Limbah" Margin="0 10 0 10"/>
+                        <CheckBox IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding TagihanLltt, Mode=TwoWay}" Content="Tagihan L2T2" Margin="0 10 0 10"/>
+                        <!--<CheckBox IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding SinkronParameter, Mode=TwoWay}" Content="Sinkronisasi Parameter" Margin="0 10 0 0"/>-->
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="3" Margin="26,10,26,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button IsEnabled="{Binding ProgressVis, Converter={StaticResource InverseBooleanConverter}}" Grid.Column="0" Margin="5,10" Style="{StaticResource ButtonPrimary}" Command="{Binding OnOpenConfirmationUploadCommand}">Upload</Button>
+                </Grid>
+            </Grid>
+        </Grid>
+        <StackPanel Margin="20,20" Background="White" Visibility="{Binding ProgressVis, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid Margin="30,22">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                    <TextBlock Text="Proses Upload" Style="{StaticResource Title}" />
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Column="0" Margin="10,0">
+                        <TextBlock Text="Tagihan Air" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanAir, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Tagihan Limbah" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanLimbah, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Tagihan L2T2" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanLltt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Sinkronasi Parameter" Margin="0,5" LineHeight="18" Visibility="{Binding SinkronParameter, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <ProgressBar BorderBrush="#D9F0FC" Height="8" Margin="0,10" Value="{Binding ProgressTagihanAir, Mode=OneWay}" Style="{StaticResource TriggerProgressBar}" Visibility="{Binding TagihanAir, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ProgressBar BorderBrush="#D9F0FC" Height="8" Margin="0,10" Value="{Binding ProgressTagihanLimbah, Mode=OneWay}" Style="{StaticResource TriggerProgressBar}" Visibility="{Binding TagihanLimbah, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ProgressBar BorderBrush="#D9F0FC" Height="8" Margin="0,10" Value="{Binding ProgressTagihanLltt, Mode=OneWay}" Style="{StaticResource TriggerProgressBar}" Visibility="{Binding TagihanLltt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ProgressBar BorderBrush="#D9F0FC" Height="8" Margin="0,10" IsIndeterminate="{Binding ProgressSinkronLoading, Mode=OneWay}" Value="{Binding ProgressSinkron, Mode=OneWay}" Style="{StaticResource TriggerProgressBar}" Visibility="{Binding SinkronParameter, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Margin="10,0">
+                        <TextBlock Text="{Binding LabelProgressTagihanAir, Mode=OneWay}" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanAir, Converter={StaticResource BooleanToVisibilityConverter}}"  />
+                        <TextBlock Text="{Binding LabelProgressTagihanLimbah, Mode=OneWay}" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanLimbah, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding LabelProgressTagihanLltt, Mode=OneWay}" Margin="0,5" LineHeight="18" Visibility="{Binding TagihanLltt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding LabelProgressSinkron, Mode=OneWay}" Margin="0,5" LineHeight="18" Visibility="{Binding SinkronParameter, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Button Click="Button_Click_1" Style="{StaticResource ButtonSecondary}" MinWidth="160" Margin="5,0" Visibility="{Binding IsUploadDone, Converter={StaticResource boolToVisibilityConverter}}">Selesai</Button>
+                        <Grid Visibility="{Binding IsUploading, Converter={StaticResource boolToVisibilityConverter}}">
+                            <Button Style="{StaticResource ButtonSecondary}"  MinWidth="200" Padding="30,0,0,0" HorizontalAlignment="Right">
+                                <TextBlock>Sedang Mengupload</TextBlock>
+                            </Button>
+                            <Button Style="{StaticResource ButtonPrimary}" Padding="30,0,0,0" IsEnabled="False" Background="Transparent">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform" HorizontalAlignment="Left" Height="30" MinWidth="180">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                        <Button Command="{Binding OnReUploadCommand}" Visibility="{Binding CanReUpload, Converter={StaticResource boolToVisibilityConverter}}" Style="{StaticResource ButtonPrimary}" MinWidth="160" Margin="5,0">
+                            <TextBlock>
+                                <Run Text="Upload Ulang (" />
+                                <Run Text="{Binding TotalFailed, Mode=OneWay}" />
+                                <Run Text=")" />
+                            </TextBlock>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+    
+</UserControl>

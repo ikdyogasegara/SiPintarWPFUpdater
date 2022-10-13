@@ -1,0 +1,263 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Atribut.Meteran.KondisiMeterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <ContextMenu x:Key="ExportMenu" Style="{StaticResource ContextMenuRegular}">
+                <MenuItem Header="HTML"
+                          Tag="html"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="LanguageHtml5" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Excel (*.xls)"
+                          Tag="xls"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileExcelOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Excel 2007 (*.xlsx)"
+                          Tag="xlsx"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileExcel" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="XML"
+                          Tag="xml"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileDocumentOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="CSV"
+                          Tag="csv"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileCsvOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+        <Grid Margin="20 0 20 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock FontSize="16" FontWeight="DemiBold"  Margin="0,0,0,8">Kondisi Meter</TextBlock>
+                    <TextBlock FontSize="12" TextWrapping="Wrap" LineHeight="15" Foreground="{StaticResource Gray}">
+                        Atur master data kondisi meter pada menu ini.
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding OnRefreshCommand}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" Margin="4" />
+                            <TextBlock Text="Refresh"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenAddFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_add.png" Margin="4" />
+                            <TextBlock Text="Tambah"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenDeleteConfirmCommand}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" Margin="4" />
+                            <TextBlock Text="Hapus"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_edit_people.png" Margin="4" />
+                            <TextBlock Text="Koreksi"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Click="Export_Click" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_table.png" Margin="4" />
+                            <TextBlock Text="Export"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Visibility="Collapsed" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_print.png" Margin="4" />
+                            <TextBlock Text="Print"
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="90" Source="/SiPintar;component/Assets/Images/empty_data_v2.png">
+                        </Image>
+                        <Border Height="8"/>
+                        <StackPanel>
+                            <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0 10 0 0" FontSize="12" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                <Run Text="Saat ini belum ada data yang ditampilkan." />
+                                <LineBreak />
+                                <Run Text="Silakan"/>
+                                <Button Command="{Binding OnOpenAddFormCommand}" Padding="0" Height="17" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0 0 2 -5">
+                                    <TextBlock FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah Kondisi Meter"/>
+                                </Button>
+                                <Run Text="terlebih dahulu"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <Border Height="30"/>
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid
+                    IsReadOnly="True"
+                    x:Name="DataGridKondisiMeter"
+                    DataContext="{Binding}"
+                    ItemsSource="{Binding KondisiMeterList, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=DataContext.SelectedData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                    Style="{StaticResource DataGridRegular}"
+                    CanUserSortColumns="False"
+                    EnableRowVirtualization="False"
+                    EnableColumnVirtualization="False"
+                    md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                    AutoGenerateColumns="False"
+                    Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                    HeadersVisibility="Column"
+                    SelectionMode="Extended"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    CanUserAddRows="False"
+                    >
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                    </DataGrid.Resources>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                            <MenuItem Header="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Hapus" Command="{Binding OnOpenDeleteConfirmCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon Width="16" Kind="Delete" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Width="0.2*" Binding="{Binding KodeKondisiMeter}" Header="KODE KONDISI METER">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextDataGridCellRegular}">
+                                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Binding="{Binding NamaKondisiMeter}" Header="NAMA KONDISI METER">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextDataGridCellRegular}">
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                    <Setter Property="Margin" Value="3 0 0 0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Border Grid.Row="2" Background="{StaticResource AthensGray}" CornerRadius="0 0 5 5" Margin="0 0 0 0" BorderBrush="{StaticResource Gray50}" BorderThickness="1 0 1 1">
+                <TextBlock Style="{StaticResource CaptionFormActiveSmaller}" Foreground="Black" Padding="10" FontFamily="{StaticResource MontserratRegular}">
+                    <Run Text="Menampilkan" FontWeight="Light" />
+                    <Run Text="{Binding KondisiMeterList.Count, Mode=OneWay, StringFormat='{}{0:#,0}', FallbackValue='0'}" />
+                    <Run Text="data" />
+                </TextBlock>
+            </Border>
+
+        </Grid>
+    </Grid>
+</UserControl>

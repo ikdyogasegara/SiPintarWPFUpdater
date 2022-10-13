@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.ProsesTransaksi.DaftarBarangKeluar.DialogVerifikasiBarangKeluarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.ProsesTransaksi.DaftarBarangKeluar"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" d:DesignWidth="378">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:NullBooleanConverter x:Key="NullToBooleanConverter" True="False" False="True"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="378">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppGudang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Verifikasi Semua Data Barang"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppGudang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8">
+                        <Button.InputBindings>
+                            <KeyBinding Command="{x:Static md:DialogHost.CloseDialogCommand}" Key="Esc"/>
+                        </Button.InputBindings>
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="33,20" Grid.Row="1">
+            <StackPanel>
+                <TextBlock Text="Nomor Transaksi" Style="{StaticResource CaptionSmallBody}" Foreground="#646464" LineHeight="18" />
+                <TextBlock Text="{Binding SelectedDaftarBarangKeluar.NomorTransaksi}" Style="{StaticResource Title}" Foreground="#252B46" LineHeight="18" Margin="0,3,0,0" />
+            </StackPanel>
+            <StackPanel Margin="0,24,0,0">
+                <TextBlock Text="Kode Keperluan" Style="{StaticResource SmallTitle}" Foreground="#646464" LineHeight="18" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Width="100" x:Name="KodeBorder">
+                        <Grid>
+                            <ComboBox x:Name="Kode" Style="{StaticResource ComboBoxInputForm}" Width="{Binding ElementName=KodeBorder, Path=ActualWidth}"
+                                      ItemsSource="{Binding DaftarKeperluan}" SelectedItem="{Binding SelectedDaftarKeperluan}" DisplayMemberPath="KodeKeperluan"/>
+                            <TextBlock Text="Pilih" Style="{StaticResource ComboBoxSelectOverlay}" Margin="5,8" DataContext="{Binding ElementName=Kode, Path=SelectedItem}" />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Column="1" x:Name="KeperluanBorder" Margin="10,0,0,0">
+                        <Grid>
+                            <ComboBox x:Name="Keperluan" Style="{StaticResource ComboBoxInputForm}" Width="{Binding ElementName=KeperluanBorder, Path=ActualWidth}"
+                                      ItemsSource="{Binding DaftarKeperluan}" SelectedItem="{Binding SelectedDaftarKeperluan}" DisplayMemberPath="Keperluan"/>
+                            <TextBlock Text="Pilih" Style="{StaticResource ComboBoxSelectOverlay}" Margin="5,8" DataContext="{Binding ElementName=Keperluan, Path=SelectedItem}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="0,24,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource ButtonSecondarySmall}" Content="Kembali" Command="{x:Static md:DialogHost.CloseDialogCommand}" Margin="0,0,16,0" />
+                <Button x:Name="BtnSubmit" Style="{StaticResource ButtonPrimarySmall}" Content="Simpan" IsEnabled="{Binding SelectedDaftarKeperluan,Converter={StaticResource NullToBooleanConverter}, FallbackValue=False}"
+                        Command="{Binding OnVerifikasiSemuaBarangCommand}" CommandParameter="{Binding ElementName=Keperluan, Path=SelectedItem}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

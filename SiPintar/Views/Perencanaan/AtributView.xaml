@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.AtributView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:local="clr-namespace:SiPintar.Views.Perencanaan" 
+             xmlns:view="clr-namespace:SiPintar.Views.Perencanaan.Atribut"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Perencanaan.Atribut"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Sipintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodel:MaterialViewModel}">
+                <view:MaterialView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:OngkosViewModel}">
+                <view:OngkosView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:PaketViewModel}">
+                <view:PaketView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:RumusVolumeViewModel}">
+                <view:RumusVolumeView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource AthensGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <!--<RowDefinition />-->
+
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ToolBarTray Background="White">
+                <ToolBar
+                    ToolBarTray.IsLocked="True"
+                    Style="{DynamicResource MaterialDesignToolBar}"
+                    Background="White"
+                    ClipToBounds="False">
+                    <ItemsControl ItemsSource="{Binding NavigationItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton
+                                    GroupName="NavItem"
+                                    Tag="{Binding Label}"
+                                    ToolTip="{Binding Tooltip}"
+                                    Click="NavItemSelectedHandler"
+                                    Style="{StaticResource NavHorizontalStyle}"
+                                    IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Label}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </ToolBar>
+            </ToolBarTray>
+        </Grid>
+        <!--<ContentControl Grid.Row="1" Content="{Binding PageViewModel}"/>
+        <Grid Grid.Row="2">
+            <Border Background="{StaticResource BaseAppPerencanaan}">
+                <TextBlock  Foreground="White"/>
+            </Border>
+        </Grid>-->
+
+        <ContentControl Grid.Row="1" Content="{Binding PageViewModel}" />
+        <Grid Grid.Row="2">
+            <Border Background="{StaticResource BaseAppPerencanaan}">
+                <TextBlock Margin="20,0,0,0" Foreground="White">
+                    <Run Text='Posisi Halaman: '/>
+                    <Run Text='Atribut > '/>
+                    <Run Text="{Binding IndikasiFooter}" FontWeight="Bold"/>
+                </TextBlock>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

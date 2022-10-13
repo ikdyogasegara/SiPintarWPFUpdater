@@ -1,0 +1,284 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.KoreksiRekeningAir.UsulanKoreksi.VerifikasiView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:NullVisibilityConverter x:Key="NullVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="500" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Vertical" Margin="10">
+                    <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" HorizontalAlignment="Right">
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black" />
+                    </Button>
+
+                    <StackPanel Orientation="Horizontal" Margin="36 0 40 0">
+                        <Image Height="50" VerticalAlignment="Top" Width="35" Source="/SiPintar;component/Assets/Images/ResponseIcon/ic_info.png" />
+
+                        <StackPanel Orientation="Vertical" Margin="28 0 0 0">
+                            <TextBlock Style="{StaticResource BigTitle}">
+                                Verifikasi Usulan Koreksi
+                            </TextBlock>
+                            <TextBlock Width="320" Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap">
+                                Anda akan melakukan persetujuan setelah menindaklanjuti usulan koreksi rekening air dengan rincian dibawah ini:
+                            </TextBlock>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Margin="0 0 20 0">
+                                        <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+                                            <RadioButton GroupName="SubMenu" x:Name="KoreksiStan"
+                                                         Style="{StaticResource NavHorizontalStyle}" FontWeight="DemiBold"
+                                                         FontSize="13" Content="Koreksi Stan" Checked="SubMenu_Checked" />
+                                            <RadioButton GroupName="SubMenu" x:Name="FotoBukti"
+                                                         Style="{StaticResource NavHorizontalStyle}" FontWeight="DemiBold"
+                                                         FontSize="13" Content="Foto Bukti" Checked="SubMenu_Checked" />
+                                        </StackPanel>
+
+                                        <Border Height="1.2" Background="{StaticResource BaseGray}" VerticalAlignment="Bottom"
+                                                Margin="0 0 0 -1" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Margin="0 10 0 10" x:Name="KoreksiStanSection" Panel.ZIndex="2" Background="White" Visibility="Visible">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Jenis" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap" Text="Stan Lalu" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap" Text="Stan Kini" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap" Text="Stan Angkat" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap" Text="Pakai" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap" Text="Biaya Pakai" />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="1">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Awal" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanLalu, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanSkrg, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanAngkat, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.Pakai, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                            <Run Text="m3" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="Rp." />
+                                            <Run Text="{Binding SelectedData.BiayaPemakaian, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0"  Grid.Column="2">
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Usulan" />
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanLalu_Usulan, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanSkrg_Usulan, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.StanAngkat_Usulan, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="{Binding SelectedData.Pakai_Usulan, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                            <Run Text="m3" />
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" TextWrapping="Wrap">
+                                            <Run Text="Rp." />
+                                            <Run Text="{Binding SelectedData.BiayaPemakaian_Usulan, Mode=OneWay, FallbackValue='0', StringFormat='{}{0:#,0}', ConverterCulture='ID-id'}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <Border Margin="0 20 0 0" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1">
+                                        <StackPanel x:Name="StatusVerifikasiBorder" VerticalAlignment="Center" Orientation="Vertical" Margin="0 0 15 13">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Verifikasi ?" />
+                                            <Grid>
+                                                <ComboBox x:Name="StatusVerifikasi" SelectionChanged="StatusVerifikasi_SelectionChanged" Width="{Binding ElementName=StatusVerifikasiBorder, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" SelectedValue="{Binding StatusVerifikasiForm}" SelectedValuePath="Tag">
+                                                    <ComboBoxItem Tag="1" Content="Verifikasi" />
+                                                    <ComboBoxItem Tag="2" Content="Tolak" />
+                                                </ComboBox>
+                                                <TextBlock Text="Pilih status" DataContext="{Binding ElementName=StatusVerifikasi, Path=Text}" Margin="10,0,0,0" Style="{StaticResource TextBoxPlaceholder}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="0 0 0 0" x:Name="AlasanBorder">
+                                        <StackPanel Margin="0 0 10 0">
+                                            <TextBlock Style="{StaticResource SmallTitle}" Text="Alasan Penolakan" />
+                                            <Grid Margin="0,0,0,0">
+                                                <TextBox x:Name="Alasan" Style="{StaticResource TextBoxInputForm}" Text="{Binding AlasanPenolakanForm, Mode=TwoWay}" VerticalAlignment="Center" />
+                                                <TextBlock DataContext="{Binding ElementName=Alasan, Path=Text}" Text="Tulis alasan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                    <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Margin="0 16 0 10" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Button x:Name="YesButton" Width="100" Click="YesButton_Click" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Proses" md:ButtonAssist.CornerRadius="13" />
+                                            <Border Width="7" />
+                                            <Button x:Name="CancelButton" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" md:ButtonAssist.CornerRadius="13" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
+
+                            <Grid Margin="0 0" x:Name="FotoBuktiSection" Panel.ZIndex="2" Background="White" Visibility="Collapsed">
+                                <StackPanel Background="White" Margin="0 0">
+                                    <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15" Height="120">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                                                <CheckBox IsChecked="{Binding IsFotoBukti1FormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Foto Bukti 1" Margin="0 5 0 10" IsHitTestVisible="False" Focusable="False" />
+                                                <Grid IsEnabled="{Binding IsFotoBukti1FormChecked}">
+                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Button Command="{Binding OnOpenImageCommand}" CommandParameter="foto_bukti1" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                            <Grid Grid.Column="1">
+                                                <Grid Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                    <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                </Grid>
+                                                <Grid Visibility="{Binding FotoBukti1Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                    <Image Source="{Binding FotoBukti1Uri}" Width="120" Height="120" Stretch="UniformToFill" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15" Height="120">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                                                <CheckBox IsChecked="{Binding IsFotoBukti2FormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Foto Bukti 2" Margin="0 5 0 10" IsHitTestVisible="False" Focusable="False" />
+                                                <Grid IsEnabled="{Binding IsFotoBukti2FormChecked}">
+                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Button Command="{Binding OnOpenImageCommand}" CommandParameter="foto_bukti2" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                            <Grid Grid.Column="1">
+                                                <Grid Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                    <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                </Grid>
+                                                <Grid Visibility="{Binding FotoBukti2Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                    <Image Source="{Binding FotoBukti2Uri}" Width="120" Height="120" Stretch="UniformToFill" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15" Height="120">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                                                <CheckBox IsChecked="{Binding IsFotoBukti3FormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Foto Bukti 3" Margin="0 5 0 10" IsHitTestVisible="False" Focusable="False" />
+                                                <Grid IsEnabled="{Binding IsFotoBukti3FormChecked}">
+                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                        <Button Command="{Binding OnOpenImageCommand}" CommandParameter="foto_bukti3" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                            <Grid Grid.Column="1">
+                                                <Grid Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToVisibleConverter}}">
+                                                    <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                                    <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                                                </Grid>
+                                                <Grid Visibility="{Binding FotoBukti3Uri, Converter={StaticResource NullToCollapseConverter}}">
+                                                    <Image Source="{Binding FotoBukti3Uri}" Width="120" Height="120" Stretch="UniformToFill" />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+
+                            </Grid>
+
+
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Height="20" />
+
+
+                </StackPanel>
+
+                <Border Background="{StaticResource BaseAppHublang}" Height="5" Grid.Row="1" />
+            </Grid>
+
+        </Border>
+        <md:DialogHost Identifier="KoreksiRekeningSubDialog" DialogTheme="Inherit" Grid.RowSpan="1" />
+    </Grid>
+</UserControl>

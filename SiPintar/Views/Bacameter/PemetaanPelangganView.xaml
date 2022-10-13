@@ -1,0 +1,217 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.PemetaanPelangganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bacameter/MapViewStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToStringConverter x:Key="BooleanToActiveInactiveConverter" True="Aktif" False="Nonaktif"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <ContextMenu x:Key="ExportMenu" Style="{StaticResource ContextMenuRegular}">
+                <MenuItem Header="HTML"
+                          Tag="html"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="LanguageHtml5" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Excel (*.xls)"
+                          Tag="xls"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileExcelOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Excel 2007 (*.xlsx)"
+                          Tag="xlsx"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileExcel" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="XML"
+                          Tag="xml"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileDocumentOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="CSV"
+                          Tag="csv"
+                          Click="ExportFile_Click"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                          Style="{StaticResource MenuItemRegular}">
+                    <MenuItem.Icon>
+                        <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="FileCsvOutline" Width="16" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="250" x:Name="FilterWrapper" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="White" Margin="0 5 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="17 10 14 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0 0 0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
+                            <TextBlock FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center" Margin="0 0 0 0">Pemetaan Pelanggan</TextBlock>
+                        </StackPanel>
+                        <TextBlock Margin="0 5 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="11" TextWrapping="Wrap" LineHeight="15" Foreground="{StaticResource CeruleanActive}" Text="{Binding CurrentPdamName}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Height="64" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Click="Export_Click" Style="{StaticResource ButtonPlain}" Background="Transparent" Padding="10 0" Height="60">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_export.png" Margin="4" />
+                                <TextBlock Text="Export" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ButtonPlain}" Background="Transparent" Padding="10 0" Height="60">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_print.png" Margin="4" />
+                                <TextBlock Text="Cetak" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Click="Filter_Click" DataContext="{Binding}" Style="{StaticResource ButtonPlain}" Background="Transparent" Padding="10 0" Height="60">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" Margin="4" />
+                                <TextBlock Text="Refresh" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Click="ShowFilter_Click" x:Name="ToolbarFilter" Style="{StaticResource ButtonPlain}" Background="Transparent" Padding="10 0" Height="60" VerticalAlignment="Top">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_filter.png" Margin="4" />
+                                <TextBlock Text="Filter" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center" Width="55" TextWrapping="Wrap" TextAlignment="Center" LineHeight="1"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Border Margin="0 0 0 10" Grid.Row="1" BorderBrush="{StaticResource Black50}" BorderThickness="1" CornerRadius="4" >
+                    <Grid>
+                        <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                <Image.RenderTransform>
+                                    <RotateTransform x:Name="noFreeze" />
+                                </Image.RenderTransform>
+                                <Image.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Image.Triggers>
+                            </Image>
+                        </Grid>
+
+                        <Grid Panel.ZIndex="2">
+                            <Border CornerRadius="2" Background="White" Padding="4,0" Margin="16,30" Width="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel>
+                                    <TextBlock x:Name="ZoomIn" Text="+" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomIn_PreviewMouseDown" />
+                                    <Separator  />
+                                    <TextBlock x:Name="ZoomOut" Text="-" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomOut_PreviewMouseDown" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <gmaps:GMapControl x:Name="MainMap" Loaded="MainMap_Loaded"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Button Style="{StaticResource BtnWrapper}" Click="ShowFilter_Click" x:Name="ToggleShowFilter" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 15" Visibility="Collapsed">
+            <Border BorderBrush="{StaticResource Cerulean}" Background="{StaticResource Cerulean}" BorderThickness="1" CornerRadius="2 0 0 2" Width="10" Height="35" VerticalAlignment="Center">
+                <Border Background="White" CornerRadius="50 0 0 50" Width="4" Height="7" Margin="2 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            </Border>
+        </Button>
+
+        <Border Margin="0 5 0 0" x:Name="FilterSection" Background="White" BorderBrush="{StaticResource Black10}" BorderThickness="1 0 0 0" Grid.Column="1" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="91"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+                    <Button Style="{StaticResource BtnWrapper}" Click="HideFilter_Click">
+                        <Border BorderBrush="{StaticResource Cerulean}" Background="{StaticResource Cerulean}" BorderThickness="1" CornerRadius="0 2 2 0" Width="10" Height="35" VerticalAlignment="Center">
+                            <Border Background="White" CornerRadius="0 50 50 0" Width="4" Height="7" Margin="2 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        </Border>
+                    </Button>
+                    <TextBlock Text="Filter" Style="{StaticResource Title}" LineHeight="16" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                </StackPanel>
+                <Border Grid.Row="1" Background="{StaticResource Black10}">
+                    <StackPanel Margin="16 20 12 20">
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" FontWeight="DemiBold" Text="Jenis Peta" />
+                        <Grid Margin="0 0 0 0">
+                            <ComboBox Background="White" x:Name="JenisPeta" Width="215" Style="{StaticResource ComboBoxInputForm}" ItemsSource="{Binding JenisPetaList}" SelectedValue="{Binding SelectedJenisPeta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock DataContext="{Binding ElementName=JenisPeta, Path=Text}" Text="Pilih salah satu" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+
+                        <StackPanel Margin="0 20 0 0" Visibility="{Binding IsShowPeriodeOption, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" Foreground="Black" FontWeight="DemiBold" Text="Periode Supervisi" />
+                            <Grid Margin="0 0 0 0">
+                                <ComboBox x:Name="Periode" Width="215" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" ItemsSource="{Binding PeriodeList}" DisplayMemberPath="NamaPeriode" SelectedValue="{Binding SelectedPeriode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="White"/>
+                                <TextBlock DataContext="{Binding ElementName=Periode, Path=Text}" Text="Pilih periode" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <StackPanel Grid.Row="2" Margin="16 20 12 20">
+                    <CheckBox Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsRayonChecked}" Content="Rayon" Margin="0 0 0 5" FontSize="12"/>
+                    <Grid Margin="0 0 0 0" IsEnabled="{Binding IsRayonChecked}">
+                        <ComboBox x:Name="Rayon" Width="215" Style="{StaticResource ComboBoxInputForm}" DisplayMemberPath="NamaRayon" ItemsSource="{Binding RayonList}" SelectedValue="{Binding SelectedRayon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock DataContext="{Binding ElementName=Rayon, Path=Text}" Text="Pilih salah satu" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+                    <Border Height="20" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Margin="0 1 0 0" Background="White">
+                    <Button Style="{StaticResource ButtonSecondarySmall}" Content="Terapkan Filter" Margin="8 17 8 0" Click="Filter_Click"/>
+                    <Button Style="{StaticResource ButtonPlain}" Height="30" FontSize="10" Content="Atur Ulang Filter" Click="Reset_Filter_Click" Margin="8 7" Background="White" Foreground="{StaticResource SecondaryBlue}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

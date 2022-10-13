@@ -1,0 +1,229 @@
+﻿<Window
+    x:Class="SiPintar.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="clr-namespace:SiPintar.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    xmlns:view="clr-namespace:SiPintar.Views.Main"
+    xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Main"
+    Title="PDAM PINTAR"
+    Width="960"
+    Height="540"
+    md:TransitionAssist.DisableTransitions="True"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    WindowState="{Binding WindowState, Mode=TwoWay}"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/MainStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+
+            <!--  Data template for views  -->
+            <DataTemplate DataType="{x:Type viewmodel:DesktopViewModel}">
+                <view:DesktopView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:WebViewModel}">
+                <view:WebView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DaftarPenggunaViewModel}">
+                <view:DaftarPenggunaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:ProfilSayaViewModel}">
+                <view:ProfilSayaView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:ManajementParafViewModel}">
+                <view:ManajementParafView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <Border BorderBrush="{StaticResource Gray50}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,0"
+                helper:EnableDragHelper.EnableDrag="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="130" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    Padding="15,5,0,0"
+                    Background="{StaticResource BaseApp}">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Foreground="White"
+                        Style="{StaticResource Title}"
+                        Text="PDAM PINTAR" />
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    Margin="-1,0,0,0"
+                    Background="{StaticResource BaseApp}">
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="40" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="2" Style="{StaticResource WindowOption}">
+                            <ToggleButton Style="{StaticResource MinimizeButton}" />
+                        </Border>
+                        <Border Grid.Column="3" Style="{StaticResource WindowOption}">
+                            <ToggleButton Checked="ToggleButton_Checked" Style="{StaticResource CloseNoAction}" />
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <md:DialogHost
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Panel.ZIndex="1"
+                DialogTheme="Inherit"
+                Identifier="MainRootDialog" />
+
+            <Grid
+                Grid.Row="1"
+                Width="200"
+                Margin="0"
+                VerticalAlignment="Top"
+                Background="White">
+                <Grid.Resources>
+                    <Style BasedOn="{StaticResource SideNavigationMenu}" TargetType="mde:SideNavigation" />
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer
+                    Grid.Row="0"
+                    Height="510"
+                    VerticalScrollBarVisibility="Auto">
+                    <mde:SideNavigation
+                        x:Name="Sidebar"
+                        Margin="0,10"
+                        Items="{Binding Path=NavigationItems, Mode=TwoWay}"
+                        NavigationItemSelected="NavigationItemSelectedHandler"
+                        SelectionCornerRadius="8" />
+                </ScrollViewer>
+
+
+
+
+                <Grid Grid.Row="2">
+                    <Button
+                        Margin="20"
+                        HorizontalAlignment="Left"
+                        Command="{Binding OnOpenLogoutDialogCommand}"
+                        Style="{StaticResource BtnWrapper}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0"
+                                Foreground="Red"
+                                Kind="Logout" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource DateCaption}"
+                                Text="Keluar Aplikasi" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Button
+                        Margin="20"
+                        HorizontalAlignment="Left"
+                        Click="CheckForUpdatesButton_Click"
+                        Style="{StaticResource BtnWrapper}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0"
+                                Foreground="Red"
+                                Kind="Update" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource DateCaption}"
+                                Text="Cek Update Aplikasi" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Button
+                        x:Name="UpdateButton"
+                        Margin="20"
+                        HorizontalAlignment="Left"
+                        Click="UpdateButton_Click"
+                        Style="{StaticResource BtnWrapper}">
+                        <StackPanel Orientation="Horizontal">
+                            <md:PackIcon
+                                Width="20"
+                                Height="20"
+                                Margin="0"
+                                Foreground="Red"
+                                Kind="Update" />
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource DateCaption}"
+                                Text="Update Aplikasi" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="5">
+                    <TextBlock
+                        x:Name="CurrentVersionTextBox"
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource DateCaption}"
+                        Text="versi" />
+                </Grid>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,0">
+                <ContentControl Content="{Binding PageViewModel}" />
+                <other:SnackbarView x:Name="Snackbar" Visibility="Collapsed" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

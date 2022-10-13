@@ -1,0 +1,227 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.RekeningLimbah.TerbitkanPelangganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="800" Height="634" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Terbitkan Pelanggan"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                            <Image.RenderTransform>
+                                <RotateTransform x:Name="noFreeze" />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+
+                    <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptyDialog, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <TextBlock Style="{StaticResource SmallTitle}" TextAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource Black70}">
+                                Belum ada data pelanggan limbah pada periode ini.<LineBreak />
+                                Silahkan pilih periode lain pada menu filter.
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+
+                    <DataGrid
+                            IsReadOnly="True"
+                            ItemsSource="{Binding TerbitkanPelangganList, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource DataGridRegular}"
+                            CanUserSortColumns="False"
+                            EnableRowVirtualization="True"
+                            EnableColumnVirtualization="True"
+                            md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                            AutoGenerateColumns="False" 
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                            HeadersVisibility="Column"
+                            SelectionMode="Extended"
+                            HorizontalScrollBarVisibility="Auto"
+                            HorizontalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
+                            CanUserAddRows="False">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns >
+                            <DataGridCheckBoxColumn
+                                IsReadOnly="False"
+                                Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                                <DataGridCheckBoxColumn.Header>
+                                    <Border Background="Transparent">
+                                        <CheckBox HorizontalAlignment="Center" Padding="7 0" IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.IsSelectAllTerbitkanPelanggan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <CheckBox.Resources>
+                                                <!--Unchecked state-->
+                                                <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="White"/>
+                                                <!--Checked state-->
+                                                <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="White"/>
+                                            </CheckBox.Resources>
+                                        </CheckBox>
+                                    </Border>
+                                </DataGridCheckBoxColumn.Header>
+                                <DataGridCheckBoxColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridCheckBoxColumn.HeaderStyle>
+                            </DataGridCheckBoxColumn>
+                            <DataGridTextColumn Binding="{Binding NomorLimbah}" Header="NO. LIMBAH" Width="150" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding NoSamb, FallbackValue='-'}" Header="NO. SAMBUNGAN" Width="150" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Nama}" Header="NAMA" Width="150" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding Alamat}" Header="ALAMAT" Width="150" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding KodeTarifLimbah}" Header="TARIF" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding NamaRayon, FallbackValue='-'}" Header="RAYON" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding NamaWilayah}" Header="WILAYAH" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding NamaKolektif}" Header="KOLEKTIF" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style>
+                                        <Setter Property="TextBox.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding NoTelp, FallbackValue='-'}" Width="100" Header="NO. TELEPON" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding NoHp, FallbackValue='-'}" Width="100" Header="NO. HP" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding Email, FallbackValue='-'}" Width="100" Header="EMAIL" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding NoKtp, FallbackValue='-'}" Width="100" Header="KTP" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding Keterangan, FallbackValue='-'}" Width="150" Header="KETERANGAN" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding NamaFlag}" Header="FLAG" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                            <DataGridTextColumn Binding="{Binding NamaStatus}" Header="STATUS" Width="100" ElementStyle="{StaticResource TextDataGridCellRegular}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Border Grid.Row="1" Background="{StaticResource AthensGray}" CornerRadius="0 0 5 5" Margin="0 0 0 0" BorderBrush="{StaticResource Gray50}" BorderThickness="1 0 1 1">
+                        <TextBlock Style="{StaticResource CaptionFormActiveSmaller}" Foreground="Black" Padding="10" FontFamily="{StaticResource MontserratRegular}">
+                    <Run Text="Menampilkan" FontWeight="Light" />
+                    <Run Text="{Binding TerbitkanPelangganList.Count, Mode=OneWay, StringFormat='{}{0:#,0}', FallbackValue='0'}" />
+                    <Run Text="data" />
+                        </TextBlock>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="180" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                        <Button Command="{Binding OnRefreshTerbitkanPelangganCommand}" Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" Margin="4" />
+                                <TextBlock Text="Refresh" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ButtonPlain}" Background="White" Margin="0" Height="60" Padding="8 5">
+                            <StackPanel Orientation="Vertical">
+                                <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_print.png" Margin="4" />
+                                <TextBlock Text="Cetak" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <Grid Grid.Column="1" Margin="15 0">
+                        <Button x:Name="OkButton" Content="Terbitkan Yang Dipilih" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="OkButton_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                        <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                <other:SpinnerLoadingView Panel.ZIndex="2" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                </Grid>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

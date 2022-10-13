@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.MasterData.MasterDataKeuangan.SaldoAwal.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost Identifier="KoreksiSaldoAwalDialog" DialogTheme="Inherit" >
+        <Grid>
+            <Border Width="400" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppAkuntansiDark}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Koreksi Rekonsiliasi Kas &amp; Bank"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Border CornerRadius="2" Background="White" Height="16">
+                                    <TextBlock Foreground="{StaticResource BaseAppAkuntansi}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                                <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Margin="30">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal Rekonsiliasi" LineHeight="20" VerticalAlignment="Center"/>
+                                <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                                    <Grid>
+                                        <DatePicker x:Name="TglPermohonan" SelectedDateFormat="Long" SelectedDate="{Binding FilterTglRekonsiliasi}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0" IsEnabled="False"/>
+                                        <TextBlock DataContext="{Binding ElementName=TglPermohonan, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Margin="0,8,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Saldo Awal di KAS</TextBlock>
+                                <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                <Grid Grid.Column="2">
+                                    <TextBox x:Name="SaldoAwalKas" Text="{Binding SaldoAwalForm.TotalSaldoKasBank, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}"
+                                             PreviewTextInput="Dynamic_PreviewTextInput"
+                                             GotFocus="Dynamic_GotFocus"
+                                             LostFocus="Dynamic_LostFocus"
+                                             Style="{StaticResource TextBoxInputForm}" TextAlignment="Right" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                        <ListView x:Name="ListDynamic" ItemsSource="{Binding SaldoAwalForm.SaldoAwalRekon}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,8,0,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="170"/>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding NamaBank}" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464"/>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                            <Grid Grid.Column="2" x:Name="Parent">
+                                                <TextBox x:Name="Saldo" Text="{Binding JumlahSaldo, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}"
+                                                         PreviewTextInput="Dynamic_PreviewTextInput"
+                                                         GotFocus="Dynamic_GotFocus"
+                                                         LostFocus="Dynamic_LostFocus"
+                                                         Width="{Binding ElementName=Parent, Path=ActualWidth}"
+                                                         Style="{StaticResource TextBoxInputForm}" TextAlignment="Right" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Margin="0,25,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Total Saldo Awal</TextBlock>
+                                <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                <Grid Grid.Column="2">
+                                    <TextBlock x:Name="TotalSaldoAwal" Text="0" Style="{StaticResource BigTitle}" FontSize="18" TextAlignment="Right" Foreground="#028DDB" TextWrapping="Wrap" Width="{Binding ElementName=TglPermohonan, Path=ActualWidth}"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid Grid.Row="2" Margin="10,20,30,20">
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                            <Grid>
+                                <Button x:Name="OkButton" Content="Simpan" Command="{Binding OnConfirmFormCommand}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                    </Viewbox>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

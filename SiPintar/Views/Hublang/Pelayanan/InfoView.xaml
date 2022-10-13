@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.InfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+             xmlns:viewmodel="clr-namespace:SiPintar.ViewModels.Hublang.Pelayanan.Info"
+             xmlns:view="clr-namespace:SiPintar.Views.Hublang.Pelayanan.Info"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <!-- Data template for views -->
+            <DataTemplate DataType="{x:Type viewmodel:HistoriPembacaanViewModel}">
+                <view:HistoriPembacaanView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:HistoriPembayaranViewModel}">
+                <view:HistoriPembayaranView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:HistoriPermohonanViewModel}">
+                <view:HistoriPermohonanView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:DataLanggananViewModel}">
+                <view:DataLanggananView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:TagihanViewModel}">
+                <view:TagihanView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodel:DenahViewModel}">
+                <view:DenahView />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="OkButton" Command="{Binding OnOpenPilihPelangganCommand}" VerticalAlignment="Top" Content="Pilih Pelanggan"  Margin="5,20,0,0" Style="{StaticResource ButtonPrimary}" Height="50" Width="200"  IsEnabled="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+
+        <Grid Grid.Column="0" Margin="0,75,0,0">
+            <Border Width="200" Height="Auto" CornerRadius="5" BorderThickness="0.35" BorderBrush="#646464" VerticalAlignment="Top" Margin="16,10,10,0" Background="White" Visibility="{Binding IsFullPage, Converter={StaticResource BooleanToCollapseConverter}}">
+                <Border.Resources>
+                    <Style TargetType="mde:SideNavigation" BasedOn="{StaticResource SideNavigationMenu}"/>
+                </Border.Resources>
+                <mde:SideNavigation Margin="0 10" Items="{Binding Path=NavigationItems, Mode=TwoWay}"
+                            NavigationItemSelected="NavigationItemSelectedHandler" x:Name="Sidebar"
+                            SelectionCornerRadius="8">
+                </mde:SideNavigation>
+            </Border>
+        </Grid>
+
+        <ContentControl Margin="0,10,16,0" Grid.Column="1" Content="{Binding PageViewModel}" />
+
+    </Grid>
+</UserControl>

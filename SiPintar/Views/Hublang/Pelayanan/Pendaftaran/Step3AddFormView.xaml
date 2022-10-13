@@ -1,0 +1,336 @@
+﻿<UserControl
+    x:Class="SiPintar.Views.Hublang.Pelayanan.Pendaftaran.Step3AddFormView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:SiPintar.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+    mc:Ignorable="d">
+
+    <Grid Background="White">
+        <StackPanel Margin="20,10,20,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,15,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource SmallTitle}"
+                        Text="Biaya Pendaftaran" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="BiayaPendaftaran"
+                            Grid.ColumnSpan="2"
+                            Padding="25,0,0,0"
+                            IsEnabled="False"
+                            PreviewKeyUp="CheckForm_PreviewKeyUp"
+                            Style="{StaticResource TextBoxInputForm}" />
+                        <TextBlock
+                            Margin="10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Style="{StaticResource CaptionFormIdle}"
+                            Text="Rp" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,15,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource SmallTitle}"
+                        Text="Biaya Opname" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="BiayaOpname"
+                            Grid.ColumnSpan="2"
+                            Padding="25,0,0,0"
+                            IsEnabled="False"
+                            PreviewKeyUp="CheckForm_PreviewKeyUp"
+                            Style="{StaticResource TextBoxInputForm}" />
+                        <TextBlock
+                            Margin="10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Style="{StaticResource CaptionFormIdle}"
+                            Text="Rp" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="0,0,15,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource SmallTitle}"
+                        Text="Biaya Formulir" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="BiayaFormulir"
+                            Grid.ColumnSpan="2"
+                            Padding="25,0,0,0"
+                            IsEnabled="False"
+                            PreviewKeyUp="CheckForm_PreviewKeyUp"
+                            Style="{StaticResource TextBoxInputForm}" />
+                        <TextBlock
+                            Margin="10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Style="{StaticResource CaptionFormIdle}"
+                            Text="Rp" />
+                    </Grid>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Margin="0,0,0,0">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource SmallTitle}"
+                        Text="Biaya Jaminan" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="BiayaJaminan"
+                            Grid.ColumnSpan="2"
+                            Padding="25,0,0,0"
+                            IsEnabled="False"
+                            PreviewKeyUp="CheckForm_PreviewKeyUp"
+                            Style="{StaticResource TextBoxInputForm}" />
+                        <TextBlock
+                            Margin="10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Style="{StaticResource CaptionFormIdle}"
+                            Text="Rp" />
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Border Height="20" />
+
+            <Border Padding="15,15,15,20" Background="{StaticResource Black10}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="30" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="PPN Biaya Pendaftaran" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding PpnBiayaPendaftaranForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="PPN Biaya Opname" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding PpnBiayaOpnameForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="PPN Biaya Formulir" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding PpnBiayaFormulirForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="3"
+                        Margin="0,0,0,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="PPN Biaya Jaminan" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding PpnBiayaJaminanForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+
+
+                    <StackPanel
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Total Biaya Pendaftaran" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding TotalBiayaPendaftaranForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Total Biaya Opname" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding TotalBiayaOpnameForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Margin="0,0,15,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Total Biaya Formulir" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding TotalBiayaFormulirForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Margin="0,0,0,0">
+                        <TextBlock
+                            LineHeight="18"
+                            Style="{StaticResource CaptionSmallBody}"
+                            Text="Total Biaya Jaminan" />
+                        <TextBlock
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            LineHeight="18"
+                            Style="{StaticResource SmallTitle}"
+                            TextWrapping="Wrap">
+                            <Run Text="Rp" />
+                            <Run Text="{Binding TotalBiayaJaminanForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                            <Run Text=",-" />
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Height="25" />
+
+            <StackPanel>
+                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Total Biaya Sambungan Baru" />
+                <TextBlock
+                    Margin="0,3,0,0"
+                    FontSize="20"
+                    Foreground="{StaticResource SecondaryBlue}"
+                    LineHeight="18"
+                    Style="{StaticResource SmallTitle}"
+                    TextWrapping="Wrap">
+                    <Run Text="Rp" />
+                    <Run Text="{Binding TotalBiayaSambunganBaruForm, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                </TextBlock>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <md:PackIcon Foreground="{StaticResource SecondaryBlue}" Kind="InfoCircle" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        FontSize="11"
+                        Style="{StaticResource CaptionSmallBody}"
+                        Text="Tagihan dapat dibayarkan di Loket" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

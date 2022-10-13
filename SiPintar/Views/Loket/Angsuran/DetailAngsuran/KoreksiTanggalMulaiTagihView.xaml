@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="SiPintar.Views.Loket.Angsuran.DetailAngsuran.KoreksiTanggalMulaiTagihView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Loket.Angsuran.DetailAngsuran"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <Grid>
+        <Border Width="256" Height="220" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="21 20 0 0">
+                            <TextBlock x:Name="DialogHeader" Style="{StaticResource BigTitle}" FontSize="13" LineHeight="18" Text="Koreksi Tanggal Mulai Tagih" />
+                            <TextBlock x:Name="DialogSubHeader" Style="{StaticResource SmallTitle}" Margin="0 6 0 0" LineHeight="18" FontSize="12" Text="{Binding DataDetailAngsuranSelected.Termin, StringFormat='Termin {0}'}" Foreground="{StaticResource Cerulean}" />
+                        </StackPanel>
+                        <Button Grid.Column="1" Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="16" Height="16" Padding="0" Margin="0 12 15 0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                        </Button>
+                    </Grid>
+
+                    <StackPanel Margin="20">
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Mulai Tagih" LineHeight="18"/>
+                        <Border BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Margin="20 0 20 29" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="CancelButton" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" Margin="0 0 8 0"/>
+                        <Button x:Name="YesButton" Command="{Binding OnSubmitTglMulaiTagihCommand}" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Simpan"/>
+                        <!--<Button x:Name="YesButton" Command="{Binding OnSubmitTglMulaiTagihCommand}" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Simpan"/>-->
+                    </StackPanel>
+
+                </StackPanel>
+
+                <Border Background="{StaticResource BaseAppLoket}" Height="5" Grid.Row="2"/>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</UserControl>
+

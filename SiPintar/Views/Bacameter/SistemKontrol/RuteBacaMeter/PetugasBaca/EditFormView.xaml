@@ -1,0 +1,170 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.SistemKontrol.RuteBacaMeter.PetugasBaca.EditFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" 
+             d:DesignHeight="657" d:DesignWidth="920">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:NullVisibilityConverter x:Key="NullVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter"
+                FirstBrush="#FFFFFF" SecondBrush="#F4F4F5" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="500" Height="450">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBacameter}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Ubah Jadwal Baca"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppBacameter}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Border Grid.Row="1" Margin="16,20,16,0" Background="{StaticResource Black10}" BorderBrush="{StaticResource Black50}" BorderThickness="0.6" Padding="15 16 15 22">
+            <StackPanel>
+                <StackPanel Margin="0 0 0 15">
+                    <TextBlock Text="Rayon" FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Foreground="Black" Margin="0" />
+                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource SecondaryBlue}" FontWeight="Bold">
+                        <Run Text="{Binding SelectedJadwal.NamaRayon, Mode=OneWay, FallbackValue='-'}"/>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel>
+                    <CheckBox Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsTglBacaChecked}" FontSize="10" Content="Tentukan Tanggal Mulai Baca" Margin="0 5 50 0"/>
+                    <Grid Margin="0 10 0 0" IsEnabled="{Binding IsTglBacaChecked}">
+                        <ComboBox x:Name="TglBaca" HorizontalAlignment="Stretch" Background="{Binding IsTglBacaChecked, Converter={StaticResource BooleanToBrushConverter}}" Style="{StaticResource ComboBoxInputForm}" Validation.ErrorTemplate="{x:Null}" ItemsSource="{Binding Parent.TanggalList}" DisplayMemberPath="Value" SelectedValue="{Binding TanggalBacaForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock DataContext="{Binding ElementName=TglBaca, Path=Text}" Text="Pilih tanggal baca" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                    </Grid>
+
+                    <TextBlock Margin="0 15 0 0" Text="Toleransi" FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Foreground="Black" />
+                    <Border IsEnabled="{Binding IsTglBacaChecked}" BorderBrush="{StaticResource Gray70}" BorderThickness="1" Padding="10 10 10 20">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Minus" FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Foreground="Black" Margin="0" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0" Tag="SubtractMinus" Click="Subtract_Click" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="0" Padding="8">
+                                            <md:PackIcon Kind="Minus" />
+                                        </Button>
+                                        <Grid Grid.Column="1" Margin="5 0 5 0" IsEnabled="{Binding IsKodeRayonChecked}">
+                                            <TextBox x:Name="ToleransiMinus" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding ToleransiMinus, Mode=TwoWay, FallbackValue='0'}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="Toleransi_PreviewKeyUp"/>
+                                            <TextBlock DataContext="{Binding ElementName=ToleransiMinus, Path=Text}" Text="Toleransi Minus" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                        <Button Grid.Column="2" Tag="AddMinus" Click="Add_Click" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="0" Padding="8">
+                                            <md:PackIcon Kind="PlusBold" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Plus" FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Foreground="Black" Margin="0" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Tag="SubtractPlus" Click="Subtract_Click" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="0" Padding="8">
+                                            <md:PackIcon Kind="Minus" />
+                                        </Button>
+                                        <Grid Grid.Column="1" Margin="5 0 5 0" IsEnabled="{Binding IsKodeRayonChecked}">
+                                            <TextBox x:Name="ToleransiPlus" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding ToleransiPlus, Mode=TwoWay, FallbackValue='0'}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="Toleransi_PreviewKeyUp"/>
+                                            <TextBlock DataContext="{Binding ElementName=ToleransiPlus, Path=Text}" Text="Toleransi Plus" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                        <Button Grid.Column="2" Tag="AddPlus" Click="Add_Click" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="0" Padding="8">
+                                            <md:PackIcon Kind="PlusBold" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Margin="0 10 0 0" x:Name="InfoSection" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Waktu Awal Baca" FontWeight="DemiBold" Style="{StaticResource BigTitleForNumber}" FontSize="12" Margin="0" LineHeight="1" Foreground="Gray" />
+                                    <TextBlock FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Margin="0">
+                                        <Run Text="Setiap tanggal"/>
+                                        <Run x:Name="AwalInfo" Text="0"/>
+                                        <Run Text="tiap bulan"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Batas Akhir Baca" FontWeight="DemiBold" Style="{StaticResource BigTitleForNumber}" FontSize="12" Margin="0" LineHeight="1" Foreground="Gray" />
+                                    <TextBlock FontWeight="DemiBold" Style="{StaticResource CaptionSmallBody}" Margin="0">
+                                        <Run Text="Setiap tanggal"/>
+                                        <Run x:Name="AkhirInfo" Text="0"/>
+                                        <Run Text="tiap bulan"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2" Margin="16,10,16,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" Margin="30 5 0 5" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                </Grid>
+                <Grid>
+                    <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="OkButton_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Grid>
+                            <TextBlock Text="Proses" />
+                        </Grid>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <md:DialogHost Identifier="RuteBacaMeterSubDialog" DialogTheme="Inherit" Grid.RowSpan="4" />
+    </Grid>
+</UserControl>

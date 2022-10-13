@@ -1,0 +1,326 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Atribut.RumusVolume.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Width="600" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPerencanaan}">
+                <Grid Margin="10 8">
+                    <Grid>
+                        <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Tambah/Koreksi Paket RAB"/>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Border CornerRadius="2" Background="White" Height="16" Margin="5 0">
+                            <TextBlock Foreground="{StaticResource BaseAppPerencanaan}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+
+                        <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="20 15">
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Kode Ongkos" LineHeight="15" Margin="0,0,0,3"/>
+                        <Grid>
+                            <ComboBox x:Name="KodeOngkos" 
+                                    Style="{StaticResource ComboBoxInputForm}" 
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding SelectedOngkos}" 
+                                    DisplayMemberPath="KodeOngkos"
+                                    ItemsSource="{Binding OngkosList, Mode=OneWay}"
+                                    SelectionChanged="Ongkos_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                            </ComboBox>
+                            <TextBlock DataContext="{Binding ElementName=KodeOngkos, Path=SelectedItem}" Text="Pilih salah satu" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Ongkos" LineHeight="15" Margin="0,0,0,3"/>
+                        <Grid>
+                            <ComboBox x:Name="NamaOngkos" 
+                                    Style="{StaticResource ComboBoxInputForm}" 
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding SelectedOngkos}" 
+                                    DisplayMemberPath="NamaOngkos"
+                                    ItemsSource="{Binding OngkosList, Mode=OneWay}"
+                                    SelectionChanged="Ongkos_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                            </ComboBox>
+                            <TextBlock DataContext="{Binding ElementName=NamaOngkos, Path=SelectedItem}" Text="Pilih salah satu" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <Border Height="1" Background="{StaticResource Gray10}" Margin="-20 0" />
+
+                <Grid Margin="0,15,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="0" x:Name="Rumus1" VerticalAlignment="Center" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsBatas1Active}" Content="Rumus 1" Margin="0 10 0 0" Checked="Rumus_Checked" Unchecked="Rumus_Checked"/>
+
+                    <Grid Grid.Column="1" IsEnabled="{Binding IsBatas1Active}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BB 1" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BB1" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Bb1, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BB1, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BA 1" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BA1" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Ba1, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BA1, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Volume 1" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="VOL1" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Volum1, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=VOL1, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="Rumus2" VerticalAlignment="Center" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsBatas2Active}" Content="Rumus 2" Margin="0 10 0 0" Checked="Rumus_Checked" Unchecked="Rumus_Checked" />
+
+                    <Grid Grid.Column="1" IsEnabled="{Binding IsBatas2Active}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BB 2" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BB2" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Bb2, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BB2, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BA 2" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BA2" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Ba2, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BA2, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Volume 2" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="VOL2" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Volum2, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=VOL2, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="Rumus3" VerticalAlignment="Center" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsBatas3Active}" Content="Rumus 3" Margin="0 10 0 0" Checked="Rumus_Checked" Unchecked="Rumus_Checked"/>
+
+                    <Grid Grid.Column="1" IsEnabled="{Binding IsBatas3Active}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BB 3" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BB3" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Bb3, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BB3, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BA 3" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BA3" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Ba3, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BA3, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Volume 3" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="VOL3" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Volum3, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=VOL3, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="Rumus4" VerticalAlignment="Center" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsBatas4Active}" Content="Rumus 4" Margin="0 10 0 0" Checked="Rumus_Checked" Unchecked="Rumus_Checked"/>
+
+                    <Grid Grid.Column="1" IsEnabled="{Binding IsBatas4Active}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BB 4" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BB4" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Bb4, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BB4, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BA 4" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BA4" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Ba4, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BA4, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Volume 4" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="VOL4" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Volum4, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=VOL4, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox x:Name="Rumus5" VerticalAlignment="Center" Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsBatas5Active}" Content="Rumus 5" Margin="0 10 0 0" Checked="Rumus_Checked" Unchecked="Rumus_Checked" />
+
+                    <Grid Grid.Column="1" IsEnabled="{Binding IsBatas5Active}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BB 5" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BB5" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Bb5, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BB5, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="BA 5" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="BA5" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Ba5, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=BA5, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Volume 5" LineHeight="15" Margin="0,0,0,5"/>
+                            <Grid>
+                                <TextBox x:Name="VOL5" Padding="5 0 5 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormData.Volum5, FallbackValue='0', ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" TextChanged="CheckForm_TextChanged" />
+                                <TextBlock DataContext="{Binding ElementName=VOL5, Path=Text}" Text="0,00" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Border Height="1" Background="{StaticResource Gray10}" Margin="-20 15" />
+                
+                <StackPanel Margin="30,0,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                    </Grid>
+                    <Grid>
+                        <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                        <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                <other:SpinnerLoadingView Panel.ZIndex="2" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

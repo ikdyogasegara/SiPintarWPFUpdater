@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.RekeningL2T2.KonfirmasiVerifikasiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/LoginStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <Border Width="300" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="30">
+                    <TextBlock Text="Masukkan Password Untuk Verifikasi" Style="{StaticResource CaptionBodyBlack}" HorizontalAlignment="Center" Margin="0 10 0 10"/>
+                    <Grid>
+                        <PasswordBox x:Name="TxtPassword" PasswordChanged="TxtPassword_PasswordChanged" Style="{StaticResource PasswordBoxInputForm}" Validation.ErrorTemplate="{x:Null}"/>
+                        <TextBlock x:Name="PasswordPlaceholder" DataContext="{Binding ElementName=TxtPassword}" Text="Masukkan password user billing" Padding="0" Foreground="{StaticResource Gray100}" Style="{StaticResource PasswordPlaceholder}" />
+                    </Grid>
+                    <StackPanel Grid.Row="2" Margin="0 15 0 0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Button x:Name="YesButton" Click="VerifikasiPassword" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Proses Sekarang" md:ButtonAssist.CornerRadius="13" />
+                        <Border Width="7" />
+                        <Button x:Name="CancelButton" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Width="110" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" md:ButtonAssist.CornerRadius="13" />
+                    </StackPanel>
+                </StackPanel>
+                <Border Background="{StaticResource BaseAppBilling}" Height="5" Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

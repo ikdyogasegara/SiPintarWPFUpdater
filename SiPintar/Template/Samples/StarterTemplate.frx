@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="12/02/2021 15:24:07" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="DSource1" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource2" Alias="DSource2" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource3" Alias="DSource3" ReferenceName="Data.DSource3" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource4" Alias="DSource4" ReferenceName="Data.DSource4" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource5" Alias="DSource5" ReferenceName="Data.DSource5" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource6" Alias="DSource6" ReferenceName="Data.DSource6" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource7" Alias="DSource7" ReferenceName="Data.DSource7" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource8" Alias="DSource8" ReferenceName="Data.DSource8" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource9" Alias="DSource9" ReferenceName="Data.DSource9" DataType="System.Int32" Enabled="false"/>
+    <TableDataSource Name="DSource10" Alias="DSource10" ReferenceName="Data.DSource10" DataType="System.Int32" Enabled="false"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="718.2" Height="151.2">
+      <TextObject Name="Text1" Left="160.65" Top="56.7" Width="359.1" Height="56.7" Text="TEMPLATE BELUM DI SET" Font="Arial, 20pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

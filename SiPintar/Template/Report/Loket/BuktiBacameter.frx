@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/12/2021 15:33:51" ReportInfo.Modified="01/18/2021 16:05:02" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="PDAMName" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Periode" DataType="System.String"/>
+      <Column Name="StanAwal" DataType="System.String"/>
+      <Column Name="StanAkhir" DataType="System.String"/>
+      <Column Name="DifotoOleh" DataType="System.String"/>
+      <Column Name="Picture" DataType="System.Byte[]"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="148" PaperHeight="210" FirstPageSource="15" OtherPagesSource="15" LastPageSource="15" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="483.84" Height="614.25" DataSource="MainData">
+      <TableObject Name="Table1" Left="103.95" Top="94.5" Width="274.05" Height="94.5">
+        <TableColumn Name="Column1" Width="116.55"/>
+        <TableColumn Name="Column2" Width="12.6"/>
+        <TableColumn Name="Column3" Width="144.9"/>
+        <TableRow Name="Row0">
+          <TableCell Name="Cell19" Text="Periode" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+          <TableCell Name="Cell20" Font="Arial, 9pt"/>
+          <TableCell Name="Cell21" Text="[MainData.Periode]" Font="Arial, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Text="Nama Pelanggan" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+          <TableCell Name="Cell2" Font="Arial, 9pt"/>
+          <TableCell Name="Cell3" Text="[MainData.Nama]" Font="Arial, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Text="Stan Akhir" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+          <TableCell Name="Cell7" Font="Arial, 9pt"/>
+          <TableCell Name="Cell8" Text="[MainData.StanAkhir]" Font="Arial, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell11" Text="Stan Awal" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+          <TableCell Name="Cell12" Font="Arial, 9pt"/>
+          <TableCell Name="Cell13" Text="[MainData.StanAwal]" Font="Arial, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Text="Difoto oleh" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+          <TableCell Name="Cell17" Font="Arial, 9pt"/>
+          <TableCell Name="Cell18" Text="[MainData.DifotoOleh]" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text1" Top="28.35" Width="481.95" Height="18.9" Text="Bukti Hasil Baca Meter" HorzAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <LineObject Name="Line1" Left="85.05" Top="75.6" Width="302.4" Border.Color="Silver" Diagonal="true"/>
+      <TextObject Name="Text5" Top="47.25" Width="481.95" Height="18.9" Text="[MainData.PDAMName]" HorzAlign="Center" Font="Arial, 9pt" TextFill.Color="DodgerBlue"/>
+      <TextObject Name="Text7" Top="453.6" Width="481.95" Height="18.9" Text="Dicetak tanggal : [Day([Date])] [MonthName(Month([Date]))] [Year([Date])], [Hour([Date])]:[Minute([Date])] WIB" HorzAlign="Center" Font="Arial, 9pt" TextFill.Color="DimGray"/>
+      <PictureObject Name="Picture1" Left="85.05" Top="207.9" Width="302.4" Height="226.8" DataColumn="MainData.Picture" SizeMode="CenterImage"/>
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="09/26/2022 15:40:22" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="MainData" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="BlnIniSambAktifAwal" DataType="System.Decimal"/>
+      <Column Name="BlnIniSpkPutusDikeluarkan" DataType="System.Decimal"/>
+      <Column Name="BlnIniSpkPutusDilaksanakan" DataType="System.Decimal"/>
+      <Column Name="BlnIniSambKembali" DataType="System.Decimal"/>
+      <Column Name="BlnIniSambBaru" DataType="System.Decimal"/>
+      <Column Name="BlnIniRubahGol" DataType="System.Decimal"/>
+      <Column Name="BlnIniSambAktifAkhir" DataType="System.Decimal"/>
+      <Column Name="BlnIniSambAktifAkhirPos" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniSambAktifAwal" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniSpkPutusDikeluarkan" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniSpkPutusDilaksanakan" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniSambKembali" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniSambBaru" DataType="System.Decimal"/>
+      <Column Name="SdBlnIniRubahGol" DataType="System.Decimal"/>
+      <Column Name="KodeWilayah" DataType="System.String"/>
+      <Column Name="NamaWilayah" DataType="System.String"/>
+      <Column Name="KodeGol" DataType="System.String"/>
+      <Column Name="NamaGol" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource2" Alias="MasterPeriode" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="true">
+      <Column Name="KodePeriode" DataType="System.Int32"/>
+      <Column Name="NamaPeriode" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource3" Alias="Label Laporan" ReferenceName="Data.DSource3" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="Bulan" DataType="System.Int32"/>
+    <Parameter Name="FullName" DataType="System.String"/>
+    <Parameter Name="UserName" DataType="System.String"/>
+    <Parameter Name="NoIdentitas" DataType="System.String"/>
+    <Parameter Name="NamaLoketLogin" DataType="System.String"/>
+    <Total Name="TotalBlnIniSambAktifAwal" Expression="[MainData.BlnIniSambAktifAwal]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSpkPutusDikeluarkan" Expression="[MainData.BlnIniSpkPutusDikeluarkan]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSpkPutusDilaksanakan" Expression="[MainData.BlnIniSpkPutusDilaksanakan]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSambKembali" Expression="[MainData.BlnIniSambKembali]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSambBaru" Expression="[MainData.BlnIniSambBaru]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniRubahGol" Expression="[MainData.BlnIniRubahGol]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSambAktifAkhir" Expression="[MainData.BlnIniSambAktifAkhir]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalBlnIniSambAktifAkhirPos" Expression="[MainData.BlnIniSambAktifAkhirPos]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniSambAktifAwal" Expression="[MainData.SdBlnIniSambAktifAwal]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniSpkPutusDikeluarkan" Expression="[MainData.SdBlnIniSpkPutusDikeluarkan]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniSpkPutusDilaksanakan" Expression="[MainData.SdBlnIniSpkPutusDilaksanakan]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniSambKembali" Expression="[MainData.SdBlnIniSambKembali]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniSambBaru" Expression="[MainData.SdBlnIniSambBaru]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalSdBlnIniRubahGol" Expression="[MainData.SdBlnIniRubahGol]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="355.6" PaperHeight="215.9" RawPaperSize="5" Watermark.Font="Arial, 60pt">
+    <GroupHeaderBand Name="GroupHeader1" Width="1268.57" Height="85.05" StartNewPage="true" Condition="[MainData.KodeWilayah]">
+      <TextObject Name="Text1" Top="9.45" Width="1266.3" Height="18.9" Text="LAPORAN POSISI SAMBUNGAN PELANGGAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text2" Top="28.35" Width="1266.3" Height="18.9" Text="PDAM KABUPATEN POSO UNIT [MainData.NamaWilayah]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Top="47.25" Width="1266.3" Height="18.9" Text="BULAN [MasterPeriode.NamaPeriode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="171.32" Width="1268.57" Condition="[MainData.KodeGol]">
+        <DataHeaderBand Name="DataHeader1" Top="90.38" Width="1268.57" Height="75.6">
+          <TextObject Name="Text4" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Samb. Aktif&#13;&#10;Awal Bulan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text5" Left="75.6" Top="56.7" Width="75.6" Height="18.9" Border.Lines="All" Text="Dikeluarkan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text6" Left="75.6" Top="37.8" Width="160.65" Height="18.9" Border.Lines="All" Text="SPK Pemutusan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text7" Left="151.2" Top="56.7" Width="85.05" Height="18.9" Border.Lines="All" Text="Dilaksanakan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text8" Left="236.25" Top="37.8" Width="94.5" Height="37.8" Border.Lines="All" Text="Penyambungan&#13;&#10;Kembali" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text9" Left="330.75" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Sambungan&#13;&#10;Baru" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text10" Left="406.35" Top="37.8" Width="66.15" Height="37.8" Border.Lines="All" Text="Perubahan&#13;&#10;Golongan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text11" Left="472.5" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Samb. Aktif&#13;&#10;Akhir Bulan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text12" Left="548.1" Top="18.9" Width="170.1" Height="56.7" Border.Lines="All" Text="URAIAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text13" Left="718.2" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Samb. Aktif&#13;&#10;Awal Tahun" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text14" Left="793.8" Top="56.7" Width="75.6" Height="18.9" Border.Lines="All" Text="Dikeluarkan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text15" Left="793.8" Top="37.8" Width="160.65" Height="18.9" Border.Lines="All" Text="SPK Pemutusan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text16" Left="869.4" Top="56.7" Width="85.05" Height="18.9" Border.Lines="All" Text="Dilaksanakan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text17" Left="954.45" Top="37.8" Width="94.5" Height="37.8" Border.Lines="All" Text="Penyambungan&#13;&#10;Kembali" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text18" Left="1048.95" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Sambungan&#13;&#10;Baru" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text19" Left="1124.55" Top="37.8" Width="66.15" Height="37.8" Border.Lines="All" Text="Perubahan&#13;&#10;Golongan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text20" Left="1190.7" Top="37.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Samb. Aktif&#13;&#10;Akhir Bulan" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text21" Top="18.9" Width="548.1" Height="18.9" Border.Lines="All" Text="BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TextObject Name="Text22" Left="718.2" Top="18.9" Width="548.1" Height="18.9" Border.Lines="All" Text="S/D BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt, style=Bold"/>
+        </DataHeaderBand>
+        <DataBand Name="Data1" Top="176.65" Width="1268.57" DataSource="DSource1"/>
+        <GroupFooterBand Name="GroupFooter2" Top="181.98" Width="1268.57" Height="18.9">
+          <TextObject Name="Text30" Left="548.1" Width="170.1" Height="18.9" Border.Lines="All" Text="[MainData.KodeGol] . [MainData.NamaGol]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text23" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSambAktifAwal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text24" Left="75.6" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSpkPutusDikeluarkan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text25" Left="151.2" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSpkPutusDilaksanakan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text26" Left="236.25" Width="94.5" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSambKembali]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text27" Left="330.75" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSambBaru]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text28" Left="406.35" Width="66.15" Height="18.9" Border.Lines="All" Text="[TotalBlnIniRubahGol]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text29" Left="472.5" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSambAktifAkhir]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text31" Left="718.2" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniSambAktifAwal]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text32" Left="793.8" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniSpkPutusDikeluarkan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text33" Left="869.4" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniSpkPutusDilaksanakan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text34" Left="954.45" Width="94.5" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniSambKembali]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text35" Left="1048.95" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniSambBaru]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text36" Left="1124.55" Width="66.15" Height="18.9" Border.Lines="All" Text="[TotalSdBlnIniRubahGol]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TextObject Name="Text37" Left="1190.7" Width="75.6" Height="18.9" Border.Lines="All" Text="[TotalBlnIniSambAktifAkhir]" HorzAlign="Center" VertAlign="Center" Font="Arial, 7pt"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="206.22" Width="1268.57" Height="28.35"/>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

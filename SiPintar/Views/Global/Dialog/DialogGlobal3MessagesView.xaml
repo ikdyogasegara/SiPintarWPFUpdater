@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="SiPintar.Views.Global.Dialog.DialogGlobal3MessagesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Global.Dialog"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <Grid>
+        <Border Width="476" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" HorizontalAlignment="Right">
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+
+                    <StackPanel Orientation="Horizontal" Margin="36 0 40 0">
+                        <Image x:Name="DialogImage" Height="52" Width="52" Source="/SiPintar;component/Assets/Images/ResponseIcon/ic_success.png" />
+
+                        <StackPanel Orientation="Vertical" Margin="28 0 0 0">
+                            <TextBlock x:Name="DialogHeader" Width="320" Style="{StaticResource BigTitle}" Text="Header" TextWrapping="Wrap" LineHeight="20" />
+                            <TextBlock x:Name="DialogMessage" Width="320" Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Message" HorizontalAlignment="Left" Margin="0 4 0 0" />
+                            <TextBlock x:Name="DialogMessage1" Width="320" Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Message" HorizontalAlignment="Left" Margin="0 4 0 0" />
+                            <TextBlock x:Name="DialogMessage2" Width="320" Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Message" HorizontalAlignment="Left" Margin="0 4 0 0" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Margin="116 16 0 32" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <Button x:Name="YesButton" Click="YesButton_Click" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Ok" md:ButtonAssist.CornerRadius="13" />
+                        <Border Width="7" />
+                        <Button x:Name="CancelButton" Click="CancelButton_Click" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" md:ButtonAssist.CornerRadius="13" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <Border x:Name="HighlightColor" Background="{StaticResource BaseApp}" Height="5" Grid.Row="1"/>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</UserControl>

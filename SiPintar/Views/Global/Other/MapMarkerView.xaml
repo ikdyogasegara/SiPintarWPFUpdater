@@ -1,0 +1,10 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="SiPintar.Views.Global.Other.MapMarkerView"
+    Height="40" Width="30" Opacity="10">
+
+    <Grid>
+        <Image Name="Icon" Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+    </Grid>
+</UserControl>

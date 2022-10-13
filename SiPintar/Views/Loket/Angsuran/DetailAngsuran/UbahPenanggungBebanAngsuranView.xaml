@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="SiPintar.Views.Loket.Angsuran.DetailAngsuran.UbahPenanggungBebanAngsuranView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Loket.Angsuran.DetailAngsuran"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+            <converters:ComparisonToBooleanConverter x:Key="ComparisonToBooleanConverter" />
+            <converters:NullVisibilityConverter x:Key="NullVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:StringToBrushConverter x:Key="StringToBrushConverter" 
+                FirstString="Aktif" SecondString="Tutup Total|Non Aktif" ThirdString="Tutup Sementara" FourthString="Segel"
+                FirstBrush="#FFFFFF" SecondBrush="#E4E2E2" ThirdBrush="#FFCBD5" FourthBrush="#FCDDD4" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+            <converters:StringDefaultValueConverter x:Key="ZeroDefaultValueConverter" Default="0"/>
+            <converters:SumWidthConverter x:Key="SumWidthConverter"/>
+            <converters:SumGroupValuesConverter x:Key="SumGroupValuesConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid Width="892" Height="644">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{StaticResource BaseAppLoket}" Grid.Row="0" Padding="18 9 18 11" CornerRadius="4 4 0 0">
+            <TextBlock x:Name="DialogHeader" Text="Ubah Penanggung Beban Angsuran" Style="{StaticResource Title}" Foreground="White" FontSize="13" LineHeight="18"/>
+        </Border>
+
+        <Border Grid.Row="1" Padding="18 18 15 16" BorderThickness="1 0 1 1" Background="White" BorderBrush="{StaticResource Black50}" CornerRadius="0 0 4 4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderThickness="1" BorderBrush="{StaticResource Alto}" CornerRadius="4" Margin="0 0 0 14" Padding="18 13 20 20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <StackPanel >
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Margin="0 0 0 6" Text="Nomor Sambungan" />
+                                <TextBox Text="{Binding SearchNosamb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxInputForm}" Width="186" Height="30" md:HintAssist.Hint="Masukkan nomor sambungan" md:HintAssist.IsFloating="False">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Command="{Binding OnSearchPelangganCommand}" Key="Return" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Margin="16 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Margin="0 0 0 6" Text="Nama Pelanggan" />
+                                <TextBox Text="{Binding SearchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxInputForm}" Width="205" Height="30" md:HintAssist.Hint="Masukkan nama pelanggan" md:HintAssist.IsFloating="False">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Command="{Binding OnSearchPelangganCommand}" Key="Return" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                            </StackPanel>
+                            <Button Command="{Binding OnSearchPelangganCommand}" x:Name="Search" Background="White" Style="{StaticResource ButtonSecondarySmall}" VerticalAlignment="Bottom" Foreground="{StaticResource Lochmara}" Content="Cari Pelanggan" Margin="16 0 0 0"/>
+                        </StackPanel>
+                        <Border Grid.Row="1" Margin="0 18 0 0" Background="{StaticResource Black20}" BorderBrush="{StaticResource Alto}" BorderThickness="1" CornerRadius="4" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingFormDetail, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                        <Image.RenderTransform>
+                                            <RotateTransform />
+                                        </Image.RenderTransform>
+                                        <Image.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Grid>
+
+                                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoadingFormDetail, Converter={StaticResource BooleanToCollapseConverter}}">
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmptyFormDetail, Converter={StaticResource BooleanToVisibleConverter}}">
+                                        <Image Height="70" Source="/SiPintar;component/Assets/Images/empty_data_v2.png" Margin="0 30 0 0">
+                                        </Image>
+                                        <Border Height="8"/>
+                                        <StackPanel>
+                                            <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Margin="0" FontSize="12" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                            <Run Text="Tidak ditemukan data pelanggan" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <Border Height="30"/>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <DataGrid
+                                    Grid.Row="0"
+                                    ItemsSource="{Binding DataPelanggan, Mode=OneWay}"
+                                    SelectedItem="{Binding PelangganSelected, Mode=TwoWay}"
+                                    Style="{StaticResource DataGridRegular}"
+                                    RowHeight="30"
+                                    SelectionMode="Extended"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    VerticalScrollBarVisibility="Auto"
+                                    EnableRowVirtualization="True"
+                                    EnableColumnVirtualization="True"
+                                    AutoGenerateColumns="False"
+                                    HeadersVisibility="Column"
+                                    IsReadOnly="True"
+                                    IsSynchronizedWithCurrentItem="True">
+                                    <DataGrid.InputBindings>
+                                        <MouseBinding
+                                            MouseAction="LeftDoubleClick"
+                                            Command="{Binding OnConfirmUbahDibebankanKepadaCommand}"
+                                            CommandParameter="{Binding DataPelanggan}"/>
+                                    </DataGrid.InputBindings>
+                                    <DataGrid.Resources>
+                                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="IsHitTestVisible" Value="False"/>
+                                            <Setter Property="Focusable" Value="False"/>
+                                            <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                                    </DataGrid.Resources>
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="DataGridRow">
+                                            <Setter Property="Background" Value="{Binding NamaStatus, Converter={StaticResource StringToBrushConverter}}"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource Gray10}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.RowStyle>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Nama}" MinWidth="240" x:Name="HeaderNama" Header="NAMA" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Binding="{Binding Alamat}" MinWidth="300" x:Name="HeaderAlamat" Header="ALAMAT" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Binding="{Binding NoSamb}" MinWidth="150" x:Name="HeaderNoSambungan" Header="NO SAMBUNGAN" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn Binding="{Binding NamaStatus}" MinWidth="100" x:Name="HeaderStatus" Header="STATUS" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Grid.Row="1" Background="{StaticResource Black20}">
+                                    <TextBlock Margin="13,7,14,7" Text="{Binding DataPelanggan.Count, StringFormat='Menampilkan {0} Data Pelanggan', Mode=OneWay}" FontFamily="{StaticResource SarabunSemiBold}" FontWeight="Bold" Foreground="{StaticResource Black100}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" BorderThickness="1" BorderBrush="{StaticResource Alto}" Padding="18 20 18 19" CornerRadius="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <StackPanel Margin="0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Text="No Sambung Sebelumnya" />
+                                <TextBlock Style="{StaticResource SmallTitleForNumber}" FontSize="12" LineHeight="15.6" Margin="0 3 0 0" Text="{Binding NosambBefore}" />
+                            </StackPanel>
+                            <StackPanel Margin="33 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Text="No Sambung Baru" />
+                                <TextBlock Style="{StaticResource SmallTitleForNumber}" FontSize="12" LineHeight="15.6" Margin="0 3 0 0" Text="{Binding PelangganSelected.NoSamb, Mode=OneWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="46 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Text="Nama Pelanggan Baru" />
+                                <TextBlock Style="{StaticResource SmallTitleForNumber}" FontSize="12" LineHeight="15.6" Margin="0 3 0 0" Text="{Binding PelangganSelected.Nama, Mode=OneWay}" />
+                            </StackPanel>
+                            <StackPanel Margin="52 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" FontSize="12" Foreground="{StaticResource Black90}" LineHeight="18" Text="Alamat Pelanggan" />
+                                <TextBlock Style="{StaticResource SmallTitleForNumber}" FontSize="12" LineHeight="15.6" Margin="0 3 0 0" Text="{Binding PelangganSelected.Alamat, Mode=OneWay}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 22 0 0">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Telepon" LineHeight="18" Foreground="{StaticResource Black90}" />
+                                <Grid Width="200">
+                                    <TextBox x:Name="NoTelp" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding Parent.NoTelpForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" PreviewTextInput="NumberValidationTextBox"  />
+                                    <TextBlock DataContext="{Binding ElementName=NoTelp, Path=Text}" Text="Masukkan no telepon" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Margin="21 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Hp" LineHeight="18" Foreground="{StaticResource Black90}" />
+                                <Grid Width="200">
+                                    <TextBox x:Name="NoHp" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" Text="{Binding Parent.NoHpForm, Mode=TwoWay}" PreviewKeyUp="CheckForm_PreviewKeyUp" PreviewTextInput="NumberValidationTextBox" />
+                                    <TextBlock DataContext="{Binding ElementName=NoHp, Path=Text}" Text="Masukkan no handphone" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <StackPanel Grid.Row="2" Margin="20 13 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="CancelButton" Command="{x:Static md:DialogHost.CloseDialogCommand}" Background="White" Style="{StaticResource ButtonSecondarySmall}" Foreground="{StaticResource Lochmara}" Content="Batal" Margin="0 0 8 0"/>
+                    <Button x:Name="OkButton" Command="{Binding OnConfirmUbahDibebankanKepadaCommand}" Background="{StaticResource Lochmara}" Style="{StaticResource ButtonPrimarySmall}" Foreground="White" Content="Simpan" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

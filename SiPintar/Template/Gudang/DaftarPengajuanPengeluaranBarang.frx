@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="06/06/2022 12:11:28" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="Pengajuan" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="NomorPengajuanPengeluaran" DataType="System.String"/>
+      <Column Name="NomorRegistrasi" DataType="System.String"/>
+      <Column Name="KodeGudang" DataType="System.String"/>
+      <Column Name="NamaGudang" DataType="System.String"/>
+      <Column Name="NamaBagianMemintaBarang" DataType="System.String"/>
+      <Column Name="Kategori" DataType="System.String"/>
+      <Column Name="TglPengajuan" DataType="System.DateTime"/>
+      <Column Name="DiGunakanUntuk" DataType="System.String"/>
+      <Column Name="NamaUser" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource2" Alias="DaftarBarang" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="true">
+      <Column Name="NomorPengajuanPengeluaran" DataType="System.String"/>
+      <Column Name="NomorRegistrasi" DataType="System.String"/>
+      <Column Name="Kategori" DataType="System.String"/>
+      <Column Name="KodeBarang" DataType="System.String"/>
+      <Column Name="NamaBarang" DataType="System.String"/>
+      <Column Name="SatuanBarang" DataType="System.String"/>
+      <Column Name="Qty" DataType="System.Decimal"/>
+      <Column Name="Qty_Dikeluarkan" DataType="System.Decimal"/>
+      <Column Name="Harga_Jual" DataType="System.Decimal"/>
+      <Column Name="Amount" DataType="System.Decimal"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="TglPengajuan" DataType="System.DateTime"/>
+      <Column Name="NamaUser" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="IdPdam" DataType="System.Int32"/>
+    <Parameter Name="Key" DataType="System.String"/>
+    <Parameter Name="Header1" DataType="System.String"/>
+    <Parameter Name="Header2" DataType="System.String"/>
+    <Parameter Name="Keterangan" DataType="System.String"/>
+    <Parameter Name="ParafJabatan1" DataType="System.String"/>
+    <Parameter Name="ParafNama1" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan1" DataType="System.String"/>
+    <Parameter Name="ParafId1" DataType="System.String"/>
+    <Parameter Name="ParafJabatan2" DataType="System.String"/>
+    <Parameter Name="ParafNama2" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan2" DataType="System.String"/>
+    <Parameter Name="ParafId2" DataType="System.String"/>
+    <Parameter Name="ParafJabatan3" DataType="System.String"/>
+    <Parameter Name="ParafNama3" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan3" DataType="System.String"/>
+    <Parameter Name="ParafId3" DataType="System.String"/>
+    <Parameter Name="ParafJabatan4" DataType="System.String"/>
+    <Parameter Name="ParafNama4" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan4" DataType="System.String"/>
+    <Parameter Name="ParafId4" DataType="System.String"/>
+    <Parameter Name="Footer1" DataType="System.String"/>
+    <Parameter Name="Footer2" DataType="System.String"/>
+    <Parameter Name="FlagHapus" DataType="System.Boolean"/>
+    <Parameter Name="WaktuUpdate" DataType="System.DateTime"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="215.9" PaperHeight="279.4" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="740.5" Height="135.98">
+      <TextObject Name="Headerline1" Left="7" Top="5.1" Width="296.69" Height="23.9" Text="Header1" Padding="2, 1, 2, 1" VertAlign="Center" Font="Calibri, 10pt, style=Bold"/>
+      <TextObject Name="Headerline2" Left="7" Top="29.66" Width="297.69" Height="20.12" Text="Header1" Padding="2, 1, 2, 1" Font="Calibri, 9pt, style=Bold"/>
+      <LineObject Name="Line1" Left="8" Top="50.44" Width="297.2"/>
+      <TextObject Name="Memo1" Left="2" Top="58.1" Width="737.49" Height="22.34" Text="DAFTAR PENGAJUAN PENGELUARAN BARANG" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 12pt, style=Bold"/>
+      <TextObject Name="bagianminta" Left="-1.05" Top="106.35" Width="410.67" Height="18.9" Text="Bagian Yang Meminta : [Pengajuan.NamaBagianMemintaBarang]" Padding="2, 1, 2, 1" Font="Calibri, 10pt, style=Bold"/>
+      <TextObject Name="no" Left="461.49" Top="108.31" Width="277.72" Height="18.9" Text="No : [Pengajuan.NomorRegistrasi]" Padding="2, 1, 2, 1" HorzAlign="Right" Font="Calibri, 10pt, style=Bold"/>
+      <TextObject Name="Memo8" Left="2" Top="74.27" Width="737.49" Height="22.34" Text="( D P P B )" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 12pt, style=Bold"/>
+      <LineObject Name="Line8" Left="305.14" Top="4.78" Height="45.35"/>
+      <LineObject Name="Line9" Left="6.78" Top="4.78" Height="45.35"/>
+      <LineObject Name="Line10" Left="6.78" Top="4.78" Width="297.83"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="139.18" Width="740.5" Height="26.99">
+      <LineObject Name="Line17" Width="739"/>
+      <LineObject Name="Line18" Top="26.99" Width="331.68"/>
+      <LineObject Name="Line19" Left="140.19" Top="0.54" Height="25.32"/>
+      <LineObject Name="Line20" Left="451.65" Top="0.54" Height="25.32"/>
+      <TextObject Name="Memo18" Left="529.13" Top="3.98" Width="61.94" Height="18.9" Text="BANYAK" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+      <LineObject Name="Line25" Top="0.54" Height="25.32"/>
+      <LineObject Name="Line28" Left="740.01" Top="0.54" Height="25.32"/>
+      <LineObject Name="Line29" Left="28.24" Top="0.54" Height="25.32"/>
+      <LineObject Name="Line30" Left="594.39" Top="0.54" Height="25.32"/>
+      <TextObject Name="Memo21" Top="4.4" Width="27.93" Height="18.9" Text="NO" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+      <TextObject Name="Memo22" Left="32.57" Top="4.4" Width="103.52" Height="18.9" Text="KODE BARANG" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+      <LineObject Name="Line31" Left="272.13" Top="26.99" Width="467.74"/>
+      <LineObject Name="Line36" Left="525.35" Top="0.62" Height="25.32"/>
+      <TextObject Name="Memo25" Left="147.4" Top="4.4" Width="296.28" Height="18.9" Text="NAMA BARANG" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+      <TextObject Name="Memo33" Left="457.32" Top="4.4" Width="61.94" Height="18.9" Text="SATUAN" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+      <TextObject Name="Memo2" Left="597.17" Top="3.78" Width="137.54" Height="18.9" Text="CATATAN" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 11pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="MasterData1" Top="169.37" Width="740.5" Height="18.9" CanGrow="true" CanShrink="true">
+      <LineObject Name="Line13" Left="28.35" Height="18.9"/>
+      <LineObject Name="Line15" Left="140.22" Height="18.9"/>
+      <LineObject Name="Line16" Left="451.65" Height="18.9"/>
+      <LineObject Name="Line21" Top="18.9" Width="739"/>
+      <TextObject Name="dblapbppkodebarang" Left="32.85" Top="0.76" Width="103.75" Height="17.01" GrowToBottom="true" Text="[DaftarBarang.KodeBarang]" Padding="2, 1, 2, 1" Font="Calibri, 9pt"/>
+      <TextObject Name="dblapbppqty" Left="533.91" Top="0.76" Width="53.49" Height="17.01" GrowToBottom="true" Text="[DaftarBarang.Qty]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Center" Font="Calibri, 9pt"/>
+      <TextObject Name="dblapbppsatuan" Left="456.75" Top="0.76" Width="64.13" Height="17.01" GrowToBottom="true" Text="[DaftarBarang.SatuanBarang]" Padding="2, 1, 2, 1" Font="Calibri, 9pt"/>
+      <TextObject Name="dblapbppdeskripsi" Left="142.19" Top="0.76" Width="304.9" Height="17.01" GrowToBottom="true" Text="[DaftarBarang.NamaBarang]" Padding="2, 1, 2, 1" Font="Calibri, 9pt"/>
+      <LineObject Name="Line27" Left="525.35" Height="18.9"/>
+      <LineObject Name="Line32" Left="740.03" Height="18.9"/>
+      <LineObject Name="Line33" Height="18.9"/>
+      <TextObject Name="Memo23" Top="1" Width="27.03" Height="17.01" GrowToBottom="true" Text="[Row#]" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="0" HorzAlign="Center" Font="Calibri, 9pt"/>
+      <LineObject Name="Line2" Left="594.52" Height="18.9"/>
+      <DataFooterBand Name="Footer1" Top="191.47" Width="740.5" Height="28.35">
+        <LineObject Name="Line23" Width="739"/>
+        <LineObject Name="Line24" Top="28.35" Width="739"/>
+        <TextObject Name="Memo16" Left="3" Top="5.15" Width="121.49" Height="18.9" Text="Di Gunakan Untuk : " Padding="2, 1, 2, 1" Font="Calibri, 10pt"/>
+        <TextObject Name="gunakanuntuk" Left="115.44" Top="5.15" Width="618.27" Height="18.9" Text="[Pengajuan.DiGunakanUntuk]" Padding="2, 1, 2, 1" Font="Calibri, 10pt"/>
+        <LineObject Name="Line34" Height="26.46"/>
+        <LineObject Name="Line35" Left="740.03" Height="26.46"/>
+      </DataFooterBand>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="223.02" Width="740.5" Height="267.67">
+      <TextObject Name="Memo17" Left="503.31" Top="26.94" Width="215.43" Height="18.9" Text="Diminta Oleh :" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="namakiri" Left="521.58" Top="111.69" Width="181.08" Height="18.9" Border.Lines="Bottom" Text="nama" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo30" Left="22.38" Top="30.61" Width="211.08" Height="18.9" Text="Dikeluarkan Oleh :" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="kota1" Left="528.8" Top="8.16" Width="56.03" Height="18.9" Text="Bombana," Padding="2, 1, 2, 1" HorzAlign="Right" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo19" Left="584.34" Top="8.16" Width="143.83" Height="18.9" Text="[Pengajuan.TglPengajuan]" Padding="2, 1, 2, 1" Format="Date" Format.Format="d" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo24" Left="41.2" Top="111.69" Width="173.52" Height="18.9" Border.Lines="Bottom" Text="nama" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo27" Left="22.23" Top="131.61" Width="209.79" Height="18.9" Text="NIK. " Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo35" Left="22.21" Top="49.13" Width="211.32" Height="18.9" Text="jabatan" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo5" Left="261.42" Top="26.46" Width="215.43" Height="18.9" Text="Disetujui Oleh :" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo7" Left="279.69" Top="111.2" Width="181.08" Height="18.9" Border.Lines="Bottom" Text="nama" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo9" Left="261.54" Top="131.12" Width="213.57" Height="18.9" Text="NIK. " Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo13" Left="260.79" Top="44.87" Width="215.1" Height="18.9" Text="jabatan" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo4" Left="521.58" Top="132.28" Width="181.42" Height="18.9" Text="NIK. " Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo6" Left="502.68" Top="45.35" Width="215.43" Height="18.9" Text="jabatan" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo10" Left="261.42" Top="177.64" Width="215.43" Height="18.9" Text="jabatan" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo11" Left="279.69" Top="247.26" Width="181.08" Height="18.9" Border.Lines="Bottom" Text="nama" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+      <TextObject Name="Memo14" Left="260.79" Top="162.03" Width="215.43" Height="18.9" Text="Diketahui Oleh :" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Calibri, 10pt"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="493.89" Width="740.5" Height="15.12">
+      <TextObject Name="Memo3" Left="589.61" Width="147.07" Height="15.12" Text="Hal [Page#] dari [TotalPages#]" Padding="2, 1, 2, 1" HorzAlign="Right" Font="Calibri, 8pt, style=Italic"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

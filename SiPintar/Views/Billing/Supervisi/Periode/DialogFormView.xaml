@@ -1,0 +1,302 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.Periode.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:EqualValueToParameterConverter x:Key="EqualValueToParameterConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="400" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppBilling}">
+                    <Grid Margin="10 8">
+                        <Grid>
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="White" LineHeight="10" Text="Tambah/Edit Periode DRD"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16" Margin="0 0 8 0">
+                                <TextBlock Foreground="{StaticResource BaseAppBilling}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="20 15">
+                    <StackPanel Margin="0,0,0,15" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <CheckBox
+                            x:Name="BuatPeriodeAir"
+                            Content="Buat Periode Air"
+                            FontSize="12"
+                            Margin="0"
+                            IsChecked="{Binding IsBuatPeriodeAirForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Checked="CheckboxButton_Checked"
+                            Unchecked="CheckboxButton_Checked" />
+                    </StackPanel>
+
+                    <Grid Margin="0,10,0,15" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Bulan &amp; Tahun" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource SecondaryBlue}" FontWeight="Bold">
+                                    <Run Text="{Binding SelectedData.NamaPeriode, Mode=OneWay}"/>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0 10" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" x:Name="FilterRayon" Margin="0 0 10 0">
+                            <CheckBox x:Name="CheckRayon" IsChecked="{Binding IsCheckedRayon}" Style="{StaticResource MaterialDesignCheckBox}">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Rayon"/>
+                            </CheckBox>
+                            <Grid>
+                                <ComboBox x:Name="ComboRayon" Style="{StaticResource ComboBoxInputForm}"
+                                          ItemsSource="{Binding RayonList, Mode=OneWay}"
+                                          DisplayMemberPath="NamaRayon"
+                                          IsEditable="False"
+                                          Width="{Binding ElementName=FilterRayon, Path=ActualWidth}"
+                                          IsEnabled="{Binding IsCheckedRayon}"
+                                          SelectedItem="{Binding Path=DataContext.SelectedRayon, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                                          IsReadOnly="True"/>
+                                <TextBlock DataContext="{Binding ElementName=ComboRayon, Path=Text}" Text="Pilih rayon"
+                                           Style="{StaticResource TextBoxPlaceholder}"/>
+
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" x:Name="FilterWilayah"  Margin="10 0 0 0">
+                            <CheckBox x:Name="CheckWilayah" IsChecked="{Binding IsCheckedWilayah}" Style="{StaticResource MaterialDesignCheckBox}">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Wilayah"/>
+                            </CheckBox>
+                            <Grid>
+                                <ComboBox x:Name="ComboWilayah" Style="{StaticResource ComboBoxInputForm}"
+                                          ItemsSource="{Binding WilayahList, Mode=OneWay}"
+                                          DisplayMemberPath="NamaWilayah"
+                                          IsEditable="False"
+                                          Width="{Binding ElementName=FilterWilayah, Path=ActualWidth}"
+                                          IsEnabled="{Binding IsCheckedWilayah}"
+                                          SelectedItem="{Binding Path=DataContext.SelectedWilayah, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                                          IsReadOnly="True"/>
+                                <TextBlock DataContext="{Binding ElementName=ComboWilayah, Path=Text}" Text="Pilih Wilayah"
+                                           Style="{StaticResource TextBoxPlaceholder}"/>
+
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Bulan" LineHeight="15" Margin="0,0,0,0"/>
+                            <Grid Margin="0,3,0,0">
+                                <ComboBox x:Name="Bulan"
+                                    Style="{StaticResource ComboBoxInputForm}"
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding BulanForm}"
+                                    DisplayMemberPath="Value"
+                                    ItemsSource="{Binding BulanList, Mode=OneWay}"
+                                    SelectionChanged="Bulan_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=Bulan, Path=SelectedItem}" Text="Pilih bulan" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="Tahun" LineHeight="15" Margin="0,0,0,0"/>
+                            <Grid Margin="0,3,0,0">
+                                <ComboBox x:Name="Tahun"
+                                    Style="{StaticResource ComboBoxInputForm}"
+                                    HorizontalAlignment="Stretch"
+                                    SelectedItem="{Binding TahunForm}"
+                                    DisplayMemberPath="Value"
+                                    ItemsSource="{Binding TahunList, Mode=OneWay}"
+                                    SelectionChanged="Tahun_SelectionChanged"
+                                    IsEnabled="{Binding IsEdit, Converter={StaticResource InverseBooleanConverter}}"
+                                >
+                                </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=Tahun, Path=SelectedItem}" Text="Pilih tahun" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai tagih" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="TglMulaiTagih" SelectedDate="{Binding TglMulaiTagihForm, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0"/>
+                                <TextBlock DataContext="{Binding ElementName=TglMulaiTagih, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai denda 1" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl1" SelectedDate="{Binding TglDenda1Form, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0" SelectedDateChanged="Tgl_SelectionChanged"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl1, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai denda 2" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl2" SelectedDate="{Binding TglDenda2Form, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0" SelectedDateChanged="Tgl_SelectionChanged"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl2, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai denda 3" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl3" SelectedDate="{Binding TglDenda3Form, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0" SelectedDateChanged="Tgl_SelectionChanged"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl3, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai denda 4" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="Tgl4" SelectedDate="{Binding TglDenda4Form, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0" SelectedDateChanged="Tgl_SelectionChanged"/>
+                                <TextBlock DataContext="{Binding ElementName=Tgl4, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Style="{StaticResource SmallTitle}" Text="Tanggal mulai denda perbulan" LineHeight="15" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="2" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3">
+                            <Grid>
+                                <DatePicker x:Name="TglMulai" SelectedDate="{Binding TglMulaiDendaForm, Mode=TwoWay}" Style="{StaticResource DefaultDatePicker}" Height="30" Margin="0 0 0 0" BorderThickness="0"/>
+                                <TextBlock DataContext="{Binding ElementName=TglMulai, Path=SelectedDate}" Text="Pilih tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <StackPanel Margin="0,0,0,15" Visibility="{Binding IsEdit, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <CheckBox
+                            x:Name="Agreement"
+                            FontSize="12"
+                            Margin="0"
+                            IsChecked="{Binding AgreementForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Checked="CheckboxButton_Checked"
+                            Unchecked="CheckboxButton_Checked">
+                            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Padding="0 5 0 0">
+                                Dengan mencentang kotak disebelah kiri, Saya menyatakan telah mengisi data dengan benar.
+                            </TextBlock>
+                        </CheckBox>
+
+                        <Border Visibility="Collapsed" BorderBrush="{StaticResource Gray70}" Background="LightYellow" BorderThickness="1" Padding="10" Margin="0 15 0 0">
+                            <CheckBox
+                            x:Name="BgProcess"
+                            FontSize="12"
+                            Margin="0"
+                            IsChecked="{Binding IsProcessAsBackgroundForm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Padding="0 0 0 0">
+                                Proses pembuatan periode di belakang layar (opsional)
+                                </TextBlock>
+                            </CheckBox>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Grid.Row="2">
+                    <StackPanel Margin="30,15,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Buat Periode" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <md:DialogHost Identifier="PeriodeDrdDialog" DialogTheme="Inherit" />
+    </Grid>
+</UserControl>

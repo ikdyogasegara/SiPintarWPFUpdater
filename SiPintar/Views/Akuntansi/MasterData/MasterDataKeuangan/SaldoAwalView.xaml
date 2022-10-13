@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.MasterData.MasterDataKeuangan.SaldoAwalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Akuntansi.MasterData.MasterDataKeuangan"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource Black10}" MaxWidth="600" HorizontalAlignment="Left">
+        <Border CornerRadius="5" Background="White">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,15">
+                <Grid Margin="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="450"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Headline3}" FontSize="18" Margin="0,0,0,15">Rekonsiliasi Kas &amp; Bank</TextBlock>
+                        <StackPanel x:Name="Parent" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="{Binding ElementName=Parent, Path=ActualWidth}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" FontSize="12" Foreground="#646464">Tanggal Rekonsiliasi</TextBlock>
+                                    <Border Grid.Column="1" Margin="70,0,0,0" BorderBrush="{StaticResource Gray100}" BorderThickness="1" CornerRadius="3" VerticalAlignment="Center">
+                                        <Grid>
+                                            <DatePicker x:Name="FilterTglRekonsiliasi" Style="{StaticResource DefaultDatePicker}" SelectedDate="{Binding FilterTglRekonsiliasi, UpdateSourceTrigger=LostFocus}"  Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                                            <TextBlock DataContext="{Binding ElementName=FilterTglRekonsiliasi, Path=SelectedDate}" Text="Pilih Tanggal" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                            <Grid>
+                                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Image Height="20" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                                        <Image.RenderTransform>
+                                            <RotateTransform x:Name="noFreeze" />
+                                        </Image.RenderTransform>
+                                        <Image.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Grid>
+                                <StackPanel>
+                                    <StackPanel Margin="0,25,0,0">
+                                        <Grid Width="{Binding ElementName=Parent, Path=ActualWidth}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" LineHeight="25" FontSize="12" Foreground="#646464">Saldo Awal di KAS</TextBlock>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" TextAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                            <TextBlock Grid.Column="2" Text="{Binding Data.TotalSaldoKasBank, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource CaptionSmallBody}" TextAlignment="Right" LineHeight="25" FontSize="12" Foreground="#646464"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <ListView x:Name="ListDynamic" ItemsSource="{Binding Data.SaldoAwalRekon, UpdateSourceTrigger=PropertyChanged}" IsHitTestVisible="False">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <ContentPresenter/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Width="{Binding ElementName=Parent, Path=ActualWidth}" Margin="0,8,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="200"/>
+                                                        <ColumnDefinition Width="20"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding NamaBank}" LineHeight="25" FontSize="12" Foreground="#646464"/>
+                                                    <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" TextAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                                    <TextBlock Grid.Column="2" Text="{Binding JumlahSaldo, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource CaptionSmallBody}" TextAlignment="Right" LineHeight="25" FontSize="12" Foreground="#646464"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <StackPanel Margin="0,25,0,0">
+                                        <Grid Width="{Binding ElementName=Parent, Path=ActualWidth}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" LineHeight="25" FontSize="12" Foreground="#646464">Total Saldo Awal</TextBlock>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center" LineHeight="25" FontSize="12" Foreground="#646464">Rp</TextBlock>
+                                            <TextBlock Grid.Column="2" Text="{Binding TotalSaldoAwal, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Style="{StaticResource BigTitle}" FontSize="18" TextAlignment="Right" Foreground="#028DDB"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Margin="0,28,0,0">
+                                <Grid Width="80" HorizontalAlignment="Right">
+                                    <Button x:Name="OkButton" Content="Koreksi" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="{Binding IsEmpty}"/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

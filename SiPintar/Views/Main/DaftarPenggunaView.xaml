@@ -1,0 +1,287 @@
+﻿<UserControl x:Class="SiPintar.Views.Main.DaftarPenggunaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:StringToBrushConverter x:Key="StringToBrushConverter"
+                FirstString="True" SecondString="False"
+                FirstBrush="#FFFFFF" SecondBrush="#FFCBD5" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BaseGray}" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+        <Grid Margin="20 0 20 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0 20 0 15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock FontSize="16" FontWeight="DemiBold"  Margin="0,0,0,8">Daftar Pengguna</TextBlock>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding OnOpenAddFormCommand}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="16" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}" Height="30" BorderBrush="{StaticResource PictonBlue}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 2 0 0">
+                            <md:PackIcon Kind="Add" />
+                            <TextBlock Text="Tambah" Style="{StaticResource CaptionSmallBody}" Margin="3 2 3 0" Foreground="White" />
+                        </StackPanel>
+                    </Button>
+                    <Border Width="5" />
+                    <Border CornerRadius="16" Background="White" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                        <Button Visibility="{Binding IsDataSelected, Converter={StaticResource BooleanToVisibleConverter}}" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MaterialDesignOutlinedButton}" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="16" BorderBrush="{StaticResource PictonBlue}" Height="30">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 2 0 0">
+                                <md:PackIcon Kind="Pencil" />
+                                <TextBlock Text="Koreksi" Style="{StaticResource CaptionSmallBody}" Margin="3 2 3 0" Foreground="{StaticResource SecondaryBlue}" />
+                            </StackPanel>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Margin="10" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+
+                <Grid Panel.ZIndex="1" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibleConverter}}">
+                        <Image Height="90" Source="/SiPintar;component/Assets/Images/empty_data_v2.png">
+                        </Image>
+                        <Border Height="8"/>
+                        <StackPanel>
+                            <TextBlock Text="Tidak Ada Data" FontStyle="Normal" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0" FontSize="12" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource Gray100}">
+                                <Run Text="Saat ini belum ada user." />
+                                <LineBreak />
+                                <Run Text="Silakan"/>
+                                <Button Command="{Binding OnOpenAddFormCommand}" Padding="0" Height="17" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0 0 2 -5">
+                                    <TextBlock FontFamily="{StaticResource SarabunSemiBold}" FontSize="12" Style="{StaticResource LabelTextLink}" Text="Tambah User"/>
+                                </Button>
+                                <Run Text="terlebih dahulu"/>
+                            </TextBlock>
+                        </StackPanel>
+                        <Border Height="30"/>
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid
+                    IsReadOnly="True"
+                    ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=DataContext.SelectedData, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}} }"
+                    Style="{StaticResource DataGridRegular}"
+                    CanUserSortColumns="False"
+                    EnableRowVirtualization="False"
+                    EnableColumnVirtualization="False"
+                    md:DataGridAssist.ColumnHeaderPadding="14 6 0 6"
+                    AutoGenerateColumns="False"
+                    Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                    HeadersVisibility="Column"
+                    SelectionMode="Extended"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    CanUserAddRows="False"
+                    >
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                    </DataGrid.Resources>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}" Visibility="{Binding IsDataSelected, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <MenuItem Header="Koreksi" IsEnabled="{Binding IsDataSelected, Mode=OneWay}" Command="{Binding OnOpenEditFormCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon Width="16" Kind="Edit" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Lihat Detail" IsEnabled="{Binding IsDataSelected, Mode=OneWay}" Command="{Binding OnOpenDetailUserCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Eye" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon Width="16" Kind="Eye" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Reset Kata Sandi" IsEnabled="{Binding IsDataSelected, Mode=OneWay}" Command="{Binding OnOpenResetPasswordConfirmationCommand}" Style="{StaticResource MenuItemRegular}">
+                                <MenuItem.Icon>
+                                    <Grid>
+                                        <md:PackIcon Width="16" Kind="Lock" Foreground="{StaticResource SecondaryBlue}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" />
+                                        <md:PackIcon Width="16" Kind="Lock" Foreground="{StaticResource Black70}" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                    </Grid>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="{Binding Aktif, Converter={StaticResource StringToBrushConverter}}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource Gray10}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Width="*" MinWidth="150" Binding="{Binding Nama}" Header="NAMA">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextDataGridCellRegular}">
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                    <Setter Property="Margin" Value="3 0 3 0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="*" MinWidth="150" Binding="{Binding NamaUser}" Header="ID PENGGUNA">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextDataGridCellRegular}">
+                                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                                    <Setter Property="Margin" Value="3 0 3 0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Width="*" MinWidth="150" Binding="{Binding NamaRole}" Header="HAK AKSES">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextDataGridCellRegular}">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="3 0 3 0"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Width="200" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15 0">
+                                        <Button Command="{Binding Path=DataContext.OnOpenDetailUserCommand,  RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Padding="0" Height="10" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0">
+                                            <TextBlock FontFamily="{StaticResource SarabunSemiBold}" Style="{StaticResource LabelTextLink}" Text="Detail"/>
+                                        </Button>
+                                        <Border Width="30" />
+                                        <Button Command="{Binding Path=DataContext.OnOpenResetPasswordConfirmationCommand,  RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Padding="0" Height="10" Style="{StaticResource ButtonPlain}" Background="{x:Null}" Margin="0">
+                                            <TextBlock FontFamily="{StaticResource SarabunSemiBold}" Style="{StaticResource LabelTextLink}" Text="Reset Kata Sandi"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <Border Grid.Row="2" Background="{StaticResource Black20}" BorderBrush="{StaticResource Black50}" BorderThickness="1 0 1 1" CornerRadius="0, 0, 4, 4" >
+                <Grid Margin="11 8 14 7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox x:Name="ShowOption"
+                                        Background="White"
+                                        Style="{StaticResource ComboBoxInputForm}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Width="64" Height="25"
+                                        SelectedItem="{Binding LimitData}"
+                                        SelectedValuePath="Key"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding ShowOptions, Mode=OneWay}"
+                                        IsEnabled="{Binding Path=IsLoading, Converter={StaticResource InverseBooleanConverter}, ConverterParameter=IsLoading}"/>
+                    <TextBlock Grid.Column="1" Text="Data per Halaman" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{StaticResource Black90}" VerticalAlignment="Center" Margin="6,3,0,0"/>
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding TotalRecord, StringFormat='{}{0:#,0.###} Data Pengguna', ConverterCulture='id-ID'}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{StaticResource Black90}" VerticalAlignment="Center" Margin="0 0 16 0"/>
+                        <Button IsEnabled="{Binding IsPreviousButtonEnabled}" Command="{Binding OnPreviousPageCommand}" Style="{StaticResource ButtonPlain}" Padding="0" Height="16">
+                            <Grid>
+                                <md:PackIcon Kind="ChevronLeft" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" Foreground="{StaticResource SecondaryBlue}" Background="{StaticResource Black20}" Height="16"/>
+                                <md:PackIcon Kind="ChevronLeft" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" Foreground="{StaticResource Black50}" Background="{StaticResource Black20}" Height="16"/>
+                            </Grid>
+                        </Button>
+                        <TextBlock Text="1" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{Binding IsLeftPageNumberActive, Converter={StaticResource BooleanToBrushConverter}}" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                        <TextBlock Text="..." Visibility="{Binding IsLeftPageNumberFillerVisible, Converter={StaticResource BooleanToVisibleConverter}}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{StaticResource Black90}" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                        <TextBlock Text="{Binding CurrentPage, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID'}" Visibility="{Binding IsMiddlePageNumberVisible, Converter={StaticResource BooleanToVisibleConverter}}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{Binding IsMiddlePageNumberVisible, Converter={StaticResource BooleanToBrushConverter}}" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                        <TextBlock Text="..." Visibility="{Binding IsRightPageNumberFillerVisible, Converter={StaticResource BooleanToVisibleConverter}}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{StaticResource Black90}" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                        <TextBlock Text="{Binding TotalPage, StringFormat='{}{0:#,0.###}', ConverterCulture='id-ID'}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Foreground="{Binding IsRightPageNumberActive, Converter={StaticResource BooleanToBrushConverter}}" VerticalAlignment="Center" Margin="13 0"/>
+                        <Button IsEnabled="{Binding IsNextButtonEnabled}" Command="{Binding OnNextPageCommand}" Style="{StaticResource ButtonPlain}" Padding="0" Height="16">
+                            <Grid>
+                                <md:PackIcon Kind="ChevronRight" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToVisibleConverter}}" Foreground="{StaticResource SecondaryBlue}" Background="{StaticResource Black20}" Height="16"/>
+                                <md:PackIcon Kind="ChevronRight" Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource BooleanToCollapseConverter}}" Foreground="{StaticResource Black50}" Background="{StaticResource Black20}" Height="16"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="3" Padding="0 10 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <Border Height="12" Width="24" BorderThickness="1" BorderBrush="{StaticResource Black50}" Background="White" Margin="3,0,8,0"/>
+                    <TextBlock Text="Pengguna Aktif" FontFamily="{StaticResource SarabunRegular}" FontWeight="Regular" FontSize="11" Foreground="{StaticResource SecondaryDarker}" VerticalAlignment="Center"/>
+                    <Border Height="12" Width="24" BorderThickness="1" BorderBrush="#FA91A5" Margin="16,0,8,0" >
+                        <Border.Background>
+                            <SolidColorBrush Color="#FF4A6D" Opacity="0.29"/>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock Text="Pengguna Tidak Aktif" FontFamily="{StaticResource SarabunRegular}" FontWeight="Regular" FontSize="11" Foreground="{StaticResource SecondaryDarker}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

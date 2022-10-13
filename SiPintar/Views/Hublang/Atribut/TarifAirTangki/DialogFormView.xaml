@@ -1,0 +1,335 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Atribut.TarifAirTangki.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Hublang.Atribut.TarifAirTangki"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" 
+             d:DesignHeight="482" d:DesignWidth="941">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBoolean" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White" Width="941" Height="482">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppHublang}">
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10,7,15,5" Grid.Column="0">
+                    <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" FontSize="13" LineHeight="10" Text="Tambah Tarif Tangki Air"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,3,0" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Border CornerRadius="2" Background="White">
+                        <TextBlock Foreground="{StaticResource BaseAppHublang}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Visibility="{Binding Path=IsLoading, Converter={StaticResource BooleanToCollapseConverter}}">
+                    <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                        <md:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="White"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="32,24, 32,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource BigTitle}" Grid.Row="0" Margin="0,0,0,10" FontSize="13" Foreground="#028DDB" LineHeight="13">Info Dasar</TextBlock>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}">Kode Tarif</TextBlock>
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="KodeTarif" Text="{Binding SelectedData.KodeTarifTangki}" PreviewKeyUp="Text_PreviewKeyUp" />
+                            <TextBlock x:Name="KodeTarifPlaceholder" DataContext="{Binding ElementName=KodeTarif, Path=Text}" Style="{StaticResource TextBoxPlaceholder}">Masukkan kode tarif</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="17,0,0,0">
+                        <TextBlock Style="{StaticResource SmallTitle}">Nama Tarif</TextBlock>
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="NamaTarif" Text="{Binding SelectedData.NamaTarifTangki}" PreviewKeyUp="Text_PreviewKeyUp"/>
+                            <TextBlock x:Name="NamaTarifPlaceholder" DataContext="{Binding ElementName=NamaTarif, Path=Text}" Style="{StaticResource TextBoxPlaceholder}">Masukkan nama tarif</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource SmallTitle}">Satuan</TextBlock>
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="Satuan" Text="{Binding SelectedData.Satuan}" PreviewKeyUp="Text_PreviewKeyUp"/>
+                            <TextBlock x:Name="SatuanPlaceholder" DataContext="{Binding ElementName=Satuan, Path=Text}" Style="{StaticResource TextBoxPlaceholder}">Masukkan satuan</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="17,0,0,0">
+                        <TextBlock Style="{StaticResource SmallTitle}">Kategori</TextBlock>
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBoxInputForm}" x:Name="Kategori" Text="{Binding SelectedData.Kategori}" PreviewKeyUp="Text_PreviewKeyUp"/>
+                            <TextBlock x:Name="KategoriPlaceholder" DataContext="{Binding ElementName=Kategori, Path=Text}" Style="{StaticResource TextBoxPlaceholder}">Masukkan kategori</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="3" Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                        <TextBlock Text="Biaya Air" Style="{StaticResource SmallTitle}"/>
+                        <Grid>
+                            <TextBox x:Name="BiayaAir" Style="{StaticResource TextBoxInputForm}" HorizontalContentAlignment="Left" Padding="20,0" Text="{Binding SelectedData.BiayaAir, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                            <TextBlock Text="Rp" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                        <TextBlock Text="Biaya Administrasi" Style="{StaticResource SmallTitle}"/>
+                        <Grid>
+                            <TextBox x:Name="BiayaAdministrasi" Style="{StaticResource TextBoxInputForm}" HorizontalContentAlignment="Left" Padding="20,0" Text="{Binding SelectedData.BiayaAdministrasi, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock Text="Rp" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="4" Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                        <TextBlock Text="Biaya Operasional" Style="{StaticResource SmallTitle}"/>
+                        <Grid>
+                            <TextBox x:Name="BiayaOperasional" Style="{StaticResource TextBoxInputForm}" HorizontalContentAlignment="Left" Padding="20,0" Text="{Binding SelectedData.BiayaOperasional, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock Text="Rp" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                        <TextBlock Text="Biaya Transportasi" Style="{StaticResource SmallTitle}"/>
+                        <Grid>
+                            <TextBox x:Name="BiayaTransportasi" Style="{StaticResource TextBoxInputForm}" HorizontalContentAlignment="Left" Padding="20,0" Text="{Binding SelectedData.BiayaTransport, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock Text="Rp" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="5" Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="PPN" Style="{StaticResource SmallTitle}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="Ppn" Width="104" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ppn, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                            <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" Style="{StaticResource SmallTitle}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="16,0,0,0">
+                        <TextBlock Text="Jenis Non-Air" Style="{StaticResource SmallTitle}"/>
+                        <Grid x:Name="JenisNonAirGroup">
+                            <ComboBox x:Name="JenisNonAir" ItemsSource="{Binding JenisNonAir}" SelectionChanged="JenisNonAir_SelectionChanged" DisplayMemberPath="NamaJenisNonAir" Width="{Binding ElementName=JenisNonAirGroup, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}">
+                            </ComboBox>
+                            <TextBlock Text="Pilih kode atau nama jenis non-air" DataContext="{Binding ElementName=JenisNonAir, Path=Text}" Style="{StaticResource TextBoxPlaceholder}"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Margin="32,15,32,15" Background="#F5F5F5">
+                <Grid Margin="9,9,9,9">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Style="{StaticResource BigTitle}" FontSize="13" Foreground="#028DDB" LineHeight="13">Progresif</TextBlock>
+                        <TextBlock Style="{StaticResource CaptionBody}" Margin="10,0,0,0" FontSize="12">*Penentuan tarif berdasarkan jarak (km)</TextBlock>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5,5">
+                            <TextBlock Text="Batas Bawah 1" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasBawah1" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Bb1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock x:Name="BatasBawah1Placeholder" DataContext="{Binding ElementName=BatasBawah1, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,5">
+                            <TextBlock Text="Batas Atas 1" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasAtas1" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ba1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock x:Name="BatasAtas1Placeholder" DataContext="{Binding ElementName=BatasAtas1, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="5,5">
+                            <TextBlock Text="Tarif 1" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="Tarif1" Style="{StaticResource TextBoxInputForm}" Padding="20,0" TextWrapping="NoWrap" Text="{Binding SelectedData.T1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock Text="Rp" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5,5">
+                            <TextBlock Text="Batas Bawah 2" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasBawah2" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding SelectedData.Bb2, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}"/>
+                                <TextBlock x:Name="BatasBawah2Placeholder" DataContext="{Binding ElementName=BatasBawah2, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,5">
+                            <TextBlock Text="Batas Atas 2" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasAtas2" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ba2, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock x:Name="BatasAtas2Placeholder" DataContext="{Binding ElementName=BatasAtas2, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="5,5">
+                            <TextBlock Text="Tarif 2" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="Tarif2" Style="{StaticResource TextBoxInputForm}" Padding="20,0" TextWrapping="NoWrap" Text="{Binding SelectedData.T2, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock Text="Rp" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5,5">
+                            <TextBlock Text="Batas Bawah 3" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasBawah3" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding SelectedData.Bb3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}"/>
+                                <TextBlock x:Name="BatasBawah3Placeholder" DataContext="{Binding ElementName=BatasBawah3, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,5">
+                            <TextBlock Text="Batas Atas 3" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasAtas3" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ba3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock x:Name="BatasAtas3Placeholder" DataContext="{Binding ElementName=BatasAtas3, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="5,5">
+                            <TextBlock Text="Tarif 3" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="Tarif3" Style="{StaticResource TextBoxInputForm}" Padding="20,0" TextWrapping="NoWrap" Text="{Binding SelectedData.T3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock Text="Rp" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5,5">
+                            <TextBlock Text="Batas Bawah 4" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasBawah4" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding SelectedData.Bb4, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}"/>
+                                <TextBlock x:Name="BatasBawah4Placeholder" DataContext="{Binding ElementName=BatasBawah4, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,5">
+                            <TextBlock Text="Batas Atas 4" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasAtas4" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ba4, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock x:Name="BatasAtas4Placeholder" DataContext="{Binding ElementName=BatasAtas4, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="5,5">
+                            <TextBlock Text="Tarif 4" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="Tarif4" Style="{StaticResource TextBoxInputForm}" Padding="20,0" TextWrapping="NoWrap" Text="{Binding SelectedData.T4, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock Text="Rp" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5,5">
+                            <TextBlock Text="Batas Bawah 5" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasBawah5" Style="{StaticResource TextBoxInputForm}" IsEnabled="False" Text="{Binding SelectedData.Bb5, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                                <TextBlock x:Name="BatasBawah5Placeholder" DataContext="{Binding ElementName=BatasBawah5, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,5">
+                            <TextBlock Text="Batas Atas 5" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="BatasAtas5" Style="{StaticResource TextBoxInputForm}" Text="{Binding SelectedData.Ba5, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock x:Name="BatasAtas5Placeholder" DataContext="{Binding ElementName=BatasAtas5, Path=Text}" Text="0 km" Style="{StaticResource TextBoxPlaceholder}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Margin="5,5">
+                            <TextBlock Text="Tarif 5" Margin="0,0,0,3" Style="{StaticResource SmallTitle}"/>
+                            <Grid>
+                                <TextBox x:Name="Tarif5" Style="{StaticResource TextBoxInputForm}" Padding="20,0" TextWrapping="NoWrap" Text="{Binding SelectedData.T5, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock Text="Rp" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Margin="32,0">
+            <Grid>
+                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" IsEnabled="{Binding Path=IsLoading, Converter={StaticResource InverseBoolean}}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+            </Grid>
+            <Grid>
+                <Button x:Name="BtnSubmit" Content="Tambah" Style="{StaticResource ButtonPrimarySmall}"  Width="80" md:ButtonAssist.CornerRadius="13" Click="BtnSubmit_Click" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToCollapseConverter}}" />
+                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Width="80" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

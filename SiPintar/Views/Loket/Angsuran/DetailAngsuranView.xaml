@@ -1,0 +1,248 @@
+﻿<UserControl x:Class="SiPintar.Views.Loket.Angsuran.DetailAngsuranView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Loket.Angsuran"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:StringToUpperConverter x:Key="StringToUpperConverter"/>
+            <converters:SumGroupValuesConverter x:Key="SumGroupValuesConverter"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible"/>
+            <converters:StringToBrushConverter x:Key="StringToBrushConverter" FirstString="Aktif" SecondString="Nonaktif" ThirdString="Segel" FirstBrush="#D9FFDF" SecondBrush="#FCE9ED" ThirdBrush="#FED4A0" />
+            <converters:StringToBrushConverter x:Key="StringToBrushBackgroundConverter" FirstString="True" SecondString="False" FirstBrush="#D9FFDF" SecondBrush="#FCE9ED"/>
+            <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" True="Sudah Publish" False="Belum Publish"/>
+            <converters:BooleanToStringConverter x:Key="BooleanToStringTransaksiConverter" True="Lunas" False="Belum Lunas"/>
+            <CollectionViewSource x:Key="GroupSource" Source="{Binding Path=DetailAngsuranList}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Termin"/>
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="{StaticResource Black10}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="{StaticResource Black20}" BorderThickness="0 0 0 1">
+                <Grid Margin="0 1 1 0" Background="White" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Height="80">
+                        <TextBlock Text="DETAIL ANGSURAN :" Style="{StaticResource LabelOverline}" FontSize="15" LineHeight="20" Margin="16 20 0 0"/>
+                        <TextBlock Text="{Binding SelectedData.NoAngsuran, Mode=OneWay, StringFormat={}No Angsuran : {0}}" Style="{StaticResource CaptionSmallBody}" LineHeight="18" Margin="16 0 0 0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Height="80" Margin="0 0 10 0">
+                        <Button Style="{StaticResource ButtonSecondarySmall}"
+                                FontSize="12" Height="35" Content="Buat Berita Acara" Margin="0 0 10 0" Command="{Binding OnCreateBeritaAcaraCommand}"
+                                Visibility="{Binding VisBeritaAcara, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Button Style="{StaticResource ButtonSecondarySmall}" FontSize="12" Height="35" Width="80" Content="Tutup" Margin="0 0 10 0" Command="{Binding OnTutupDetailAngsuranCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="2" Margin="11 12 10 15">
+                <Border Grid.Row="1" Background="{StaticResource Black20}" BorderBrush="{StaticResource Alto}" BorderThickness="1" CornerRadius="2 2 4 4" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid
+                            Grid.Row="0"
+                            DataContext="{Binding}"
+                            ItemsSource="{Binding Source={StaticResource GroupSource}, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding DetailAngsuran, Mode=TwoWay}"
+                            Style="{StaticResource DataGridRegular}"
+                            RowHeight="30"
+                            SelectionMode="Extended"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            EnableRowVirtualization="True"
+                            EnableColumnVirtualization="True"
+                            AutoGenerateColumns="False"
+                            Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext}"
+                            HeadersVisibility="Column"
+                            IsReadOnly="True">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource DataGridHeaderDark}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                </Style>
+                                <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Black90}"/>
+                                    <Setter Property="Padding" Value="10 0 5 0"/>
+                                    <Setter Property="TextAlignment" Value="Right"/>
+                                </Style>
+                                <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource DataGridCellRegular}"/>
+                            </DataGrid.Resources>
+
+                            <DataGrid.ContextMenu>
+                                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}" Style="{StaticResource ContextMenuRegular}">
+                                    <MenuItem Header="Koreksi Tanggal Mulai Tagih" Command="{Binding OnOpenKoreksiTanggalMulaiTagihCommand}" Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon Width="16" Kind="Calendar" Foreground="{StaticResource SecondaryBlue}"/>
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Koreksi Semua Tanggal Mulai Tagih" Command="{Binding OnOpenKoreksiSemuaTanggalMulaiTagihCommand}" Style="{StaticResource MenuItemRegular}">
+                                        <MenuItem.Icon>
+                                            <Grid>
+                                                <md:PackIcon Width="16" Kind="Calendar" Foreground="{StaticResource SecondaryBlue}"/>
+                                            </Grid>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="Mundurkan Bulan Tagih" Command="{Binding OnOpenMundurkanBulanTagihCommand}" Style="{StaticResource MenuItemRegular}"/>
+                                    <MenuItem Header="Ubah Penanggung Beban Angsuran" Visibility="{Binding }" Command="{Binding OnOpenUbahPenanggungBebanAngsuranCommand}" Style="{StaticResource MenuItemRegular}"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                        <StackPanel >
+                                                            <Border Background="{StaticResource Gray50}" BorderBrush="{StaticResource Black50}" BorderThickness="0 1 0 0">
+                                                                <TextBlock Margin="10,10,10,10" Text="{Binding Name, Converter={StaticResource StringToUpperConverter}, StringFormat=TERMIN {0}}" FontSize="10" Foreground="{StaticResource Cerulean}" FontWeight="Bold" />
+                                                            </Border>
+                                                            <StackPanel Grid.Row="2" Margin="0 0">
+                                                                <Border BorderBrush="{StaticResource Black50}" BorderThickness="0.4">
+                                                                    <ItemsPresenter />
+                                                                </Border>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </DataGrid.GroupStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding NamaPeriode}" x:Name="HeaderPeriode" Header="PERIODE" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding TglMulaiTagih, StringFormat='dd MMMM yyyy'}" x:Name="HeaderTglMulaiTagih" Header="TGL TAGIH"
+                                                    ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding Keterangan, FallbackValue='-'}" x:Name="HeaderKeterangan" Header="KETERANGAN" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding WaktuTransaksi, FallbackValue='-'}" x:Name="HeaderWaktuBayar" Header="TGL BAYAR" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding Total, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" x:Name="HeaderJumlah" Header="JUMLAH" ElementStyle="{StaticResource RightCell}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding NamaUserTransaksi, FallbackValue='-'}" x:Name="HeaderKasir" Header="KASIR" ElementStyle="{StaticResource TextDataGridCellRegular}" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                <DataGridTextColumn Binding="{Binding StatusTransaksi, Converter={StaticResource BooleanToStringTransaksiConverter}}" ElementStyle="{StaticResource TextDataGridCellRegular}" x:Name="HeaderStatus" Header="STATUS" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="Background" Value="{Binding StatusTransaksi, Converter={StaticResource StringToBrushBackgroundConverter}}"/>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Grid.Row="2" Background="{StaticResource Black20}">
+                            <TextBlock Margin="536 4 0 4" FontWeight="Bold" FontFamily="{StaticResource SarabunSemiBold}" LineHeight="20" Foreground="{StaticResource Black100}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+        <Border Grid.Column="1" x:Name="PelangganGrid" Width="233" Padding="21 24 22 24" BorderBrush="{StaticResource Black20}" BorderThickness="1 0 0 0" Background="White">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{StaticResource JaggedIce}" BorderThickness="0 0 0 1" Padding="3 0 0 20">
+                    <StackPanel>
+                        <TextBlock Text="{Binding SelectedData.Nama}" TextWrapping="Wrap" Style="{StaticResource BigTitle}" FontSize="15" LineHeight="20"/>
+                        <TextBlock Text="{Binding SelectedData.Alamat}" TextWrapping="Wrap" Style="{StaticResource CaptionSmallBody}"  LineHeight="20"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" BorderBrush="{StaticResource JaggedIce}" BorderThickness="0 0 0 1" Padding="3 16 0 20">
+                    <StackPanel>
+                        <TextBlock Text="Rekening Air" Style="{StaticResource BigTitle}" FontSize="13" LineHeight="18"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="68"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 10 0 0" Text="Nomor" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 10 0 0" Text="{Binding SelectedPelanggan.NoSamb}" Style="{StaticResource SmallTitleForNumber}" LineHeight="15.6" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 10 0 0" Text="Golongan" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 10 0 0" Text="{Binding SelectedPelanggan.NamaGolongan}" Style="{StaticResource SmallTitleForNumber}" LineHeight="15.6" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 10 0 0" Text="Status" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <Border Grid.Row="2" Grid.Column="1" CornerRadius="10" Background="{Binding SelectedPelanggan.NamaStatus, Converter={StaticResource StringToBrushConverter}}">
+                                <TextBlock Padding="10 2 0 0" VerticalAlignment="Center" Text="{Binding SelectedPelanggan.NamaStatus}" Style="{StaticResource SmallTitleForNumber}" TextWrapping="Wrap"/>
+                            </Border>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 10 0 0" Text="No. Hp" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 10 0 0" Text="{Binding SelectedData.NoHp}" Style="{StaticResource SmallTitleForNumber}" LineHeight="15.6" TextWrapping="Wrap"/>
+
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Padding="3 16 0 0">
+                    <StackPanel>
+                        <TextBlock Text="Detail Angsuran" Style="{StaticResource BigTitle}" FontSize="13" LineHeight="18"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="68"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0 10 0 0" Text="Nomor" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 10 0 0" Text="{Binding SelectedData.NoAngsuran}" Style="{StaticResource SmallTitleForNumber}" LineHeight="15.6" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="0 10 0 0" Text="Termin" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 10 0 0" Text="{Binding SelectedData.JumlahTermin, StringFormat={}{0} Kali}" Style="{StaticResource SmallTitleForNumber}" LineHeight="15.6" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Margin="0 10 0 0" Text="Status" Style="{StaticResource CaptionSmallBody}" LineHeight="18"/>
+                            <Border Grid.Row="2" Grid.Column="1" Background="{Binding SelectedData.FlagPublish, Converter={StaticResource StringToBrushBackgroundConverter}}" CornerRadius="10">
+                                <TextBlock VerticalAlignment="Center" Padding="10 2 0 0" Text="{Binding SelectedData.FlagPublish, Converter={StaticResource BooleanToStringConverter}}" Style="{StaticResource SmallTitleForNumber}" TextWrapping="Wrap"/>
+                            </Border>
+                        </Grid>
+                        <Button Background="Transparent" Foreground="{StaticResource SecondaryBlue}" BorderThickness="0" Padding="0 10 0 0" HorizontalAlignment="Left"
+                                Click="CetakBeritaAcara_OnClick"
+                                Visibility="{Binding VisBeritaAcara, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Width="16" Kind="Printer" Margin="0 0 5 0" VerticalAlignment="Center" Foreground="{StaticResource SecondaryBlue}" />
+                                <TextBlock Text="Cetak Berita Acara"></TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Background="Transparent" Foreground="{StaticResource SecondaryBlue}" BorderThickness="0" Padding="0 0 0 0" HorizontalAlignment="Left"
+                                Click="CetakSpa_OnClick"
+                                Visibility="{Binding VisBeritaAcara, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Width="16" Margin="0 0 5 0" Kind="Printer" VerticalAlignment="Center" Foreground="{StaticResource SecondaryBlue}" />
+                                <TextBlock Text="Cetak Surat Pernyataan"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

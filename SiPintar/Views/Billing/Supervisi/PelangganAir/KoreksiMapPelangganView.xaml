@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.PelangganAir.KoreksiMapPelangganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+
+            <Style x:Key="IconZoom" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource MontserratMedium}"/>
+                <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+                <Setter Property="FontSize" Value="24px" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Border Width="960" Height="570" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="#E2451B">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Tentukan Titik Lokasi Pelanggan Air"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Panel.ZIndex="1" Visibility="{Binding IsLoadingMap, Converter={StaticResource BooleanToVisibleConverter}}">
+                    <Image Height="30" RenderTransformOrigin="0.5, 0.5" Source="/SiPintar;component/Assets/Images/spinner_loading.png">
+                        <Image.RenderTransform>
+                            <RotateTransform x:Name="noFreeze" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                                Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                                To="360" Duration="0:0:0:1" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="16 16 16 16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="7 8 0 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBox x:Name="Alamat" Style="{StaticResource TextBoxInputForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                            <TextBlock DataContext="{Binding ElementName=Alamat, Path=Text}" Text="Masukkan alamat" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                        </Grid>
+                        <Button  Grid.Column="1" Margin="20 0 0 0" Content="Cari" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="5" Click="Search_Click" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" Background="{StaticResource BaseGray}">
+                        <Grid Panel.ZIndex="2">
+                            <Border CornerRadius="2" Background="White" Padding="4,0" Margin="16,30" Width="24" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel>
+                                    <TextBlock x:Name="ZoomIn" Text="+" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomIn_PreviewMouseDown" />
+                                    <Separator  />
+                                    <TextBlock x:Name="ZoomOut" Text="-" Style="{StaticResource IconZoom}" UIElement.PreviewMouseDown="ZoomOut_PreviewMouseDown" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Image x:Name="CenterMarker" Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" Width="30" Panel.ZIndex="2" />
+                        <gmaps:GMapControl x:Name="MainMap" Loaded="MainMap_Loaded" Height="500" OnMapDrag="MainMap_OnMapDrag" />
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <StackPanel Margin="30,20,14,15" Orientation="Horizontal"  HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                                <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="5" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                            </Grid>
+                            <Button x:Name="SaveButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="5" Click="SaveButton_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

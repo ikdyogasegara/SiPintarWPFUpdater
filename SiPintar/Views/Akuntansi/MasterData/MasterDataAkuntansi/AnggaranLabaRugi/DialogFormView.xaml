@@ -1,0 +1,201 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.MasterData.MasterDataAkuntansi.AnggaranLabaRugi.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/SideNavigationStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="DialogGrid" Background="White" Width="450">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppAkuntansiDark}">
+                <Grid Margin="10 5">
+                    <Grid Margin="10,7,15,5">
+                        <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Anggaran Laba-Rugi"/>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Border CornerRadius="2" Background="White" Height="16">
+                            <TextBlock Foreground="{StaticResource BaseAppAkuntansi}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                        </Border>
+                        <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                            <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Vertical" Margin="20 10 20 0">
+                    <StackPanel Margin="10">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource CaptionBody}" Text="Pilihan Input" FontSize="14" LineHeight="20"/>
+                            <RadioButton x:Name="CheckTahun" Content="Tahunan (2022)" Checked="CheckTahun_Checked" Style="{StaticResource RadioStyle}" FontSize="16" Margin="0 0 0 10" Foreground="{StaticResource Black100}"/>
+                            <RadioButton x:Name="CheckBulan" Content="Bulanan (Jan 2022 - Des 2022)" Checked="CheckBulan_Checked" Style="{StaticResource RadioStyle}" FontSize="16" Margin="0 0 0 10" Foreground="{StaticResource Black100}"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 10 0 0">
+                            <TextBlock Style="{StaticResource CaptionBody}" Text="Jenis" FontSize="14" LineHeight="20"/>
+                            <TextBlock Style="{StaticResource SmallTitle}" FontSize="14" LineHeight="20">
+                                        <Run Text="{Binding SelectedDataUraian.Header}"/>
+                                        <Run Text=" - "/>
+                                        <Run Text="{Binding SelectedDataUraian.Uraian}"/>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 10 0 0">
+                            <TextBlock Style="{StaticResource CaptionBody}" Text="Uraian" FontSize="14" LineHeight="20"/>
+                            <TextBlock Style="{StaticResource SmallTitle}" Text="{Binding SelectedDataUraian.NamaPerkiraan}" FontSize="14" LineHeight="20"/>
+                        </StackPanel>
+
+                        <StackPanel x:Name="TextBoxGroupTahun" Margin="0 20 0 0">
+                            <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Nominal" FontSize="14" LineHeight="20"/>
+                            <Grid>
+                                <TextBox x:Name="AnggaranTahunan" Text="{Binding AnggaranLabaRugiForm.Anggaran1, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                <TextBlock DataContext="{Binding ElementName=AnggaranTahunan, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                            </Grid>
+                        </StackPanel>
+
+                        <Grid x:Name="TextBoxGroupBulan" Visibility="Collapsed" Margin="0 10 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <StackPanel Margin="0 10 0 0">
+                                    <DockPanel x:Name="SamakanNominal">
+                                        <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Januari" FontSize="14" LineHeight="20"/>
+                                        <Button Click="SamakanNominal_Click" Content="Samakan Nominal" HorizontalAlignment="Right" Foreground="{StaticResource Black100}" FontSize="10" BorderBrush="Transparent" Background="LightGray" Height="18" Width="95" Padding="0" Margin="0 0 0 5" />
+                                    </DockPanel>
+                                    <TextBlock x:Name="SamakanNominalTutupBuku" Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Januari" FontSize="14" LineHeight="20" Margin="0,0,0,3"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran1_TextChanged" x:Name="Anggaran1" Text="{Binding AnggaranLabaRugiForm.Anggaran1, Mode=TwoWay, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran1, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Februari" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran2_TextChanged" x:Name="Anggaran2" Text="{Binding AnggaranLabaRugiForm.Anggaran2, Mode=TwoWay, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran2, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Maret" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran3_TextChanged" x:Name="Anggaran3" Text="{Binding AnggaranLabaRugiForm.Anggaran3, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran3, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="April" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran4_TextChanged" x:Name="Anggaran4" Text="{Binding AnggaranLabaRugiForm.Anggaran4, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran4, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Mei" FontSize="14" LineHeight="20" Margin="0,0,0,3"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran5_TextChanged" x:Name="Anggaran5" Text="{Binding AnggaranLabaRugiForm.Anggaran5, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran5, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,5,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Juni" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran6_TextChanged" x:Name="Anggaran6" Text="{Binding AnggaranLabaRugiForm.Anggaran6, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran6, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Juli" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran7_TextChanged" x:Name="Anggaran7" Text="{Binding AnggaranLabaRugiForm.Anggaran7, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran7, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Agustus" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran8_TextChanged" x:Name="Anggaran8" Text="{Binding AnggaranLabaRugiForm.Anggaran8, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran8, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4" Orientation="Vertical">
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="September" FontSize="14" LineHeight="20"  Margin="0,0,0,3" />
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran9_TextChanged" x:Name="Anggaran9" Text="{Binding AnggaranLabaRugiForm.Anggaran9, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran9, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Oktober" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran10_TextChanged" x:Name="Anggaran10" Text="{Binding AnggaranLabaRugiForm.Anggaran10, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran10, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="November" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran11_TextChanged" x:Name="Anggaran11" Text="{Binding AnggaranLabaRugiForm.Anggaran11, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran11, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Margin="0 10 0 0">
+                                    <TextBlock Style="{StaticResource CaptionBody}" Foreground="{StaticResource Black100}" Text="Desember" FontSize="14" LineHeight="20"/>
+                                    <Grid>
+                                        <TextBox TextChanged="Anggaran12_TextChanged" x:Name="Anggaran12" Text="{Binding AnggaranLabaRugiForm.Anggaran12, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Height="40" FontSize="20" TextAlignment="Right" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                        <TextBlock DataContext="{Binding ElementName=Anggaran12, Path=Text}" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel x:Name="TotalBorder" Visibility="Collapsed" Orientation="Horizontal" Margin="0 20 0 0">
+                            <TextBlock Text="Total : " Style="{StaticResource BigTitleForNumber}"/>
+                            <TextBlock x:Name="TextBlockTotal" Style="{StaticResource BigTitleForNumber}" Text="{Binding Path=., ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Margin="10,0,30,20">
+                <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                    <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                    <Grid>
+                        <Button x:Name="OkButton" Content="Simpan" Click="OkButton_Click"  Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                        <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                            <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                <other:SpinnerLoadingView Panel.ZIndex="2" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

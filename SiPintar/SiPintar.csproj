@@ -1,0 +1,3691 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	<ApplicationIcon>Assets\Images\Application\main_icon.ico</ApplicationIcon>
+	<UseWindowsForms>true</UseWindowsForms>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<AssemblyVersion>1.7.84</AssemblyVersion>
+	<FileVersion>1.7.84</FileVersion>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
+		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
+
+		<Version>$(FileVersion)</Version>
+
+		<NuspecFile>$(SolutionDir)SiPintar\ReleaseSpec.nuspec</NuspecFile>
+	</PropertyGroup>
+
+	<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+		<XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
+			<Output TaskParameter="Result" ItemName="ID" />
+		</XmlPeek>
+
+		<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)SiPintar\Deployment\GeneratedNugets" />
+		<Exec Command="$(SquirrelTools)\Squirrel.exe --releasify $(SolutionDir)SiPintar\Deployment\GeneratedNugets\@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)SiPintar\Deployment\Releases" />
+	</Target>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningLevel>3</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<PlatformTarget>x64</PlatformTarget>
+		<OutputPath>bin\Debug\</OutputPath>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="AppConfig\Keuangan\**" />
+		<Compile Remove="ViewModels\Distribusi\Distribusi\BaPelangganAirViewModel.cs\**" />
+		<Compile Remove="Views\Perencanaan\Perencanaan\NewFolder\**" />
+		<EmbeddedResource Remove="AppConfig\Keuangan\**" />
+		<EmbeddedResource Remove="ViewModels\Distribusi\Distribusi\BaPelangganAirViewModel.cs\**" />
+		<EmbeddedResource Remove="Views\Perencanaan\Perencanaan\NewFolder\**" />
+		<None Remove="AppConfig\Keuangan\**" />
+		<None Remove="ViewModels\Distribusi\Distribusi\BaPelangganAirViewModel.cs\**" />
+		<None Remove="Views\Perencanaan\Perencanaan\NewFolder\**" />
+		<Page Remove="AppConfig\Keuangan\**" />
+		<Page Remove="ViewModels\Distribusi\Distribusi\BaPelangganAirViewModel.cs\**" />
+		<Page Remove="Views\Perencanaan\Perencanaan\NewFolder\**" />
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_interaksi_layanan_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\voucher_isiedit_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\voucher_pembayaranpembatalan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\penyusutan_data_aktiva_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_kelompok_kode_perkiraan_2_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_keuangan_persentase_tarif_pajak_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_persentase_penyusutan_aktiva_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_pengelompokan_aktiva_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_kelompok_kode_perkiraan_3_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_kelompok_kode_perkiraan_1_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_saldo_awal_perkiraan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_interaksi_jenis_persediaan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_interaksi_layanan_non_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\master_data_akuntansi_interaksi_penyusutan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\jurnal_umum_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\posting_keuangan_pengeluaranlainnya_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Akuntansi\posting_keuangan_penerimaanlainnya_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Distribusi\distribusi_usulan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="config.env">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalBayarKas%28JBK%29Detail.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalBayarKas%28JBK%29Rekap.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHHD.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHHDKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHHDPotrait.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHHDPotraitKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHJP.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29DHJPKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29SisaHutang.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalDaftarHutangSudah&amp;HarusDibayar%28DHHD%29SisaHutangKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29Perkiraan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29PerkiraanKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29PerkiraanRekap.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29PerkiraanRekapKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29Transaksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPenerimaanKas%28JPK%29TransaksiKonsolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningAir%28JRA%29Detail.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningAir%28JRA%29Rekap.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningNonAir%28JRNA%29Detail.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningNonAir%28JRNA%29Kosolidasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Gudang\DaftarPengajuanPengeluaranBarang.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\1.LaporanPerputaranUangLangsungBulanan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\2.LaporanPerputaranUangLangsungTriwulan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\3.LaporanLabaRugiSak-EtapBulanan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\4.LaporanLabaRugiSak-EtapTriwulan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\bukubesar.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\DPK%28Rekap%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\DPK%28Rincian%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\LaporanRincianBiayaMetodeLangsung%28Detail%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\LaporanRincianBiayaMetodeLangsung%28Rekap%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\LaporanTes.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\NeracaAkhirDetail%28BULANAN%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\NeracaAkhirDetail%28TAHUNAN%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\NeracaAkhirDetail%28TRIWULAN%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\NeracaLajurPerBulan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Akuntansi&amp;keuangan\NeracaLajurPerTahun.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Loket\DaftarTagihanNonAirKolektif.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\KolektifFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\KoreksiFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\MapView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\Step1AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\Step2AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\Step3AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\LanggananView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Langganan\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Langganan\KoreksiPelangganAirFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Langganan\MapView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Langganan\KoreksiPelangganLimbahFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Langganan\KoreksiPelangganLlttFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PermohonanAir\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PermohonanAir\MapView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<None Update="AppConfig\Loket\tagihan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarPenerimaan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\LaporanHarianPenerimaanKasLoket.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaan(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanAir(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanLimbah(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanLLTT(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanNonAir(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanNonAirBerdasarkanJenis.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianPenerimaanLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianPenerimaanLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianPenerimaanNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\AktifasiSamb.Baru.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraBalikNama.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraKoreksiRekening.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraPengirimanAirTangki.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraPerubahanGolongan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraRubahRayon.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraSegelKarenaPermohonan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraSegelKarenaTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraTutupSementara.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraTutupTotalKarenaPermohonan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\BeritaAcaraTutupTotalKarenaTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\DaftarMaterial.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\DaftarPengaduan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\LaporanRotasiMeter.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\PenyelesaianBlokirPelanggan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapBonBarangPengaduanLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapBonBarangRABLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapBonBarangRABSambunganBaru(Air).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapKoreksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapMutasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapPengaduanTahunan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapPermintaanSambunganKembali.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RekapSambunganBaruTerpasang(Air).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\RincianKoreksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\VerifikasiBukaSegel.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\VerifikasiSamb.Kembali.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\VerifikasiSegel.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\VerifikasiTutupSementara(KarenaPermintaan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Hublang\VerifikasiTutupTotal(KarenaTunggakan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\verifikasi_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_permohonan_koreksi_rekening_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_usulan_koreksi_rekening_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Page Update="Views\Billing\Supervisi\RekeningAir\HasilBacaUlangView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Supervisi\RekeningAir\VideoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Supervisi\RekeningAir\LampiranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\PetugasBaca\DialogFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\PetugasBaca\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\PetugasBaca\PasswordFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\PetugasBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\RuteBacaMeter\PerPetugasBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\RuteBacaMeterView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Atribut\KelainanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Produktivitas\PelangganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Produktivitas\PembacaanPerTanggalView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Produktivitas\PetugasBacaPerHariView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Produktivitas\PetugasView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Produktivitas\ProgressPembacaanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\ProduktivitasView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<None Update="Template\Loket\KwitansiTagihan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\FotoMeter.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarAdministratif.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarAngsuran.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarPelanggan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarPemakaianAirPerKecamatan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarPemakaianAirPerKelurahan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarPenerimaan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarRek.Air(Kecamatan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarRek.Limbah(Kecamatan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarRek.LLTT(Kecamatan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarRekening.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\IkhtisarSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\InformasiTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\KwitansiAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\KwitansiNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\LaporanHarianPenerimaanKasLoket.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\LaporanPPNSamb.Baru.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\LogPembatalan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDNonAir(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDPostingLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDPostingLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDPostingPerGolongan(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDPostingPerGolongan(PerRayon).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDPostingPerRayon(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDRealLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDRealLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDRealPerGolongan(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDRealPerGolongan(PerRayon).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapDRDRealPerRayon(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapitulasiIkhtisarPemakaian(Kecamatan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapitulasiIkhtisarPemakaian(Kelurahan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapitulasiPenerimaanAirPerLoket.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapLPP.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\Rekappenerimaan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaan(Konsolidasi).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanAir(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanAirBerdasarkanGolongan(PerLoket).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanLimbah(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanLLTT(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanNonAir(PerTanggal).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPenerimaanNonAirBerdasarkanJenis.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPiutangNonair(Keseluruhan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapPiutangNonair(Periode).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RekapSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDPosting.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDPostingLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDPostingLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDReal.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDRealLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianDRDRealLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianPenerimaanLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianPenerimaanLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianPenerimaanNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianPiutangNonair.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\AktifasiSamb.Baru.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraBalikNama.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraKoreksiRekening.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraPengirimanAirTangki.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraPerubahanGolongan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraRubahRayon.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraSegelKarenaPermohonan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraSegelKarenaTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraTutupSementara.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraTutupTotalKarenaPermohonan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\BeritaAcaraTutupTotalKarenaTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\DaftarMaterial.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\DaftarPengaduan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\LaporanRotasiMeter.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\PenyelesaianBlokirPelanggan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapBonBarangPengaduanLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapBonBarangRABLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapBonBarangRABSambunganBaru(Air).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapKoreksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapMutasi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapPengaduanTahunan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapPermintaanSambunganKembali.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RekapSambunganBaruTerpasang(Air).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\RincianKoreksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\VerifikasiBukaSegel.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\VerifikasiSamb.Kembali.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\VerifikasiSegel.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\VerifikasiTutupSementara(KarenaPermintaan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\VerifikasiTutupTotal(KarenaTunggakan).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Billing\RincianPenerimaanAir(Loket).frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\DialogUsulanFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\SpkpFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\DaftarMaterialView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\DaftarOngkosView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\DialogBaFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\TambahOngkosView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Permohonan\TambahMaterialView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAir\SearchDialogNonAir.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanNonAirLainnya\RiwayatTransaksiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Compile Update="Views\Gudang\ProsesTransaksi\PengajuanPengeluaranBarang\PengajuanView.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<None Update="Template\Samples\StarterTemplateReport.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAir\RiwayatTransaksiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Assets\Images\Action\ic_add.png" />
+		<None Remove="Assets\Images\Action\ic_add_blue.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_down.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_left.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_left_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_right.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_right_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_arrow_up.png" />
+		<None Remove="Assets\Images\Action\ic_baca_ulang_active.png" />
+		<None Remove="Assets\Images\Action\ic_baca_ulang_cancel.png" />
+		<None Remove="Assets\Images\Action\ic_baca_ulang_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_baca_ulang_req.png" />
+		<None Remove="Assets\Images\Action\ic_batang_chart.png" />
+		<None Remove="Assets\Images\Action\ic_brush_small.png" />
+		<None Remove="Assets\Images\Action\ic_calendar_active.png" />
+		<None Remove="Assets\Images\Action\ic_calendar_idle.png" />
+		<None Remove="Assets\Images\Action\ic_camera_white.png" />
+		<None Remove="Assets\Images\Action\ic_checkmark.png" />
+		<None Remove="Assets\Images\Action\ic_checkmark_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_chevron_left.png" />
+		<None Remove="Assets\Images\Action\ic_chevron_right.png" />
+		<None Remove="Assets\Images\Action\ic_close.png" />
+		<None Remove="Assets\Images\Action\ic_close_rounded.png" />
+		<None Remove="Assets\Images\Action\ic_close_white.png" />
+		<None Remove="Assets\Images\Action\ic_custom_beban_active.png" />
+		<None Remove="Assets\Images\Action\ic_custom_beban_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_delete_active.png" />
+		<None Remove="Assets\Images\Action\ic_delete_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_detail_pelanggan_active.png" />
+		<None Remove="Assets\Images\Action\ic_detail_pelanggan_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_edit_active.png" />
+		<None Remove="Assets\Images\Action\ic_edit_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_exit-white.png" />
+		<None Remove="Assets\Images\Action\ic_exit.png" />
+		<None Remove="Assets\Images\Action\ic_expand.png" />
+		<None Remove="Assets\Images\Action\ic_expand_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_export.png" />
+		<None Remove="Assets\Images\Action\ic_flag_active.png" />
+		<None Remove="Assets\Images\Action\ic_flag_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_folder.png" />
+		<None Remove="Assets\Images\Action\ic_garis_chart.png" />
+		<None Remove="Assets\Images\Action\ic_hapus_baca_active.png" />
+		<None Remove="Assets\Images\Action\ic_hapus_baca_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_html.png" />
+		<None Remove="Assets\Images\Action\ic_kolom_chart.png" />
+		<None Remove="Assets\Images\Action\ic_konduksi_tabel.png" />
+		<None Remove="Assets\Images\Action\ic_koreksi_active.png" />
+		<None Remove="Assets\Images\Action\ic_koreksi_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_lampiran_active.png" />
+		<None Remove="Assets\Images\Action\ic_lampiran_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_lihat_hasil_active.png" />
+		<None Remove="Assets\Images\Action\ic_lihat_hasil_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_lingkaran_chart.png" />
+		<None Remove="Assets\Images\Action\ic_load.png" />
+		<None Remove="Assets\Images\Action\ic_lock_small.png" />
+		<None Remove="Assets\Images\Action\ic_meter_terbalik_active.png" />
+		<None Remove="Assets\Images\Action\ic_meter_terbalik_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_min.png" />
+		<None Remove="Assets\Images\Action\ic_minimize.png" />
+		<None Remove="Assets\Images\Action\ic_min_active.png" />
+		<None Remove="Assets\Images\Action\ic_min_idle.png" />
+		<None Remove="Assets\Images\Action\ic_min_pressed.png" />
+		<None Remove="Assets\Images\Action\ic_narrow_table_active.png" />
+		<None Remove="Assets\Images\Action\ic_narrow_table_idle.png" />
+		<None Remove="Assets\Images\Action\ic_normal_table_active.png" />
+		<None Remove="Assets\Images\Action\ic_normal_table_idle.png" />
+		<None Remove="Assets\Images\Action\ic_page_add.png" />
+		<None Remove="Assets\Images\Action\ic_paper_small.png" />
+		<None Remove="Assets\Images\Action\ic_play.png" />
+		<None Remove="Assets\Images\Action\ic_plus_active.png" />
+		<None Remove="Assets\Images\Action\ic_plus_idle.png" />
+		<None Remove="Assets\Images\Action\ic_plus_pressed.png" />
+		<None Remove="Assets\Images\Action\ic_print.png" />
+		<None Remove="Assets\Images\Action\ic_printer.png" />
+		<None Remove="Assets\Images\Action\ic_print_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_print_small.png" />
+		<None Remove="Assets\Images\Action\ic_publish.png" />
+		<None Remove="Assets\Images\Action\ic_publish_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_refresh.png" />
+		<None Remove="Assets\Images\Action\ic_report.png" />
+		<None Remove="Assets\Images\Action\ic_report_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_riwayat.png" />
+		<None Remove="Assets\Images\Action\ic_riwayat_disable.png" />
+		<None Remove="Assets\Images\Action\ic_rotate.png" />
+		<None Remove="Assets\Images\Action\ic_setting_appheader.png" />
+		<None Remove="Assets\Images\Action\ic_setting_filter.png" />
+		<None Remove="Assets\Images\Action\ic_set_inactive_active.png" />
+		<None Remove="Assets\Images\Action\ic_set_inactive_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_set_rayon_active.png" />
+		<None Remove="Assets\Images\Action\ic_set_rayon_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_set_rute_baca.png" />
+		<None Remove="Assets\Images\Action\ic_set_stan_awal_active.png" />
+		<None Remove="Assets\Images\Action\ic_set_stan_awal_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_stan_kembali_active.png" />
+		<None Remove="Assets\Images\Action\ic_stan_kembali_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_subtract.png" />
+		<None Remove="Assets\Images\Action\ic_success.png" />
+		<None Remove="Assets\Images\Action\ic_table_layout.png" />
+		<None Remove="Assets\Images\Action\ic_taksasi_active.png" />
+		<None Remove="Assets\Images\Action\ic_taksasi_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_taksasi_pemakaian_active.png" />
+		<None Remove="Assets\Images\Action\ic_taksasi_pemakaian_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_times.png" />
+		<None Remove="Assets\Images\Action\ic_txt.png" />
+		<None Remove="Assets\Images\Action\ic_unverifikasi_active.png" />
+		<None Remove="Assets\Images\Action\ic_unverifikasi_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_unverifikasi_table.png" />
+		<None Remove="Assets\Images\Action\ic_update_supervisi.png" />
+		<None Remove="Assets\Images\Action\ic_upload_active.png" />
+		<None Remove="Assets\Images\Action\ic_upload_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_verifikasi_active.png" />
+		<None Remove="Assets\Images\Action\ic_verifikasi_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_water_meter_active.png" />
+		<None Remove="Assets\Images\Action\ic_water_meter_disabled.png" />
+		<None Remove="Assets\Images\Action\ic_wide_table_active.png" />
+		<None Remove="Assets\Images\Action\ic_wide_table_idle.png" />
+		<None Remove="Assets\Images\Action\ic_xls.png" />
+		<None Remove="Assets\Images\Action\ic_xlsx.png" />
+		<None Remove="Assets\Images\Action\ic_xml.png" />
+		<None Remove="Assets\Images\Application\akuntansi_icon.ico" />
+		<None Remove="Assets\Images\Application\akuntansi_logo.png" />
+		<None Remove="Assets\Images\Application\akuntansi_logo_3x.png" />
+		<None Remove="Assets\Images\Application\bacameter_icon.ico" />
+		<None Remove="Assets\Images\Application\bacameter_logo.png" />
+		<None Remove="Assets\Images\Application\bacameter_logo_3x.png" />
+		<None Remove="Assets\Images\Application\billing_icon.ico" />
+		<None Remove="Assets\Images\Application\billing_logo.png" />
+		<None Remove="Assets\Images\Application\billing_logo_3x.png" />
+		<None Remove="Assets\Images\Application\bsa_logo.png" />
+		<None Remove="Assets\Images\Application\config_logo.ico" />
+		<None Remove="Assets\Images\Application\config_logo.png" />
+		<None Remove="Assets\Images\Application\config_logo_3x.png" />
+		<None Remove="Assets\Images\Application\dashboard_logo.png" />
+		<None Remove="Assets\Images\Application\dashboard_logo_3x.png" />
+		<None Remove="Assets\Images\Application\distribusi_icon.ico" />
+		<None Remove="Assets\Images\Application\distribusi_logo.png" />
+		<None Remove="Assets\Images\Application\distribusi_logo_3x.png" />
+		<None Remove="Assets\Images\Application\gudang_icon.ico" />
+		<None Remove="Assets\Images\Application\gudang_logo.png" />
+		<None Remove="Assets\Images\Application\gudang_logo_3x.png" />
+		<None Remove="Assets\Images\Application\hublang_icon.ico" />
+		<None Remove="Assets\Images\Application\hublang_logo.png" />
+		<None Remove="Assets\Images\Application\hublang_logo_3x.png" />
+		<None Remove="Assets\Images\Application\loket_icon.ico" />
+		<None Remove="Assets\Images\Application\loket_logo.png" />
+		<None Remove="Assets\Images\Application\loket_logo_3x.png" />
+		<None Remove="Assets\Images\Application\main_icon.ico" />
+		<None Remove="Assets\Images\Application\main_logo_3x.png" />
+		<None Remove="Assets\Images\Application\pdam_info_logo.png" />
+		<None Remove="Assets\Images\Application\pdam_info_logo_3x.png" />
+		<None Remove="Assets\Images\Application\pdam_pintar.png" />
+		<None Remove="Assets\Images\Application\perencanaan_icon.ico" />
+		<None Remove="Assets\Images\Application\perencanaan_logo.png" />
+		<None Remove="Assets\Images\Application\perencanaan_logo_3x.png" />
+		<None Remove="Assets\Images\Application\personalia_icon.ico" />
+		<None Remove="Assets\Images\Application\personalia_logo.png" />
+		<None Remove="Assets\Images\Application\personalia_logo_3x.png" />
+		<None Remove="Assets\Images\Application\report_icon.ico" />
+		<None Remove="Assets\Images\Application\report_logo.png" />
+		<None Remove="Assets\Images\Application\report_logo_3x.png" />
+		<None Remove="Assets\Images\backup_database.png" />
+		<None Remove="Assets\Images\checkup_database.png" />
+		<None Remove="Assets\Images\email.png" />
+		<None Remove="Assets\Images\empty_data_v1.png" />
+		<None Remove="Assets\Images\empty_data_v2.png" />
+		<None Remove="Assets\Images\ic_marker_blue.png" />
+		<None Remove="Assets\Images\ic_marker_red.png" />
+		<None Remove="Assets\Images\ic_no_map.png" />
+		<None Remove="Assets\Images\ic_no_pic.png" />
+		<None Remove="Assets\Images\ic_password.png" />
+		<None Remove="Assets\Images\ic_username.png" />
+		<None Remove="Assets\Images\invoice.png" />
+		<None Remove="Assets\Images\login_bg.png" />
+		<None Remove="Assets\Images\lunas.png" />
+		<None Remove="Assets\Images\lupa_password.png" />
+		<None Remove="Assets\Images\Map\ic_marker_green.png" />
+		<None Remove="Assets\Images\Map\ic_marker_pink.png" />
+		<None Remove="Assets\Images\Map\ic_marker_purple.png" />
+		<None Remove="Assets\Images\Map\ic_marker_yellow.png" />
+		<None Remove="Assets\Images\no_image.png" />
+		<None Remove="Assets\Images\Onboarding\Billing\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Billing\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Billing\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Akuntansi\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Personalia\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Gudang\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Perencanaan\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Distribusi\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Loket\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.c.1.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.c.2.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.c.3.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\Figures\fig.c.4.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Hublang\onboard.welcome.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.a.1.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.a.2.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.a.3.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.a.4.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.a.5.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.1.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.2.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.3.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.4.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.5.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\Figures\fig.b.6.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.0.1.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.0.2.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.0.3.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.0.4.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.close.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.ok.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.point.left.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.point.right.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.start.png" />
+		<None Remove="Assets\Images\Onboarding\Bacameter\onboard.welcome.png" />
+		<None Remove="Assets\Images\optimasi_database.png" />
+		<None Remove="Assets\Images\perbaikan_database.png" />
+		<None Remove="Assets\Images\spinner_loading.png" />
+		<None Remove="Assets\Images\splash_bg.png" />
+		<None Remove="Assets\Images\tagihan.png" />
+		<None Remove="Assets\Images\Toolbar\ic_add.png" />
+		<None Remove="Assets\Images\Toolbar\ic_akses.png" />
+		<None Remove="Assets\Images\Toolbar\ic_back.png" />
+		<None Remove="Assets\Images\Toolbar\ic_barang_urgen2x.png" />
+		<None Remove="Assets\Images\Toolbar\ic_barang_urgent.png" />
+		<None Remove="Assets\Images\Toolbar\ic_buat_laporan.png" />
+		<None Remove="Assets\Images\Toolbar\ic_calendar.png" />
+		<None Remove="Assets\Images\Toolbar\ic_calender_add.png" />
+		<None Remove="Assets\Images\Toolbar\ic_calender_check.png" />
+		<None Remove="Assets\Images\Toolbar\ic_calender_close.png" />
+		<None Remove="Assets\Images\Toolbar\ic_close.png" />
+		<None Remove="Assets\Images\Toolbar\ic_delete.png" />
+		<None Remove="Assets\Images\Toolbar\ic_delete_v2.png" />
+		<None Remove="Assets\Images\Toolbar\ic_download.png" />
+		<None Remove="Assets\Images\Toolbar\ic_duplicate.png" />
+		<None Remove="Assets\Images\Toolbar\ic_edit_people.png" />
+		<None Remove="Assets\Images\Toolbar\ic_export.png" />
+		<None Remove="Assets\Images\Toolbar\ic_filter.png" />
+		<None Remove="Assets\Images\Toolbar\ic_filter_disabled.png" />
+		<None Remove="Assets\Images\Toolbar\ic_filter_side_toggle.png" />
+		<None Remove="Assets\Images\Toolbar\ic_gudang.png" />
+		<None Remove="Assets\Images\Toolbar\ic_hapus_rute.png" />
+		<None Remove="Assets\Images\Toolbar\ic_history.png" />
+		<None Remove="Assets\Images\Toolbar\ic_hitung.png" />
+		<None Remove="Assets\Images\Toolbar\ic_import.png" />
+		<None Remove="Assets\Images\Toolbar\ic_info_detail.png" />
+		<None Remove="Assets\Images\Toolbar\ic_kolektif.png" />
+		<None Remove="Assets\Images\Toolbar\ic_koreksi.png" />
+		<None Remove="Assets\Images\Toolbar\ic_lpb_sementaran.png" />
+		<None Remove="Assets\Images\Toolbar\ic_pembayaran.png" />
+		<None Remove="Assets\Images\Toolbar\ic_pengajuan_pembelian.png" />
+		<None Remove="Assets\Images\Toolbar\ic_perbarui_data.png" />
+		<None Remove="Assets\Images\Toolbar\ic_personalia.png" />
+		<None Remove="Assets\Images\Toolbar\ic_pratinjau.png" />
+		<None Remove="Assets\Images\Toolbar\ic_print.png" />
+		<None Remove="Assets\Images\Toolbar\ic_publish.png" />
+		<None Remove="Assets\Images\Toolbar\ic_refresh.png" />
+		<None Remove="Assets\Images\Toolbar\ic_refresh_password.png" />
+		<None Remove="Assets\Images\Toolbar\ic_refresh_v2.png" />
+		<None Remove="Assets\Images\Toolbar\ic_reset.png" />
+		<None Remove="Assets\Images\Toolbar\ic_table.png" />
+		<None Remove="Assets\Images\Toolbar\ic_table_setting.png" />
+		<None Remove="Assets\Images\Toolbar\ic_tambah.png" />
+		<None Remove="Assets\Images\Toolbar\ic_tambah_rute.png" />
+		<None Remove="Assets\Images\Toolbar\ic_unverifikasi.png" />
+		<None Remove="Assets\Images\Toolbar\ic_unverifikasi_all.png" />
+		<None Remove="Assets\Images\Toolbar\ic_unverifikasi_no_outline.png" />
+		<None Remove="Assets\Images\Toolbar\ic_update%402x.png" />
+		<None Remove="Assets\Images\Toolbar\ic_update.png" />
+		<None Remove="Assets\Images\Toolbar\ic_update_tarif.png" />
+		<None Remove="Assets\Images\Toolbar\ic_update_tarif_l2t2.png" />
+		<None Remove="Assets\Images\Toolbar\ic_upload.png" />
+		<None Remove="Assets\Images\Toolbar\ic_upload_no_outline.png" />
+		<None Remove="Assets\Images\Toolbar\ic_verifikasi.png" />
+		<None Remove="Assets\Images\Toolbar\ic_verifikasi_all.png" />
+		<None Remove="Assets\Images\default.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_first.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_last.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_next.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_previous.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_print.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_save.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_zoom_in.png" />
+		<None Remove="Assets\Images\ReportViewer\ic_zoom_out.png" />
+		<None Remove="Assets\Images\ResponseIcon\ic_error.png" />
+		<None Remove="Assets\Images\ResponseIcon\ic_info.png" />
+		<None Remove="Assets\Images\ResponseIcon\ic_success.png" />
+		<None Remove="Assets\Images\ResponseIcon\ic_warning.png" />
+		<None Remove="Assets\Images\Toolbar\ic_verifikasi_no_outline.png" />
+		<None Remove="Assets\Images\top-main-slicer.png" />
+		<None Remove="Assets\Images\top-nav-slicer.png" />
+		<None Remove="Assets\Images\user.png" />
+		<None Remove="Assets\Images\video.jpg" />
+		<None Remove="Assets\Images\Window\ic_close.png" />
+		<None Remove="Assets\Images\Window\ic_close_white.png" />
+		<None Remove="Assets\Images\Window\ic_maximize.png" />
+		<None Remove="Assets\Images\Window\ic_maximize_full.png" />
+		<None Remove="Assets\Images\Window\ic_maximize_full_white.png" />
+		<None Remove="Assets\Images\Window\ic_maximize_white.png" />
+		<None Remove="Assets\Images\Window\ic_minimize.png" />
+		<None Remove="Assets\Images\Window\ic_minimize_white.png" />
+		<None Remove="Assets\Images\Window\ic_setting_filled.png" />
+		<None Remove="Assets\Images\Window\ic_setting_filled_white.png" />
+		<None Remove="Assets\Images\Window\ic_setting_white.png" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Folder Include="AppConfig\Gudang\" />
+		<Folder Include="AppConfig\Personalia\" />
+		<Folder Include="Commands\Distribusi\Distribusi\GantiMeterNonRutin\KelainanBacameter" />
+		<Folder Include="obj" />
+		<Folder Include="Template\Akuntansi\" />
+		<Folder Include="Views\Distribusi\Distribusi\GantiMeterNonRutin\KelainanBacameter" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.0.123" />
+		<PackageReference Include="DeviceId" Version="6.2.0" />
+		<PackageReference Include="DeviceId.Windows" Version="6.2.0" />
+		<PackageReference Include="DeviceId.Windows.Wmi" Version="6.2.0" />
+		<PackageReference Include="DotNetEnv" Version="2.3.0" />
+		<PackageReference Include="GMap.NET.Core" Version="2.1.7" />
+		<PackageReference Include="GMap.NET.WinPresentation" Version="2.1.7" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.45" />
+		<PackageReference Include="IniFileParserStandard" Version="1.0.1" />
+		<PackageReference Include="LiteDB" Version="5.0.12" />
+		<PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+		<PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
+		<PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.3.32804.24" />
+		<PackageReference Include="MySql.Data" Version="8.0.30" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NPOI" Version="2.5.6" />
+		<PackageReference Include="NuGet.CommandLine" Version="6.3.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+		<PackageReference Include="ResXResourceReader.NetStandard" Version="1.1.0" />
+		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="squirrel.windows" Version="1.9.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\AppBusiness.Data\AppBusiness.Data.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Reference Include="FastReport">
+			<HintPath>Libraries\FastReport\FastReport.dll</HintPath>
+		</Reference>
+		<Reference Include="FastReport.Bars">
+			<HintPath>Libraries\FastReport\FastReport.Bars.dll</HintPath>
+		</Reference>
+		<Reference Include="FastReport.Editor">
+			<HintPath>Libraries\FastReport\FastReport.Editor.dll</HintPath>
+		</Reference>
+		<Reference Include="FastReport.Service">
+			<HintPath>Libraries\FastReport\FastReport.Service.dll</HintPath>
+		</Reference>
+		<Reference Include="FastReport.VSDesign">
+			<HintPath>Libraries\FastReport\FastReport.VSDesign.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Windows.Forms.DataVisualization">
+			<HintPath>C:\Program Files (x86)\FastReports\FastReport.Net Trial\System.Windows.Forms.DataVisualization.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="AppConfig\Distribusi\distribusi_usulan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Common.Logging.Core.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Common.Logging.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Couchbase.NetClient.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Designer.exe">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\de\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\DnsClient.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\es\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Compat.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.Couchbase.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.Json.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.MongoDB.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.MySql.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.OracleODPCore.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.Postgres.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.RavenDB.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.Data.SQLite.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\FastReport.DataVisualization.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\fi\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\fr\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\ja\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Lambda2Js.Signed.Custom.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\libzstd.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\MongoDB.Bson.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\MongoDB.Driver.Core.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\MongoDB.Driver.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\MongoDB.Libmongocrypt.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Mono.Security.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\MySql.Data.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\netstandard.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Newtonsoft.Json.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Npgsql.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\OpenTracing.Signed.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Oracle.ManagedDataAccess.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Raven.Client.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\readme.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\SharpCompress.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\snappy32.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\snappy64.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Sparrow.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\System.Buffers.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\System.Data.SQLite.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\System.Runtime.CompilerServices.Unsafe.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\System.Runtime.InteropServices.RuntimeInformation.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\System.Threading.Tasks.Extensions.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\Viewer.exe">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\x64\SQLite.Interop.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\x86\SQLite.Interop.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Libraries\FastReport.Designer\zh-CN\Npgsql.resources.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Assets\Images\Action\ic_add.png" />
+		<Resource Include="Assets\Images\Action\ic_add_blue.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_down.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_left.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_left_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_right.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_right_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_arrow_up.png" />
+		<Resource Include="Assets\Images\Action\ic_baca_ulang_active.png" />
+		<Resource Include="Assets\Images\Action\ic_baca_ulang_cancel.png" />
+		<Resource Include="Assets\Images\Action\ic_baca_ulang_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_baca_ulang_req.png" />
+		<Resource Include="Assets\Images\Action\ic_brush_small.png" />
+		<Resource Include="Assets\Images\Action\ic_calendar_active.png" />
+		<Resource Include="Assets\Images\Action\ic_calendar_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_camera_white.png" />
+		<Resource Include="Assets\Images\Action\ic_checkmark.png" />
+		<Resource Include="Assets\Images\Action\ic_checkmark_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_chevron_left.png" />
+		<Resource Include="Assets\Images\Action\ic_chevron_right.png" />
+		<Resource Include="Assets\Images\Action\ic_close_rounded.png" />
+		<Resource Include="Assets\Images\Action\ic_custom_beban_active.png" />
+		<Resource Include="Assets\Images\Action\ic_custom_beban_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_delete_active.png" />
+		<Resource Include="Assets\Images\Action\ic_delete_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_detail_pelanggan_active.png" />
+		<Resource Include="Assets\Images\Action\ic_detail_pelanggan_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_edit_active.png" />
+		<Resource Include="Assets\Images\Action\ic_edit_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_export.png" />
+		<Resource Include="Assets\Images\Action\ic_flag_active.png" />
+		<Resource Include="Assets\Images\Action\ic_flag_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_folder.png" />
+		<Resource Include="Assets\Images\Action\ic_hapus_baca_active.png" />
+		<Resource Include="Assets\Images\Action\ic_hapus_baca_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_html.png" />
+		<Resource Include="Assets\Images\Action\ic_koreksi_active.png" />
+		<Resource Include="Assets\Images\Action\ic_koreksi_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_lampiran_active.png" />
+		<Resource Include="Assets\Images\Action\ic_lampiran_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_lihat_hasil_active.png" />
+		<Resource Include="Assets\Images\Action\ic_lihat_hasil_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_load.png" />
+		<Resource Include="Assets\Images\Action\ic_lock_small.png" />
+		<Resource Include="Assets\Images\Action\ic_meter_terbalik_active.png" />
+		<Resource Include="Assets\Images\Action\ic_meter_terbalik_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_minimize.png" />
+		<Resource Include="Assets\Images\Action\ic_min_active.png" />
+		<Resource Include="Assets\Images\Action\ic_min_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_min_pressed.png" />
+		<Resource Include="Assets\Images\Action\ic_narrow_table_active.png" />
+		<Resource Include="Assets\Images\Action\ic_narrow_table_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_normal_table_active.png" />
+		<Resource Include="Assets\Images\Action\ic_normal_table_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_page_add.png" />
+		<Resource Include="Assets\Images\Action\ic_paper_small.png" />
+		<Resource Include="Assets\Images\Action\ic_play.png" />
+		<Resource Include="Assets\Images\Action\ic_plus_active.png" />
+		<Resource Include="Assets\Images\Action\ic_plus_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_plus_pressed.png" />
+		<Resource Include="Assets\Images\Action\ic_print.png" />
+		<Resource Include="Assets\Images\Action\ic_print_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_print_small.png" />
+		<Resource Include="Assets\Images\Action\ic_publish.png" />
+		<Resource Include="Assets\Images\Action\ic_publish_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_refresh.png" />
+		<Resource Include="Assets\Images\Action\ic_report.png" />
+		<Resource Include="Assets\Images\Action\ic_report_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_riwayat.png" />
+		<Resource Include="Assets\Images\Action\ic_riwayat_disable.png" />
+		<Resource Include="Assets\Images\Action\ic_setting_appheader.png" />
+		<Resource Include="Assets\Images\Action\ic_setting_filter.png" />
+		<Resource Include="Assets\Images\Action\ic_set_inactive_active.png" />
+		<Resource Include="Assets\Images\Action\ic_set_inactive_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_set_rayon_active.png" />
+		<Resource Include="Assets\Images\Action\ic_set_rayon_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_set_rute_baca.png" />
+		<Resource Include="Assets\Images\Action\ic_set_stan_awal_active.png" />
+		<Resource Include="Assets\Images\Action\ic_set_stan_awal_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_stan_kembali_active.png" />
+		<Resource Include="Assets\Images\Action\ic_stan_kembali_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_success.png" />
+		<Resource Include="Assets\Images\Action\ic_taksasi_active.png" />
+		<Resource Include="Assets\Images\Action\ic_taksasi_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_taksasi_pemakaian_active.png" />
+		<Resource Include="Assets\Images\Action\ic_taksasi_pemakaian_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_times.png" />
+		<Resource Include="Assets\Images\Action\ic_txt.png" />
+		<Resource Include="Assets\Images\Action\ic_unverifikasi_active.png" />
+		<Resource Include="Assets\Images\Action\ic_unverifikasi_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_unverifikasi_table.png" />
+		<Resource Include="Assets\Images\Action\ic_update_supervisi.png" />
+		<Resource Include="Assets\Images\Action\ic_upload_active.png" />
+		<Resource Include="Assets\Images\Action\ic_upload_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_verifikasi_active.png" />
+		<Resource Include="Assets\Images\Action\ic_verifikasi_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_water_meter_active.png" />
+		<Resource Include="Assets\Images\Action\ic_water_meter_disabled.png" />
+		<Resource Include="Assets\Images\Action\ic_wide_table_active.png" />
+		<Resource Include="Assets\Images\Action\ic_wide_table_idle.png" />
+		<Resource Include="Assets\Images\Action\ic_xls.png" />
+		<Resource Include="Assets\Images\Action\ic_xlsx.png" />
+		<Resource Include="Assets\Images\Action\ic_xml.png" />
+		<Resource Include="Assets\Images\Application\akuntansi_icon.ico" />
+		<Resource Include="Assets\Images\Application\akuntansi_logo.png" />
+		<Resource Include="Assets\Images\Application\akuntansi_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\bacameter_icon.ico" />
+		<Resource Include="Assets\Images\Application\bacameter_logo.png" />
+		<Resource Include="Assets\Images\Application\bacameter_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\billing_icon.ico" />
+		<Resource Include="Assets\Images\Application\billing_logo.png" />
+		<Resource Include="Assets\Images\Application\billing_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\bsa_logo.png" />
+		<Resource Include="Assets\Images\Application\config_logo.ico" />
+		<Resource Include="Assets\Images\Application\config_logo.png" />
+		<Resource Include="Assets\Images\Application\config_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\dashboard_logo.png" />
+		<Resource Include="Assets\Images\Application\dashboard_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\distribusi_icon.ico" />
+		<Resource Include="Assets\Images\Application\distribusi_logo.png" />
+		<Resource Include="Assets\Images\Application\distribusi_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\gudang_icon.ico" />
+		<Resource Include="Assets\Images\Application\gudang_logo.png" />
+		<Resource Include="Assets\Images\Application\gudang_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\hublang_icon.ico" />
+		<Resource Include="Assets\Images\Application\hublang_logo.png" />
+		<Resource Include="Assets\Images\Application\hublang_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\loket_icon.ico" />
+		<Resource Include="Assets\Images\Application\loket_logo.png" />
+		<Resource Include="Assets\Images\Application\main_icon.ico" />
+		<Resource Include="Assets\Images\Application\main_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\loket_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\pdam_info_logo.png" />
+		<Resource Include="Assets\Images\Application\pdam_info_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\pdam_pintar.png" />
+		<Resource Include="Assets\Images\Application\perencanaan_icon.ico" />
+		<Resource Include="Assets\Images\Application\perencanaan_logo.png" />
+		<Resource Include="Assets\Images\Application\perencanaan_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\personalia_icon.ico" />
+		<Resource Include="Assets\Images\Application\personalia_logo.png" />
+		<Resource Include="Assets\Images\Application\personalia_logo_3x.png" />
+		<Resource Include="Assets\Images\Application\report_icon.ico" />
+		<Resource Include="Assets\Images\Application\report_logo.png" />
+		<Resource Include="Assets\Images\Application\report_logo_3x.png" />
+		<Resource Include="Assets\Images\backup_database.png" />
+		<Resource Include="Assets\Images\invoice.png" />
+		<Resource Include="Assets\Images\lunas.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_blue.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_green.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_pink.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_purple.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_red.png" />
+		<Resource Include="Assets\Images\Map\ic_marker_yellow.png" />
+		<Resource Include="Assets\Images\Onboarding\Billing\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Billing\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Billing\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Akuntansi\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Personalia\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Gudang\onboard.welcome.png" />
+		<Resource Include="Assets\Images\splash_bg.png" />
+		<Resource Include="Assets\Images\Chart\ic_batang_chart.png" />
+		<Resource Include="Assets\Images\Action\ic_close.png" />
+		<Resource Include="Assets\Images\Action\ic_close_white.png" />
+		<Resource Include="Assets\Images\Action\ic_exit-white.png" />
+		<Resource Include="Assets\Images\Action\ic_exit.png" />
+		<Resource Include="Assets\Images\Action\ic_expand.png" />
+		<Resource Include="Assets\Images\Action\ic_expand_disabled.png" />
+		<Resource Include="Assets\Images\Chart\ic_garis_chart.png" />
+		<Resource Include="Assets\Images\Chart\ic_kolom_chart.png" />
+		<Resource Include="Assets\Images\Action\ic_konduksi_tabel.png" />
+		<Resource Include="Assets\Images\Chart\ic_lingkaran_chart.png" />
+		<Resource Include="Assets\Images\Action\ic_min.png" />
+		<Resource Include="Assets\Images\Action\ic_printer.png" />
+		<Resource Include="Assets\Images\Action\ic_rotate.png" />
+		<Resource Include="Assets\Images\Action\ic_subtract.png" />
+		<Resource Include="Assets\Images\Action\ic_table_layout.png" />
+		<Resource Include="Assets\Images\checkup_database.png" />
+		<Resource Include="Assets\Images\email.png" />
+		<Resource Include="Assets\Images\empty_data_v1.png" />
+		<Resource Include="Assets\Images\empty_data_v2.png" />
+		<Resource Include="Assets\Images\ic_no_map.png" />
+		<Resource Include="Assets\Images\ic_no_pic.png" />
+		<Resource Include="Assets\Images\ic_password.png" />
+		<Resource Include="Assets\Images\ic_username.png" />
+		<Resource Include="Assets\Images\login_bg.png" />
+		<Resource Include="Assets\Images\lupa_password.png" />
+		<Resource Include="Assets\Images\no_image.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Perencanaan\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Distribusi\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Loket\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.c.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.c.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.c.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\Figures\fig.c.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Hublang\onboard.welcome.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.a.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.a.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.a.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.a.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.a.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.5.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\Figures\fig.b.6.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.0.1.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.0.2.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.0.3.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.0.4.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.close.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.ok.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.point.left.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.point.right.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.start.png" />
+		<Resource Include="Assets\Images\Onboarding\Bacameter\onboard.welcome.png" />
+		<Resource Include="Assets\Images\optimasi_database.png" />
+		<Resource Include="Assets\Images\perbaikan_database.png" />
+		<Resource Include="Assets\Images\spinner_loading.png" />
+		<Resource Include="Assets\Images\tagihan.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_add.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_akses.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_back.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_barang_urgen2x.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_barang_urgent.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_buat_laporan.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_calendar.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_calender_add.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_calender_check.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_calender_close.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_close.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_delete.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_delete_v2.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_download.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_duplicate.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_edit_people.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_export.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_filter.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_filter_disabled.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_filter_side_toggle.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_gudang.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_hapus_rute.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_history.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_hitung.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_import.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_info_detail.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_kolektif.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_koreksi.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_lpb_sementaran.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_pembayaran.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_pengajuan_pembelian.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_perbarui_data.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_personalia.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_pratinjau.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_print.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_publish.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_refresh.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_refresh_password.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_refresh_v2.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_reset.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_table.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_table_setting.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_tambah.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_tambah_rute.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_unverifikasi.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_unverifikasi_all.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_unverifikasi_no_outline.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_update.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_update@2x.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_update_tarif.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_update_tarif_l2t2.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_upload.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_upload_no_outline.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_verifikasi.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_verifikasi_all.png" />
+		<Resource Include="Assets\Images\default.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Assets\Images\ReportViewer\ic_first.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_last.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_next.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_previous.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_print.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_save.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_zoom_in.png" />
+		<Resource Include="Assets\Images\ReportViewer\ic_zoom_out.png" />
+		<Resource Include="Assets\Images\ResponseIcon\ic_error.png" />
+		<Resource Include="Assets\Images\ResponseIcon\ic_info.png" />
+		<Resource Include="Assets\Images\ResponseIcon\ic_success.png" />
+		<Resource Include="Assets\Images\ResponseIcon\ic_warning.png" />
+		<Resource Include="Assets\Images\Toolbar\ic_verifikasi_no_outline.png" />
+		<Resource Include="Assets\Images\top-main-slicer.png" />
+		<Resource Include="Assets\Images\top-nav-slicer.png" />
+		<Resource Include="Assets\Images\user.png" />
+		<Resource Include="Assets\Images\video.jpg" />
+		<Resource Include="Assets\Images\Window\ic_close.png" />
+		<Resource Include="Assets\Images\Window\ic_close_white.png" />
+		<Resource Include="Assets\Images\Window\ic_maximize.png" />
+		<Resource Include="Assets\Images\Window\ic_maximize_full.png" />
+		<Resource Include="Assets\Images\Window\ic_maximize_full_white.png" />
+		<Resource Include="Assets\Images\Window\ic_maximize_white.png" />
+		<Resource Include="Assets\Images\Window\ic_minimize.png" />
+		<Resource Include="Assets\Images\Window\ic_minimize_white.png" />
+		<Resource Include="Assets\Images\Window\ic_setting_filled.png" />
+		<Resource Include="Assets\Images\Window\ic_setting_filled_white.png" />
+		<Resource Include="Assets\Images\Window\ic_setting_white.png" />
+		<Resource Include="Assets\Images\Toolbar\pasang_pel_baru.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Views\Bacameter\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Billing\AtributView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Billing\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Distribusi\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Gudang\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Hublang\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Hublang\Pelayanan\MeteranView - Copy %282%29.xaml.cs">
+			<DependentUpon>MeteranView.xaml.cs</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Hublang\Pelayanan\MeteranView - Copy - Copy.xaml.cs">
+			<DependentUpon>MeteranView - Copy.xaml.cs</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Hublang\Pelayanan\MeteranView - Copy.xaml.cs">
+			<DependentUpon>MeteranView.xaml.cs</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Loket\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Perencanaan\Atribut\RumusVolumeView.xaml.cs">
+			<DependentUpon>RumusVolumeView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Perencanaan\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\Personalia\BantuanView.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="AppConfig\Bacameter\supervisi_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\bacameter_menu.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_pelanggan_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_pelanggan_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_penghapusan_rekening_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_periode_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_rekening_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_rekening_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_rekening_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\supervisi_permohonan_koreksi_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\user_billing_log_aktivitas_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Billing\user_billing_pengguna_bsbs_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Distribusi\distribusi_ba_non_pelanggan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Distribusi\distribusi_ba_pelanggan_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Distribusi\distribusi_ba_pelanggan_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Distribusi\distribusi_ba_pelanggan_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Gudang\datamaster_barang.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\atribut_tarif_tangki_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_berita_acara_non_pelanggan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_berita_acara_pengembalian_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_berita_acara_pelanggan_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_berita_acara_pelanggan_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_pendaftaran_sambungan_baru_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_berita_acara_pelanggan_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_tagihan_manual_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Hublang\pelayanan_permohonan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\hublang_menu.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Loket\angsuran_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\loket_menu.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_rab_non_pelanggan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_rab_pelanggan_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_rab_pelanggan_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_rab_pelanggan_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_spk_non_pelanggan_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_spk_pelanggan_air_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_spk_pelanggan_limbah_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\Perencanaan\perencanaan_spk_pelanggan_lltt_config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\response_message.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="AppConfig\billing_menu.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="customize.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="example.config.env">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara memperbarui data.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara menambahkan data Tarif &amp; Golongan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara menambahkan data wilayah administrasi baru.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara menampilkan aktivitas user berdasrkan jangka waktu.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara mencetak daftar Data Rayon.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara mengosongkan rute baca pada petugas.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Bagaimana cara menyimpan daftar pelanggan ke dalam format HTML, Excel, XML, dan TXT.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Images\administrasibaru.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\LainLain\LogAksesUser\Bagaimana Cara Melihat Log Akses User.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\LainLain\PerawatanDatabase\Bagaimana cara Perawatan Database.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Laporan\DistribusiPelanggan\Bagaimana cara mengubah Data Distribusi Pelanggan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Laporan\JadwalRutebaca\Bagaimana cara mengubah Data Jadwal Rute Baca.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\DaftarKelainan\Bagaimana cara mengubah daftar kelainan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\DataPelanggan\Bagaimana cara mengubah data pelanggan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\PetugasBaca\Bagaimana cara Mengubah Petugas Baca.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\RuteBaca\Bagaimana cara mengubah rute baca.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\TarifGolongan\Bagaimana cara mengubah tarif golongan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\MasterData\WilayahAdministrasi\Bagaimana cara menambahkan data wilayah administrasi baru.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\DataPembacaan\Bagaimana cara mengubah Data Pengaturan Pembacaan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\PengaturanPutStamp\Bagaimana cara mengubah Pengaturan Put Stamp.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\PengaturanUmum\Bagaimana cara mengubah Pengaturan Umum.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\PenggunaHakAkses\Bagaimana cara Mengubah Pengguna Hak Akses.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\Sinkronisasi\Bagaimana cara Melakukan Sinkronisasi.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Bacameter\Pengaturan Sistem\SmsGateway\Bagaimana cara mengubah SMS Gateway.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\1. Periode\Apakah bisa menghapus periode.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\1. Periode\Apakah fungsi tombol hitung pada fitur periode.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\1. Periode\Bagaimana cara membuat  periode baru.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\1. Periode\Bagaimana cara menutup periode.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\2. Rekening Air\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\2. Rekening Air\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\3. Rekening Limbah dan L2T2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\3. Rekening Limbah dan L2T2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\4. Pelanggan Air\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\4. Pelanggan Air\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\5. Pelanggan Limbah dan L2T2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\5. Pelanggan Limbah dan L2T2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\6. Usulan Koreksi\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\6. Usulan Koreksi\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\7. Upload dan Download\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\7. Upload dan Download\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\8. Posting\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\1. Supervisi\8. Posting\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\2. Atribut\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\2. Atribut\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\2. Atribut\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\2. Atribut\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\3. User Billing\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\3. User Billing\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\3. User Billing\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\3. User Billing\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\4. Laporan\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\4. Laporan\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\4. Laporan\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\4. Laporan\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Billing\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Akuntansi\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Keuangan\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Personalia\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Gudang\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Perencanaan\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Distribusi\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\1. Menu Pertama\1. Sub Menu 1\Pertanyaan 1.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\1. Menu Pertama\2. Sub Menu 2\Pertanyaan 1.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\2. Menu Kedua\1. Sub Menu 1\Pertanyaan 2.1.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\2. Menu Kedua\2. Sub Menu 2\Pertanyaan 2.2.2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\Assets\demo.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\Pertanyaan 1.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Hublang\Pertanyaan 2.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\1. Tagihan SR\1. Bagaimana cara mencari pelanggan berdasarkan nomor sambungan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\1. Tagihan SR\2. Bagaimana cara mencari pelanggan berdasarkan nama atau alamat.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\1. Tagihan SR\3. Bagaimana cara memproses pembayaran sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\1. Tagihan SR\4. Bagaimana cara melihat riwayat pembayaran pelanggan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\2. Tagihan Non Air\1. Bagaimana cara mencari pelanggan non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\2. Tagihan Non Air\2. Bagaimana cara memproses pembayaran non air lainnya.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\3. Tagihan Kolektif Air\1. Bagaimana cara menambahkan pelanggan kolektif Air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\3. Tagihan Kolektif Air\2. Bagaimana cara memproses pembayaran kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\3. Tagihan Kolektif Air\3. Bagaimana cara menghapus denda pada rekening kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\3. Tagihan Kolektif Air\4. Bagaimana cara melihat riwayat pembayaran pelanggan kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\1. Fungsi Dasar\3. Tagihan Kolektif Air\5. Bagaimana cara menghapus atau menambahkan pelanggan kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\1. Bagaimana cara mencari pelanggan berdasarkan nomor sambungan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\2. Bagaimana cara mencari pelanggan berdasarkan nama atau alamat.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\3. Bagaimana cara memproses pembayaran sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\4. Bagaimana cara melihat riwayat pembayaran pelanggan.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\5. Bagaimana cara membatalkan pembayaran tagihan sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\1. Tagihan SR\6. Bagaimana cara menghapus denda pada rekening sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\2. Tagihan Non Air\1. Bagaimana cara mencari pelanggan non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\2. Tagihan Non Air\2. Bagaimana cara memproses pembayaran non air lainnya.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\2. Tagihan Non Air\3. Ada berapa jenis tagihan non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\2. Tagihan Non Air\4. Bagaimana cara membatalkan pembayaran tagihan non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\3. Tagihan Kolektif Air\1. Bagaimana cara menambahkan pelanggan kolektif Air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\3. Tagihan Kolektif Air\2. Bagaimana cara memproses pembayaran kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\3. Tagihan Kolektif Air\3. Bagaimana cara menghapus denda pada rekening kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\3. Tagihan Kolektif Air\4. Bagaimana cara melihat riwayat pembayaran pelanggan kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\3. Tagihan Kolektif Air\5. Bagaimana cara menghapus atau menambahkan pelanggan kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\4. Tagihan Kolektif Non Air\1. Bagaimana cara menambahkan pelanggan kolektif non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\4. Tagihan Kolektif Non Air\2. Bagaimana cara memproses pembayaran kolektif non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\4. Tagihan Kolektif Non Air\3. Bagaimana cara melihat riwayat pembayaran pelanggan kolektif non air.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\2. Tagihan\4. Tagihan Kolektif Non Air\4. Bagaimana cara menghapus atau menambahkan pelanggan kolektif.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\cara-nama-pelanggan-SR.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\cari-pelanggan-SR.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\detail-kolektif-edit.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\detail-kolektif-menu.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\Filter Kolektif Non Air.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\form-cari-nama-pelanggan-SR.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\form-input-tunai.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\Kategori Non Air.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\klik-kanan-denda.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\klik-kanan-hapus-denda.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\kolektif-menu-bar-kanan.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\kolektif-menu-bar-kiri.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\menu-riwayat.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\pembatalan.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\tabel-plg-nonair.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\tambah-plg-kolektif-form-result.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\tambah-plg-kolektif-form.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\tambah-plg-kolektif-nonair-form-result.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Assets\tambah-plg-kolektif.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Bagaimana cara membatalkan pembayaran tagihan sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="FAQ\Loket\Bagaimana cara menghapus denda pada rekening sambungan rumah.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\DaftarHutangHarusDibayar%28DHHD%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\DaftarPenerimaanLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\DaftarPengeluaranLainnya.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalPemakaianBahanInstalasi&amp;Kimia%28JPBIK%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningAir%28JRA%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Akuntansi\JurnalRekeningNonAir%28JRNA%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Hublang\PermohonanPelangganAir_BALIK_NAMA.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Laporan\Loket\DaftarTagihan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Loket\DaftarTagihanAirKolektif.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\FotoMeter.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarAdministratif.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarAngsuran.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarPelanggan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarPemakaianAirPerKecamatan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarPemakaianAirPerKelurahan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarRek.Air%28Kecamatan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarRek.Limbah%28Kecamatan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarRek.LLTT%28Kecamatan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarRekening.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\IkhtisarSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\InformasiTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\KwitansiAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\KwitansiNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\LogPembatalan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDNonAir%28Konsolidasi%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDPostingPerGolongan%28Konsolidasi%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDPostingPerGolongan%28PerRayon%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDPostingPerRayon%28Konsolidasi%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDRealPerGolongan%28Konsolidasi%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDRealPerGolongan%28PerRayon%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapDRDRealPerRayon%28Konsolidasi%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapitulasiIkhtisarPemakaian%28Kecamatan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapitulasiIkhtisarPemakaian%28Kelurahan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapitulasiPenerimaanAirPerLoket.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapLPP.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPenerimaanAirBerdasarkanGolongan%28PerLoket%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPiutangNonair%28Keseluruhan%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapPiutangNonair%28Periode%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RekapSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianDRDNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianDRDPosting.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianDRDReal.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianPenerimaanAir%28Loket%29.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianPiutangNonair.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianSaldoAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianSaldoLimbah.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Billing\RincianSaldoLLTT.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\BA_AngsuranAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\BA_AngsuranNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\BA_AngsuranSambBaru.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\SPA_AngsuranAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\SPA_AngsuranNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Angsuran\SPA_AngsuranSambBaru.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\BuktiBacameter.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\DaftarTagihan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\KwitansiAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\KwitansiNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\KwitansiTagihanKolektifAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\KwitansiTagihanKolektifNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\DaftarTagihan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LogBatal.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LogHapusDenda.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LogTransaksi.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppAir1.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppAir2.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppAir3.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppHarianKas.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\LppNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\RekapLpp.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\SuratTunggakan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Laporan\SuratTunggakanTutupan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\ListTagihanKolektifAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\ListTagihanKolektifNonAir.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Report\Loket\Setoran.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Loket\KwitansiTagihan.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Samples\Calon_Pelanggan_Sambungan_Baru_01.csv">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Template\Samples\StarterTemplate.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Page Update="Assets\ResourceDictionaries\ApplicationConfigStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\BuktiBacaStanStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\ChartStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\LaporanStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\MapViewStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\PerhitunganPemakaianStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\PetaLokasiStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\RincianRekeningStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\RiwayatPemakaianStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bacameter\SupervisiStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Bantuan\PenggunaanStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Billing\AppHeaderStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\FaqStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Hublang\AppHeaderStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Laporan\AppHeaderStyle.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Loket\CentralExpanderStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\MainStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\Loket\AppHeaderStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Assets\ResourceDictionaries\SideNavigationStyle.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerBlokView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerGolonganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerDiameterView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerRayonView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerKelurahanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelanggan\PerKecamatanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\JadwalRuteBaca\RayonTanpaTanggalBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\JadwalRuteBaca\RayonBelumDijadwalView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\JadwalRuteBaca\PetugasBacaGridView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\JadwalRuteBaca\PetugasBacaGrafikView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PengaturanPutstamp\ManualPDAView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PengaturanPutstamp\ListUserPDAView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PetugasBaca\DialogFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PetugasBaca\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PetugasBaca\PasswordFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\TarifGolongan\GolonganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\RuteBacaMeter\PetugasBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\RuteBacaMeter\DetailView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\RuteBacaMeter\EditFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\RuteBacaMeter\ListRayonFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\WilayahAdministrasi\RayonView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\WilayahAdministrasi\Kecamatan\DialogFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\WilayahAdministrasi\KecamatanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Distribusi\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Dialog\DialogBgProcess.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\KotakMasukView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\PrintPreviewNoTemplate.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\PrintPreviewWithTemplate.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Gudang\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PendaftaranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\BuktiPendaftaranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\DetailView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\FotoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\KolektifFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\KoreksiFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\MapView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\MasterAddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\SPAView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\SPPRABView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\Step1AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\Step2AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\Step3AddFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Pendaftaran\SambunganLltt\TableSettingFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Supervisi\PostingConfirmationView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Supervisi\TableSettingFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\BuatAngsuran\FormNonAirLainnyaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\BuatAngsuran\FormSambunganBaruView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\SettingTable\SettingTableNonAirLainnyaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\SettingTable\SettingTableSambunganBaruView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\SettingTable\SettingTableTunggakanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\SambunganBaruView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\NonAirLainnyaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\TunggakanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Angsuran\BuatAngsuran\FormTunggakanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Dialog\BayarTagihanSuccess.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Setoran\FormSetoranDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Setoran\DetailResiSetoranDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAirView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAir\DetailTagihanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAir\ListTagihanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanKolektifAir\SearchDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanNonAirLainnya\CariTagihanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanNonAirLainnya\DetailTagihanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\Tagihan\TagihanNonAirLainnya\SearchResultDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\TutupLoket\SuccessDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\DaftarPengguna\DetailUserView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\DaftarPengguna\PasswordFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\ProfilSaya\PasswordFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\TagihanManualView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\TagihanManual\DetailBiayaView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\TagihanManual\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\TagihanManual\SettingTableFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Perencanaan\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\DataMasterView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\DataPegawai\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\Departemen\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\Keluarga\DialogKeluargaView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\Keluarga\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\Keluarga\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\DataMaster\Pendidikan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\DewanPengawas\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\DewanPengawas\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\TenagaHarian\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\TenagaHarian\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\Direksi\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\Direksi\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\Tambahan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\Tambahan\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\TenagaKontrak\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\GajiPokok\TenagaKontrak\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\PerjalananDinas\DialogPesertaBiayaFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\PerjalananDinas\DialogPesertaFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\PerjalananDinas\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\PerjalananDinas\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\Pensiun\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\DiklatPelatihan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\DiklatPelatihan\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKPegawaiTetap\DialogDetailFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKPegawaiTetap\DialogDetailView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKPegawaiTetap\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKPegawaiTetap\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKCalonPegawai\DialogDetailFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKCalonPegawai\DialogDetailView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKCalonPegawai\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Kepegawaian\SKCalonPegawai\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\TunjanganView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\KepegawaianView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Onboarding\Menu1View.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Onboarding\Menu3View.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Gudang\MasterDataView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Gudang\ProsesTransaksiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Gudang\Onboarding\Menu1View.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Gudang\Onboarding\Menu3View.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Produktivitas\PelangganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Produktivitas\PembacaanPerTanggalView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Produktivitas\PetugasBacaPerHariView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Produktivitas\PetugasView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Produktivitas\ProgressPembacaanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DaftarKelainanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DataPelangganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DataPembacaanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\DistribusiPelangganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\JadwalRuteBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\LogAksesUserView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PengaturanPutstampView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PengaturanUmumView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PenggunaHakAksesView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PerawatanDatabaseView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\PetugasBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\RuteBacaMeterView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\SinkronisasiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\SmsGatewayView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\TarifGolonganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrol\WilayahAdministrasiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\FotoRumahView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\VideoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\HasilBacaUlangView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\HitungUlangView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\FotoStanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\ShortcutInfoView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\SetVerifikasiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\LampiranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\KoreksiHasilBacaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Supervisi\MapView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Onboarding\CloseView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Onboarding\ProduktivitasView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Onboarding\SupervisiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\Onboarding\WelcomeView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\PemetaanPelangganView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\ProduktivitasView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SistemKontrolView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Bacameter\SupervisiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\AtributView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\BantuanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Billing\Onboarding\CloseView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\AkuntansiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\PersonaliaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\GudangView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\MapMarkerView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Atribut\JenisNonAir\DetailBiayaView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\FotoDenahView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\FotoHistoriPermohonanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\DenahView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\TagihanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\HistoriPermohonanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\HistoriPembayaranView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\Info\HistoriPembacaanView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\InfoView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Atribut\JenisNonAir\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PermohonanLltt\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PermohonanLltt\DialogView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Hublang\Pelayanan\PermohonanLltt\SettingTableFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Ongkos\ItemFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Ongkos\KuantitasFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Ongkos\PaketFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Material\BarangFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Material\KuantitasFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Material\PaketFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\OngkosView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\Paket\Rab\DetailView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Dialog\DialogCloseWindow.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\PerencanaanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Dialog\DialogGlobalView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Dialog\DialogGlobalYesCancelView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Dialog\DialogLogout.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\AppConfigView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\GlobalLoadingDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\SnackbarView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\SpinnerLoadingView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Global\Other\SplashScreenView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\DistribusiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\AppHeaderView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\AtributView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\PelayananView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\VerifikasiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Onboarding\CloseView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Onboarding\AtributView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Onboarding\PelayananView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Onboarding\SupervisiView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Hublang\Onboarding\WelcomeView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\LoginView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\LoketView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\HublangView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\AngsuranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\AppHeaderView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\LaporanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\PengaturanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\SetoranView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\TagihanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\TunggakanView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Loket\TutupLoketView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\ProfilSayaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\DaftarPenggunaView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\WebView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Main\DesktopView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Perencanaan\Atribut\RumusVolume\DialogFormView.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\PengecualianTunjangan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\TunjanganBulanan\DialogDeleteView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\TunjanganBulanan\DialogPegawaiView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\TunjanganBulanan\DialogPeriodeView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\MasterTunjangan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\Personalia\Tunjangan\TunjanganBulanan\DialogFormView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+
+
+</Project>

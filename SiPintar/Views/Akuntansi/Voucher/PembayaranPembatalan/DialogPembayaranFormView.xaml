@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="SiPintar.Views.Akuntansi.Voucher.PembayaranPembatalan.DialogPembayaranFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Akuntansi.Voucher.PembayaranPembatalan"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <md:DialogHost Identifier="AtributMaterialDialog" DialogTheme="Inherit" >
+        <Grid>
+            <Border Width="665" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppAkuntansiDark}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Pembayaran Data Voucher Usaha/Non Usaha"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Border CornerRadius="2" Background="White" Height="16">
+                                    <TextBlock Foreground="{StaticResource BaseAppAkuntansi}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                                <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="32,16,32,0" Orientation="Vertical">
+                        <Grid Background="#F5F5F5">
+                            <Grid Margin="24">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="1.5*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Tanggal Voucher"/>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="31 September 2020" FontSize="14"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Nomor Voucher"/>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="052/VC/XII/2020" FontSize="14"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4" Orientation="Vertical">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Uraian"/>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Utang Gaji Karyawan a.n. Sumardi, S.Pd. Periode tahun 2015 dan 2016" FontSize="14" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <Grid Margin="0,24,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="25" />
+                                <ColumnDefinition Width="1.2*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical" Background="#F5F5F5">
+                                <Grid Margin="24,24,24,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1.6*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" Text="Total Bayar"/>
+                                    <TextBlock Grid.Column="1" Style="{StaticResource SmallTitle}" HorizontalAlignment="Right" TextAlignment="Right" FontSize="14" Text="Rp20.500.000"/>
+                                 </Grid>
+                                <Grid Margin="24,0,24,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1.6*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" Text="Sisa Bayar"/>
+                                    <TextBlock Grid.Column="1" Style="{StaticResource SmallTitle}" FontSize="14" HorizontalAlignment="Right" TextAlignment="Right" Text="Rp20.500.000"/>
+                                </Grid>
+                                <Separator Margin="24,0,24,16" Background="#E9E9E9" />
+                                <Grid Margin="24,0,24,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1.6*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource CaptionSmallBody}" VerticalAlignment="Center" Text="Jumlah Bayar"/>
+                                    <TextBlock Grid.Column="1" Style="{StaticResource SmallTitle}" FontSize="16" HorizontalAlignment="Right" TextAlignment="Right" Text="Rp20.500.000" Foreground="#028DDB" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Orientation="Vertical">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Tipe Pembayaran" LineHeight="25"/>
+                                        <Grid Margin="0,5,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <RadioButton Grid.Column="0" Style="{StaticResource MaterialDesignRadioButton}" Content="Cash" Width="56" IsChecked="True" />
+                                            <RadioButton Grid.Column="1" Style="{StaticResource MaterialDesignRadioButton}" Content="Kredit" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Termin ke-" LineHeight="25"/>
+                                        <Grid>
+                                            <TextBox x:Name="Termin" Width="50" Style="{StaticResource TextBoxInputForm}" HorizontalAlignment="Left" IsEnabled="False" />
+                                            <TextBlock DataContext="{Binding ElementName=Termin, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                                <StackPanel Orientation="Vertical" x:Name="NamaBankBorder" Margin="0,8,0,0">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Nama Bank" LineHeight="20"/>
+                                    <Grid>
+                                        <ComboBox x:Name="NamaBank" Style="{StaticResource ComboBoxInputForm}"
+                                           Validation.ErrorTemplate="{x:Null}"
+                                          IsEditable="False" 
+                                          ItemsSource="{Binding NamaBankList, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedNamaBank}"
+                                          Width="{Binding ElementName=NamaBankBorder, Path=ActualWidth}"
+                                          FontSize="13"
+                                          PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+
+                                        <TextBlock Text="Pilih nama Bank" DataContext="{Binding ElementName=NamaBank, Path=Text}" Margin="10,0,0,0" Style="{StaticResource TextBoxPlaceholder}"/>
+                                    </Grid>
+                                </StackPanel>
+                                <Grid Margin="0,15,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="1.5*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical" x:Name="NomorCekBorder">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Nomor Cek / BG"/>
+                                        <Grid>
+                                            <TextBox x:Name="NomorCek" Width="{Binding ElementName=NomorCekBorder, Path=ActualWidth}" Style="{StaticResource TextBoxInputForm}" HorizontalAlignment="Left" />
+                                            <TextBlock DataContext="{Binding ElementName=NomorCek, Path=Text}" Text="Nomor Cek" Style="{StaticResource TextBoxPlaceholder}" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Vertical">
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Tanggal Bayar"/>
+                                        <Border BorderBrush="{StaticResource Black90}" BorderThickness="0.5" CornerRadius="2" >
+                                            <Grid>
+                                                <DatePicker x:Name="Tanggalbayar" Style="{StaticResource DefaultDatePicker}" SelectedDate="{Binding Tanggalbayar}"  Height="30" Margin="6 0 0 0" BorderThickness="0"/>
+                                                <TextBlock DataContext="{Binding ElementName=Tanggalbayar, Path=SelectedDate}" Text="Pilih Tanggal Bayar" Style="{StaticResource ComboBoxSelectOverlay}" Panel.ZIndex="-10" Padding="5,2,7,0" Foreground="{StaticResource Gray100}" />
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <Grid Grid.Row="3" Margin="10,20,30,20">
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                            <Grid>
+                                <Button x:Name="OkButton" Content="Simpan" Command="{Binding OnSubmitCommand}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                    </Viewbox>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

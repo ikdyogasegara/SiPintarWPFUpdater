@@ -1,0 +1,509 @@
+﻿<UserControl x:Class="SiPintar.Views.Bacameter.Produktivitas.PelangganView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="200" Padding="5" Width="Auto" Height="Auto">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bacameter/ChartStyle.xaml" />
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bacameter/LaporanStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <XmlDataProvider x:Key="ProduktivitasPelanggan" />
+            <BooleanToVisibilityConverter x:Key="bvc" />
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <ContextMenu x:Key="PlotMenu" MenuItem.Click="PlotMenuItem_Click">
+                <MenuItem x:Name="KolomMenuItem"
+                          Header="Kolom"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_kolom_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="BatangMenuItem"
+                          Header="Batang"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_batang_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="GarisMenuItem"
+                          Header="Garis"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_garis_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="LingkaranMenuItem"
+                          Header="Lingkaran"
+                          Visibility="Collapsed"
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Source="/SiPintar;component/Assets/Images/Chart/ic_lingkaran_chart.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="SubLaporan" Background="{StaticResource BaseGray}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="665" x:Name="ChartWrapper" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="CetakArea" VerticalAlignment="Top">
+            <StackPanel Visibility="{Binding ChartVisibility}">
+                <StackPanel x:Name="CetakAreaTitle" Visibility="Collapsed">
+                    <TextBlock Text="Laporan Produktivitas Pelanggan" Style="{StaticResource CetakAreaTitle}"/>
+                </StackPanel>
+                <StackPanel Height="75">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="7*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Margin="0,24,20,24">
+                                    <TextBlock Text="Tampilan Data" Style="{StaticResource CaptionSmallBody}" Margin="20,0,16,0" VerticalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                        <RadioButton x:Name="TampilanDataGrafikRadioButton" Content="Grafik" GroupName="TampilanDataGroup" Template="{DynamicResource ToggleButtonLeft}" IsChecked="True" />
+                                        <RadioButton x:Name="TampilanDataTabelRadioButton" Content="Tabel" GroupName="TampilanDataGroup" Template="{DynamicResource ToggleButtonRight}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel VerticalAlignment="Center" Visibility="{Binding IsChecked, ElementName=TampilanDataGrafikRadioButton, Converter={StaticResource bvc}}">
+                                    <Button Style="{StaticResource BtnWrapper}" Margin="20,24,8,24"  Click="PlotOption_Click" x:Name="PlotButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border VerticalAlignment="Center" Width="24" Height="24" Margin="0,0,8,0" Style="{StaticResource CurrentPlotButton}">
+                                                <Image Source="{Binding CurrentPlotImage}" Width="24" />
+                                            </Border>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding CurrentPlot}" Style="{StaticResource CurrentPlotText}" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <CheckBox x:Name="PelangganLabelCheckBox" IsChecked="{Binding JumlahPelangganSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="{StaticResource SecondaryBlue}" CornerRadius="2">
+                                            <TextBlock Text="Jumlah Pelanggan" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <CheckBox x:Name="TerbacaLabelCheckBox" IsChecked="{Binding TerbacaSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="DarkOrange" CornerRadius="2">
+                                            <TextBlock Text="Terbaca" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <CheckBox x:Name="FotoMeterLabelCheckBox" IsChecked="{Binding FotoMeterSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="MediumPurple" CornerRadius="2">
+                                            <TextBlock Text="Foto Meter" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <CheckBox x:Name="FotoRumahLabelCheckBox" IsChecked="{Binding FotoRumahSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="ForestGreen" CornerRadius="2">
+                                            <TextBlock Text="Foto Rumah" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <CheckBox x:Name="VideoLabelCheckBox" IsChecked="{Binding VideoSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="OrangeRed" CornerRadius="2">
+                                            <TextBlock Text="Video" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                                <StackPanel>
+                                    <CheckBox x:Name="GpsLabelCheckBox" IsChecked="{Binding GpsSeriesVisibility}" Margin="12,24" Style="{StaticResource LabelCheckBox}">
+                                        <Border BorderThickness="1" Background="PaleVioletRed" CornerRadius="2">
+                                            <TextBlock Text="GPS" Style="{StaticResource LabelTitle}" />
+                                        </Border>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+                <Border Visibility="{Binding IsLoading, Converter={StaticResource bvc}}">
+                    <StackPanel>
+                        <other:SpinnerLoadingView Margin="0,50,0,0" />
+                        <TextBlock Text="Harap tunggu..." HorizontalAlignment="Center" Style="{StaticResource ContentText}" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+                <StackPanel Visibility="{Binding IsNotLoading, Converter={StaticResource bvc}}" Margin="10">
+                    <StackPanel Visibility="{Binding IsChecked, ElementName=TampilanDataGrafikRadioButton, Converter={StaticResource bvc}}">
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Kolom'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:ColumnSeries Title="Jumlah Pelanggan" Values="{Binding JumlahPelangganSeries}" Fill="{StaticResource SecondaryBlue}" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Terbaca" Values="{Binding TerbacaSeries}" Fill="DarkOrange" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Foto Meter" Values="{Binding FotoMeterSeries}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Foto Rumah" Values="{Binding FotoRumahSeries}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="Video" Values="{Binding VideoSeries}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:ColumnSeries Title="GPS" Values="{Binding GpsSeries}" Fill="PaleVioletRed" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource HorizontalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Batang'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False" DataTooltip="{x:Null}">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:RowSeries Title="Jumlah Pelanggan" Values="{Binding JumlahPelangganSeries}" Fill="{StaticResource SecondaryBlue}" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Terbaca" Values="{Binding TerbacaSeries}" Fill="DarkOrange" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Foto Meter" Values="{Binding FotoMeterSeries}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Foto Rumah" Values="{Binding FotoRumahSeries}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="Video" Values="{Binding VideoSeries}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:RowSeries Title="GPS" Values="{Binding GpsSeries}" Fill="PaleVioletRed" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource VerticalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                                <!--<lvc:CartesianChart.DataTooltip>
+                                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
+                                </lvc:CartesianChart.DataTooltip>-->
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Garis'}">
+                            <lvc:CartesianChart Height="400" Hoverable="False">
+                                <lvc:CartesianChart.Series>
+                                    <lvc:LineSeries Title="Jumlah Pelanggan" Values="{Binding JumlahPelangganSeries}" LineSmoothness="0" PointForeground="{StaticResource SecondaryBlue}" Stroke="{StaticResource SecondaryBlue}" Fill="Transparent" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Terbaca" Values="{Binding TerbacaSeries}" LineSmoothness="0" PointForeground="DarkOrange" Stroke="DarkOrange" Fill="Transparent" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Foto Meter" Values="{Binding FotoMeterSeries}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Foto Rumah" Values="{Binding FotoRumahSeries}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="Video" Values="{Binding VideoSeries}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                    <lvc:LineSeries Title="GPS" Values="{Binding GpsSeries}" LineSmoothness="0" PointForeground="PaleVioletRed" Stroke="PaleVioletRed" Fill="Transparent" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                </lvc:CartesianChart.Series>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Labels="{Binding Labels}">
+                                        <lvc:Axis.Separator >
+                                            <lvc:Separator Step="1" Style="{StaticResource HorizontalChartSeparator}" />
+                                        </lvc:Axis.Separator>
+                                    </lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Jum. Pelanggan" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding Plot, Converter={StaticResource ComparisonToVisibleConverter}, ConverterParameter='Lingkaran'}" Margin="28,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="36,50,36,0">
+                                    <lvc:PieChart MinHeight="250" Hoverable="False" DataTooltip="{x:Null}">
+                                        <lvc:PieChart.Series>
+                                            <lvc:PieSeries Title="Jumlah Pelanggan" Values="{Binding ProduktivitasPelangganChart[2].TotalPelanggan}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="{StaticResource SecondaryBlue}" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Terbaca" Values="{Binding ProduktivitasPelangganChart[2].SudahBaca}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="DarkOrange" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Meter" Values="{Binding ProduktivitasPelangganChart[2].FotoMeter}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Rumah" Values="{Binding ProduktivitasPelangganChart[2].FotoRumah}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Video" Values="{Binding ProduktivitasPelangganChart[2].Video}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="GPS" Values="{Binding ProduktivitasPelangganChart[2].Gps}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="PaleVioletRed" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                        </lvc:PieChart.Series>
+                                    </lvc:PieChart>
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[2].Bulan}" Style="{StaticResource ProduktivitasPelangganPieTitle}" Margin="0,40,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="36,50,36,0">
+                                    <lvc:PieChart MinHeight="250" Hoverable="False" DataTooltip="{x:Null}">
+                                        <lvc:PieChart.Series>
+                                            <lvc:PieSeries Title="Jumlah Pelanggan" Values="{Binding ProduktivitasPelangganChart[1].TotalPelanggan}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="{StaticResource SecondaryBlue}" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Terbaca" Values="{Binding ProduktivitasPelangganChart[1].SudahBaca}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="DarkOrange" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Meter" Values="{Binding ProduktivitasPelangganChart[1].FotoMeter}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Rumah" Values="{Binding ProduktivitasPelangganChart[1].FotoRumah}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Video" Values="{Binding ProduktivitasPelangganChart[1].Video}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="GPS" Values="{Binding ProduktivitasPelangganChart[1].Gps}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="PaleVioletRed" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                        </lvc:PieChart.Series>
+                                    </lvc:PieChart>
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[1].Bulan}" Style="{StaticResource ProduktivitasPelangganPieTitle}" Margin="0,40,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Margin="36,50,36,0">
+                                    <lvc:PieChart MinHeight="250" Hoverable="False" DataTooltip="{x:Null}">
+                                        <lvc:PieChart.Series>
+                                            <lvc:PieSeries Title="Jumlah Pelanggan" Values="{Binding ProduktivitasPelangganChart[0].TotalPelanggan}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="{StaticResource SecondaryBlue}" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Terbaca" Values="{Binding ProduktivitasPelangganChart[0].SudahBaca}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="DarkOrange" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Meter" Values="{Binding ProduktivitasPelangganChart[0].FotoMeter}" Fill="MediumPurple" Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Foto Rumah" Values="{Binding ProduktivitasPelangganChart[0].FotoRumah}" Fill="ForestGreen" Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="Video" Values="{Binding ProduktivitasPelangganChart[0].Video}" Fill="OrangeRed" Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" />
+                                            <lvc:PieSeries Title="GPS" Values="{Binding ProduktivitasPelangganChart[0].Gps}" DataLabels="True" LabelPoint="{Binding PointLabel}" Fill="PaleVioletRed" Stroke="{x:Null}" StrokeThickness="0" Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" />
+                                        </lvc:PieChart.Series>
+                                    </lvc:PieChart>
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[0].Bulan}" Style="{StaticResource ProduktivitasPelangganPieTitle}" Margin="0,40,0,0" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding IsChecked, ElementName=TampilanDataTabelRadioButton, Converter={StaticResource bvc}}" Margin="0,37,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <StackPanel Width="250">
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[2].Bulan}" Style="{StaticResource TabelPelangganHeader}" />
+                                    <Border Style="{StaticResource TabelPelangganBody}">
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Jumlah Pelanggan" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].TotalPelanggan, StringFormat=N0}" Foreground="{StaticResource SecondaryBlue}" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Terbaca" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].SudahBaca, StringFormat=N0}" Foreground="DarkOrange" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Meter" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].FotoMeter, StringFormat=N0}" Foreground="MediumPurple" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Rumah" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].FotoRumah, StringFormat=N0}" Foreground="ForestGreen" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Video" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].Video, StringFormat=N0}" Foreground="OrangeRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="GPS" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[2].Gps, StringFormat=N0}" Foreground="PaleVioletRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Width="250">
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[1].Bulan}" Style="{StaticResource TabelPelangganHeader}" />
+                                    <Border Style="{StaticResource TabelPelangganBody}">
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Jumlah Pelanggan" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].TotalPelanggan, StringFormat=N0}" Foreground="{StaticResource SecondaryBlue}" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Terbaca" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].SudahBaca, StringFormat=N0}" Foreground="DarkOrange" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Meter" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].FotoMeter, StringFormat=N0}" Foreground="MediumPurple" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Rumah" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].FotoRumah, StringFormat=N0}" Foreground="ForestGreen" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Video" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].Video, StringFormat=N0}" Foreground="OrangeRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="GPS" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[1].Gps, StringFormat=N0}" Foreground="PaleVioletRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <StackPanel Width="250">
+                                    <TextBlock Text="{Binding ProduktivitasPelanggan[0].Bulan}" Style="{StaticResource TabelPelangganHeader}" />
+                                    <Border Style="{StaticResource TabelPelangganBody}">
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Visibility="{Binding JumlahPelangganSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Jumlah Pelanggan" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].TotalPelanggan, StringFormat=N0}" Foreground="{StaticResource SecondaryBlue}" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel Visibility="{Binding TerbacaSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Terbaca" Style="{StaticResource TabelPelangganText}" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].SudahBaca, StringFormat=N0}" Foreground="DarkOrange" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                </Grid>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoMeterSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Meter" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].FotoMeter, StringFormat=N0}" Foreground="MediumPurple" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding FotoRumahSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Foto Rumah" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].FotoRumah, StringFormat=N0}" Foreground="ForestGreen" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding VideoSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Video" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].Video, StringFormat=N0}" Foreground="OrangeRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <StackPanel Visibility="{Binding GpsSeriesVisibility, Converter={StaticResource bvc}}" Style="{StaticResource TabelPelangganRow}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="GPS" Style="{StaticResource TabelPelangganText}" />
+                                                        <TextBlock Grid.Column="1" Text="{Binding ProduktivitasPelanggan[0].Gps, StringFormat=N0}" Foreground="PaleVioletRed" Style="{StaticResource TabelPelangganNumber}" TextAlignment="Right" HorizontalAlignment="Right" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Bantuan.CaraPenggunaanView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/Bantuan/PenggunaanStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <XmlDataProvider x:Key="PenggunaanBantuan" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel x:Name="PanduanOnboarding">
+                    <Border Style="{StaticResource TitleContainer}" Width="Auto" Margin="0,-4,0,30">
+                        <TextBlock Style="{StaticResource MainTitleText}">
+                            Panduan Dasar Aplikasi Perencanaan
+                        </TextBlock>
+                    </Border>
+                    <StackPanel Margin="20,0,20,20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0">
+                                <StackPanel Width="600" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource Title}">Pengenalan Fitur-Fitur Supervisi</TextBlock>
+                                    <TextBlock Style="{StaticResource ContentText}">
+                                        Kenali fitur-fitur utama di Aplikasi Perencanaan agar pekerjaan Anda 
+                                        semakin mudah dan dapat menggunakan Aplikasi Perencanaan secara maksimal.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Button Grid.Column="1" Style="{StaticResource Btn}" Width="120" x:Name="Intro" Margin="0,5,0,0">Lihat Panduan</Button>
+                        </Grid>
+                        <!--<Border Margin="0,30,0,0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0">
+                                <StackPanel Width="600" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource Title}">Cara Mengaktifkan Tabel Supervisi &amp; Filter</TextBlock>
+                                    <TextBlock Style="{StaticResource ContentText}">
+                                Demi memenuhi kebutuhan untuk memaksimalkan kinerja pada setiap orang, 
+                                kami menyediakan Tabel Supervisi dan Filter yang dapat disesuaikan dengan kebutuhan Anda. 
+                                Cari tahu cara mengaktifkan dan memaksimalkan Tabel Supervisi dan Filter di dalamnya.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Button Grid.Column="1" Style="{StaticResource Btn}" Width="120" x:Name="Pengaturan" Margin="0,5,0,0">Lihat Panduan</Button>
+                        </Grid>
+                        <Border Margin="0,30,0,0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0">
+                                <StackPanel Width="600" HorizontalAlignment="Left">
+                                    <TextBlock Style="{StaticResource Title}">Verifikasi &amp; Upload Hasil Baca</TextBlock>
+                                    <TextBlock Style="{StaticResource ContentText}">
+                                Salah satu fungsi utama dari Aplikasi Bacameter yaitu melakukan verifikasi hasil baca petugas lapangan, 
+                                kemudian mengupload hasil baca tersebut sehingga bisa dilakukan penagihan pemakaian air pelanggan. 
+                                Pelajari caranya dan nikmati kemudahannya.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                            <Button Grid.Column="1" Style="{StaticResource Btn}" Width="120" x:Name="Verifikasi" Margin="0,5,0,0">Lihat Panduan</Button>
+                        </Grid>-->
+                    </StackPanel>
+                    <Border Margin="0,60,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

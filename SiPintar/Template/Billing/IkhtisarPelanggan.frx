@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="02/14/2022 17:09:12" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true">
+      <Column Name="kecamatan" DataType="System.String"/>
+      <Column Name="golongan" DataType="System.String"/>
+      <Column Name="aktiflalu" DataType="System.String"/>
+      <Column Name="sambbarurekening" DataType="System.String"/>
+      <Column Name="sambbaruyad" DataType="System.String"/>
+      <Column Name="sambkembalirekening" DataType="System.String"/>
+      <Column Name="sambkembaliyad" DataType="System.String"/>
+      <Column Name="segel" DataType="System.String"/>
+      <Column Name="aktifakhir" DataType="System.String"/>
+      <Column Name="publish" DataType="System.String"/>
+      <Column Name="nonaktiflalu" DataType="System.String"/>
+      <Column Name="nonaktifini" DataType="System.String"/>
+      <Column Name="jumpel" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="periode" DataType="System.String"/>
+    <Parameter Name="berdasarkan" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="330" PaperHeight="216" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1171.8" Height="85.05">
+      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="1143.45" Height="18.9" Text="LAPORAN JUMLAH PELANGGAN BERDASARKAN &quot;UpperCase(berdasarkan)&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text2" Left="9.45" Top="37.8" Width="1143.45" Height="18.9" Text="PERIODE BULAN &quot;UpperCase(periode)&quot; &quot;TAHUN&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="90.38" Width="1171.8" Height="60.48">
+      <TextObject Name="Text46" Left="47.25" Width="179.55" Height="60.48" Border.Lines="All" Text="&quot;berdasarkan&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text47" Left="315.63" Width="158.76" Height="20.79" Border.Lines="All" Text="PASANG BARU" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text48" Left="315.63" Top="20.79" Width="79.38" Height="39.69" Border.Lines="All" Text="YANG JADI REKENING" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text49" Left="395.01" Top="20.79" Width="79.38" Height="39.69" Border.Lines="All" Text="REKENING BULAN YAD." HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text50" Left="474.39" Top="20.79" Width="79.38" Height="39.69" Border.Lines="All" Text="YANG JADI REKENING" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text51" Left="553.77" Top="20.79" Width="79.38" Height="39.69" Border.Lines="All" Text="REKENING BULAN YAD." HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text55" Left="9.45" Width="37.8" Height="60.48" Border.Lines="All" Text="NO" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text53" Left="633.15" Width="88.83" Height="60.48" Border.Lines="All" Text="TUTUPAN JADI REKENING" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text56" Left="474.39" Width="158.76" Height="20.79" Border.Lines="All" Text="PASANG BARU" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text57" Left="721.98" Width="88.83" Height="60.48" Border.Lines="All" Text="PELANGGAN AKTIF PADA AKHIR BULAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text58" Left="810.81" Width="79.38" Height="60.48" Border.Lines="All" Text="REKENING YANG TERCETAK" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text59" Left="890.19" Width="88.83" Height="60.48" Border.Lines="All" Text="TUTUPAN S/D BULAN LALU" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text60" Left="979.02" Width="88.83" Height="60.48" Border.Lines="All" Text="TUTUPAN S/D BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text61" Left="1067.85" Width="88.83" Height="60.48" Border.Lines="All" Text="JUMLAH PELANGGAN AKHIR BULAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text62" Left="226.8" Width="88.83" Height="60.48" Border.Lines="All" Text="PELANGGAN AKTIF PADA  AWAL BULAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+    </ColumnHeaderBand>
+    <DataBand Name="Data1" Top="156.2" Width="1171.8" Height="32.13" DataSource="MainData">
+      <TextObject Name="Text63" Left="47.25" Width="179.55" Height="32.13" Border.Lines="All" Text="[MainData.kecamatan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text64" Left="315.63" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.sambbarurekening]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text65" Left="395.01" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.sambbaruyad]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text66" Left="474.39" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.sambkembalirekening]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text67" Left="553.77" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.sambkembaliyad]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text68" Left="9.45" Width="37.8" Height="32.13" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text69" Left="633.15" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.segel]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text70" Left="721.98" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.aktifakhir]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text71" Left="810.81" Width="79.38" Height="32.13" Border.Lines="All" Text="[MainData.publish]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text72" Left="890.19" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.nonaktiflalu]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text73" Left="979.02" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.nonaktifini]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text74" Left="1067.85" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.jumpel]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text75" Left="226.8" Width="88.83" Height="32.13" Border.Lines="All" Text="[MainData.aktiflalu]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="333.18" Width="1171.8" Height="170.1"/>
+    <ColumnFooterBand Name="ColumnFooter1" Top="193.66" Width="1171.8" Height="134.19">
+      <TextObject Name="Text77" Left="315.63" Top="25.7" Width="158.76" Height="25.33" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text81" Left="9.45" Width="217.35" Height="51.03" Border.Lines="All" Text="Jumlah Bulan Ini" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text82" Left="633.15" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text83" Left="721.98" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text84" Left="810.81" Width="79.38" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text85" Left="890.19" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text86" Left="979.02" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text87" Left="1067.85" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text88" Left="226.8" Width="88.83" Height="51.03" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text89" Left="315.63" Width="79.38" Height="25.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text91" Left="395.01" Width="79.38" Height="25.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text92" Left="474.39" Top="25.7" Width="158.76" Height="25.33" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text93" Left="474.39" Width="79.38" Height="25.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text94" Left="553.77" Width="79.38" Height="25.7" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text96" Left="9.45" Top="51.03" Width="217.35" Height="41.58" Border.Lines="All" Text="Jumlah Sampai Dengan Bulan Lalu" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text97" Left="633.15" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text98" Left="721.98" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text99" Left="810.81" Top="51.03" Width="79.38" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text100" Left="890.19" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text101" Left="979.02" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text102" Left="1067.85" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text103" Left="226.8" Top="51.03" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text104" Left="315.63" Top="51.03" Width="158.76" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text105" Left="474.39" Top="51.03" Width="158.76" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text106" Left="9.45" Top="92.61" Width="217.35" Height="41.58" Border.Lines="All" Text="Jumlah Sampai Dengan Bulan Ini" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text107" Left="633.15" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text108" Left="721.98" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text109" Left="810.81" Top="92.61" Width="79.38" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text110" Left="890.19" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text111" Left="979.02" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text112" Left="1067.85" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text113" Left="226.8" Top="92.61" Width="88.83" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text114" Left="315.63" Top="92.61" Width="158.76" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text115" Left="474.39" Top="92.61" Width="158.76" Height="41.58" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+    </ColumnFooterBand>
+  </ReportPage>
+</Report>

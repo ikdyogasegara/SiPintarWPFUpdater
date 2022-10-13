@@ -1,0 +1,243 @@
+﻿<UserControl x:Class="SiPintar.Views.Hublang.Pelayanan.Pendaftaran.Step2AddFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:StringDefaultValueConverter x:Key="StringDefaultValueConverter" Default="-" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost Identifier="InnerHublangRootDialog" DialogTheme="Inherit">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 -20 0">
+        <Grid Background="White" Margin="5 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="15" />
+                <ColumnDefinition Width="450" />
+            </Grid.ColumnDefinitions>
+
+           <StackPanel Grid.Column="0">
+                <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                            <CheckBox IsChecked="{Binding IsFotoSuratPernyataanFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Surat Pernyataan" Margin="0 5 0 10"/>
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Pilih &amp; Upload file dari dokumen komputer." />
+                            <Grid IsEnabled="{Binding IsFotoSuratPernyataanFormChecked}">
+                                <Button Visibility="{Binding FotoSuratPernyataanUri, Converter={StaticResource NullToVisibleConverter}}" Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="surat_pernyataan" Width="80" Content="Pilih File" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding FotoSuratPernyataanUri, Converter={StaticResource NullToCollapseConverter}}">
+                                    <Button Command="{Binding OnOpenImageCommand}" CommandParameter="surat_pernyataan" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                    <Button Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="surat_pernyataan" Width="80" Content="Ubah Foto" Style="{StaticResource BtnWrapper}" FontSize="11" HorizontalAlignment="Left" Height="28" Foreground="{StaticResource PictonBlue}" Margin="10 10 0 0" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid Visibility="{Binding FotoSuratPernyataanUri, Converter={StaticResource NullToVisibleConverter}}">
+                                <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                            </Grid>
+                            <Grid Visibility="{Binding FotoSuratPernyataanUri, Converter={StaticResource NullToCollapseConverter}}">
+                                <Image Source="{Binding FotoSuratPernyataanUri}" Width="180" Height="100" Stretch="UniformToFill" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Height="10" />
+                <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                            <CheckBox IsChecked="{Binding IsFotoKkFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Fotokopi Kartu Keluarga" Margin="0 5 0 10"/>
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Pilih &amp; Upload file dari dokumen komputer." />
+                            <Grid IsEnabled="{Binding IsFotoKkFormChecked}">
+                                <Button Visibility="{Binding FotoKkUri, Converter={StaticResource NullToVisibleConverter}}" Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="kk" Width="80" Content="Pilih File" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding FotoKkUri, Converter={StaticResource NullToCollapseConverter}}">
+                                    <Button Command="{Binding OnOpenImageCommand}" CommandParameter="kk" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                    <Button Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="kk" Width="80" Content="Ubah Foto" Style="{StaticResource BtnWrapper}" FontSize="11" HorizontalAlignment="Left" Height="28" Foreground="{StaticResource PictonBlue}" Margin="10 10 0 0" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid Visibility="{Binding FotoKkUri, Converter={StaticResource NullToVisibleConverter}}">
+                                <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                            </Grid>
+                            <Grid Visibility="{Binding FotoKkUri, Converter={StaticResource NullToCollapseConverter}}">
+                                <Image Source="{Binding FotoKkUri}" Width="180" Height="100" Stretch="UniformToFill" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Height="10" />
+                <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                            <CheckBox IsChecked="{Binding IsFotoKtpFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Fotokopi KTP" Margin="0 5 0 10"/>
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Pilih &amp; Upload file dari dokumen komputer." />
+                            <Grid IsEnabled="{Binding IsFotoKtpFormChecked}">
+                                <Button Visibility="{Binding FotoKtpUri, Converter={StaticResource NullToVisibleConverter}}" Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="ktp" Width="80" Content="Pilih File" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding FotoKtpUri, Converter={StaticResource NullToCollapseConverter}}">
+                                    <Button Command="{Binding OnOpenImageCommand}" CommandParameter="ktp" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                    <Button Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="ktp" Width="80" Content="Ubah Foto" Style="{StaticResource BtnWrapper}" FontSize="11" HorizontalAlignment="Left" Height="28" Foreground="{StaticResource PictonBlue}" Margin="10 10 0 0" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid Visibility="{Binding FotoKtpUri, Converter={StaticResource NullToVisibleConverter}}">
+                                <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                            </Grid>
+                            <Grid Visibility="{Binding FotoKtpUri, Converter={StaticResource NullToCollapseConverter}}">
+                                <Image Source="{Binding FotoKtpUri}" Width="180" Height="100" Stretch="UniformToFill" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Height="15" />
+                 <Border BorderBrush="{StaticResource BaseGray}" BorderThickness="1" CornerRadius="5" Padding="10 10 10 15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 20 0">
+                            <CheckBox IsChecked="{Binding IsFotoImbFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Fotokopi IMB" Margin="0 5 0 10"/>
+                            <TextBlock Style="{StaticResource CaptionSmallBody}" TextWrapping="Wrap" Text="Pilih &amp; Upload file dari dokumen komputer." />
+                            <Grid IsEnabled="{Binding IsFotoImbFormChecked}">
+                                <Button Visibility="{Binding FotoImbUri, Converter={StaticResource NullToVisibleConverter}}" Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="imb" Width="80" Content="Pilih File" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding FotoImbUri, Converter={StaticResource NullToCollapseConverter}}">
+                                    <Button Command="{Binding OnOpenImageCommand}" CommandParameter="imb" Width="90" Content="Lihat Foto" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" HorizontalAlignment="Left" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="0 10 0 0" />
+                                    <Button Command="{Binding OnBrowseFileBuktiCommand}" CommandParameter="imb" Width="80" Content="Ubah Foto" Style="{StaticResource BtnWrapper}" FontSize="11" HorizontalAlignment="Left" Height="28" Foreground="{StaticResource PictonBlue}" Margin="10 10 0 0" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid Visibility="{Binding FotoImbUri, Converter={StaticResource NullToVisibleConverter}}">
+                                <TextBlock Panel.ZIndex="1" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">Belum ada foto</TextBlock>
+                                <Border Background="{StaticResource Black10}" CornerRadius="5" />
+                            </Grid>
+                            <Grid Visibility="{Binding FotoImbUri, Converter={StaticResource NullToCollapseConverter}}">
+                                <Image Source="{Binding FotoImbUri}" Width="180" Height="100" Stretch="UniformToFill" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Height="15" />
+                <StackPanel>
+                    <TextBlock Text="Kelengkapan Lainnya" Style="{StaticResource Title}" Foreground="{StaticResource SecondaryBlue}"/>
+                    <Grid Margin="0 8 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Grid.Column="1" IsChecked="{Binding IsMeteraiFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Meterai" Margin="0 0 70 0"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding IsMapPlastikFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Map Plastik" Margin="0 0 10 0"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+
+            <Border Grid.Column="2" CornerRadius="5" BorderBrush="{StaticResource BaseGray}" BorderThickness="1" Padding="15" Margin="0 0 10 0">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0 0 10 0" VerticalAlignment="Center">
+                            <CheckBox IsChecked="{Binding IsDenahLokasiFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Titik Lokasi" />
+                        </StackPanel>
+                        <Grid Grid.Column="1" IsEnabled="{Binding IsDenahLokasiFormChecked}" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="160"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="Lokasi" Padding="25 0 0 0" Style="{StaticResource TextBoxInputForm}" Text="{Binding DenahLokasiForm}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="Lokasi_PreviewKeyUp"  Grid.ColumnSpan="2" />
+                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <md:PackIcon Kind="Search" />
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+
+                    <Border Height="0" />
+
+                    <Grid IsEnabled="{Binding IsDenahLokasiFormChecked}">
+                        <Border Background="{StaticResource BaseGray}" Margin="0,8,0,0" Height="200" CornerRadius="2">
+                            <Grid>
+                                <gmaps:GMapControl x:Name="MainMap" Height="200" OnMapDrag="MainMap_OnMapDrag" />
+                                <Button Style="{StaticResource BtnWrapper}"  Click="OpenMap_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Background="#a7ddf7" Width="25" Height="25" Margin="0 4 4 0">
+                                    <md:PackIcon Kind="Fullscreen" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 4 4">
+                                    <Button Click="ZoomInButton_Click"  x:Name="ZoomInButton" Style="{StaticResource BtnWrapper}" Background="#a7ddf7" Width="25" Height="25">
+                                        <md:PackIcon Kind="Add" Margin="0" Width="25"/>
+                                    </Button>
+                                    <Border Height="5" />
+                                    <Button Click="ZoomOutButton_Click" x:Name="ZoomOutButton" Style="{StaticResource BtnWrapper}" Background="#a7ddf7" Width="25" Height="25">
+                                        <md:PackIcon Kind="Minus" Margin="0" Width="25"/>
+                                    </Button>
+                                </StackPanel>
+                                <Image x:Name="CenterMarker" Source="/SiPintar;component/Assets/Images/Map/ic_marker_red.png" Width="30" Panel.ZIndex="2" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Border Height="15" />
+
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Alamat Map" />
+                        <TextBlock x:Name="AlamatMap" Style="{StaticResource SmallTitle}" TextWrapping="Wrap" Margin="0 3 0 0" Text="{Binding FormData.AlamatMap, Mode=TwoWay}" />
+                        <CheckBox IsChecked="{Binding IsAlamatMapFormChecked, Mode=TwoWay}" Style="{StaticResource FilterCheckBox}" Content="Atur sebagai alamat utama calon pelanggan ini" Margin="0 20 0 20"/>
+                        <Grid Margin="0 20 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0 0 15 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Latitude" />
+                                <TextBlock x:Name="LonText" Style="{StaticResource SmallTitle}" TextWrapping="Wrap" Margin="0 3 0 0" Text="{Binding FormData.Latitude, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="0 0 0 0">
+                                <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Longitude" />
+                                <TextBlock x:Name="LatText" Style="{StaticResource SmallTitle}" TextWrapping="Wrap" Margin="0 3 0 0" Text="{Binding FormData.Longitude, Mode=TwoWay}" />
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock Style="{StaticResource CaptionSmallBody}" Text="Akurasi" Margin="0 20 0 0" />
+                        <TextBlock x:Name="AkurasiText" Style="{StaticResource SmallTitle}" TextWrapping="Wrap" Margin="0 3 0 0" Text="-" />
+
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+    </md:DialogHost>
+</UserControl>

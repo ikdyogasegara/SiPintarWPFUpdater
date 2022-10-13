@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="03/24/2022 11:05:10" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="RekeningAir" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="IdPelangganAir" DataType="System.Int32"/>
+      <Column Name="IdPeriode" DataType="System.Int32"/>
+      <Column Name="KodePeriode" DataType="System.Int32"/>
+      <Column Name="NamaPeriode" DataType="System.String"/>
+      <Column Name="NoSamb" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="KodeGolongan" DataType="System.String"/>
+      <Column Name="NamaGolongan" DataType="System.String"/>
+      <Column Name="KodeDiameter" DataType="System.String"/>
+      <Column Name="NamaDiameter" DataType="System.String"/>
+      <Column Name="KodeRayon" DataType="System.String"/>
+      <Column Name="NamaRayon" DataType="System.String"/>
+      <Column Name="KodeWilayah" DataType="System.String"/>
+      <Column Name="NamaWilayah" DataType="System.String"/>
+      <Column Name="IdUser" DataType="System.Int32"/>
+      <Column Name="NamaKasir" DataType="System.String"/>
+      <Column Name="IdLoket" DataType="System.Int32"/>
+      <Column Name="KodeLoket" DataType="System.String"/>
+      <Column Name="NamaLoket" DataType="System.String"/>
+      <Column Name="NomorTransaksi" DataType="System.String"/>
+      <Column Name="WaktuTransaksi" DataType="System.DateTime"/>
+      <Column Name="StanLalu" DataType="System.Decimal"/>
+      <Column Name="StanSkrg" DataType="System.Decimal"/>
+      <Column Name="StanAngkat" DataType="System.Decimal"/>
+      <Column Name="Pakai" DataType="System.Decimal"/>
+      <Column Name="BiayaPemakaian" DataType="System.Decimal"/>
+      <Column Name="Administrasi" DataType="System.Decimal"/>
+      <Column Name="Pemeliharaan" DataType="System.Decimal"/>
+      <Column Name="Retribusi" DataType="System.Decimal"/>
+      <Column Name="Pelayanan" DataType="System.Decimal"/>
+      <Column Name="AirLimbah" DataType="System.Decimal"/>
+      <Column Name="DendaPakai0" DataType="System.Decimal"/>
+      <Column Name="AdministrasiLain" DataType="System.Decimal"/>
+      <Column Name="PemeliharaanLain" DataType="System.Decimal"/>
+      <Column Name="RetribusiLain" DataType="System.Decimal"/>
+      <Column Name="Meterai" DataType="System.Decimal"/>
+      <Column Name="Rekair" DataType="System.Decimal"/>
+      <Column Name="Denda" DataType="System.Decimal"/>
+      <Column Name="Ppn" DataType="System.Decimal"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource2" Alias="RekeningLimbah" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="true">
+      <Column Name="IdPelangganLimbah" DataType="System.Int32"/>
+      <Column Name="IdPeriode" DataType="System.Int32"/>
+      <Column Name="KodePeriode" DataType="System.Int32"/>
+      <Column Name="NamaPeriode" DataType="System.String"/>
+      <Column Name="NomorLimbah" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="KodeTarifLimbah" DataType="System.String"/>
+      <Column Name="NamaTarifLimbah" DataType="System.String"/>
+      <Column Name="KodeRayon" DataType="System.String"/>
+      <Column Name="NamaRayon" DataType="System.String"/>
+      <Column Name="KodeWilayah" DataType="System.String"/>
+      <Column Name="NamaWilayah" DataType="System.String"/>
+      <Column Name="IdUser" DataType="System.Int32"/>
+      <Column Name="NamaKasir" DataType="System.String"/>
+      <Column Name="IdLoket" DataType="System.Int32"/>
+      <Column Name="KodeLoket" DataType="System.String"/>
+      <Column Name="NamaLoket" DataType="System.String"/>
+      <Column Name="NomorTransaksi" DataType="System.String"/>
+      <Column Name="WaktuTransaksi" DataType="System.DateTime"/>
+      <Column Name="Biaya" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource3" Alias="RekeningLltt" ReferenceName="Data.DSource3" DataType="System.Int32" Enabled="true">
+      <Column Name="IdPelangganLltt" DataType="System.Int32"/>
+      <Column Name="IdPeriode" DataType="System.Int32"/>
+      <Column Name="KodePeriode" DataType="System.Int32"/>
+      <Column Name="NamaPeriode" DataType="System.String"/>
+      <Column Name="NomorLltt" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="KodeTarifLltt" DataType="System.String"/>
+      <Column Name="NamaTarifLltt" DataType="System.String"/>
+      <Column Name="KodeRayon" DataType="System.String"/>
+      <Column Name="NamaRayon" DataType="System.String"/>
+      <Column Name="KodeWilayah" DataType="System.String"/>
+      <Column Name="NamaWilayah" DataType="System.String"/>
+      <Column Name="IdUser" DataType="System.Int32"/>
+      <Column Name="NamaKasir" DataType="System.String"/>
+      <Column Name="IdLoket" DataType="System.Int32"/>
+      <Column Name="KodeLoket" DataType="System.String"/>
+      <Column Name="NamaLoket" DataType="System.String"/>
+      <Column Name="NomorTransaksi" DataType="System.String"/>
+      <Column Name="WaktuTransaksi" DataType="System.DateTime"/>
+      <Column Name="Biaya" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource4" Alias="RekeningNonAir" ReferenceName="Data.DSource4" DataType="System.Int32" Enabled="true">
+      <Column Name="IdNonAir" DataType="System.Int32"/>
+      <Column Name="NomorNonAir" DataType="System.String"/>
+      <Column Name="IdJenisNonAir" DataType="System.Int32"/>
+      <Column Name="NamaJenisNonAir" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+      <Column Name="TanggalMulaiTagih" DataType="System.DateTime"/>
+      <Column Name="NomorTransaksi" DataType="System.String"/>
+      <Column Name="WaktuTransaksi" DataType="System.DateTime"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource5" Alias="Angsuran" ReferenceName="Data.DSource5" DataType="System.Int32" Enabled="true">
+      <Column Name="IdNonAir" DataType="System.Int32"/>
+      <Column Name="NomorNonAir" DataType="System.String"/>
+      <Column Name="IdJenisNonAir" DataType="System.Int32"/>
+      <Column Name="NamaJenisNonAir" DataType="System.String"/>
+      <Column Name="Nama" DataType="System.String"/>
+      <Column Name="Alamat" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="IdAngsuran" DataType="System.Int32"/>
+      <Column Name="Termin" DataType="System.Int32"/>
+      <Column Name="Total" DataType="System.Decimal"/>
+      <Column Name="TanggalMulaiTagih" DataType="System.DateTime"/>
+      <Column Name="NomorTransaksi" DataType="System.String"/>
+      <Column Name="WaktuTransaksi" DataType="System.DateTime"/>
+    </TableDataSource>
+    <Parameter Name="IdPdam" DataType="System.Int32"/>
+    <Parameter Name="Key" DataType="System.String"/>
+    <Parameter Name="Header1" DataType="System.String"/>
+    <Parameter Name="Header2" DataType="System.String"/>
+    <Parameter Name="Keterangan" DataType="System.String"/>
+    <Parameter Name="ParafJabatan1" DataType="System.String"/>
+    <Parameter Name="ParafNama1" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan1" DataType="System.String"/>
+    <Parameter Name="ParafId1" DataType="System.String"/>
+    <Parameter Name="ParafJabatan2" DataType="System.String"/>
+    <Parameter Name="ParafNama2" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan2" DataType="System.String"/>
+    <Parameter Name="ParafId2" DataType="System.String"/>
+    <Parameter Name="ParafJabatan3" DataType="System.String"/>
+    <Parameter Name="ParafNama3" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan3" DataType="System.String"/>
+    <Parameter Name="ParafId3" DataType="System.String"/>
+    <Parameter Name="ParafJabatan4" DataType="System.String"/>
+    <Parameter Name="ParafNama4" DataType="System.String"/>
+    <Parameter Name="ParafKeterangan4" DataType="System.String"/>
+    <Parameter Name="ParafId4" DataType="System.String"/>
+    <Parameter Name="Footer1" DataType="System.String"/>
+    <Parameter Name="Footer2" DataType="System.String"/>
+    <Parameter Name="FlagHapus" DataType="System.Boolean"/>
+    <Parameter Name="WaktuUpdate" DataType="System.DateTime"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="355.6" PaperHeight="215.9" RawPaperSize="5" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1268.57" Height="113.4">
+      <TextObject Name="Text2" Left="396.9" Top="37.8" Width="396.9" Height="18.9" Text="DAFTAR PENGELUARAN LAINNYA" HorzAlign="Center" Font="Times New Roman, 12pt, style=Bold"/>
+      <TextObject Name="Text3" Left="396.9" Top="56.7" Width="396.9" Height="28.35" Text="Tanggal : 01-Jan-2021 S/D 02-Dec-2021" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="117.4" Width="1268.57" Height="18.9">
+      <TextObject Name="Text4" Left="18.9" Width="103.95" Height="18.9" Border.Lines="All" Text="NOMOR BUKTI" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text5" Left="122.85" Width="85.05" Height="18.9" Border.Lines="All" Text="WILAYAH" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text6" Left="207.9" Width="132.3" Height="18.9" Border.Lines="All" Text="KODE PERK." HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text7" Left="340.2" Width="481.95" Height="18.9" Border.Lines="All" Text="URAIAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text8" Left="822.15" Width="132.3" Height="18.9" Border.Lines="All" Text="TGL. PENERIMAAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text9" Left="954.45" Width="160.65" Height="18.9" Border.Lines="All" Text="JUMLAH" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text10" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" Text="LOKASI" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="140.3" Width="1268.57" Height="18.9">
+      <TextObject Name="Text11" Left="18.9" Width="103.95" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text12" Left="122.85" Width="85.05" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text13" Left="207.9" Width="132.3" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text14" Left="340.2" Width="481.95" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text15" Left="822.15" Width="132.3" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text16" Left="954.45" Width="160.65" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text17" Left="1115.1" Width="122.85" Height="18.9" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

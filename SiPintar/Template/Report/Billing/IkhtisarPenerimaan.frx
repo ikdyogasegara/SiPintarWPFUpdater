@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="04/13/2022 16:18:28" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="MainData" ReferenceName="Data.MainData" DataType="System.Int32" Enabled="true"/>
+    <TableDataSource Name="AdditionalData" ReferenceName="Data.AdditionalData" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="TanggalPenerimaanAwal" DataType="System.DateTime"/>
+    <Parameter Name="TanggalPenerimaanAkhir" DataType="System.DateTime"/>
+    <Parameter Name="kodeloket" DataType="System.String"/>
+    <Parameter Name="namaloket" DataType="System.String"/>
+    <Parameter Name="nama" DataType="System.String"/>
+    <Parameter Name="NamaUser" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="406" PaperHeight="215.9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1459.08" Height="105.83">
+      <TextObject Name="Memo1" Width="1458.9" Height="18.9" Text="IKTISAR LAPORAN PENAGIHAN PENAGIH" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Trebuchet MS, 9pt"/>
+      <TextObject Name="tanggal" Top="18.9" Width="1458.9" Height="18.9" Text="TGL" Padding="2, 1, 2, 1" HorzAlign="Center" Font="Trebuchet MS, 9pt"/>
+      <TextObject Name="keterangan" Top="37.8" Width="1458.9" Height="18.9" Padding="2, 1, 2, 1" Font="Trebuchet MS, 8pt"/>
+      <TextObject Name="Memo3" Top="56.69" Width="64.25" Height="49.13" Border.Lines="All" Border.Style="Dot" Text="Periode" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo4" Left="64.25" Top="56.69" Width="90.71" Height="49.13" Border.Lines="All" Border.Style="Dot" Text="Golongan" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo5" Left="154.96" Top="56.69" Width="389.29" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="Tagihan Rek.Air" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo6" Left="154.96" Top="79.37" Width="83.15" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Air+Adm" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo7" Left="238.11" Top="79.37" Width="68.03" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="D.Meter" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo8" Left="306.14" Top="79.37" Width="86.93" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Harga Air" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo9" Left="393.07" Top="79.37" Width="52.91" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Denda" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo10" Left="445.98" Top="79.37" Width="98.27" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Jumlah" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo11" Left="544.25" Top="56.69" Width="241.89" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="Tagihan Samb.Baru" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo12" Left="544.25" Top="79.37" Width="83.15" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Angsuran" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo15" Left="627.4" Top="79.37" Width="60.47" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Denda" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo16" Left="687.87" Top="79.37" Width="98.27" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Jumlah" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo13" Left="786.14" Top="56.69" Width="241.89" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="Tagihan Piutang Air" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo14" Left="786.14" Top="79.37" Width="83.15" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Angsuran" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo17" Left="869.29" Top="79.37" Width="60.47" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Denda" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo18" Left="929.76" Top="79.37" Width="98.27" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Jumlah" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo19" Left="1028.03" Top="56.69" Width="241.89" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="Tagihan Piutang Non Air" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo20" Left="1028.03" Top="79.37" Width="83.15" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Angsuran" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo21" Left="1111.18" Top="79.37" Width="60.47" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Denda" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo22" Left="1171.65" Top="79.37" Width="98.27" Height="26.46" Border.Lines="All" Border.Style="Dot" Text="Jumlah" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo57" Left="1269.92" Top="56.69" Width="68.03" Height="49.13" Border.Lines="All" Border.Style="Dot" Text="Meterai" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo58" Left="1337.95" Top="56.69" Width="120.94" Height="49.13" Border.Lines="All" Border.Style="Dot" Text="Jumlah Total" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="111.16" Width="1459.08" Height="22.68">
+      <TextObject Name="Memo23" Width="1458.9" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="  Tagihan Tahun " Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="139.18" Width="1459.08" Height="22.68">
+        <TextObject Name="Memo24" Width="1458.9" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="bulan" Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+        <DataBand Name="Data1" Top="167.19" Width="1459.08" Height="22.68">
+          <TextObject Name="Memo25" Width="64.25" Height="22.68" Border.Lines="Left, Right" Border.Style="Dot" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo26" Left="64.25" Width="90.71" Height="22.68" Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo27" Left="154.96" Width="83.15" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo28" Left="238.11" Width="68.03" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo29" Left="306.14" Width="86.93" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo30" Left="393.07" Width="52.91" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo31" Left="445.98" Width="98.27" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo32" Left="544.25" Width="83.15" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo33" Left="627.4" Width="60.47" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo34" Left="687.87" Width="98.27" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo35" Left="786.14" Width="83.15" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo36" Left="869.29" Width="60.47" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo37" Left="929.76" Width="98.27" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo38" Left="1028.03" Width="83.15" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo39" Left="1111.18" Width="60.47" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo40" Left="1171.65" Width="98.27" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo59" Left="1269.92" Width="68.03" Height="22.68" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+          <TextObject Name="Memo61" Left="1337.95" Width="120.94" Height="22.68" Border.Lines="Right" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter2" Top="195.2" Width="1459.08" Height="22.68">
+          <TextObject Name="Memo41" Width="64.25" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" HorzAlign="Center" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo42" Left="64.25" Width="90.71" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="Sub Total" Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo43" Left="154.96" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo44" Left="238.11" Width="68.03" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo45" Left="306.14" Width="86.93" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo46" Left="393.07" Width="52.91" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo47" Left="445.98" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo48" Left="544.25" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo49" Left="627.4" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo50" Left="687.87" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo51" Left="786.14" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo52" Left="869.29" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo53" Left="929.76" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo54" Left="1028.03" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo55" Left="1111.18" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo56" Left="1171.65" Width="98.27" Height="22.68" Border.Lines="Left, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo60" Left="1269.92" Width="68.03" Height="22.68" Border.Lines="Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+          <TextObject Name="Memo62" Left="1337.95" Width="120.94" Height="22.68" Border.Lines="Right, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="223.22" Width="1459.08" Height="22.68">
+        <TextObject Name="Memo64" Width="154.96" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="  Total Tahun" Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+        <TextObject Name="Memo65" Left="154.96" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo66" Left="238.11" Width="68.03" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo67" Left="306.14" Width="86.93" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo68" Left="393.07" Width="52.91" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo69" Left="445.98" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo70" Left="544.25" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo71" Left="627.4" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo72" Left="687.87" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo73" Left="786.14" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo74" Left="869.29" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo75" Left="929.76" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo76" Left="1028.03" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo77" Left="1111.18" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo78" Left="1171.65" Width="98.27" Height="22.68" Border.Lines="Left, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo79" Left="1269.92" Width="68.03" Height="22.68" Border.Lines="Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+        <TextObject Name="Memo80" Left="1337.95" Width="120.94" Height="22.68" Border.Lines="Right, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="251.23" Width="1459.08" Height="37.8">
+      <TextObject Name="Memo2" Width="154.96" Height="22.68" Border.Lines="All" Border.Style="Dot" Text="  Jumlah Total" Padding="2, 1, 2, 1" VertAlign="Center" Font="Trebuchet MS, 8pt, style=Bold"/>
+      <TextObject Name="Memo81" Left="154.96" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo82" Left="238.11" Width="68.03" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo83" Left="306.14" Width="86.93" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo84" Left="393.07" Width="52.91" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo85" Left="445.98" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo86" Left="544.25" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo87" Left="627.4" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo88" Left="687.87" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo89" Left="786.14" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo90" Left="869.29" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo91" Left="929.76" Width="98.27" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo92" Left="1028.03" Width="83.15" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo93" Left="1111.18" Width="60.47" Height="22.68" Border.Lines="All" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo94" Left="1171.65" Width="98.27" Height="22.68" Border.Lines="Left, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo95" Left="1269.92" Width="68.03" Height="22.68" Border.Lines="Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+      <TextObject Name="Memo96" Left="1337.95" Width="120.94" Height="22.68" Border.Lines="Right, Top, Bottom" Border.Style="Dot" Padding="2, 1, 2, 1" Format="Number" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="294.36" Width="1459.08" Height="28.35">
+      <TextObject Name="Memo63" Left="1237.95" Width="222.99" Height="22.68" Text="Tgl Cetak : [Date]" Padding="2, 1, 2, 1" HorzAlign="Right" VertAlign="Center" Font="Trebuchet MS, 7pt, style=Bold, Italic"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

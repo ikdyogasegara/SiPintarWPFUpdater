@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="SiPintar.Views.Billing.Supervisi.RekeningAir.SettingTableView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Billing.Supervisi.RekeningAir" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:other="clr-namespace:SiPintar.Views.Global.Other" xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border Width="750" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" >
+                        <Grid Margin="10 8">
+                            <StackPanel Orientation="Vertical">
+                            <TextBlock x:Name="Title" Style="{StaticResource CaptionFormActive}" Foreground="{StaticResource Black100}" LineHeight="10" Text="Setting Tabel"/>
+                                <TextBlock x:Name="SubTitle" Style="{StaticResource CaptionFormActive}" Foreground="{StaticResource Black50}" LineHeight="10" FontSize="9" Text="Pilih data yang ingin anda tampilkan di tabel "/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Background="{x:Null}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Style="{StaticResource ButtonPlain}" Width="14" Height="14" Padding="0" Margin="0" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                <Grid Grid.Row="1" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Publish" Margin="0 5" IsChecked="{Binding TableSetting.FlagPublish, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Publish</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Verifikasi" Content="Verifikasi" Margin="0 0 0 10" IsChecked="{Binding TableSetting.FlagVerifikasi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" />
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeGolongan" Margin="0 5" IsChecked="{Binding TableSetting.KodeGolongan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Golongan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaGolongan" Margin="0 5" IsChecked="{Binding TableSetting.NamaGolongan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Golongan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeDiameter" Margin="0 5" IsChecked="{Binding TableSetting.KodeDiameter, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Diameter</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaDiameter" Margin="0 5" IsChecked="{Binding TableSetting.NamaDiameter, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Diameter</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeCabang" Margin="0 5" IsChecked="{Binding TableSetting.KodeCabang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Cabang</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaCabang" Margin="0 5" IsChecked="{Binding TableSetting.NamaCabang, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Cabang</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeRayon" Margin="0 5" IsChecked="{Binding TableSetting.KodeRayon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Rayon</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaRayon" Margin="0 5" IsChecked="{Binding TableSetting.NamaRayon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Rayon</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeKelurahan" Margin="0 5" IsChecked="{Binding TableSetting.KodeKelurahan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Kelurahan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaKelurahan" Margin="0 5" IsChecked="{Binding TableSetting.NamaKelurahan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Kelurahan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeWilayah" Margin="0 5" IsChecked="{Binding TableSetting.KodeWilayah, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Wilayah</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="LoketBayar" Margin="0 5" IsChecked="{Binding TableSetting.NamaLoket, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Loket Bayar</CheckBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaWilayah" Margin="0 5" IsChecked="{Binding TableSetting.NamaWilayah, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Wilayah</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="KodeKolektif" Margin="0 5" IsChecked="{Binding TableSetting.KodeKolektif, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kode Kolektif</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaKolektif" Margin="0 5" IsChecked="{Binding TableSetting.NamaKolektif, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Kolektif</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="PemeliharaanLain" Margin="0 5" IsChecked="{Binding TableSetting.PemeliharaanLain, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Pemeliharaan Lain</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="AdministrasiLain" Margin="0 5" IsChecked="{Binding TableSetting.AdministrasiLain, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Administrasi Lain</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="RetribusiLain" Margin="0 5" IsChecked="{Binding TableSetting.RetribusiLain, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Retribusi Lain</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NoRekening" Margin="0 5" IsChecked="{Binding TableSetting.NoRekening, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">No Rekening</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="SambunganLalu" Margin="0 5" IsChecked="{Binding TableSetting.StanLalu, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Stan Lalu</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="SambunganKini" Margin="0 5" IsChecked="{Binding TableSetting.StanSkrg, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Stan Kini</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="SambunganAngkat" Margin="0 5" IsChecked="{Binding TableSetting.StanAngkat, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Stan Angkat</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Pakai" Margin="0 5" IsChecked="{Binding TableSetting.Pakai, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Pakai</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Status" Margin="0 5" IsChecked="{Binding TableSetting.NamaStatus, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Status</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="TanggalBayar" Margin="0 5" IsChecked="{Binding TableSetting.WaktuTransaksi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Tanggal Bayar</CheckBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="PakaiHitung" Margin="0 5" IsChecked="{Binding TableSetting.PakaiHitung, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Pakai Hitung</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="BiayaPakai" Margin="0 5" IsChecked="{Binding TableSetting.BiayaPemakaian, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Biaya Pakai</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Administrasi" Margin="0 5" IsChecked="{Binding TableSetting.Administrasi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Administrasi</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Pemeliharaan" Margin="0 5" IsChecked="{Binding TableSetting.Pemeliharaan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Pemeliharaan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Retribusi" Margin="0 5" IsChecked="{Binding TableSetting.Retribusi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Retribusi</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Materai" Margin="0 5" IsChecked="{Binding TableSetting.Meterai, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Materai</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="RekeningAir" Margin="0 5" IsChecked="{Binding TableSetting.Rekair, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Rekening Air</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Koreksi" Margin="0 5" IsChecked="{Binding TableSetting.FlagKoreksi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Koreksi</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="PetugasBaca" Margin="0 5" IsChecked="{Binding TableSetting.PetugasBaca, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Petugas Baca</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Taksasi" Margin="0 5" IsChecked="{Binding TableSetting.Taksasi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Taksasi</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Kelainan" Margin="0 5" IsChecked="{Binding TableSetting.Kelainan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kelainan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Alamat" Margin="0 5" IsChecked="{Binding TableSetting.Alamat, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Alamat</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Kasir" Margin="0 5" IsChecked="{Binding TableSetting.NamaUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Kasir</CheckBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Pelayanan" Margin="0 5" IsChecked="{Binding TableSetting.Pelayanan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Pelayanan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="AirLimbah" Margin="0 5" IsChecked="{Binding TableSetting.AirLimbah, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Air Limbah</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="DendaPakai0" Margin="0 5" IsChecked="{Binding TableSetting.DendaPakai0, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Denda Pakai 0</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Denda" Margin="0 5" IsChecked="{Binding TableSetting.Denda, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Denda</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Total" Margin="0 5" IsChecked="{Binding TableSetting.Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Total</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="TanggalKoreksi" Margin="0 5" IsChecked="{Binding TableSetting.WaktuKoreksi, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Tanggal Koreksi</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="TanggalPublish" Margin="0 5" IsChecked="{Binding TableSetting.WaktuPublish, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Tanggal Publish</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Upload" Margin="0 5" IsChecked="{Binding TableSetting.FlagUpload, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Upload</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Nosamb" Margin="0 5" IsChecked="{Binding TableSetting.Nosamb, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">No Sambungan</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Nama" Margin="0 5" IsChecked="{Binding TableSetting.Nama, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Flag" Margin="0 5" IsChecked="{Binding TableSetting.Flag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Flag</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="NamaFlag" Margin="0 5" IsChecked="{Binding TableSetting.NamaFlag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Nama Flag</CheckBox>
+                        <CheckBox Foreground="{StaticResource Black90}" x:Name="Ppn" Margin="0 5" IsChecked="{Binding TableSetting.Ppn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked">Ppn</CheckBox>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Button Click="Kosongkan_Click" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Style="{StaticResource ButtonPlain}" Background="White" Height="60" >
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Kosongkan Semua" TextDecorations="Underline" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ButtonPlain}" Click="Reset_Click" Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" Background="White" Height="60">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Reset" TextDecorations="Underline" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel  HorizontalAlignment="Right"  Margin="0,0,10,0" Orientation="Horizontal">
+                        <Grid Visibility="{Binding Path=IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}">
+                            <Button Command="{x:Static md:DialogHost.CloseDialogCommand}" Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" FontSize="11" Foreground="{StaticResource PictonBlue}" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0" />
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Click="Submit_Click" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="3" Background="{StaticResource BaseAppBilling}" />
+            </Grid>
+
+         </Border>
+
+    </Grid>
+</UserControl>

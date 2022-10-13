@@ -1,0 +1,686 @@
+﻿<UserControl x:Class="SiPintar.Views.Personalia.Onboarding.Menu2View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="Transparent">
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            x:Name="Step1"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='1'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Image Width="330" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.start.png" />
+            </Grid>
+            <Border Grid.Column="1" Background="White" Margin="-1,11,0,5">
+                <StackPanel>
+                    <Button 
+                            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='1||2||3||4||5'}"
+                            HorizontalAlignment="Right" 
+                            Background="{x:Null}" 
+                            Command="{Binding CloseDialogPageCommand}" 
+                            Style="{StaticResource ButtonPlain}" 
+                            Width="14" 
+                            Height="14" 
+                            Padding="0" 
+                            Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                            Margin="40,10,40,20">
+                        <TextBlock Margin="0,10,0,5" TextAlignment="Left" FontStyle="Normal" FontSize="14" FontFamily="{StaticResource MontserratSemiBold}">
+                                Selamat Datang di PDAM Pintar Personalia
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,10" Width="300" TextWrapping="Wrap" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                Kami akan memandu Anda untuk mengetahui cara <Run FontWeight="Bold" Foreground="Black">Membayar Tagihan Kolektif</Run>. Anda bisa langsung mencobanya sendiri lho!<LineBreak/><LineBreak/>
+                                Kita mulai ya, <Run FontWeight="Bold" Foreground="Black">hanya butuh waktu 3 menit</Run> saja untuk memahami cara penggunaannya.
+                        </TextBlock>
+                        <Button Command="{Binding NextPageCommand}"
+                                    Width="80" 
+                                    Height="30" 
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource ButtonPrimary}" 
+                                    Foreground="{StaticResource White100}" 
+                                    BorderBrush="{StaticResource PictonBlue}" 
+                                    Background="{StaticResource PictonBlue}"
+                                    Content="Mulai" 
+                                    FontSize="10" 
+                                    Margin="0,15"  
+                                    md:ButtonAssist.CornerRadius="15"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0,80,0,0"
+            x:Name="Step2"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='2'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Margin="0,0,20,0">
+                <Image HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.right.png" />
+            </Grid>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <Button 
+                    HorizontalAlignment="Right" 
+                    Background="{x:Null}" 
+                    Command="{Binding CloseDialogPageCommand}" 
+                    Style="{StaticResource ButtonPlain}" 
+                    Width="14" 
+                    Height="14" 
+                    Padding="0" 
+                    Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                    Margin="10,0,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Akses Menu Tagihan di Menu Utama
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="350" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Pilih menu “Tagihan” di bagian atas layar
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Menu utama dapat diakses dari semua halaman. Cukup klik menu tagihan, maka Anda akan diarahkan ke halaman Tagihan.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource ButtonPrimary}" 
+                            Foreground="{StaticResource White100}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Background="{StaticResource PictonBlue}"
+                            Content="Selanjutnya" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0,100,0,0"
+            x:Name="Step3"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='3'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Margin="0,0,20,0">
+                <Image HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="160" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.left.png" />
+            </Grid>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <Button 
+                    HorizontalAlignment="Right" 
+                    Background="{x:Null}" 
+                    Command="{Binding CloseDialogPageCommand}" 
+                    Style="{StaticResource ButtonPlain}" 
+                    Width="14" 
+                    Height="14" 
+                    Padding="0" 
+                    Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                    Margin="10,0,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Pilih Kategori Pencarian Tagihan “Kolektif Air”
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="450" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Pelanggan SR
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Untuk cek &amp; bayar tagihan sambungan rumah.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="450" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Kolektif Air
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Untuk cek &amp; bayar tagihan secara kolektif. Anda bisa memproses tagihan SR dalam jumlah banyak.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="450" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Non Air Lainnya
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Untuk pembayaran tagihan kategori non-air lainnya.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="450" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Kolektif Non Air
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Untuk cek &amp; bayar tagihan secara kolektif. Anda bisa memproses tagihan non air dalam jumlah banyak.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding PreviousPageCommand}" 
+                            HorizontalAlignment="Left"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}" 
+                            Foreground="{StaticResource PictonBlue}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Content="Kembali" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                        <Button Grid.Column="2" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource ButtonPrimary}" 
+                            Foreground="{StaticResource White100}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Background="{StaticResource PictonBlue}"
+                            Content="Selanjutnya" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Left" VerticalAlignment="Bottom"
+            Margin="30,0,0,80"
+            x:Name="Step4"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='4'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1" Margin="20,0,0,0">
+                <Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="140" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.right.png" />
+            </Grid>
+
+            <Border Grid.Column="0" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <Button 
+                    HorizontalAlignment="Right" 
+                    Background="{x:Null}" 
+                    Command="{Binding CloseDialogPageCommand}" 
+                    Style="{StaticResource ButtonPlain}" 
+                    Width="14" 
+                    Height="14" 
+                    Padding="0" 
+                    Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                    Margin="10,0,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Tambahkan Pelanggan Kolektif
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Tekan Tombol “Tambah Pelanggan”
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Anda bisa menggunakan filter pencarian untuk memudahkan pencarian.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding PreviousPageCommand}" 
+                            HorizontalAlignment="Left"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}" 
+                            Foreground="{StaticResource PictonBlue}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Content="Kembali" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                        <Button Grid.Column="2" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource ButtonPrimary}" 
+                            Foreground="{StaticResource White100}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Background="{StaticResource PictonBlue}"
+                            Content="Selanjutnya" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Bottom"
+            Margin="0,0,0,120"
+            x:Name="Step5"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='5'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Margin="0,0,20,0">
+                <Image HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.right.png" />
+            </Grid>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <Button 
+                    HorizontalAlignment="Right" 
+                    Background="{x:Null}" 
+                    Command="{Binding CloseDialogPageCommand}" 
+                    Style="{StaticResource ButtonPlain}" 
+                    Width="14" 
+                    Height="14" 
+                    Padding="0" 
+                    Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                    Margin="10,0,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Gunakan Filter Pencarian
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Tekan Tombol “Cari Pelanggan” Setelah Pilih Filter
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Kini, Anda tidak perlu lagi melihat data tabel yang panjang, Anda bisa dengan mudah melihat tagihan yang telah difilter berdasarkan bulan.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding PreviousPageCommand}" 
+                            HorizontalAlignment="Left"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}" 
+                            Foreground="{StaticResource PictonBlue}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Content="Kembali" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                        <Button Grid.Column="2" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource ButtonPrimary}" 
+                            Foreground="{StaticResource White100}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Background="{StaticResource PictonBlue}"
+                            Content="Selanjutnya" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0,20,0,0"
+            x:Name="Step6"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='6'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" Margin="0,80,20,0">
+                <Image HorizontalAlignment="Right" VerticalAlignment="Center" Width="140" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.left.png" />
+            </Grid>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <Button 
+                    HorizontalAlignment="Right" 
+                    Background="{x:Null}" 
+                    Command="{Binding CloseDialogPageCommand}" 
+                    Style="{StaticResource ButtonPlain}" 
+                    Width="14" 
+                    Height="14" 
+                    Padding="0" 
+                    Margin="8" >
+                        <md:PackIcon Kind="Close" Margin="0" Foreground="Black"/>
+                    </Button>
+                    <StackPanel 
+                    Margin="10,0,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Pilih Pelanggan Kolektif
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Centang Pelanggan yang akan dimasukkan ke Daftar Pelanggan Kolektif
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Dengan fitur centang, Anda bisa menghapus atau menambahkan pelanggan secara bersamaan.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding PreviousPageCommand}" 
+                            HorizontalAlignment="Left"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}" 
+                            Foreground="{StaticResource PictonBlue}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Content="Kembali" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                        <Button Grid.Column="2" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="120" 
+                            Height="30" 
+                            Style="{StaticResource ButtonPrimary}" 
+                            Foreground="{StaticResource White100}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Background="{StaticResource PictonBlue}"
+                            Content="Selanjutnya" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid 
+            HorizontalAlignment="Center" VerticalAlignment="Top"
+            Margin="0,120,0,0"
+            x:Name="Step7"
+            Visibility="{Binding Path=CurrentPageIndex, Converter={StaticResource ComparisonToVisibilityConverter}, ConverterParameter='7'}"
+            >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,20,0">
+                <Image HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Source="/SiPintar;component/Assets/Images/Onboarding/Personalia/onboard.point.right.png" />
+            </Grid>
+
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Padding="10,5,5,10">
+                <StackPanel>
+                    <StackPanel 
+                    Margin="10,22,15,10">
+                        <TextBlock TextWrapping="Wrap" Margin="8,0,0,25" TextAlignment="Left" FontStyle="Normal" FontSize="16" FontFamily="{StaticResource MontserratSemiBold}">
+                        Hapus dan Tambah Pelanggan dengan Mudah
+                        </TextBlock>
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Hapus Pelanggan Dalam Jumlah Banyak
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Pelanggan yang tercentang biru dapat dihapus secara bersamaan dengan klik menu <Run Foreground="{StaticResource PictonBlue}">“Hapus”</Run>.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid HorizontalAlignment="Center">
+                                    <md:PackIcon Kind="Check" Margin="0" Foreground="Green"/>
+                                </Grid>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Margin="0,0,0,5" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="Black">
+                                    Tambahkan Pelanggan Lainnya
+                                    </TextBlock>
+                                    <TextBlock Margin="0,0,0,10" TextWrapping="Wrap" FontFamily="{StaticResource SarabunRegular}" FontSize="12" Foreground="{StaticResource Gray}">
+                                    Jika perlu, Anda bisa menambahkan pelanggan lagi dengan klik menu <Run Foreground="{StaticResource PictonBlue}">“Tambah Pelanggan”</Run>.
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Margin="0,0,0,10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource SarabunRegular}" Foreground="{StaticResource Gray}">
+                            <Run Text="{Binding CurrentPageIndexShow}"></Run>
+                            <Run Text="/" />
+                            <Run Foreground="{StaticResource PictonBlue}" Text="{Binding PageTotalShow}"></Run>
+                        </TextBlock>
+
+                        <Button Grid.Column="1" Command="{Binding NextPageCommand}" 
+                            HorizontalAlignment="Right"
+                            Width="80" 
+                            Height="30" 
+                            Style="{StaticResource MaterialDesignOutlinedButton}" 
+                            Foreground="{StaticResource PictonBlue}" 
+                            BorderBrush="{StaticResource PictonBlue}" 
+                            Content="Oke" 
+                            FontSize="11" 
+                            Margin="0,15"  
+                            md:ButtonAssist.CornerRadius="15"/>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

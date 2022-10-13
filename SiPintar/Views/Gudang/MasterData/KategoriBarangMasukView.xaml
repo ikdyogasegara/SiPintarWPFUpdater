@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="SiPintar.Views.Gudang.MasterData.KategoriBarangMasukView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Gudang.MasterData"
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewmodels="clr-namespace:SiPintar.Helpers.TableHelper"
+             xmlns:views="clr-namespace:SiPintar.Views.Gudang.MasterData.KategoriBarangMasuk"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:NullVisibilityConverter x:Key="NullToCollapsibleConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:BooleanToStringConverter x:Key="StatusConverter" True="Aktif" False="Tidak Aktif" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverter" FirstBrush="#646464" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBrushConverterActivePage" FirstBrush="#028DDB" SecondBrush="#646464" />
+            <converters:BooleanToBrushConverter x:Key="BooleanToBackgroundConverter" FirstBrush="#FFFFFF" SecondBrush="#FA91A5"/>
+            <converters:ComparisonToVisibilityConverter x:Key="ComparisonToVisibleConverter" />
+            <converters:ComparisonToStrikethroughTextConverter x:Key="ComparisonToStrikethroughTextConverter" />
+            <converters:DatetimeToStringConverter x:Key="DatetimeToStringConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+            <DataTemplate DataType="{x:Type viewmodels:TableHelper}">
+                <views:TableView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#E5E5E5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="240" x:Name="FilterWrapper" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="8,8,8,8" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="White" Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource ButtonPlain}" Background="Transparent" Margin="0" Height="70" Padding="8 5" Command="{Binding OnRefreshCommand}">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_refresh.png" Margin="4" />
+                            <TextBlock Text="Refresh" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center" LineHeight="1"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonPlain}" Background="Transparent" Margin="0" Height="70" Padding="8 5" Command="{Binding OnOpenAddFormCommand}">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_add.png" Margin="4" />
+                            <TextBlock Text="Tambah" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center" LineHeight="1"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonPlain}" Background="Transparent" Margin="0" Height="70" Padding="8 5" Command="{Binding OnOpenEditFormCommand}">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_update@2x.png" Margin="4" />
+                            <TextBlock Text="Koreksi" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center" LineHeight="1"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonPlain}" Background="Transparent" Margin="0" Height="70" Padding="8 5" Command="{Binding OnOpenDeleteFormCommand}">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_close.png" Margin="4" />
+                            <TextBlock Text="Hapus" 
+                                       Style="{StaticResource CaptionSmallBody}"
+                                       HorizontalAlignment="Center" LineHeight="1"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Click="ShowFilter_Click" x:Name="ToolbarFilter" Style="{StaticResource ButtonPlain}" Background="Transparent" Padding="8 5" Height="70" VerticalAlignment="Center" Visibility="Collapsed">
+                        <StackPanel Orientation="Vertical">
+                            <Image Height="24" Width="24" Source="/SiPintar;component/Assets/Images/Toolbar/ic_filter.png" Margin="5.5" />
+                            <TextBlock Text="Filter Pencarian" Style="{StaticResource CaptionSmallBody}" HorizontalAlignment="Center" Width="90" TextWrapping="Wrap" TextAlignment="Center" LineHeight="1"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <ContentControl Content="{Binding DataKategoriBarangMasuk}" Grid.Row="1" Margin="10" />
+        </Grid>
+        <Grid Grid.Column="1" Margin="0,8,8,8" x:Name="FilterSection" Visibility="Visible">
+            <Border BorderBrush="{StaticResource Black10}" BorderThickness="1 0 0 0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="65"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="White">
+                        <Button Style="{StaticResource BtnWrapper}" Click="HideFilter_Click">
+                            <Border BorderBrush="{StaticResource Cerulean}" Background="{StaticResource Cerulean}" BorderThickness="1" CornerRadius="0 2 2 0" Width="10" Height="35" VerticalAlignment="Center">
+                                <Border Background="White" CornerRadius="0 50 50 0" Width="4" Height="7" Margin="2 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            </Border>
+                        </Button>
+                        <TextBlock Text="Filter Pencarian" Style="{StaticResource Title}" LineHeight="16" VerticalAlignment="Center" Margin="13 0 0 0"/>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="White">
+                                <StackPanel Margin="16 0 12 13">
+                                    <CheckBox Style="{StaticResource FilterCheckBox}" IsChecked="{Binding IsNamaKategoriBarangMasukChecked}" Content="Nama Kategori"/>
+                                    <Grid Margin="0,10,0,0">
+                                        <TextBox x:Name="NamaKategori" Style="{StaticResource TextBoxInputForm}" IsEnabled="{Binding IsNamaKategoriBarangMasukChecked}" Text="{Binding FilterNamaKategoriBarangMasuk, Mode=TwoWay}" VerticalAlignment="Center" />
+                                        <TextBlock DataContext="{Binding ElementName=NamaKategori, Path=Text}" Text="Masukkan nama" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="2" Margin="0 1 0 0" Background="White" VerticalAlignment="Bottom">
+                        <Button Command="{Binding OnTerapkanFilterCommand}" Style="{StaticResource ButtonSecondarySmall}" Content="Terapkan Filter" Margin="8 17 8 0"/>
+                        <Button Command="{Binding OnResetFilterCommand}" Style="{StaticResource ButtonPlain}" Height="30" FontSize="10" Content="Atur Ulang Filter" Margin="8 7" Background="White" Foreground="{StaticResource SecondaryBlue}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

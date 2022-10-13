@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="SiPintar.Views.Distribusi.Atribut.KelainanGantiMeter.GantiMeterNonRutin.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SiPintar.Views.Distribusi.Atribut.KelainanGantiMeter.GantiMeterNonRutin" xmlns:other="clr-namespace:SiPintar.Views.Global.Other" xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converters="clr-namespace:SiPintar.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Collapsed" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Border Width="600" Background="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppDistribusi}">
+                    <Grid Margin="10 5">
+                        <Grid Margin="10,7,15,5">
+                            <TextBlock Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" x:Name="TitleDialog" Text="Tambah Jenis Kelainan Ganti Meter - Rutin"/>
+                        </Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Border CornerRadius="2" Background="White" Height="16">
+                                <TextBlock Foreground="{StaticResource BaseAppDistribusi}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                            </Border>
+                            <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+                <Grid Grid.Row="1" Margin="20,30,20,0">
+                    <StackPanel Orientation="Vertical" Margin="20,0">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Title}" Text="Kategori" LineHeight="15"/>
+                            <Grid Margin="0,0,0,10">
+                                <TextBox x:Name="Kategori" Width="150" Style="{StaticResource TextBoxInputForm}" HorizontalAlignment="Left" Text="{Binding FormGantiMeter.Kategori}" PreviewKeyUp="CheckForm_PreviewKeyUp" IsEnabled="False"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Margin="0 5 0 0">
+                            <TextBlock Style="{StaticResource Title}" Text="Nama Kelainan" LineHeight="15"/>
+                            <Grid Margin="0,0,0,10">
+                                <TextBox x:Name="NamaKelainan" Style="{StaticResource TextBoxInputForm}" Text="{Binding FormGantiMeter.JenisGantiMeter}" PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                                <TextBlock DataContext="{Binding ElementName=NamaKelainan, Path=Text}" Text="Masukkan nama kelainan. Contoh: Terendam" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Title}" Text="Biaya Ganti Meter" Margin="0 10 0 5" LineHeight="15"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <RadioButton x:Name="RadioDenganBiaya" Checked="RadioButton_Checked" Content="Dengan Biaya" GroupName="radio" Click="Radio_Click"/>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <RadioButton x:Name="RadioTanpaBiaya" Content="Tanpa Biaya" Checked="RadioButton_Checked_1" GroupName="radio" Click="Radio_Click"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 20 0 0" x:Name="PanelJenisBiaya" Visibility="Collapsed">
+                            <TextBlock Style="{StaticResource Title}" Text="Jenis Biaya" LineHeight="15"/>
+                            <Grid Margin="0,0,0,10">
+                                <ComboBox x:Name="JenisBiaya" ItemsSource="{Binding JenisNonairList}" SelectedItem="{Binding JenisNonair}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" DisplayMemberPath="NamaJenisNonAir" SelectionChanged="Combo_SelectionChanged"/>
+                                <TextBlock DataContext="{Binding ElementName=JenisBiaya, Path=Text}" Text="Pilih jenis biaya" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Margin="0 15 0 0" Width="auto">
+                            <TextBlock Style="{StaticResource Title}" Text="Kode Warna" LineHeight="15"/>
+                            <Grid>
+                                <ComboBox x:Name="ComboColor" ItemsSource="{Binding WarnaMeterList}" SelectedItem="{Binding WarnaMeter}" VerticalContentAlignment="Center" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}, Path=ActualWidth}" Style="{StaticResource ComboBoxInputForm}" SelectionChanged="Combo_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                                    <Border Height="20" Width="300" BorderThickness="1" VerticalAlignment="Center" Background="{Binding KodeWarnaGantiMeter}" BorderBrush="{StaticResource Black10}"  />
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="0" Width="150" Height="20" >
+                                                    <TextBlock Text="{Binding WarnaGantiMeter}" Margin="5 3 0 0" Style="{StaticResource Title}" FontWeight="Regular" VerticalAlignment="Center"/>
+                                                </StackPanel>
+
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                                <TextBlock DataContext="{Binding ElementName=ComboColor, Path=Text}" Text="Pilih warna" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Margin="10,30,20,20">
+                    <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                        <Grid>
+                            <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                        </Grid>
+                        <Grid>
+                            <Button x:Name="OkButton" Command="{Binding OnSubmitFormCommand}" IsEnabled="False" Content="Simpan" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                            <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                    <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

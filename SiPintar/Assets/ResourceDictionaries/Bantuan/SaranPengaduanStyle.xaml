@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/SiPintar;component/Assets/ResourceDictionaries/BaseStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="TextBoxInputForm" TargetType="TextBox">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="BorderBrush" Value="{StaticResource SilverChalice}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}" />
+        <Setter Property="Margin" Value="0,4,0,0" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource EbonyClay}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="4" SnapsToDevicePixels="True">
+                        <ScrollViewer Margin="5,3,0,0" VerticalAlignment="{TemplateBinding VerticalAlignment}" x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Cerulean}"/>
+                            <Setter Property="BorderThickness" TargetName="border" Value="2" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource AthensGray}"/>
+                            <Setter Property="Foreground" TargetName="PART_ContentHost" Value="{StaticResource Gray}"/>
+                        </Trigger>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Trigger.Setters>
+                                <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="Red"/>
+                                <Setter Property="CornerRadius" TargetName="border" Value="2" />
+                            </Trigger.Setters>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TextBoxPlaceholder" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}"/>
+        <Setter Property="Foreground" Value="{StaticResource SilverChalice}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Grid.ZIndex" Value="10" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Margin" Value="2,2,8,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding}" Value="">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ratingButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Path Name="starPath" Fill="Gray" Data="M 9,0 L 7,6 L 0,6 L 6,11 L 4,17 L 9,12 L 14,17 L 12,11 L 18,6 L 11,6 L 9,0">
+                        <Path.LayoutTransform>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                        </Path.LayoutTransform>
+                    </Path>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="starPath" Property="Fill" Value="Gold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

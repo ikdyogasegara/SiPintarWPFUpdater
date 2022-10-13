@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="SiPintar.Views.Perencanaan.Atribut.Ongkos.DialogFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SiPintar.Views.Perencanaan.Atribut.Ongkos" 
+             xmlns:converters="clr-namespace:SiPintar.Converters" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:other="clr-namespace:SiPintar.Views.Global.Other"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibleConverter" True="Visible" False="Hidden" />
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToCollapseConverter" True="Collapsed" False="Visible" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <md:DialogHost Identifier="AtributOngkosDialog" DialogTheme="Inherit" >
+        <Grid>
+            <Border Width="500" Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Background="{StaticResource BaseAppPerencanaan}">
+                        <Grid Margin="10 5">
+                            <Grid Margin="10,7,15,5">
+                                <TextBlock x:Name="Title" Style="{StaticResource BigTitle}" Foreground="White" LineHeight="10" Text="Tambah Data Ongkos"/>
+                            </Grid>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Border CornerRadius="2" Background="White" Height="16">
+                                    <TextBlock Foreground="{StaticResource BaseAppPerencanaan}" Padding="6,1,6,1" FontSize="10" FontWeight="SemiBold">Esc</TextBlock>
+                                </Border>
+                                <Button Background="{x:Null}" Style="{StaticResource ButtonPlain}" Command="{x:Static md:DialogHost.CloseDialogCommand}" Width="14" Height="14" Padding="0" Margin="8" >
+                                    <md:PackIcon Kind="Close" Margin="0" Foreground="White"/>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Grid.Row="0" Margin="30 30 0 20">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Jenis Ongkos" LineHeight="15"/>
+                                <ComboBox x:Name="JenisOngkos" Margin="0,0,10,0" Style="{StaticResource ComboBoxInputForm}"
+                                           Validation.ErrorTemplate="{x:Null}"
+                                          IsEnabled="False" 
+                                          IsEditable="False" 
+                                          ItemsSource="{Binding ListDataKategori, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedDataKategori}"
+                                          Width="200"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Value" SelectedValue="{Binding OngkosForm.OngkosLimbah, Mode=TwoWay}"
+                                          FontSize="13"
+                                          PreviewKeyUp="CheckForm_PreviewKeyUp"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="0" Margin="0 30 30 20">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Kode Ongkos" LineHeight="15"/>
+                                <Grid>
+                                    <TextBox x:Name="KodeOngkos" Style="{StaticResource TextBoxInputForm}" MaxLength="50" Text="{Binding OngkosForm.KodeOngkos, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Grid.ColumnSpan="2" />
+                                    <TextBlock DataContext="{Binding ElementName=KodeOngkos, Path=Text}" Text="Masukan kode ongkos" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Grid.Row="1" Grid.ColumnSpan="1" Margin="30 0 30 20">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Deskripsi" LineHeight="15"/>
+                                <Grid>
+                                    <TextBox x:Name="NamaOngkos" Style="{StaticResource TextBoxInputForm}" MaxLength="150" Text="{Binding OngkosForm.NamaOngkos}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Grid.ColumnSpan="2" />
+                                    <TextBlock DataContext="{Binding ElementName=NamaOngkos, Path=Text}" Text="Masukan nama ongkos" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Grid.ColumnSpan="2" Margin="10,0,5,0" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Margin="30 0 20 0">
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Satuan" LineHeight="15"/>
+                                <Grid Margin="0,0,0,20">
+                                    <TextBox x:Name="Satuan" Style="{StaticResource TextBoxInputForm}"  MaxLength="50" Text="{Binding OngkosForm.Satuan}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                    <TextBlock DataContext="{Binding ElementName=Satuan, Path=Text}" Text="Cotoh : Buah, Pc, Box" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Perhitungan" LineHeight="15"/>
+                                <Grid Margin="0,0,0,20">
+                                    <!--<ComboBox x:Name="Perhitungan" Style="{StaticResource ComboBoxInputForm}" Width="200" Text="{Binding OngkosForm.Satuan}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />-->
+                                    <ComboBox x:Name="Perhitungan" Style="{StaticResource ComboBoxInputForm}"                     
+                                          IsEditable="False" 
+                                          ItemsSource="{Binding ListPerhitungan, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedDataPerhitungan}"
+                                          Width="200"
+                                          DisplayMemberPath="Key"
+                                          SelectedValuePath="Key" SelectedValue="{Binding OngkosForm.Perhitungan, Mode=TwoWay}"
+                                          IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13" SelectionChanged="Perhitungan_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=Perhitungan, Path=Text}" Text="Pilih perhitungan" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Margin="0 0 30 0">
+                                <StackPanel Visibility="{Binding IsEnableBiaya, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <TextBlock Style="{StaticResource SmallTitle}" Text="Harga" LineHeight="15"/>
+                                    <Grid Margin="0,0,0,20">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="29*"/>
+                                            <ColumnDefinition Width="191*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox x:Name="HargaJual" Padding="22 0 0 0" Style="{StaticResource TextBoxInputForm}" IsEnabled="{Binding IsEnableBiaya, Mode=TwoWay}" Text="{Binding OngkosForm.Biaya, ConverterCulture='id-ID', StringFormat='{}{0:#,0.###}'}" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" Grid.ColumnSpan="2" />
+                                        <TextBlock Text="Rp" Style="{StaticResource CaptionFormIdle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Grid>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Persen Dari" LineHeight="15"/>
+                                <Grid Margin="0,0,0,20">
+                                    <!--<ComboBox x:Name="PersenDari" Style="{StaticResource ComboBoxInputForm}" Width="220" Text="{Binding OngkosForm.Satuan}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" />-->
+                                    <ComboBox x:Name="PersenDari" Style="{StaticResource ComboBoxInputForm}"  
+                                          ItemsSource="{Binding PaketMaterialList, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedDataPaketMaterial}"
+                                          IsEditable="False" 
+                                          Width="220"
+                                          DisplayMemberPath="NamaPaketMaterial"
+                                          SelectedValuePath="IdPaketMaterial" SelectedValue="{Binding OngkosForm.IdPaketMaterial, Mode=TwoWay}"
+                                          IsEnabled="{Binding IsEnablePerhitungan, Mode=TwoWay}"
+                                          IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13" SelectionChanged="Perhitungan_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=PersenDari, Path=Text}" Text="Pilih persen dari" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0" Margin="30 0 0 0">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation='Horizontal'>
+                                    <StackPanel Orientation="Vertical" >
+                                        <TextBlock Style="{StaticResource SmallTitle}" Text="Jumlah Persen" LineHeight="15"/>
+                                        <Grid Margin="0,0,0,20">
+                                            <TextBox x:Name="JumlahPersen" Style="{StaticResource TextBoxInputForm}" IsEnabled="{Binding IsEnablePerhitungan, Mode=TwoWay}" Width="415" Text="{Binding OngkosForm.Persentase}" Validation.ErrorTemplate="{x:Null}"  PreviewTextInput="NumberValidationTextBox" PreviewKeyUp="CheckForm_PreviewKeyUp" />
+                                            <TextBlock DataContext="{Binding ElementName=JumlahPersen, Path=Text}" Text="0" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" />
+                                        </Grid>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource SmallTitle}" FontSize="15" Padding="8 5 0 0" Text="%" VerticalAlignment="Center" LineHeight="15"/>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Kategori" LineHeight="15"/>
+                                <Grid Margin="0,0,0,20">
+                                    <!--<ComboBox x:Name="Kategori" Style="{StaticResource ComboBoxInputForm}" Width="440" Text="{Binding OngkosForm.NamaOngkos}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Grid.ColumnSpan="2" />-->
+                                    <ComboBox x:Name="Kategori" Style="{StaticResource ComboBoxInputForm}"                     
+                                          IsEditable="False" 
+                                          ItemsSource="{Binding ListPostBiaya, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedDataPostBiaya}"
+                                          Width="440"
+                                          DisplayMemberPath="Value"
+                                          SelectedValuePath="Value" SelectedValue="{Binding OngkosForm.PostBiaya, Mode=TwoWay}"
+                                          IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13" SelectionChanged="Perhitungan_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=Kategori, Path=Text}" Text="Pilih kategori" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource SmallTitle}" Text="Tipe" LineHeight="15"/>
+                                <Grid Margin="0,0,0,20">
+                                    <!--<ComboBox x:Name="Tipe" Style="{StaticResource ComboBoxInputForm}" Width="440" Text="{Binding OngkosForm.NamaOngkos}" Validation.ErrorTemplate="{x:Null}" PreviewKeyUp="CheckForm_PreviewKeyUp" Grid.ColumnSpan="2" />-->
+                                    <ComboBox x:Name="Tipe" Style="{StaticResource ComboBoxInputForm}"                     
+                                          IsEditable="False" 
+                                          ItemsSource="{Binding ListTipe, Mode=OneWay}"
+                                          SelectedItem="{Binding SelectedDataTipe}"
+                                          Width="440"
+                                          DisplayMemberPath="Value"
+                                          SelectedValuePath="Value" SelectedValue="{Binding OngkosForm.Kelompok, Mode=TwoWay}"
+                                          IsReadOnly="True" Validation.ErrorTemplate="{x:Null}" FontSize="13" SelectionChanged="Perhitungan_SelectionChanged"/>
+                                    <TextBlock DataContext="{Binding ElementName=Tipe, Path=Text}" Text="Pilih tipe" Style="{StaticResource TextBoxPlaceholder}" Padding="0" Foreground="{StaticResource Gray100}" Margin="10,0,5,0" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="10,20,30,20">
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Right">
+                            <Button Content="Batal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static md:DialogHost.CloseDialogCommand}"  FontSize="11" Foreground="#028DDB" md:ButtonAssist.CornerRadius="13" BorderBrush="{StaticResource PictonBlue}" Height="28" Margin="5 0"/>
+                            <Grid>
+                                <Button x:Name="OkButton" Content="Simpan" Command="{Binding OnSubmitCommand}" Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToCollapseConverter}}" />
+                                <Button Style="{StaticResource ButtonPrimarySmall}" md:ButtonAssist.CornerRadius="13" IsEnabled="False" Background="{StaticResource Gray50}" Visibility="{Binding IsLoadingForm, Converter={StaticResource BooleanToVisibleConverter}}">
+                                    <Viewbox StretchDirection="Both" Stretch="Uniform"  Height="20" Width="20">
+                                        <other:SpinnerLoadingView Panel.ZIndex="2" />
+                                    </Viewbox>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </md:DialogHost>
+</UserControl>

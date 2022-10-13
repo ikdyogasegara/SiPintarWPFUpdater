@@ -1,0 +1,118 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ExpanderButton" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Column="0" x:Name="HeaderContent" ContentSource="Content"/>
+                        <Image Grid.Column="1" x:Name="ExpanderIcon" Cursor="Hand" Source="/SiPintar;component/Assets/Images/Action/ic_add.png" Width="16"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--Change the sign to minus when toggled-->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Source" TargetName="ExpanderIcon" Value="/SiPintar;component/Assets/Images/Action/ic_subtract.png" />
+                        </Trigger>
+
+                        <!-- MouseOver, Pressed behaviours-->
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Expander" TargetType="Expander">
+        <Setter Property="IsExpanded" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Expander">
+                    <DockPanel>
+                        <ToggleButton x:Name="ExpanderButton" 
+                              DockPanel.Dock="Top"
+                              Style="{StaticResource ExpanderButton}"
+                              Content="{TemplateBinding Header}"
+                              IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                              OverridesDefaultStyle="True"
+                              Padding="1.5,0">
+                        </ToggleButton>
+                        <ContentPresenter x:Name="ExpanderContent"
+                                  Grid.Row="1" 
+                                  Visibility="Collapsed"
+                                  DockPanel.Dock="Bottom"/>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+
+    <Style x:Key="TextBlockLabelLeft" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+
+    <Style x:Key="TextBlockLabelRight" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0,8,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+
+    <Style x:Key="TextBlockValueLeft" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="0,3,0,5" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+
+    <Style x:Key="TextBlockValueRight" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0,3,0,5" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunRegular}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+
+    <Style x:Key="TextBlockTotalLabel" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="0,13,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource MontserratSemiBold}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Gray}" />
+    </Style>
+    <Style x:Key="TextBlockTotalValue" TargetType="TextBlock">
+        <Setter Property="TextAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0,13,0,0" />
+        <Setter Property="FontFamily" Value="{StaticResource SarabunBold}"/>
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="Foreground" Value="{StaticResource Astronaut}" />
+    </Style>
+
+</ResourceDictionary>

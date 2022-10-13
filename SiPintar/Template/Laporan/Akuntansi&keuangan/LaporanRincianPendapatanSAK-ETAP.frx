@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="09/29/2022 16:42:04" ReportInfo.CreatorVersion="2020.1.17.0">
+  <Dictionary>
+    <TableDataSource Name="DSource1" Alias="MainData" ReferenceName="Data.DSource1" DataType="System.Int32" Enabled="true">
+      <Column Name="NamaPerkiraan" DataType="System.String"/>
+      <Column Name="KodePerkiraan" DataType="System.String"/>
+      <Column Name="RealisasiPerbulan" DataType="System.Decimal"/>
+      <Column Name="AnggaranPerbulan" DataType="System.Decimal"/>
+      <Column Name="SelisihPerbulan" DataType="System.Decimal"/>
+      <Column Name="PersentasePerbulan" DataType="System.Decimal"/>
+      <Column Name="RealisasiSampaiDengan" DataType="System.Decimal"/>
+      <Column Name="AnggaranSampaiDengan" DataType="System.Decimal"/>
+      <Column Name="SelisihSampaiDengan" DataType="System.Decimal"/>
+      <Column Name="PersentaseSampaiDengan" DataType="System.Decimal"/>
+      <Column Name="NamaPerkiraan2" DataType="System.String"/>
+      <Column Name="KodePerkiraan2" DataType="System.String"/>
+      <Column Name="PersentasePerbulanSub" DataType="System.Decimal"/>
+      <Column Name="PersentaseSampaiDenganSub" DataType="System.Decimal"/>
+      <Column Name="PersentaseTotalAkhir" DataType="System.Decimal"/>
+      <Column Name="PersentaseSampaiDenganTotalAkhir" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="DSource2" Alias="Label Laporan" ReferenceName="Data.DSource2" DataType="System.Int32" Enabled="true">
+      <Column Name="Header1" DataType="System.String"/>
+      <Column Name="Header2" DataType="System.String"/>
+      <Column Name="Keterangan" DataType="System.String"/>
+      <Column Name="ParafJabatan1" DataType="System.String"/>
+      <Column Name="ParafNama1" DataType="System.String"/>
+      <Column Name="ParafKeterangan1" DataType="System.String"/>
+      <Column Name="ParafId1" DataType="System.String"/>
+      <Column Name="ParafJabatan2" DataType="System.String"/>
+      <Column Name="ParafNama2" DataType="System.String"/>
+      <Column Name="ParafKeterangan2" DataType="System.String"/>
+      <Column Name="ParafId2" DataType="System.String"/>
+      <Column Name="ParafJabatan3" DataType="System.String"/>
+      <Column Name="ParafNama3" DataType="System.String"/>
+      <Column Name="ParafKeterangan3" DataType="System.String"/>
+      <Column Name="ParafId3" DataType="System.String"/>
+      <Column Name="ParafJabatan4" DataType="System.String"/>
+      <Column Name="ParafNama4" DataType="System.String"/>
+      <Column Name="ParafKeterangan4" DataType="System.String"/>
+      <Column Name="ParafId4" DataType="System.String"/>
+      <Column Name="Footer1" DataType="System.String"/>
+      <Column Name="Footer2" DataType="System.String"/>
+    </TableDataSource>
+    <Parameter Name="Periode" DataType="System.Int32"/>
+    <Parameter Name="kodewilayah" DataType="System.String"/>
+    <Parameter Name="namawilayah" DataType="System.String"/>
+    <Parameter Name="FullName" DataType="System.String"/>
+    <Parameter Name="UserName" DataType="System.String"/>
+    <Parameter Name="NoIdentitas" DataType="System.String"/>
+    <Parameter Name="NamaLoketLogin" DataType="System.String"/>
+    <Total Name="TotalRealisasi" Expression="[MainData.RealisasiPerbulan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalAnggaran" Expression="[MainData.AnggaranPerbulan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalSelisih" Expression="[MainData.SelisihPerbulan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalRealisasiSampaiDengan" Expression="[MainData.RealisasiSampaiDengan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalAnggaranSampaiDengan" Expression="[MainData.AnggaranSampaiDengan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalSelisihSampaiDengan" Expression="[MainData.SelisihSampaiDengan]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalRealisasiSeluruhnya" Expression="[MainData.RealisasiPerbulan]" Evaluator="Data1"/>
+    <Total Name="TotalAnggaranSeluruhnya" Expression="[MainData.AnggaranPerbulan]" Evaluator="Data1"/>
+    <Total Name="TotalSelisihnyaSeluruhnya" Expression="[MainData.SelisihPerbulan]" Evaluator="Data1"/>
+    <Total Name="TotalRealisasiSDSeluruhnya" Expression="[MainData.RealisasiSampaiDengan]" Evaluator="Data1"/>
+    <Total Name="TotalAnggaranSDSeluruhnya" Expression="[MainData.AnggaranSampaiDengan]" Evaluator="Data1"/>
+    <Total Name="TotalSelisihSDSeluruhnya" Expression="[MainData.SelisihSampaiDengan]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="103.95">
+      <TextObject Name="Text1" Left="9.45" Width="396.9" Height="18.9" Text="[Label Laporan.Header1]" Font="Arial, 10pt"/>
+      <TextObject Name="Text2" Left="9.45" Top="18.9" Width="396.9" Height="18.9" Text="[Label Laporan.Header2]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="9.45" Top="47.25" Width="311.85" Height="56.7" Border.Lines="All" Text="URAIAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="652.05" Top="47.25" Width="387.45" Height="18.9" Border.Lines="All" Text="SAMPAI DENGAN BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text6" Left="321.3" Top="47.25" Width="330.75" Height="18.9" Border.Lines="All" Text="BULAN INI" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="321.3" Top="66.15" Width="85.05" Height="37.8" Border.Lines="All" Text="REALISASI" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text8" Left="406.35" Top="66.15" Width="94.5" Height="37.8" Border.Lines="All" Text="ANGGARAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="500.85" Top="66.15" Width="85.05" Height="37.8" Border.Lines="All" Text="LEBIH (KURANG)" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text10" Left="585.9" Top="66.15" Width="66.15" Height="37.8" Border.Lines="All" Text="%" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="652.05" Top="66.15" Width="103.95" Height="37.8" Border.Lines="All" Text="REALISASI" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text12" Left="756" Top="66.15" Width="113.4" Height="37.8" Border.Lines="All" Text="ANGGARAN" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text13" Left="869.4" Top="66.15" Width="103.95" Height="37.8" Border.Lines="All" Text="LEBIH (KURANG)" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text14" Left="973.35" Top="66.15" Width="66.15" Height="37.8" Border.Lines="All" Text="%" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="107.95" Width="1047.06" Height="18.9" Condition="[MainData.KodePerkiraan2]">
+      <TextObject Name="Text25" Left="9.45" Width="245.7" Height="18.9" Border.Lines="Left, Right" Text="[MainData.NamaPerkiraan2]" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text26" Left="255.15" Width="66.15" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text29" Left="321.3" Width="85.05" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text30" Left="406.35" Width="94.5" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text31" Left="500.85" Width="85.05" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text32" Left="585.9" Width="66.15" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text33" Left="652.05" Width="103.95" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text34" Left="756" Width="113.4" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text35" Left="869.4" Width="103.95" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text36" Left="973.35" Width="66.15" Height="18.9" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+      <DataBand Name="Data1" Top="130.85" Width="1047.06" Height="18.9" DataSource="DSource1">
+        <TextObject Name="Text15" Left="9.45" Width="245.7" Height="18.9" Border.Lines="Left, Right" Text="[MainData.NamaPerkiraan]" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text16" Left="255.15" Width="66.15" Height="18.9" Border.Lines="Right" Text="[MainData.KodePerkiraan]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text17" Left="321.3" Width="85.05" Height="18.9" Border.Lines="Left, Right" Text="[MainData.RealisasiPerbulan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text18" Left="406.35" Width="94.5" Height="18.9" Border.Lines="Left, Right" Text="[MainData.AnggaranPerbulan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text19" Left="500.85" Width="85.05" Height="18.9" Border.Lines="Left, Right" Text="[MainData.SelisihPerbulan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text20" Left="585.9" Width="66.15" Height="18.9" Border.Lines="Left, Right" Text="[MainData.PersentasePerbulan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text21" Left="652.05" Width="103.95" Height="18.9" Border.Lines="Left, Right" Text="[MainData.RealisasiSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text22" Left="756" Width="113.4" Height="18.9" Border.Lines="Left, Right" Text="[MainData.AnggaranSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text23" Left="869.4" Width="103.95" Height="18.9" Border.Lines="Left, Right" Text="[MainData.SelisihSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text24" Left="973.35" Width="66.15" Height="18.9" Border.Lines="Left, Right" Text="[MainData.PersentaseSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="153.75" Width="1047.06" Height="18.9">
+        <TextObject Name="Text27" Left="9.45" Width="311.85" Height="18.9" Border.Lines="All" Text="JUMLAH SUB TOTAL" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text28" Left="321.3" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalRealisasi]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text37" Left="406.35" Width="94.5" Height="18.9" Border.Lines="All" Text="[TotalAnggaran]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text38" Left="500.85" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalSelisih]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text39" Left="585.9" Width="66.15" Height="18.9" Border.Lines="All" Text="[MainData.PersentasePerbulanSub]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text40" Left="652.05" Width="103.95" Height="18.9" Border.Lines="All" Text="[TotalRealisasiSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text41" Left="756" Width="113.4" Height="18.9" Border.Lines="All" Text="[TotalAnggaranSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text42" Left="869.4" Width="103.95" Height="18.9" Border.Lines="All" Text="[TotalSelisihSampaiDengan]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+        <TextObject Name="Text43" Left="973.35" Width="66.15" Height="18.9" Border.Lines="All" Text="[MainData.PersentaseSampaiDenganSub]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="176.65" Width="1047.06" Height="18.9">
+      <TextObject Name="Text44" Left="9.45" Width="311.85" Height="18.9" Border.Lines="All" Text="JUMLAH TOTAL PENDAPATAN" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text45" Left="321.3" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalRealisasiSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text46" Left="406.35" Width="94.5" Height="18.9" Border.Lines="All" Text="[TotalAnggaranSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text47" Left="500.85" Width="85.05" Height="18.9" Border.Lines="All" Text="[TotalSelisihnyaSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text48" Left="652.05" Width="103.95" Height="18.9" Border.Lines="All" Text="[TotalRealisasiSDSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text49" Left="756" Width="113.4" Height="18.9" Border.Lines="All" Text="[TotalAnggaranSDSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text50" Left="869.4" Width="103.95" Height="18.9" Border.Lines="All" Text="[TotalSelisihSDSeluruhnya]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text52" Left="585.9" Width="66.15" Height="18.9" Border.Lines="All" Text="[MainData.PersentaseTotalAkhir]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text53" Left="973.35" Width="66.15" Height="18.9" Border.Lines="All" Text="[MainData.PersentaseSampaiDenganTotalAkhir]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt"/>
+    </ReportSummaryBand>
+  </ReportPage>
+</Report>
